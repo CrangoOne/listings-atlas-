@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Listings Atlas — Willhaben · AutoScout · Kleinanzeigen</title>
+    <meta
+      name="description"
+      content="Interactive market dashboard for merged Willhaben, AutoScout24, and Kleinanzeigen car listings."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/dashboard.css" />
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true"></div>
+
+    <header class="site-nav">
+      <a class="brand-mark" href="#top">Listings Atlas</a>
+      <nav>
+        <a href="#explore">Explore</a>
+        <a href="#markets">Markets</a>
+        <a href="#prices">Prices</a>
+        <a href="#makes">Makes</a>
+        <a href="#about">Data</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <p class="brand">Listings Atlas</p>
+        <h1>Three markets. One inventory pulse.</h1>
+        <p class="lede">
+          Filter and drill into merged Willhaben, AutoScout24, and Kleinanzeigen
+          listings — then scan the market overview below.
+        </p>
+        <div class="cta-row">
+          <a class="btn primary" href="#explore">Explore listings</a>
+          <a class="btn ghost" href="#markets">Market overview</a>
+        </div>
+      </section>
+
+      <section id="explore" class="section explore">
+        <div class="section-head">
+          <h2>Explore individual listings</h2>
+          <p>
+            Load the consolidated SQLite DB once, then search strings, set
+            numeric ranges, and open any row.
+          </p>
+        </div>
+
+        <div id="db-gate" class="db-gate">
+          <p class="db-gate-copy">
+            The full pack is ~435&nbsp;MB. Prefer loading a local copy of
+            <code>20261108_all_car_listings.db</code> (fast, works offline).
+            Remote GitHub LFS load is optional and can take several minutes.
+          </p>
+          <div class="db-actions">
+            <label class="btn primary file-btn">
+              Load local .db
+              <input id="db-file" type="file" accept=".db,application/octet-stream" hidden />
+            </label>
+            <button type="button" class="btn ghost" id="db-remote">
+              Load from GitHub LFS
+            </button>
+          </div>
+          <div id="db-progress" class="db-progress" hidden>
+            <div class="db-progress-track">
+              <div id="db-progress-fill" class="db-progress-fill"></div>
+            </div>
+            <p id="db-progress-label" class="db-progress-label">Preparing…</p>
+          </div>
+        </div>
+
+        <div id="explore-app" class="explore-app" hidden>
+          <form id="filter-form" class="filter-form" autocomplete="off">
+            <div class="filter-grid">
+              <label class="field">
+                <span>Source</span>
+                <div class="combo" data-combo="source" data-multiple="true"></div>
+              </label>
+              <label class="field">
+                <span>Make</span>
+                <div class="combo" data-combo="make"></div>
+              </label>
+              <label class="field">
+                <span>Model contains</span>
+                <input name="model" type="search" placeholder="e.g. Golf" />
+              </label>
+              <label class="field">
+                <span>Fuel</span>
+                <div class="combo" data-combo="fuel_type"></div>
+              </label>
+              <label class="field">
+                <span>Transmission</span>
+                <div class="combo" data-combo="transmission"></div>
+              </label>
+              <label class="field">
+                <span>Body type</span>
+                <div class="combo" data-combo="body_type"></div>
+              </label>
+              <label class="field wide">
+                <span>Title / location / VIN / Ad ID</span>
+                <input
+                  name="q"
+                  type="search"
+                  placeholder="Search text across title, location, VIN, ad id"
+                />
+              </label>
+            </div>
+
+            <div class="range-grid">
+              <fieldset class="range-field">
+                <legend>Price (€)</legend>
+                <div class="range-inputs">
+                  <input name="price_min" type="number" inputmode="decimal" placeholder="Min" />
+                  <span>–</span>
+                  <input name="price_max" type="number" inputmode="decimal" placeholder="Max" />
+                </div>
+              </fieldset>
+              <fieldset class="range-field">
+                <legend>Year</legend>
+                <div class="range-inputs">
+                  <input name="year_min" type="number" inputmode="numeric" placeholder="Min" />
+                  <span>–</span>
+                  <input name="year_max" type="number" inputmode="numeric" placeholder="Max" />
+                </div>
+              </fieldset>
+              <fieldset class="range-field">
+                <legend>Mileage (km)</legend>
+                <div class="range-inputs">
+                  <input name="km_min" type="number" inputmode="numeric" placeholder="Min" />
+                  <span>–</span>
+                  <input name="km_max" type="number" inputmode="numeric" placeholder="Max" />
+                </div>
+              </fieldset>
+              <fieldset class="range-field">
+                <legend>Power (PS)</legend>
+                <div class="range-inputs">
+                  <input name="ps_min" type="number" inputmode="numeric" placeholder="Min" />
+                  <span>–</span>
+                  <input name="ps_max" type="number" inputmode="numeric" placeholder="Max" />
+                </div>
+              </fieldset>
+            </div>
+
+            <div class="filter-actions">
+              <button type="submit" class="btn primary">Apply filters</button>
+              <button type="reset" class="btn ghost">Reset</button>
+              <p id="result-meta" class="result-meta">DB ready — run a filter to list rows.</p>
+            </div>
+          </form>
+
+          <div class="table-wrap">
+            <table class="results" id="results-table">
+              <thead>
+                <tr>
+                  <th>Source</th>
+                  <th>Make</th>
+                  <th>Model</th>
+                  <th>Year</th>
+                  <th>Price</th>
+                  <th>Km</th>
+                  <th>Fuel</th>
+                  <th>Location</th>
+                </tr>
+              </thead>
+              <tbody id="results-body">
+                <tr class="empty-row">
+                  <td colspan="8">No query yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="pager" id="pager" hidden>
+            <button type="button" class="btn ghost" id="page-prev">Previous</button>
+            <span id="page-label">Page 1</span>
+            <button type="button" class="btn ghost" id="page-next">Next</button>
+          </div>
+        </div>
+      </section>
+
+      <dialog id="row-dialog" class="row-dialog">
+        <form method="dialog" class="row-dialog-inner">
+          <header>
+            <h3 id="row-dialog-title">Listing</h3>
+            <button type="submit" class="btn ghost" value="close">Close</button>
+          </header>
+          <div id="row-dialog-body" class="row-dialog-body"></div>
+        </form>
+      </dialog>
+
+      <section id="markets" class="section">
+        <div class="section-head">
+          <h2>Where the inventory sits</h2>
+          <p>Share of listings across the three sources in the merged pack.</p>
+        </div>
+        <div class="kpi-row" id="kpi-row"></div>
+        <div class="chart-block">
+          <div class="chart-label">Listings by source</div>
+          <div id="source-bars" class="bar-chart" role="img" aria-label="Listings by source"></div>
+        </div>
+      </section>
+
+      <section id="prices" class="section">
+        <div class="section-head">
+          <h2>Price landscape</h2>
+          <p>Filtered to €500–€200k to dampen outliers and scrapes errors.</p>
+        </div>
+        <div class="split">
+          <div class="chart-block grow">
+            <div class="chart-label">Price bands</div>
+            <div id="price-bars" class="bar-chart"></div>
+          </div>
+          <div class="chart-block">
+            <div class="chart-label">Average price by market</div>
+            <div id="price-source" class="bar-chart"></div>
+          </div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-label">Model year mix (2000–2026)</div>
+          <div id="year-bars" class="bar-chart dense"></div>
+        </div>
+      </section>
+
+      <section id="makes" class="section">
+        <div class="section-head">
+          <h2>Makes that dominate</h2>
+          <p>Top brands overall, then the leaders inside each market.</p>
+        </div>
+        <div class="chart-block">
+          <div class="chart-label">Top 20 makes</div>
+          <div id="make-bars" class="bar-chart"></div>
+        </div>
+        <div class="market-grid" id="market-makes"></div>
+      </section>
+
+      <section class="section twin">
+        <div class="chart-block">
+          <div class="chart-label">Fuel type</div>
+          <div id="fuel-bars" class="bar-chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-label">Transmission</div>
+          <div id="trans-bars" class="bar-chart"></div>
+        </div>
+      </section>
+
+      <section id="about" class="section about">
+        <div class="section-head">
+          <h2>How interactivity works on GitHub</h2>
+          <p>
+            Overview charts use a tiny <code>summary.json</code>. Row-level
+            explore uses <code>sql.js</code> against the consolidated
+            <code>.db</code> in your browser.
+          </p>
+        </div>
+        <div class="about-copy">
+          <p>
+            <strong>GitHub Pages</strong> can host this HTML. Enable Pages from
+            the <code>docs/</code> folder.
+          </p>
+          <p>
+            <strong>Full DB from GitHub:</strong> possible via Git LFS, but
+            ~435&nbsp;MB. Local file load is the reliable path; remote load is
+            available as a fallback and is cached in IndexedDB after the first
+            success.
+          </p>
+          <p class="meta" id="generated-meta">Loading summary…</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-foot">
+      <span>Listings Atlas</span>
+      <span>Willhaben · AutoScout24 · Kleinanzeigen</span>
+    </footer>
+
+    <script src="assets/dashboard.js" type="module"></script>
+  </body>
+</html>
