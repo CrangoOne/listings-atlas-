@@ -614,7 +614,7 @@ export function initExplore(summary) {
     } catch (err) {
       hideVinPanel();
       resultMeta.textContent = `VIN decode failed: ${err.message || err}`;
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="9">Could not decode VIN.</td></tr>`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Could not decode VIN.</td></tr>`;
       pager.hidden = true;
       return;
     }
@@ -804,9 +804,15 @@ export function initExplore(summary) {
     document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
   }
 
+  function listingUrl(row) {
+    const u = String(row?.url || "").trim();
+    if (!u || u.toUpperCase() === "N/A") return "";
+    return u;
+  }
+
   function renderRows(rows, { showVinScore = false } = {}) {
     if (!rows.length) {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="9">No rows match these filters.</td></tr>`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="10">No rows match these filters.</td></tr>`;
       return;
     }
     tbody.innerHTML = rows
@@ -817,6 +823,10 @@ export function initExplore(summary) {
           showVinScore && r._vin_distance != null && r._vin_distance > 0
             ? `${escapeHtml(vinText)} <span class="vin-score">~${Number(r._vin_distance).toFixed(0)}</span>`
             : escapeHtml(vinText);
+        const href = listingUrl(r);
+        const linkCell = href
+          ? `<a class="row-link" href="${escapeHtml(href)}" target="_blank" rel="noopener" title="Open original listing">Open</a>`
+          : "—";
         return `<tr class="result-row" data-row="${payload}">
           <td>${escapeHtml(niceSource(r.source))}</td>
           <td>${escapeHtml(r.make || "—")}</td>
@@ -827,6 +837,7 @@ export function initExplore(summary) {
           <td class="vin-cell">${vinCell}</td>
           <td>${escapeHtml(r.fuel_type || "—")}</td>
           <td>${escapeHtml(r.location || "—")}</td>
+          <td class="link-cell">${linkCell}</td>
         </tr>`;
       })
       .join("");
@@ -834,8 +845,24 @@ export function initExplore(summary) {
 
   function openRow(row) {
     dialogTitle.textContent = `${niceSource(row.source)} · ${row.make || ""} ${row.model || ""}`.trim();
-    const entries = Object.entries(row).filter(([, v]) => v != null && String(v).trim() !== "");
-    dialogBody.innerHTML = `<dl class="row-dl">
+    const href = listingUrl(row);
+    const skip = new Set(["_vin_distance"]);
+    const entries = Object.entries(row).filter(
+      ([k, v]) => !skip.has(k) && v != null && String(v).trim() !== ""
+    );
+    // Put URL first for validation.
+    entries.sort(([a], [b]) => {
+      if (a === "url") return -1;
+      if (b === "url") return 1;
+      return 0;
+    });
+    const openBtn = href
+      ? `<p class="detail-url-bar">
+           <a class="btn primary" href="${escapeHtml(href)}" target="_blank" rel="noopener">Open original listing</a>
+           <a class="detail-url-text" href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(href)}</a>
+         </p>`
+      : `<p class="detail-url-bar muted">No listing URL on this row.</p>`;
+    dialogBody.innerHTML = `${openBtn}<dl class="row-dl">
       ${entries
         .map(
           ([k, v]) => `<div><dt>${escapeHtml(k)}</dt><dd>${
@@ -882,7 +909,7 @@ export function initExplore(summary) {
     lastVinRanked = null;
     hideVinPanel();
     setTimeout(() => {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="9">Filters cleared.</td></tr>`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Filters cleared.</td></tr>`;
       resultMeta.textContent = "Filters reset — apply again to search.";
       pager.hidden = true;
     }, 0);
@@ -902,6 +929,8 @@ export function initExplore(summary) {
   });
 
   tbody.addEventListener("click", (e) => {
+    // Let the Open link work without also opening the detail dialog.
+    if (e.target.closest("a.row-link")) return;
     const tr = e.target.closest("tr[data-row]");
     if (!tr) return;
     try {

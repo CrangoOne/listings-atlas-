@@ -873,3 +873,44 @@ body {
   font-size: 1.05rem;
   letter-spacing: -0.02em;
 }
+
+.link-cell {
+  white-space: nowrap;
+}
+
+.row-link {
+  color: var(--accent-deep);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.row-link:hover {
+  text-decoration: underline;
+}
+
+.detail-url-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.detail-url-bar .btn {
+  align-self: flex-start;
+}
+
+.detail-url-text {
+  font-size: 0.82rem;
+  color: var(--accent-deep);
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.detail-url-bar.muted {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.85rem;
+}
