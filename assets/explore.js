@@ -1,7 +1,7 @@
 import {
   VIN_RE,
   buildDecodedCompWhere,
-  decodeVinNhtsa,
+  decodeVin,
   fuelNeedles,
   rowMatchesFuel,
   scoreCompMatch,
@@ -580,9 +580,13 @@ export function initExplore(summary) {
       .join(" ");
     const meta = [];
     if (decoded.likely_eu) meta.push("EU VIN");
+    if (decoded.decode_source) meta.push(decoded.decode_source);
+    if (decoded.model_source === "eu_local") meta.push("model from EU type code");
+    else if (decoded.model_source === "nhtsa") meta.push("model from NHTSA");
     if (decoded.year_source === "vin_pos10") meta.push("year from VIN pos.10");
     else if (decoded.year_source === "nhtsa") meta.push("year from NHTSA");
-    meta.push("US check-digit ignored");
+    if (decoded.series) meta.push(`series ${decoded.series}`);
+    if (decoded.eu_zzz) meta.push("US check-digit N/A");
     if (decoded.note) meta.push(`note: ${decoded.note}`);
     vinSummary.textContent = `${decoded.vin} → ${bits} · ${meta.join(" · ")}`;
     const euroOr = (v) => (v == null ? "—" : euro.format(v));
@@ -617,11 +621,11 @@ export function initExplore(summary) {
       return;
     }
 
-    resultMeta.textContent = "Decoding VIN via NHTSA…";
+    resultMeta.textContent = "Decoding VIN (EU local + NHTSA)…";
     const yearTol = Math.max(0, Number(form.year_tol?.value ?? 1) || 0);
     let decoded;
     try {
-      decoded = await decodeVinNhtsa(fullVin);
+      decoded = await decodeVin(fullVin);
     } catch (err) {
       hideVinPanel();
       resultMeta.textContent = `VIN decode failed: ${err.message || err}`;

@@ -49,8 +49,8 @@
           <h2>Explore individual listings</h2>
           <p>
             Load the consolidated SQLite DB once, then filter listings — or enter
-            a 17-character VIN to decode make/model/year/fuel and show similar
-            comps (same approach as <code>daq/vin_market.py</code>).
+            a 17-character European or US VIN to decode make/model/year (EU local
+            type codes + NHTSA) and show similar comps.
           </p>
         </div>
 
@@ -180,7 +180,7 @@
 
           <div id="vin-decode-panel" class="vin-decode-panel" hidden>
             <div class="vin-decode-head">
-              <h3>VIN decode → similar comps</h3>
+              <h3>VIN decode (EU + NHTSA) → similar comps</h3>
               <p id="vin-decode-summary" class="vin-decode-summary"></p>
             </div>
             <div id="vin-decode-stats" class="vin-decode-stats"></div>
