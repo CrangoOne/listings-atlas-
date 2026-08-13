@@ -1,6 +1,10 @@
 /**
  * Browser port of daq/vin_market.py:
  * VIN → NHTSA decode → make/model/year(/fuel) query for similar listings.
+ *
+ * Tuned for mostly EU VINs: NHTSA is still used for WMI/make/model (free + CORS),
+ * but US check-digit / "invalid character" noise is ignored, and model year can
+ * fall back to VIN position 10 when NHTSA omits it.
  */
 
 export const NHTSA_URL =
@@ -67,6 +71,46 @@ export function normalizeVinStrict(vin) {
   return cleaned;
 }
 
+/** Rough EU/UK WMI hint from the first VIN character (not exhaustive). */
+export function isLikelyEuVin(vin) {
+  const c = String(vin || "").toUpperCase()[0];
+  return "STUVWXYZ".includes(c);
+}
+
+/**
+ * Model year from VIN position 10 (ISO 3779).
+ * Covers 2001–2009 (1–9) and 2010–2030 (A–Y, skipping I/O/Q/U/Z).
+ */
+export function yearFromVinPosition10(vin) {
+  const code = String(vin || "").toUpperCase()[9];
+  if (!code) return null;
+  if (code >= "1" && code <= "9") return 2000 + Number(code);
+  const map = {
+    A: 2010,
+    B: 2011,
+    C: 2012,
+    D: 2013,
+    E: 2014,
+    F: 2015,
+    G: 2016,
+    H: 2017,
+    J: 2018,
+    K: 2019,
+    L: 2020,
+    M: 2021,
+    N: 2022,
+    P: 2023,
+    R: 2024,
+    S: 2025,
+    T: 2026,
+    V: 2027,
+    W: 2028,
+    X: 2029,
+    Y: 2030,
+  };
+  return map[code] ?? null;
+}
+
 export function compactAlnum(s) {
   return String(s || "")
     .toUpperCase()
@@ -114,6 +158,63 @@ export function fuelNeedles(fuel) {
   return [key];
 }
 
+/**
+ * NHTSA often returns non-fatal codes even when Make/Model decode fine.
+ * Hide the noisy ones from the UI when we already have a usable vehicle.
+ */
+const BENIGN_NHTSA_CODES = new Set([
+  "0", // success
+  "1", // check digit (9th position) — very common on EU / non-US VINs
+  "7", // manufacturer not registered with NHTSA
+  "8", // no detailed data available
+  "14", // incomplete / some fields unavailable
+  "400", // "invalid characters" — often a false alarm after successful decode
+]);
+
+function splitNhtsaCodes(errorCode) {
+  return String(errorCode || "")
+    .split(/[,;|]/)
+    .map((c) => c.trim())
+    .filter(Boolean);
+}
+
+function splitNhtsaMessages(errorText) {
+  return String(errorText || "")
+    .split(/;\s*/)
+    .map((m) => m.trim())
+    .filter(Boolean);
+}
+
+/** Keep only messages that are not the usual benign NHTSA warnings. */
+export function meaningfulNhtsaNote(errorCode, errorText, { hasMakeModel = true } = {}) {
+  const codes = splitNhtsaCodes(errorCode);
+  const messages = splitNhtsaMessages(errorText);
+  if (!messages.length) return null;
+
+  const actionable = messages.filter((msg) => {
+    const codeMatch = msg.match(/^(\d+)\b/);
+    const code = codeMatch ? codeMatch[1] : "";
+    if (code && BENIGN_NHTSA_CODES.has(code)) return false;
+    // Text fallbacks when code prefix is missing from a fragment.
+    const lower = msg.toLowerCase();
+    if (hasMakeModel) {
+      if (lower.includes("check digit")) return false;
+      if (lower.includes("invalid characters present")) return false;
+      if (lower.includes("manufacturer is not registered")) return false;
+    }
+    if (code === "0" || lower === "0 - vin decoded clean. check digit (9th position) is correct") {
+      return false;
+    }
+    return true;
+  });
+
+  // If every code is benign and make/model exist, stay silent.
+  if (hasMakeModel && codes.length && codes.every((c) => BENIGN_NHTSA_CODES.has(c))) {
+    return null;
+  }
+  return actionable.length ? actionable.join("; ") : null;
+}
+
 export async function decodeVinNhtsa(vin, { timeoutMs = 20000 } = {}) {
   const cleaned = normalizeVinStrict(vin);
   const url = NHTSA_URL.replace("{vin}", encodeURIComponent(cleaned));
@@ -133,11 +234,22 @@ export async function decodeVinNhtsa(vin, { timeoutMs = 20000 } = {}) {
         `NHTSA could not decode make/model for ${cleaned}: ${row.ErrorText || "unknown"}`
       );
     }
+    const error_code = row.ErrorCode || null;
+    const error_text = row.ErrorText || null;
+    const vinYear = yearFromVinPosition10(cleaned);
+    const yearSource =
+      year != null ? "nhtsa" : vinYear != null ? "vin_pos10" : null;
+    const resolvedYear = year != null ? year : vinYear;
+    const likelyEu = isLikelyEuVin(cleaned);
     return {
       vin: cleaned,
       make,
       model,
-      year,
+      year: resolvedYear,
+      year_nhtsa: year,
+      year_vin: vinYear,
+      year_source: yearSource,
+      likely_eu: likelyEu,
       body: row.BodyClass || null,
       fuel: row.FuelTypePrimary || null,
       series: row.Series || null,
@@ -145,12 +257,99 @@ export async function decodeVinNhtsa(vin, { timeoutMs = 20000 } = {}) {
       displacement_l: row.DisplacementL || null,
       doors: row.Doors || null,
       plant_country: row.PlantCountry || null,
-      error_code: row.ErrorCode || null,
-      error_text: row.ErrorText || null,
+      error_code,
+      error_text,
+      // UI-facing note: omit routine check-digit / char warnings (common on EU VINs).
+      note: meaningfulNhtsaNote(error_code, error_text, { hasMakeModel: true }),
     };
   } finally {
     clearTimeout(timer);
   }
+}
+
+/**
+ * How close a listing is to the decoded VIN vehicle.
+ * Higher score = closer. Label: Strong / Close / Loose.
+ */
+export function scoreCompMatch(row, decoded, { yearTol = 1, fuelNeedles: needles = [] } = {}) {
+  const reasons = [];
+  let score = 0;
+  const tokens = modelTokens(decoded.model);
+  const modelCompact = compactAlnum(row.model);
+  const titleCompact = compactAlnum(row.title);
+  const hayCompact = modelCompact + titleCompact;
+
+  // Make is required by the SQL filter — small base credit.
+  score += 10;
+  reasons.push("make");
+
+  // Model token placement (field beats title-only).
+  if (tokens.length) {
+    const inModel = tokens.filter((t) => modelCompact.includes(compactAlnum(t))).length;
+    const inHay = tokens.filter((t) => hayCompact.includes(compactAlnum(t))).length;
+    if (inModel === tokens.length) {
+      score += 35;
+      reasons.push("model field");
+    } else if (inModel > 0) {
+      score += 22;
+      reasons.push("partial model");
+    } else if (inHay === tokens.length) {
+      score += 14;
+      reasons.push("model in title");
+    } else {
+      score += 6;
+      reasons.push("weak model");
+    }
+  }
+
+  // Year distance.
+  if (decoded.year != null && row.year_int != null) {
+    const d = Math.abs(Number(row.year_int) - Number(decoded.year));
+    if (d === 0) {
+      score += 30;
+      reasons.push("year exact");
+    } else if (d === 1) {
+      score += 18;
+      reasons.push("year ±1");
+    } else if (d <= yearTol) {
+      score += 8;
+      reasons.push(`year ±${d}`);
+    } else {
+      reasons.push(`year ±${d}`);
+    }
+  } else {
+    reasons.push("year unknown");
+  }
+
+  // Fuel.
+  const fuel = String(row.fuel_type || "").toUpperCase();
+  if (needles.length) {
+    if (fuel && fuel !== "N/A" && fuel !== "UNKNOWN" && needles.some((n) => fuel.includes(n))) {
+      score += 15;
+      reasons.push("fuel");
+    } else if (!fuel || fuel === "N/A" || fuel === "UNKNOWN") {
+      score += 4;
+      reasons.push("fuel unknown");
+    } else {
+      reasons.push("fuel mismatch");
+    }
+  }
+
+  // Series / trim hints in title/model (EU ads often put "320d", "Sportline", etc.).
+  const series = compactAlnum(decoded.series);
+  const trim = compactAlnum(decoded.trim);
+  if (series && series.length >= 2 && hayCompact.includes(series)) {
+    score += 6;
+    reasons.push("series");
+  }
+  if (trim && trim.length >= 2 && hayCompact.includes(trim)) {
+    score += 4;
+    reasons.push("trim");
+  }
+
+  score = Math.max(0, Math.min(100, Math.round(score)));
+  const label = score >= 80 ? "Strong" : score >= 55 ? "Close" : "Loose";
+  return { score, label, reasons };
 }
 
 /**

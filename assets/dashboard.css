@@ -914,3 +914,41 @@ body {
   border-bottom: 1px solid var(--line);
   padding-bottom: 0.85rem;
 }
+
+.match-pill {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.match-strong {
+  background: rgba(15, 122, 108, 0.16);
+  color: var(--accent-deep);
+}
+
+.match-close {
+  background: rgba(180, 83, 9, 0.14);
+  color: #9a3412;
+}
+
+.match-loose {
+  background: rgba(23, 35, 58, 0.08);
+  color: var(--ink-soft);
+}
+
+.detail-match {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.85rem;
+}
+
+.detail-match-reasons {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}

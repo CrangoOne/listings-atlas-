@@ -2,7 +2,9 @@ import {
   VIN_RE,
   buildDecodedCompWhere,
   decodeVinNhtsa,
+  fuelNeedles,
   rowMatchesFuel,
+  scoreCompMatch,
   summarizePrices,
 } from "./vin_market.js";
 
@@ -576,9 +578,13 @@ export function initExplore(summary) {
     ]
       .filter(Boolean)
       .join(" ");
-    vinSummary.textContent = `${decoded.vin} → ${bits}${
-      decoded.error_text ? ` · note: ${decoded.error_text}` : ""
-    }`;
+    const meta = [];
+    if (decoded.likely_eu) meta.push("EU VIN");
+    if (decoded.year_source === "vin_pos10") meta.push("year from VIN pos.10");
+    else if (decoded.year_source === "nhtsa") meta.push("year from NHTSA");
+    meta.push("US check-digit ignored");
+    if (decoded.note) meta.push(`note: ${decoded.note}`);
+    vinSummary.textContent = `${decoded.vin} → ${bits} · ${meta.join(" · ")}`;
     const euroOr = (v) => (v == null ? "—" : euro.format(v));
     vinStats.innerHTML = `
       <div class="vin-stat"><span>Comps</span><strong>${fmt.format(comps)}</strong></div>
@@ -594,11 +600,16 @@ export function initExplore(summary) {
     if (!resetPage && lastDecoded && lastVinRanked && lastWhere.fullVin === fullVin) {
       lastCount = lastVinRanked.length;
       const offset = page * PAGE_SIZE;
-      const slice = lastVinRanked.slice(offset, offset + PAGE_SIZE).map((x) => x.row);
-      renderRows(slice);
+      const slice = lastVinRanked.slice(offset, offset + PAGE_SIZE).map((x) => ({
+        ...x.row,
+        _match_score: x.match?.score,
+        _match_label: x.match?.label,
+        _match_reasons: x.match?.reasons,
+      }));
+      renderRows(slice, { showMatch: true });
       const from = lastCount ? offset + 1 : 0;
       const to = Math.min(offset + PAGE_SIZE, lastCount);
-      resultMeta.textContent = `${fmt.format(lastCount)} comps for decoded ${lastDecoded.make} ${lastDecoded.model} · showing ${from}–${to}`;
+      resultMeta.textContent = `${fmt.format(lastCount)} comps for decoded ${lastDecoded.make} ${lastDecoded.model} · showing ${from}–${to} (closest first)`;
       pager.hidden = lastCount <= PAGE_SIZE;
       pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
       document.getElementById("page-prev").disabled = page <= 0;
@@ -614,7 +625,7 @@ export function initExplore(summary) {
     } catch (err) {
       hideVinPanel();
       resultMeta.textContent = `VIN decode failed: ${err.message || err}`;
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Could not decode VIN.</td></tr>`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="11">Could not decode VIN.</td></tr>`;
       pager.hidden = true;
       return;
     }
@@ -676,35 +687,45 @@ export function initExplore(summary) {
 
     let comps = candidates;
     let fuelApplied = false;
-    if (comp.fuelNeedles.length) {
-      const withFuel = candidates.filter((r) => rowMatchesFuel(r, comp.fuelNeedles));
+    const needles = comp.fuelNeedles.length ? comp.fuelNeedles : fuelNeedles(decoded.fuel);
+    if (needles.length) {
+      const withFuel = candidates.filter((r) => rowMatchesFuel(r, needles));
       if (withFuel.length >= Math.min(5, candidates.length) && withFuel.length > 0) {
         comps = withFuel;
         fuelApplied = true;
       }
     }
 
-    comps = comps.slice().sort((a, b) => {
-      const pa = a.price_eur;
-      const pb = b.price_eur;
-      if (pa == null && pb == null) return 0;
-      if (pa == null) return 1;
-      if (pb == null) return -1;
-      if (pa !== pb) return pa - pb;
-      return (a.mileage_km ?? 1e12) - (b.mileage_km ?? 1e12);
-    });
+    lastVinRanked = comps
+      .map((row) => ({
+        row,
+        match: scoreCompMatch(row, decoded, { yearTol, fuelNeedles: needles }),
+      }))
+      .sort((a, b) => {
+        if (b.match.score !== a.match.score) return b.match.score - a.match.score;
+        const pa = a.row.price_eur;
+        const pb = b.row.price_eur;
+        if (pa == null && pb == null) return 0;
+        if (pa == null) return 1;
+        if (pb == null) return -1;
+        return pa - pb;
+      });
 
-    lastVinRanked = comps.map((row) => ({ row, dist: 0 }));
     const stats = summarizePrices(comps);
     showVinPanel(decoded, stats, { fuelApplied, comps: comps.length });
 
     lastCount = lastVinRanked.length;
     const offset = page * PAGE_SIZE;
-    const slice = lastVinRanked.slice(offset, offset + PAGE_SIZE).map((x) => x.row);
-    renderRows(slice);
+    const slice = lastVinRanked.slice(offset, offset + PAGE_SIZE).map((x) => ({
+      ...x.row,
+      _match_score: x.match.score,
+      _match_label: x.match.label,
+      _match_reasons: x.match.reasons,
+    }));
+    renderRows(slice, { showMatch: true });
     const from = lastCount ? offset + 1 : 0;
     const to = Math.min(offset + PAGE_SIZE, lastCount);
-    resultMeta.textContent = `${fmt.format(lastCount)} comps for decoded ${decoded.make} ${decoded.model} · showing ${from}–${to}`;
+    resultMeta.textContent = `${fmt.format(lastCount)} comps for decoded ${decoded.make} ${decoded.model} · showing ${from}–${to} (closest first)`;
     pager.hidden = lastCount <= PAGE_SIZE;
     pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
     document.getElementById("page-prev").disabled = page <= 0;
@@ -810,9 +831,9 @@ export function initExplore(summary) {
     return u;
   }
 
-  function renderRows(rows, { showVinScore = false } = {}) {
+  function renderRows(rows, { showVinScore = false, showMatch = false } = {}) {
     if (!rows.length) {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="10">No rows match these filters.</td></tr>`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="11">No rows match these filters.</td></tr>`;
       return;
     }
     tbody.innerHTML = rows
@@ -827,7 +848,22 @@ export function initExplore(summary) {
         const linkCell = href
           ? `<a class="row-link" href="${escapeHtml(href)}" target="_blank" rel="noopener" title="Open original listing">Open</a>`
           : "—";
+        let matchCell = "—";
+        if (showMatch && r._match_label != null) {
+          const cls =
+            r._match_label === "Strong"
+              ? "match-strong"
+              : r._match_label === "Close"
+                ? "match-close"
+                : "match-loose";
+          matchCell = `<span class="match-pill ${cls}" title="${escapeHtml(
+            (r._match_reasons || []).join(", ")
+          )}">${escapeHtml(r._match_label)} ${fmt.format(r._match_score ?? 0)}</span>`;
+        } else if (showVinScore && r._vin_distance != null) {
+          matchCell = `<span class="match-pill match-close">~${Number(r._vin_distance).toFixed(0)}</span>`;
+        }
         return `<tr class="result-row" data-row="${payload}">
+          <td>${matchCell}</td>
           <td>${escapeHtml(niceSource(r.source))}</td>
           <td>${escapeHtml(r.make || "—")}</td>
           <td>${escapeHtml(r.model || "—")}</td>
@@ -846,7 +882,7 @@ export function initExplore(summary) {
   function openRow(row) {
     dialogTitle.textContent = `${niceSource(row.source)} · ${row.make || ""} ${row.model || ""}`.trim();
     const href = listingUrl(row);
-    const skip = new Set(["_vin_distance"]);
+    const skip = new Set(["_vin_distance", "_match_score", "_match_label", "_match_reasons"]);
     const entries = Object.entries(row).filter(
       ([k, v]) => !skip.has(k) && v != null && String(v).trim() !== ""
     );
@@ -862,7 +898,18 @@ export function initExplore(summary) {
            <a class="detail-url-text" href="${escapeHtml(href)}" target="_blank" rel="noopener">${escapeHtml(href)}</a>
          </p>`
       : `<p class="detail-url-bar muted">No listing URL on this row.</p>`;
-    dialogBody.innerHTML = `${openBtn}<dl class="row-dl">
+    const matchBlock =
+      row._match_label != null
+        ? `<p class="detail-match"><span class="match-pill ${
+            row._match_label === "Strong"
+              ? "match-strong"
+              : row._match_label === "Close"
+                ? "match-close"
+                : "match-loose"
+          }">${escapeHtml(row._match_label)} ${fmt.format(row._match_score ?? 0)}</span>
+          <span class="detail-match-reasons">${escapeHtml((row._match_reasons || []).join(" · "))}</span></p>`
+        : "";
+    dialogBody.innerHTML = `${openBtn}${matchBlock}<dl class="row-dl">
       ${entries
         .map(
           ([k, v]) => `<div><dt>${escapeHtml(k)}</dt><dd>${
@@ -909,7 +956,7 @@ export function initExplore(summary) {
     lastVinRanked = null;
     hideVinPanel();
     setTimeout(() => {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Filters cleared.</td></tr>`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="11">Filters cleared.</td></tr>`;
       resultMeta.textContent = "Filters reset — apply again to search.";
       pager.hidden = true;
     }, 0);
