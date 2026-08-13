@@ -48,8 +48,9 @@
         <div class="section-head">
           <h2>Explore individual listings</h2>
           <p>
-            Load the consolidated SQLite DB once, then search strings, set
-            numeric ranges, and open any row.
+            Load the consolidated SQLite DB once, then filter listings — or enter
+            a 17-character VIN to decode make/model/year/fuel and show similar
+            comps (same approach as <code>daq/vin_market.py</code>).
           </p>
         </div>
 
@@ -103,12 +104,34 @@
                 <span>Body type</span>
                 <div class="combo" data-combo="body_type"></div>
               </label>
+              <label class="field">
+                <span>VIN</span>
+                <input
+                  name="vin"
+                  type="search"
+                  spellcheck="false"
+                  autocomplete="off"
+                  placeholder="17-char VIN → decode comps"
+                />
+              </label>
+              <label class="field">
+                <span>Year ±</span>
+                <input
+                  name="year_tol"
+                  type="number"
+                  inputmode="numeric"
+                  min="0"
+                  max="10"
+                  value="1"
+                  title="Year tolerance for VIN decode comps"
+                />
+              </label>
               <label class="field wide">
-                <span>Title / location / VIN / Ad ID</span>
+                <span>Title / location / Ad ID</span>
                 <input
                   name="q"
                   type="search"
-                  placeholder="Search text across title, location, VIN, ad id"
+                  placeholder="Search text across title, location, ad id"
                 />
               </label>
             </div>
@@ -155,6 +178,14 @@
             </div>
           </form>
 
+          <div id="vin-decode-panel" class="vin-decode-panel" hidden>
+            <div class="vin-decode-head">
+              <h3>VIN decode → similar comps</h3>
+              <p id="vin-decode-summary" class="vin-decode-summary"></p>
+            </div>
+            <div id="vin-decode-stats" class="vin-decode-stats"></div>
+          </div>
+
           <div class="table-wrap">
             <table class="results" id="results-table">
               <thead>
@@ -165,13 +196,14 @@
                   <th>Year</th>
                   <th>Price</th>
                   <th>Km</th>
+                  <th>VIN</th>
                   <th>Fuel</th>
                   <th>Location</th>
                 </tr>
               </thead>
               <tbody id="results-body">
                 <tr class="empty-row">
-                  <td colspan="8">No query yet.</td>
+                  <td colspan="9">No query yet.</td>
                 </tr>
               </tbody>
             </table>

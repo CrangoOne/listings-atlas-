@@ -1,3 +1,11 @@
+import {
+  VIN_RE,
+  buildDecodedCompWhere,
+  decodeVinNhtsa,
+  rowMatchesFuel,
+  summarizePrices,
+} from "./vin_market.js";
+
 const PAGE_SIZE = 50;
 const IDB_NAME = "listings-atlas";
 const IDB_STORE = "files";
@@ -40,6 +48,91 @@ function debounce(fn, ms) {
     clearTimeout(t);
     t = setTimeout(() => fn(...args), ms);
   };
+}
+
+/** Strip to A-Z0-9 and uppercase for VIN comparison. */
+function normalizeVin(value) {
+  return String(value || "")
+    .toUpperCase()
+    .replace(/[^A-Z0-9]/g, "");
+}
+
+/** Common OCR / mistype confusions in VINs. */
+function confuseVin(value) {
+  return normalizeVin(value)
+    .replace(/[OQ]/g, "0")
+    .replace(/[IL]/g, "1")
+    .replace(/S/g, "5")
+    .replace(/B/g, "8")
+    .replace(/Z/g, "2");
+}
+
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  const row = new Array(b.length + 1);
+  for (let j = 0; j <= b.length; j++) row[j] = j;
+  for (let i = 1; i <= a.length; i++) {
+    let prev = i - 1;
+    row[0] = i;
+    for (let j = 1; j <= b.length; j++) {
+      const cur = row[j];
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      row[j] = Math.min(row[j] + 1, row[j - 1] + 1, prev + cost);
+      prev = cur;
+    }
+  }
+  return row[b.length];
+}
+
+/**
+ * Lower is better. 0 = substring / strong match.
+ * Uses sliding-window edit distance for near-full VINs and OCR lookalikes.
+ */
+function vinDistance(queryRaw, vinRaw) {
+  const q = normalizeVin(queryRaw);
+  const v = normalizeVin(vinRaw);
+  if (!q || !v) return Infinity;
+  if (v.includes(q) || (q.length >= 6 && q.includes(v))) return 0;
+
+  const qc = confuseVin(q);
+  const vc = confuseVin(v);
+  if (vc.includes(qc)) return 0.5;
+
+  let best = levenshtein(q, v);
+  best = Math.min(best, levenshtein(qc, vc));
+
+  // Compare query to windows of the stored VIN (handles partial + typos).
+  if (q.length >= 5 && v.length >= q.length) {
+    for (let i = 0; i <= v.length - q.length; i++) {
+      const slice = v.slice(i, i + q.length);
+      best = Math.min(best, levenshtein(q, slice));
+      best = Math.min(best, levenshtein(qc, confuseVin(slice)));
+      if (best === 0) break;
+    }
+  } else if (q.length >= 5 && q.length > v.length) {
+    for (let i = 0; i <= q.length - v.length; i++) {
+      best = Math.min(best, levenshtein(q.slice(i, i + v.length), v));
+    }
+  }
+
+  // Prefer matches on the vehicle serial (VIN tail).
+  const tailLen = Math.min(8, q.length);
+  if (tailLen >= 5) {
+    const qTail = q.slice(-tailLen);
+    const vTail = v.slice(-tailLen);
+    best = Math.min(best, levenshtein(qTail, vTail) + 0.25);
+  }
+  return best;
+}
+
+function vinDistanceThreshold(queryNorm) {
+  const n = queryNorm.length;
+  if (n <= 4) return 0; // short: substring only (via distance 0 / 0.5)
+  if (n <= 8) return 2;
+  if (n <= 12) return 3;
+  return Math.max(3, Math.floor(n * 0.15));
 }
 
 async function idbGet(key) {
@@ -251,11 +344,16 @@ export function initExplore(summary) {
   const dialog = document.getElementById("row-dialog");
   const dialogTitle = document.getElementById("row-dialog-title");
   const dialogBody = document.getElementById("row-dialog-body");
+  const vinPanel = document.getElementById("vin-decode-panel");
+  const vinSummary = document.getElementById("vin-decode-summary");
+  const vinStats = document.getElementById("vin-decode-stats");
 
   let db = null;
   let page = 0;
-  let lastWhere = { sql: "1=1", params: [] };
+  let lastWhere = { sql: "1=1", params: [], vinQuery: "", mode: "filter" };
   let lastCount = 0;
+  let lastVinRanked = null;
+  let lastDecoded = null;
 
   const combos = {
     source: createCombo(document.querySelector('[data-combo="source"]'), {
@@ -394,16 +492,42 @@ export function initExplore(summary) {
       params.push(`%${model}%`);
     }
 
+    // Partial VIN string similarity (when not a full 17-char decode).
+    const vinRaw = (form.vin?.value || "").trim();
+    const vinQuery = normalizeVin(vinRaw);
+    const looksFullVin = VIN_RE.test(vinQuery);
+    if (!looksFullVin && vinQuery.length >= 4) {
+      const vinExpr = `upper(REPLACE(REPLACE(REPLACE(COALESCE(vin,''),' ',''),'-',''),'.',''))`;
+      const vinConf = confuseVin(vinQuery);
+      const parts = [`${vinExpr} LIKE ?`, `${vinExpr} LIKE ?`];
+      params.push(`%${vinQuery}%`, `%${vinConf}%`);
+      if (vinQuery.length >= 6) {
+        parts.push(`${vinExpr} LIKE ?`);
+        params.push(`%${vinQuery.slice(-6)}%`);
+      }
+      if (vinQuery.length >= 8) {
+        parts.push(`${vinExpr} LIKE ?`);
+        params.push(`%${vinQuery.slice(3, 11)}%`);
+      }
+      if (vinQuery.length >= 10) {
+        parts.push(`${vinExpr} LIKE ?`);
+        params.push(`%${vinQuery.slice(0, 4)}%${vinQuery.slice(-4)}%`);
+      }
+      clauses.push(`(vin IS NOT NULL AND vin != '' AND vin != 'N/A' AND (${parts.join(" OR ")}))`);
+    } else if (!looksFullVin && vinRaw) {
+      clauses.push(`upper(COALESCE(vin,'')) LIKE ?`);
+      params.push(`%${vinRaw.toUpperCase()}%`);
+    }
+
     const q = form.q.value.trim();
     if (q) {
       clauses.push(`(
         lower(COALESCE(title,'')) LIKE lower(?)
         OR lower(COALESCE(location,'')) LIKE lower(?)
-        OR lower(COALESCE(vin,'')) LIKE lower(?)
         OR lower(COALESCE(ad_id,'')) LIKE lower(?)
       )`);
       const like = `%${q}%`;
-      params.push(like, like, like, like);
+      params.push(like, like, like);
     }
 
     const addRange = (col, minEl, maxEl) => {
@@ -419,20 +543,239 @@ export function initExplore(summary) {
       }
     };
     addRange("price_eur", form.price_min, form.price_max);
-    addRange("year_int", form.year_min, form.year_max);
+    // For full-VIN decode comps, year window comes from decode (± year_tol).
+    if (!looksFullVin) {
+      addRange("year_int", form.year_min, form.year_max);
+    }
     addRange("mileage_km", form.km_min, form.km_max);
     addRange("power_ps", form.ps_min, form.ps_max);
 
     return {
       sql: clauses.length ? clauses.join(" AND ") : "1=1",
       params,
+      vinQuery: !looksFullVin && vinQuery.length >= 4 ? vinQuery : "",
+      fullVin: looksFullVin ? vinQuery : "",
+      mode: looksFullVin ? "decode" : vinQuery.length >= 4 ? "vin-similar" : "filter",
     };
   }
 
-  function runQuery(resetPage = true) {
+  function hideVinPanel() {
+    if (vinPanel) vinPanel.hidden = true;
+    lastDecoded = null;
+  }
+
+  function showVinPanel(decoded, stats, { fuelApplied, comps }) {
+    if (!vinPanel) return;
+    vinPanel.hidden = false;
+    const bits = [
+      decoded.make,
+      decoded.model,
+      decoded.year != null ? `(${decoded.year})` : "",
+      decoded.fuel || "",
+      decoded.body || "",
+    ]
+      .filter(Boolean)
+      .join(" ");
+    vinSummary.textContent = `${decoded.vin} → ${bits}${
+      decoded.error_text ? ` · note: ${decoded.error_text}` : ""
+    }`;
+    const euroOr = (v) => (v == null ? "—" : euro.format(v));
+    vinStats.innerHTML = `
+      <div class="vin-stat"><span>Comps</span><strong>${fmt.format(comps)}</strong></div>
+      <div class="vin-stat"><span>Median €</span><strong>${euroOr(stats.median)}</strong></div>
+      <div class="vin-stat"><span>p25–p75</span><strong>${euroOr(stats.p25)} – ${euroOr(stats.p75)}</strong></div>
+      <div class="vin-stat"><span>Min–Max</span><strong>${euroOr(stats.min)} – ${euroOr(stats.max)}</strong></div>
+      <div class="vin-stat"><span>Fuel filter</span><strong>${fuelApplied ? "on" : "relaxed"}</strong></div>
+    `;
+  }
+
+  async function runDecodedVinQuery(fullVin, resetPage) {
+    // Pagination reuse: keep decoded comps without re-calling NHTSA.
+    if (!resetPage && lastDecoded && lastVinRanked && lastWhere.fullVin === fullVin) {
+      lastCount = lastVinRanked.length;
+      const offset = page * PAGE_SIZE;
+      const slice = lastVinRanked.slice(offset, offset + PAGE_SIZE).map((x) => x.row);
+      renderRows(slice);
+      const from = lastCount ? offset + 1 : 0;
+      const to = Math.min(offset + PAGE_SIZE, lastCount);
+      resultMeta.textContent = `${fmt.format(lastCount)} comps for decoded ${lastDecoded.make} ${lastDecoded.model} · showing ${from}–${to}`;
+      pager.hidden = lastCount <= PAGE_SIZE;
+      pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
+      document.getElementById("page-prev").disabled = page <= 0;
+      document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+      return;
+    }
+
+    resultMeta.textContent = "Decoding VIN via NHTSA…";
+    const yearTol = Math.max(0, Number(form.year_tol?.value ?? 1) || 0);
+    let decoded;
+    try {
+      decoded = await decodeVinNhtsa(fullVin);
+    } catch (err) {
+      hideVinPanel();
+      resultMeta.textContent = `VIN decode failed: ${err.message || err}`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="9">Could not decode VIN.</td></tr>`;
+      pager.hidden = true;
+      return;
+    }
+    lastDecoded = decoded;
+
+    // Prefill visible filters so the user sees what was queried.
+    if (form.model) form.model.value = decoded.model || "";
+    if (decoded.year != null) {
+      form.year_min.value = String(decoded.year - yearTol);
+      form.year_max.value = String(decoded.year + yearTol);
+    }
+
+    const comp = buildDecodedCompWhere(decoded, { yearTol, preferFuel: true });
+
+    // Decoded make/model/year plus optional source/price/mileage filters.
+    const extra = [];
+    const extraParams = [];
+    const sources = combos.source.getValues();
+    if (sources.length) {
+      extra.push(`source IN (${sources.map(() => "?").join(",")})`);
+      extraParams.push(...sources);
+    }
+    const kmMin = form.km_min.value.trim();
+    const kmMax = form.km_max.value.trim();
+    if (kmMin !== "") {
+      extra.push("mileage_km >= ?");
+      extraParams.push(Number(kmMin));
+    }
+    if (kmMax !== "") {
+      extra.push("mileage_km <= ?");
+      extraParams.push(Number(kmMax));
+    }
+    const priceMin = form.price_min.value.trim();
+    const priceMax = form.price_max.value.trim();
+    if (priceMin !== "") {
+      extra.push("price_eur >= ?");
+      extraParams.push(Number(priceMin));
+    }
+    if (priceMax !== "") {
+      extra.push("price_eur <= ?");
+      extraParams.push(Number(priceMax));
+    }
+
+    const sql = [comp.sql, ...extra].filter(Boolean).join(" AND ");
+    const params = [...comp.params, ...extraParams];
+    lastWhere = { sql, params, vinQuery: "", fullVin, mode: "decode" };
+
+    const selectSql = `SELECT source, ad_id, make, model, year, year_int, price, price_eur,
+              mileage, mileage_km, power, power_ps, fuel_type, transmission,
+              body_type, location, vin, url, title, scraped_at, updated
+       FROM listings
+       WHERE ${sql}`;
+
+    const stmt = db.prepare(`${selectSql} LIMIT 5000`);
+    if (params.length) stmt.bind(params);
+    const candidates = [];
+    while (stmt.step()) candidates.push(stmt.getAsObject());
+    stmt.free();
+
+    let comps = candidates;
+    let fuelApplied = false;
+    if (comp.fuelNeedles.length) {
+      const withFuel = candidates.filter((r) => rowMatchesFuel(r, comp.fuelNeedles));
+      if (withFuel.length >= Math.min(5, candidates.length) && withFuel.length > 0) {
+        comps = withFuel;
+        fuelApplied = true;
+      }
+    }
+
+    comps = comps.slice().sort((a, b) => {
+      const pa = a.price_eur;
+      const pb = b.price_eur;
+      if (pa == null && pb == null) return 0;
+      if (pa == null) return 1;
+      if (pb == null) return -1;
+      if (pa !== pb) return pa - pb;
+      return (a.mileage_km ?? 1e12) - (b.mileage_km ?? 1e12);
+    });
+
+    lastVinRanked = comps.map((row) => ({ row, dist: 0 }));
+    const stats = summarizePrices(comps);
+    showVinPanel(decoded, stats, { fuelApplied, comps: comps.length });
+
+    lastCount = lastVinRanked.length;
+    const offset = page * PAGE_SIZE;
+    const slice = lastVinRanked.slice(offset, offset + PAGE_SIZE).map((x) => x.row);
+    renderRows(slice);
+    const from = lastCount ? offset + 1 : 0;
+    const to = Math.min(offset + PAGE_SIZE, lastCount);
+    resultMeta.textContent = `${fmt.format(lastCount)} comps for decoded ${decoded.make} ${decoded.model} · showing ${from}–${to}`;
+    pager.hidden = lastCount <= PAGE_SIZE;
+    pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
+    document.getElementById("page-prev").disabled = page <= 0;
+    document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+  }
+
+  async function runQuery(resetPage = true) {
     if (!db) return;
-    if (resetPage) page = 0;
-    lastWhere = buildWhere();
+    if (resetPage) {
+      page = 0;
+      lastVinRanked = null;
+    }
+
+    const draft = buildWhere();
+    if (draft.mode === "decode" && draft.fullVin) {
+      await runDecodedVinQuery(draft.fullVin, resetPage);
+      return;
+    }
+
+    hideVinPanel();
+    lastWhere = draft;
+
+    const selectSql = `SELECT source, ad_id, make, model, year, year_int, price, price_eur,
+              mileage, mileage_km, power, power_ps, fuel_type, transmission,
+              body_type, location, vin, url, title, scraped_at, updated
+       FROM listings
+       WHERE ${lastWhere.sql}`;
+
+    // Partial VIN similar-match path: pull candidates, rank by edit distance.
+    if (lastWhere.vinQuery) {
+      if (!lastVinRanked) {
+        const stmt = db.prepare(`${selectSql} LIMIT 3000`);
+        if (lastWhere.params.length) stmt.bind(lastWhere.params);
+        const candidates = [];
+        while (stmt.step()) candidates.push(stmt.getAsObject());
+        stmt.free();
+
+        const threshold = vinDistanceThreshold(lastWhere.vinQuery);
+        lastVinRanked = candidates
+          .map((row) => {
+            const dist = vinDistance(lastWhere.vinQuery, row.vin);
+            return { row, dist };
+          })
+          .filter((x) => x.dist <= threshold)
+          .sort((a, b) => {
+            if (a.dist !== b.dist) return a.dist - b.dist;
+            const pa = a.row.price_eur;
+            const pb = b.row.price_eur;
+            if (pa == null && pb == null) return 0;
+            if (pa == null) return 1;
+            if (pb == null) return -1;
+            return pa - pb;
+          });
+      }
+
+      lastCount = lastVinRanked.length;
+      const offset = page * PAGE_SIZE;
+      const slice = lastVinRanked.slice(offset, offset + PAGE_SIZE).map((x) => ({
+        ...x.row,
+        _vin_distance: x.dist,
+      }));
+      renderRows(slice, { showVinScore: true });
+      const from = lastCount ? offset + 1 : 0;
+      const to = Math.min(offset + PAGE_SIZE, lastCount);
+      resultMeta.textContent = `${fmt.format(lastCount)} similar VIN string matches · showing ${from}–${to}`;
+      pager.hidden = lastCount <= PAGE_SIZE;
+      pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
+      document.getElementById("page-prev").disabled = page <= 0;
+      document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+      return;
+    }
 
     const countStmt = db.prepare(`SELECT COUNT(*) AS c FROM listings WHERE ${lastWhere.sql}`);
     if (lastWhere.params.length) countStmt.bind(lastWhere.params);
@@ -441,11 +784,7 @@ export function initExplore(summary) {
 
     const offset = page * PAGE_SIZE;
     const stmt = db.prepare(
-      `SELECT source, ad_id, make, model, year, year_int, price, price_eur,
-              mileage, mileage_km, power, power_ps, fuel_type, transmission,
-              body_type, location, vin, url, title, scraped_at, updated
-       FROM listings
-       WHERE ${lastWhere.sql}
+      `${selectSql}
        ORDER BY price_eur IS NULL, price_eur ASC, make, model
        LIMIT ${PAGE_SIZE} OFFSET ${offset}`
     );
@@ -465,14 +804,19 @@ export function initExplore(summary) {
     document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
   }
 
-  function renderRows(rows) {
+  function renderRows(rows, { showVinScore = false } = {}) {
     if (!rows.length) {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="8">No rows match these filters.</td></tr>`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="9">No rows match these filters.</td></tr>`;
       return;
     }
     tbody.innerHTML = rows
-      .map((r, idx) => {
+      .map((r) => {
         const payload = encodeURIComponent(JSON.stringify(r));
+        const vinText = r.vin || "—";
+        const vinCell =
+          showVinScore && r._vin_distance != null && r._vin_distance > 0
+            ? `${escapeHtml(vinText)} <span class="vin-score">~${Number(r._vin_distance).toFixed(0)}</span>`
+            : escapeHtml(vinText);
         return `<tr class="result-row" data-row="${payload}">
           <td>${escapeHtml(niceSource(r.source))}</td>
           <td>${escapeHtml(r.make || "—")}</td>
@@ -480,6 +824,7 @@ export function initExplore(summary) {
           <td>${escapeHtml(r.year_int || r.year || "—")}</td>
           <td>${r.price_eur != null ? euro.format(r.price_eur) : escapeHtml(r.price || "—")}</td>
           <td>${r.mileage_km != null ? fmt.format(r.mileage_km) : escapeHtml(r.mileage || "—")}</td>
+          <td class="vin-cell">${vinCell}</td>
           <td>${escapeHtml(r.fuel_type || "—")}</td>
           <td>${escapeHtml(r.location || "—")}</td>
         </tr>`;
@@ -526,13 +871,18 @@ export function initExplore(summary) {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    runQuery(true);
+    runQuery(true).catch((err) => {
+      console.error(err);
+      resultMeta.textContent = `Query failed: ${err.message || err}`;
+    });
   });
 
   form.addEventListener("reset", () => {
     Object.values(combos).forEach((c) => c.reset());
+    lastVinRanked = null;
+    hideVinPanel();
     setTimeout(() => {
-      tbody.innerHTML = `<tr class="empty-row"><td colspan="8">Filters cleared.</td></tr>`;
+      tbody.innerHTML = `<tr class="empty-row"><td colspan="9">Filters cleared.</td></tr>`;
       resultMeta.textContent = "Filters reset — apply again to search.";
       pager.hidden = true;
     }, 0);
@@ -541,13 +891,13 @@ export function initExplore(summary) {
   document.getElementById("page-prev").addEventListener("click", () => {
     if (page > 0) {
       page -= 1;
-      runQuery(false);
+      runQuery(false).catch(console.error);
     }
   });
   document.getElementById("page-next").addEventListener("click", () => {
     if ((page + 1) * PAGE_SIZE < lastCount) {
       page += 1;
-      runQuery(false);
+      runQuery(false).catch(console.error);
     }
   });
 

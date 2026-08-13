@@ -807,3 +807,69 @@ body {
 .row-dl a {
   color: var(--accent-deep);
 }
+
+.vin-cell {
+  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, monospace;
+  font-size: 0.84rem;
+}
+
+.vin-score {
+  margin-left: 0.25rem;
+  color: var(--warn);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.vin-decode-panel {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.vin-decode-head h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.vin-decode-summary {
+  margin: 0.4rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.vin-decode-stats {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+@media (max-width: 800px) {
+  .vin-decode-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.vin-stat {
+  padding-top: 0.35rem;
+  border-top: 2px solid var(--accent);
+}
+
+.vin-stat span {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  font-weight: 650;
+}
+
+.vin-stat strong {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
