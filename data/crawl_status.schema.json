@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "crawl_status.schema.json",
+  "title": "DAQ crawl status board",
+  "type": "object",
+  "required": ["runs"],
+  "properties": {
+    "updated_at": { "type": ["string", "null"], "description": "ISO-8601 UTC" },
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["job_id", "source", "status"],
+        "properties": {
+          "job_id": { "type": "string" },
+          "source": {
+            "type": "string",
+            "enum": ["willhaben", "autoscout", "kleinanzeigen", "coches", "wko"]
+          },
+          "worker_id": { "type": "string" },
+          "branch": { "type": "string" },
+          "makes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Brand/make slugs owned by this worker"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["queued", "running", "finished", "failed", "cancelled"]
+          },
+          "started_at": { "type": ["string", "null"] },
+          "finished_at": { "type": ["string", "null"] },
+          "rows_added": { "type": ["integer", "null"] },
+          "rows_total": { "type": ["integer", "null"] },
+          "agent_url": { "type": ["string", "null"] },
+          "pr_url": { "type": ["string", "null"] },
+          "notes": { "type": ["string", "null"] }
+        }
+      }
+    }
+  }
+}

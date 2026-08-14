@@ -1,0 +1,35 @@
+{
+  "updated_at": "2026-08-14T18:00:00Z",
+  "runs": [
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-bmw",
+      "branch": "cursor/daq-autoscout-by-brand-bmw-1a84",
+      "makes": ["bmw"],
+      "status": "queued",
+      "started_at": null,
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "notes": "Example row — replace when real workers start"
+    },
+    {
+      "job_id": "ka_shard",
+      "source": "kleinanzeigen",
+      "worker_id": "ka_shard-w1",
+      "branch": "cursor/daq-ka-shard-w1-1a84",
+      "makes": ["bmw", "opel", "toyota"],
+      "status": "finished",
+      "started_at": "2026-08-13T10:00:00Z",
+      "finished_at": "2026-08-13T14:22:00Z",
+      "rows_added": 1204,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "notes": "Example finished shard"
+    }
+  ]
+}

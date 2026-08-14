@@ -1,4 +1,5 @@
 import { initExplore } from "./explore.js";
+import { initCrawls } from "./crawls.js";
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
@@ -167,6 +168,7 @@ async function main() {
   meta.textContent = `Summary generated ${data.generated_at} from ${data.db_file} · ${fmt.format(data.total)} listings`;
 
   initExplore(data);
+  initCrawls();
 }
 
 main().catch((err) => {

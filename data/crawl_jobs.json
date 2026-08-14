@@ -1,0 +1,75 @@
+{
+  "generated_from": "daq/jobs/catalog.yaml",
+  "jobs": [
+    {
+      "id": "willhaben_direct",
+      "source": "willhaben",
+      "summary": "Willhaben AT car listings (direct Chrome TLS / __NEXT_DATA__)",
+      "workers": "1",
+      "duration_default": "3600s (0 = until exhausted)"
+    },
+    {
+      "id": "willhaben_1h",
+      "source": "willhaben",
+      "summary": "Willhaben direct crawl capped at 1 hour",
+      "workers": "1",
+      "duration_default": "3600s"
+    },
+    {
+      "id": "autoscout_collect",
+      "source": "autoscout",
+      "summary": "AutoScout24.at facet crawl — single process until exhausted",
+      "workers": "1",
+      "duration_default": "0 (until exhausted)"
+    },
+    {
+      "id": "autoscout_by_brand",
+      "source": "autoscout",
+      "summary": "One AutoScout cloud worker per brand — full scrape until exhausted",
+      "workers": "one per brand",
+      "duration_default": "0 (until exhausted)"
+    },
+    {
+      "id": "autoscout_shard",
+      "source": "autoscout",
+      "summary": "Parallel AutoScout workers — splits brands across N agents",
+      "workers": "param (default 5)",
+      "duration_default": "0 (until exhausted)"
+    },
+    {
+      "id": "coches_collect",
+      "source": "coches",
+      "summary": "coches.net Spain facet crawl until exhausted",
+      "workers": "1",
+      "duration_default": "0 (until exhausted)"
+    },
+    {
+      "id": "coches_1h",
+      "source": "coches",
+      "summary": "coches.net incremental 1h single-worker crawl",
+      "workers": "1",
+      "duration_default": "3600s"
+    },
+    {
+      "id": "ka_all",
+      "source": "kleinanzeigen",
+      "summary": "Kleinanzeigen SERP+enrich for all makes in one process",
+      "workers": "1",
+      "duration_default": "none"
+    },
+    {
+      "id": "ka_shard",
+      "source": "kleinanzeigen",
+      "summary": "Parallel Kleinanzeigen workers — splits makes across N agents",
+      "workers": "param (default 5)",
+      "duration_default": "none"
+    },
+    {
+      "id": "ka_pack5",
+      "source": "kleinanzeigen",
+      "summary": "Preset 5-worker Kleinanzeigen pack",
+      "workers": "5",
+      "duration_default": "none"
+    }
+  ]
+}

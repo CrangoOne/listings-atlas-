@@ -23,6 +23,7 @@
       <a class="brand-mark" href="#top">Listings Atlas</a>
       <nav>
         <a href="#explore">Explore</a>
+        <a href="#crawls">Crawls</a>
         <a href="#markets">Markets</a>
         <a href="#prices">Prices</a>
         <a href="#makes">Makes</a>
@@ -40,7 +41,7 @@
         </p>
         <div class="cta-row">
           <a class="btn primary" href="#explore">Explore listings</a>
-          <a class="btn ghost" href="#markets">Market overview</a>
+          <a class="btn ghost" href="#crawls">Monitor crawls</a>
         </div>
       </section>
 
@@ -216,6 +217,52 @@
             <span id="page-label">Page 1</span>
             <button type="button" class="btn ghost" id="page-next">Next</button>
           </div>
+        </div>
+      </section>
+
+      <section id="crawls" class="section crawls">
+        <div class="section-head">
+          <h2>Crawl monitor</h2>
+          <p>
+            Live board for DAQ workers. Launch with a catalog job id in Cursor
+            chat (e.g. <code>autoscout_by_brand</code>, <code>ka_shard</code>),
+            then agents append rows to <code>docs/data/crawl_status.json</code>.
+          </p>
+        </div>
+
+        <div class="kpi-row" id="crawl-kpis"></div>
+        <p class="crawl-board-meta" id="crawl-board-meta">Loading crawl status…</p>
+
+        <div class="table-wrap crawl-table-wrap">
+          <table class="results crawl-table" id="crawl-runs-table">
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Job / worker</th>
+                <th>Source</th>
+                <th>Makes</th>
+                <th>Started</th>
+                <th>Finished</th>
+                <th>Rows</th>
+                <th>Links</th>
+              </tr>
+            </thead>
+            <tbody id="crawl-runs-body"></tbody>
+          </table>
+        </div>
+        <p class="crawl-empty" id="crawl-empty" hidden>
+          No crawls recorded yet. After your next start, workers update this
+          board so you can watch progress here.
+        </p>
+
+        <div class="crawl-catalog">
+          <div class="chart-label">Catalog jobs you can launch</div>
+          <div id="crawl-jobs" class="crawl-jobs"></div>
+          <p class="crawl-hint">
+            Full scrape without a timeout: omit <code>--duration</code> or set
+            it to <code>0</code>. Prefer <code>autoscout_by_brand</code> for one
+            worker per AutoScout brand.
+          </p>
         </div>
       </section>
 
