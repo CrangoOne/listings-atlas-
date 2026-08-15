@@ -11,18 +11,19 @@ import {
 const PAGE_SIZE = 50;
 const IDB_NAME = "listings-atlas";
 const IDB_STORE = "files";
-const IDB_KEY = "20261108_all_car_listings.db";
+const IDB_KEY = "20260815_all_car_listings.db";
 
 const DEFAULT_DB_URLS = [
   // Prefer the branch/main LFS media endpoint for public repos.
-  "https://media.githubusercontent.com/media/CrangoOne/Cursor/main/daq/merged/20261108_all_car_listings.db",
-  "https://media.githubusercontent.com/media/CrangoOne/Cursor/cursor/merged-car-listings-1a84/daq/merged/20261108_all_car_listings.db",
+  "https://media.githubusercontent.com/media/CrangoOne/Cursor/main/daq/merged/20260815_all_car_listings.db",
+  "https://media.githubusercontent.com/media/CrangoOne/Cursor/cursor/atlas-sources-tab-d442/daq/merged/20260815_all_car_listings.db",
 ];
 
 const SOURCE_LABEL = {
   willhaben: "Willhaben",
   autoscout: "AutoScout24",
   kleinanzeigen: "Kleinanzeigen",
+  coches: "coches.net",
 };
 
 const fmt = new Intl.NumberFormat("en-US");
