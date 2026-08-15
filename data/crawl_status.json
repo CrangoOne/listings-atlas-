@@ -1,35 +1,739 @@
 {
-  "updated_at": "2026-08-14T18:00:00Z",
+  "updated_at": "2026-08-15T20:05:36Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
       "source": "autoscout",
       "worker_id": "autoscout_by_brand-bmw",
       "branch": "cursor/daq-autoscout-by-brand-bmw-1a84",
-      "makes": ["bmw"],
-      "status": "queued",
-      "started_at": null,
-      "finished_at": null,
-      "rows_added": null,
-      "rows_total": null,
-      "agent_url": null,
+      "makes": [
+        "bmw"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T22:59:00Z",
+      "finished_at": "2026-08-14T23:06:14Z",
+      "rows_added": 2025,
+      "rows_total": 2025,
+      "agent_url": "https://cursor.com/agents/bc-e225a080-d9e8-59ac-a20e-e3c91af1b690",
       "pr_url": null,
-      "notes": "Example row — replace when real workers start"
+      "notes": "Finished: +2025 BMW rows, 23/23 facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-volkswagen",
+      "branch": "cursor/daq-autoscout-by-brand-volkswagen-1a84",
+      "makes": [
+        "volkswagen"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T23:08:01Z",
+      "finished_at": "2026-08-14T23:20:53Z",
+      "rows_added": 3112,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-fde179d7-b579-5b10-956a-7b231467d7b4",
+      "pr_url": null,
+      "notes": "Finished: +3112 VW rows, 33/33 facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-audi",
+      "branch": "cursor/daq-autoscout-by-brand-audi-1a84",
+      "makes": [
+        "audi"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T23:21:04Z",
+      "finished_at": "2026-08-14T23:27:51Z",
+      "rows_added": 1810,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-e4db4137-cd0b-5ecc-8408-e1fe086cd55e",
+      "pr_url": null,
+      "notes": "Finished: +1810 Audi rows, 23/23 facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-mercedes-benz",
+      "branch": "cursor/daq-autoscout-by-brand-mercedes-benz-1a84",
+      "makes": [
+        "mercedes-benz"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T23:28:02Z",
+      "finished_at": "2026-08-14T23:35:06Z",
+      "rows_added": 1602,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-74e68ba0-cfdb-57c0-ab78-4f3733792390",
+      "pr_url": null,
+      "notes": "Finished: +1602 mercedes-benz rows, 23/23 facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-skoda",
+      "branch": "cursor/daq-autoscout-by-brand-skoda-1a84",
+      "makes": [
+        "skoda"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T23:35:18Z",
+      "finished_at": "2026-08-14T23:42:01Z",
+      "rows_added": 1612,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-1a15cd14-b706-5e24-aef1-30792af09d36",
+      "pr_url": null,
+      "notes": "Finished: +1612 Skoda rows, 23/23 facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-ford",
+      "branch": "cursor/daq-autoscout-by-brand-ford-1a84",
+      "makes": [
+        "ford"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T23:42:12Z",
+      "finished_at": "2026-08-14T23:50:14Z",
+      "rows_added": 1377,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-e59c2b45-ca9e-592b-9921-1e77477ff42a",
+      "pr_url": null,
+      "notes": "Finished: +1377 Ford rows, 23/23 facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-opel",
+      "branch": "cursor/daq-autoscout-by-brand-opel-1a84",
+      "makes": [
+        "opel"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T23:50:26Z",
+      "finished_at": "2026-08-14T23:56:49Z",
+      "rows_added": 796,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-bbbd1ea0-0a1e-5197-b8ee-0a1c6cf1996e",
+      "pr_url": null,
+      "notes": "Finished: +796 Opel rows, 23/23 facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-renault",
+      "branch": "cursor/daq-autoscout-by-brand-renault-1a84",
+      "makes": [
+        "renault"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T23:57:00Z",
+      "finished_at": "2026-08-14T23:59:24Z",
+      "rows_added": 668,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-7155e59c-b147-5f6c-b858-a0257de38b4c",
+      "pr_url": null,
+      "notes": "Finished: +668 Renault rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-toyota",
+      "branch": "cursor/daq-autoscout-by-brand-toyota-1a84",
+      "makes": [
+        "toyota"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T23:59:38Z",
+      "finished_at": "2026-08-15T00:02:25Z",
+      "rows_added": 508,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-691e33bf-6098-543b-adae-9b90c188d26e",
+      "pr_url": null,
+      "notes": "Finished: +508 Toyota rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-hyundai",
+      "branch": "cursor/daq-autoscout-by-brand-hyundai-1a84",
+      "makes": [
+        "hyundai"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:02:38Z",
+      "finished_at": "2026-08-15T00:08:23Z",
+      "rows_added": 843,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-149f2f5c-e584-5cca-9c2b-c012f17af301",
+      "pr_url": null,
+      "notes": "Finished: +843 Hyundai rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-seat",
+      "branch": "cursor/daq-autoscout-by-brand-seat-1a84",
+      "makes": [
+        "seat"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:08:35Z",
+      "finished_at": "2026-08-15T00:12:18Z",
+      "rows_added": 821,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-29e7d8d3-4d8e-5ffc-9dd1-203e003a2216",
+      "pr_url": null,
+      "notes": "Finished: +821 Seat rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-peugeot",
+      "branch": "cursor/daq-autoscout-by-brand-peugeot-1a84",
+      "makes": [
+        "peugeot"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:12:29Z",
+      "finished_at": "2026-08-15T00:16:23Z",
+      "rows_added": 703,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-60836964-cb34-503b-9af2-c9768b6986dd",
+      "pr_url": null,
+      "notes": "Finished: +703 Peugeot rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-mazda",
+      "branch": "cursor/daq-autoscout-by-brand-mazda-1a84",
+      "makes": [
+        "mazda"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:16:34Z",
+      "finished_at": "2026-08-15T00:20:01Z",
+      "rows_added": 378,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-bb6ef779-6523-5825-ae6c-68dd6c698fd2",
+      "pr_url": null,
+      "notes": "Finished: +378 Mazda rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-volvo",
+      "branch": "cursor/daq-autoscout-by-brand-volvo-1a84",
+      "makes": [
+        "volvo"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:20:15Z",
+      "finished_at": "2026-08-15T00:22:16Z",
+      "rows_added": 248,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-5062b0f5-5f6f-5252-b03d-8a035219c39f",
+      "pr_url": null,
+      "notes": "Finished: +248 Volvo rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-porsche",
+      "branch": "cursor/daq-autoscout-by-brand-porsche-1a84",
+      "makes": [
+        "porsche"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:21:03Z",
+      "finished_at": "2026-08-15T00:23:58Z",
+      "rows_added": 228,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-ea010eb1-71f0-58c1-8f13-5334e9f11316",
+      "pr_url": null,
+      "notes": "Finished: +228 Porsche rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-tesla",
+      "branch": "cursor/daq-autoscout-by-brand-tesla-1a84",
+      "makes": [
+        "tesla"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:22:30Z",
+      "finished_at": "2026-08-15T00:25:06Z",
+      "rows_added": 80,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-f79e378c-3ef4-5d1e-91cf-79d4122fd07e",
+      "pr_url": null,
+      "notes": "Finished: +80 Tesla rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-kia",
+      "branch": "cursor/daq-autoscout-by-brand-kia-1a84",
+      "makes": [
+        "kia"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:24:12Z",
+      "finished_at": "2026-08-15T00:26:31Z",
+      "rows_added": 517,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-dbeb3081-e87b-54f1-b2b3-0afaa3ff35ba",
+      "pr_url": null,
+      "notes": "Finished: +517 Kia rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-cupra",
+      "branch": "cursor/daq-autoscout-by-brand-cupra-1a84",
+      "makes": [
+        "cupra"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:25:19Z",
+      "finished_at": "2026-08-15T00:28:01Z",
+      "rows_added": 321,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-7d8b9d9f-8658-577d-9602-ca2f5a267890",
+      "pr_url": null,
+      "notes": "Finished: +321 Cupra rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-mini",
+      "branch": "cursor/daq-autoscout-by-brand-mini-1a84",
+      "makes": [
+        "mini"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:26:47Z",
+      "finished_at": "2026-08-15T00:27:23Z",
+      "rows_added": 163,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-48c4ca11-b6e8-538a-ad9e-3598032287b5",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/70",
+      "notes": "Finished: +163 MINI rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-fiat",
+      "branch": "cursor/daq-autoscout-by-brand-fiat-1a84",
+      "makes": [
+        "fiat"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:28:13Z",
+      "finished_at": "2026-08-15T00:30:54Z",
+      "rows_added": 561,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-cd1e0938-fb70-5c42-96b5-ef0ef02c1a04",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/71",
+      "notes": "Finished: +561 Fiat rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-dacia",
+      "branch": "cursor/daq-autoscout-by-brand-dacia-1a84",
+      "makes": [
+        "dacia"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:29:47Z",
+      "finished_at": "2026-08-15T00:32:30Z",
+      "rows_added": 337,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-0de0ac55-85c9-5fc0-be00-5c2f0240eceb",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/72",
+      "notes": "Finished: +337 Dacia rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-citroen",
+      "branch": "cursor/daq-autoscout-by-brand-citroen-1a84",
+      "makes": [
+        "citroen"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:30:54Z",
+      "finished_at": "2026-08-15T00:33:32Z",
+      "rows_added": 483,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-3d4f5799-7167-5a23-8480-bd48bdd1981b",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/73",
+      "notes": "Finished: +483 Citroen rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-nissan",
+      "branch": "cursor/daq-autoscout-by-brand-nissan-1a84",
+      "makes": [
+        "nissan"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:32:30Z",
+      "finished_at": "2026-08-15T00:35:16Z",
+      "rows_added": 264,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-b58e6620-881c-550f-9978-a9ca7ea432a1",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/74",
+      "notes": "Finished: +264 Nissan rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-suzuki",
+      "branch": "cursor/daq-autoscout-by-brand-suzuki-1a84",
+      "makes": [
+        "suzuki"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:33:32Z",
+      "finished_at": "2026-08-15T00:36:24Z",
+      "rows_added": 247,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-9f91dc9f-1696-5af2-a81f-c34976d57e07",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/75",
+      "notes": "Finished: +247 Suzuki rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-mitsubishi",
+      "branch": "cursor/daq-autoscout-by-brand-mitsubishi-1a84",
+      "makes": [
+        "mitsubishi"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:35:16Z",
+      "finished_at": "2026-08-15T00:37:28Z",
+      "rows_added": 97,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-7ae106c2-726f-5e70-906f-c2885f4fb8f7",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/76",
+      "notes": "Finished: +97 Mitsubishi rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-jeep",
+      "branch": "cursor/daq-autoscout-by-brand-jeep-1a84",
+      "makes": [
+        "jeep"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:36:24Z",
+      "finished_at": "2026-08-15T00:41:20Z",
+      "rows_added": 153,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-8b733444-1bef-5f8b-b782-380eef18af27",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/77",
+      "notes": "Finished: +153 Jeep rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-land-rover",
+      "branch": "cursor/daq-autoscout-by-brand-land-rover-1a84",
+      "makes": [
+        "land-rover"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:37:28Z",
+      "finished_at": "2026-08-15T00:42:26Z",
+      "rows_added": 167,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-95435f58-b8cc-5f85-b391-bd59508cc943",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/78",
+      "notes": "Finished: +167 Land Rover rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-alfa-romeo",
+      "branch": "cursor/daq-autoscout-by-brand-alfa-romeo-1a84",
+      "makes": [
+        "alfa-romeo"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:41:20Z",
+      "finished_at": "2026-08-15T00:44:10Z",
+      "rows_added": 116,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-412ef9f4-a957-5fa0-98bb-7e275f94595a",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/79",
+      "notes": "Finished: +116 Alfa Romeo rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-honda",
+      "branch": "cursor/daq-autoscout-by-brand-honda-1a84",
+      "makes": [
+        "honda"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T00:42:26Z",
+      "finished_at": "2026-08-15T12:25:07Z",
+      "rows_added": 69,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-6c970ec6-43db-5fe4-862e-95179bc3ade6",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/81",
+      "notes": "Finished: +69 Honda rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-mg",
+      "branch": "cursor/daq-autoscout-by-brand-mg-1a84",
+      "makes": [
+        "mg"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T12:23:54Z",
+      "finished_at": "2026-08-15T12:24:15Z",
+      "rows_added": 300,
+      "rows_total": 300,
+      "agent_url": "https://cursor.com/agents/bc-6aac384d-0207-5362-afff-aa7ae59f9b10",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/83",
+      "notes": "Finished: +300 MG rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-smart",
+      "branch": "cursor/daq-autoscout-by-brand-smart-1a84",
+      "makes": [
+        "smart"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T12:25:07Z",
+      "finished_at": "2026-08-15T12:29:18Z",
+      "rows_added": 33,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-c5517fdb-ad2d-5470-a734-91554b14357e",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/85",
+      "notes": "Finished: +33 Smart rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-subaru",
+      "branch": "cursor/daq-autoscout-by-brand-subaru-1a84",
+      "makes": [
+        "subaru"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T12:25:07Z",
+      "finished_at": "2026-08-15T12:29:18Z",
+      "rows_added": 22,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-e9e8e7a8-d4fe-5871-9c17-2e9b7f498d50",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/84",
+      "notes": "Finished: +22 Subaru rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-lexus",
+      "branch": "cursor/daq-autoscout-by-brand-lexus-1a84",
+      "makes": [
+        "lexus"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T12:26:26Z",
+      "finished_at": "2026-08-15T12:30:53Z",
+      "rows_added": 12,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-30060322-285e-5dd3-a283-31f29fe057b9",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/86",
+      "notes": "Finished: +12 Lexus rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-jaguar",
+      "branch": "cursor/daq-autoscout-by-brand-jaguar-1a84",
+      "makes": [
+        "jaguar"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T12:29:18Z",
+      "finished_at": "2026-08-15T12:34:16Z",
+      "rows_added": 67,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-91b5c4d9-6f9f-510c-85f9-c8aa27058cab",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/88",
+      "notes": "Finished: +67 Jaguar rows, facets exhausted"
+    },
+    {
+      "job_id": "autoscout_by_brand",
+      "source": "autoscout",
+      "worker_id": "autoscout_by_brand-byd",
+      "branch": "cursor/daq-autoscout-by-brand-byd-1a84",
+      "makes": [
+        "byd"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T12:29:18Z",
+      "finished_at": "2026-08-15T12:32:26Z",
+      "rows_added": 224,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-229d9120-3ee2-526c-a35a-2ad66aea47b6",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/87",
+      "notes": "Finished: +224 BYD rows, facets exhausted"
+    },
+    {
+      "job_id": "willhaben_direct",
+      "source": "willhaben",
+      "worker_id": "willhaben_direct",
+      "branch": "cursor/daq-willhaben-direct-1a84",
+      "makes": null,
+      "status": "finished",
+      "started_at": "2026-08-14T21:10:46Z",
+      "finished_at": "2026-08-15T12:25:07Z",
+      "rows_added": 68442,
+      "rows_total": 220257,
+      "agent_url": "https://cursor.com/agents/bc-831677ad-5f2e-50e6-9c81-f959c7d63677",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/82",
+      "notes": "Finished: +68442 rows, 93 facets exhausted (~14.2h)"
     },
     {
       "job_id": "ka_shard",
       "source": "kleinanzeigen",
       "worker_id": "ka_shard-w1",
       "branch": "cursor/daq-ka-shard-w1-1a84",
-      "makes": ["bmw", "opel", "toyota"],
+      "makes": [
+        "bmw",
+        "opel",
+        "toyota"
+      ],
       "status": "finished",
-      "started_at": "2026-08-13T10:00:00Z",
-      "finished_at": "2026-08-13T14:22:00Z",
-      "rows_added": 1204,
+      "started_at": "2026-08-15T12:30:53Z",
+      "finished_at": "2026-08-15T15:23:26Z",
+      "rows_added": 41646,
       "rows_total": null,
-      "agent_url": null,
+      "agent_url": "https://cursor.com/agents/bc-80bedd0c-a7fa-5145-88ea-3bae02fc67bf",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/92",
+      "notes": "Finished: +41646 KA rows (bmw–chevrolet)"
+    },
+    {
+      "job_id": "ka_shard",
+      "source": "kleinanzeigen",
+      "worker_id": "ka_shard-w2",
+      "branch": "cursor/daq-ka-shard-w2-1a84",
+      "makes": [
+        "volkswagen",
+        "renault",
+        "peugeot",
+        "volvo",
+        "tesla",
+        "jeep",
+        "mg"
+      ],
+      "status": "running",
+      "started_at": "2026-08-15T12:32:26Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-47fb167c-98ab-5165-97f7-dc694c952a92",
       "pr_url": null,
-      "notes": "Example finished shard"
+      "notes": "Wave: ka_shard-w2 duration=0"
+    },
+    {
+      "job_id": "ka_shard",
+      "source": "kleinanzeigen",
+      "worker_id": "ka_shard-w3",
+      "branch": "cursor/daq-ka-shard-w3-1a84",
+      "makes": [
+        "audi",
+        "skoda",
+        "mazda",
+        "porsche",
+        "cupra",
+        "alfa_romeo",
+        "byd"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T21:11:23Z",
+      "finished_at": "2026-08-14T22:52:51Z",
+      "rows_added": 22678,
+      "rows_total": 104754,
+      "agent_url": "https://cursor.com/agents/bc-762c83d5-fe81-5d3f-a208-01df0fbd18a4",
+      "pr_url": null,
+      "notes": "Finished: +22678 rows (audi/skoda/mazda/porsche/cupra/alfa_romeo/byd)"
+    },
+    {
+      "job_id": "ka_shard",
+      "source": "kleinanzeigen",
+      "worker_id": "ka_shard-w4",
+      "branch": "cursor/daq-ka-shard-w4-1a84",
+      "makes": [
+        "mercedes_benz",
+        "toyota",
+        "fiat",
+        "mini",
+        "suzuki",
+        "land_rover"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-14T21:10:46Z",
+      "finished_at": "2026-08-15T00:20:51Z",
+      "rows_added": 33030,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-460bfe88-d6ed-5388-87e4-ff1d791e0db2",
+      "pr_url": null,
+      "notes": "Finished: +33030 rows (mercedes_benz/toyota/fiat/mini/suzuki/land_rover)"
+    },
+    {
+      "job_id": "ka_shard",
+      "source": "kleinanzeigen",
+      "worker_id": "ka_shard-w5",
+      "branch": "cursor/daq-ka-shard-w5-1a84",
+      "makes": [
+        "opel",
+        "hyundai",
+        "citroen",
+        "kia",
+        "mitsubishi",
+        "smart"
+      ],
+      "status": "finished",
+      "started_at": "2026-08-15T12:34:16Z",
+      "finished_at": "2026-08-15T14:33:34Z",
+      "rows_added": 18812,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-6d53979b-fdfe-54e2-b13f-85f82459ccbf",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/89",
+      "notes": "Finished: +18812 KA rows (opel–smart)"
+    },
+    {
+      "job_id": "coches_collect",
+      "source": "coches",
+      "worker_id": "coches_collect",
+      "branch": "cursor/daq-coches-collect-1a84",
+      "makes": null,
+      "status": "finished",
+      "started_at": "2026-08-15T14:33:34Z",
+      "finished_at": "2026-08-15T14:59:27Z",
+      "rows_added": 7673,
+      "rows_total": 282293,
+      "agent_url": "https://cursor.com/agents/bc-e4727c81-fd4e-5d1e-9684-169f303bc85f",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/91",
+      "notes": "Finished: +7673 rows (282293 unique), 175/175 facets exhausted"
     }
   ]
 }
