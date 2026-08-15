@@ -808,152 +808,20 @@ body {
   color: var(--accent-deep);
 }
 
-<<<<<<< HEAD
-.vin-cell {
-  font-family: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Menlo, monospace;
-  font-size: 0.84rem;
-}
-
-.vin-score {
-  margin-left: 0.25rem;
-  color: var(--warn);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-.vin-decode-panel {
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--line);
-}
-
-.vin-decode-head h3 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  letter-spacing: -0.02em;
-}
-
-.vin-decode-summary {
-  margin: 0.4rem 0 0;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
-.vin-decode-stats {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.65rem;
-  margin-top: 0.85rem;
-}
-
-@media (max-width: 800px) {
-  .vin-decode-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.vin-stat {
-  padding-top: 0.35rem;
-  border-top: 2px solid var(--accent);
-}
-
-.vin-stat span {
-  display: block;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink-soft);
-  font-weight: 650;
-}
-
-.vin-stat strong {
-  display: block;
-  margin-top: 0.25rem;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  letter-spacing: -0.02em;
-}
-
-.link-cell {
-  white-space: nowrap;
-}
-
-.row-link {
-  color: var(--accent-deep);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.row-link:hover {
-  text-decoration: underline;
-}
-
-.detail-url-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  margin: 0 0 1rem;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid var(--line);
-}
-
-.detail-url-bar .btn {
-  align-self: flex-start;
-}
-
-.detail-url-text {
-  font-size: 0.82rem;
-  color: var(--accent-deep);
-  overflow-wrap: anywhere;
-  word-break: break-all;
-}
-
-.detail-url-bar.muted {
-  color: var(--ink-soft);
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 0.85rem;
-}
-
-.match-pill {
-  display: inline-block;
-  padding: 0.15rem 0.45rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-}
-
-.match-strong {
-  background: rgba(15, 122, 108, 0.16);
-  color: var(--accent-deep);
-}
-
-.match-close {
-  background: rgba(180, 83, 9, 0.14);
-  color: #9a3412;
-}
-
-.match-loose {
-  background: rgba(23, 35, 58, 0.08);
-  color: var(--ink-soft);
-}
-
-.detail-match {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0 0 0.85rem;
-}
-
-.detail-match-reasons {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-=======
 /* —— Crawl monitor —— */
+.crawl-phone-steps {
+  margin: 0 0 1.35rem;
+  padding-left: 1.25rem;
+  max-width: 38rem;
+  color: var(--ink);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.crawl-phone-steps li + li {
+  margin-top: 0.4rem;
+}
+
 .crawls .crawl-board-meta,
 .crawl-hint,
 .crawl-empty {
@@ -1089,5 +957,91 @@ body {
   .crawl-job-meta {
     text-align: left;
   }
->>>>>>> 0338c083ede194d82690eeba6d748fb900a2fbf0
 }
+
+/* —— Sources health —— */
+.sources-meta {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin: 0.35rem 0 1rem;
+}
+
+.sources-board {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem 1.75rem;
+}
+
+@media (max-width: 900px) {
+  .sources-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.source-card {
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--line);
+}
+
+.source-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.source-card-head h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.source-rows {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.source-meta {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+}
+
+.source-meta > div {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: 0.5rem 0.75rem;
+}
+
+.source-meta dt {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.source-meta dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.92rem;
+}
+
+.source-quality .chart-label {
+  margin-bottom: 0.5rem;
+}
+
+.source-quality-bars {
+  max-height: 22rem;
+  overflow: auto;
+  padding-right: 0.25rem;
+}
+
+.source-empty {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
