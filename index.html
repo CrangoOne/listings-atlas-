@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Listings Atlas — Willhaben · AutoScout · Kleinanzeigen</title>
+    <title>Listings Atlas — Willhaben · AutoScout · Kleinanzeigen · coches</title>
     <meta
       name="description"
-      content="Interactive market dashboard for merged Willhaben, AutoScout24, and Kleinanzeigen car listings."
+      content="Interactive market dashboard for merged Willhaben, AutoScout24, Kleinanzeigen, and coches.net car listings."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,6 +23,7 @@
       <a class="brand-mark" href="#top">Listings Atlas</a>
       <nav>
         <a href="#explore">Explore</a>
+        <a href="#sources">Sources</a>
         <a href="#crawls">Crawls</a>
         <a href="#markets">Markets</a>
         <a href="#prices">Prices</a>
@@ -36,11 +37,13 @@
         <p class="brand">Listings Atlas</p>
         <h1>Three markets. One inventory pulse.</h1>
         <p class="lede">
-          Filter and drill into merged Willhaben, AutoScout24, and Kleinanzeigen
-          listings — then scan the market overview below.
+          Filter and drill into merged Willhaben, AutoScout24, Kleinanzeigen,
+          and coches.net listings — then scan source health and the market
+          overview below.
         </p>
         <div class="cta-row">
           <a class="btn primary" href="#explore">Explore listings</a>
+          <a class="btn ghost" href="#sources">Source health</a>
           <a class="btn ghost" href="#crawls">Monitor crawls</a>
         </div>
       </section>
@@ -57,8 +60,9 @@
 
         <div id="db-gate" class="db-gate">
           <p class="db-gate-copy">
-            The full pack is ~435&nbsp;MB. Prefer loading a local copy of
-            <code>20261108_all_car_listings.db</code> (fast, works offline).
+            The full pack is ~690&nbsp;MB (Willhaben · AutoScout · Kleinanzeigen ·
+            coches.net). Prefer loading a local copy of
+            <code>20260815_all_car_listings.db</code> (fast, works offline).
             Remote GitHub LFS load is optional and can take several minutes.
           </p>
           <div class="db-actions">
@@ -220,15 +224,43 @@
         </div>
       </section>
 
+      <section id="sources" class="section sources">
+        <div class="section-head">
+          <h2>Sources</h2>
+          <p>
+            Per-market inventory health from the consolidated pack: last crawl,
+            scraped date coverage, row counts, and column fill rates.
+          </p>
+        </div>
+        <div class="kpi-row" id="sources-kpis"></div>
+        <p class="sources-meta" id="sources-meta">Loading source health…</p>
+        <div id="sources-board" class="sources-board"></div>
+      </section>
+
       <section id="crawls" class="section crawls">
         <div class="section-head">
           <h2>Crawl monitor</h2>
           <p>
             Live board for DAQ workers. Launch with a catalog job id in Cursor
-            chat (e.g. <code>autoscout_by_brand</code>, <code>ka_shard</code>),
-            then agents append rows to <code>docs/data/crawl_status.json</code>.
+            chat (e.g. <code>autoscout_by_brand</code>, <code>ka_shard</code>).
+            Agents publish <code>data/crawl_status.json</code> to the public
+            <code>listings-atlas-</code> repo — status updates without
+            redeploying the site pack.
           </p>
         </div>
+
+        <ol class="crawl-phone-steps">
+          <li>Open this page on your phone (bookmark the site).</li>
+          <li>Tap <strong>Crawls</strong> in the top nav (or <strong>Monitor crawls</strong>).</li>
+          <li>Read the KPI row: Running / Queued / Finished.</li>
+          <li>Scroll the runs table for per-worker status, rows, and Agent / PR links.</li>
+          <li>Pull to refresh (or reload) after workers finish so the board updates.</li>
+          <li>
+            Status is published with
+            <code>python3 daq/jobs/publish_crawl_status.py</code>
+            (Cursor needs write access to <code>listings-atlas-</code>).
+          </li>
+        </ol>
 
         <div class="kpi-row" id="crawl-kpis"></div>
         <p class="crawl-board-meta" id="crawl-board-meta">Loading crawl status…</p>
@@ -279,7 +311,7 @@
       <section id="markets" class="section">
         <div class="section-head">
           <h2>Where the inventory sits</h2>
-          <p>Share of listings across the three sources in the merged pack.</p>
+          <p>Share of listings across the four sources in the merged pack.</p>
         </div>
         <div class="kpi-row" id="kpi-row"></div>
         <div class="chart-block">
@@ -348,7 +380,7 @@
           </p>
           <p>
             <strong>Full DB from GitHub:</strong> possible via Git LFS, but
-            ~435&nbsp;MB. Local file load is the reliable path; remote load is
+            ~690&nbsp;MB. Local file load is the reliable path; remote load is
             available as a fallback and is cached in IndexedDB after the first
             success.
           </p>
