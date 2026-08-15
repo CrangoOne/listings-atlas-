@@ -1,5 +1,6 @@
 import { initExplore } from "./explore.js";
 import { initCrawls } from "./crawls.js";
+import { initSources } from "./sources.js";
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
@@ -12,6 +13,7 @@ const SOURCE_LABEL = {
   willhaben: "Willhaben",
   autoscout: "AutoScout24",
   kleinanzeigen: "Kleinanzeigen",
+  coches: "coches.net",
 };
 
 function niceSource(id) {
@@ -61,9 +63,9 @@ function renderKpis(data) {
       sub: share(by.kleinanzeigen, data.total),
     },
     {
-      label: "Willhaben",
-      value: fmt.format(by.willhaben || 0),
-      sub: share(by.willhaben, data.total),
+      label: "coches.net",
+      value: fmt.format(by.coches || 0),
+      sub: share(by.coches, data.total),
     },
     {
       label: "Avg. price",
@@ -89,10 +91,11 @@ function share(part, total) {
 
 function renderMarketMakes(data) {
   const root = document.getElementById("market-makes");
-  const order = ["kleinanzeigen", "willhaben", "autoscout"];
+  const order = ["kleinanzeigen", "willhaben", "autoscout", "coches"];
   root.innerHTML = order
     .map((source) => {
       const rows = data.makes_by_source?.[source] || [];
+      if (!rows.length) return "";
       const id = `makes-${source}`;
       return `<div class="market-panel">
         <h3>${niceSource(source)}</h3>
@@ -106,6 +109,7 @@ function renderMarketMakes(data) {
       label: d.make,
       count: d.count,
     }));
+    if (!rows.length) continue;
     renderBars(document.getElementById(`makes-${source}`), rows);
   }
 }
@@ -168,6 +172,7 @@ async function main() {
   meta.textContent = `Summary generated ${data.generated_at} from ${data.db_file} · ${fmt.format(data.total)} listings`;
 
   initExplore(data);
+  initSources();
   initCrawls();
 }
 
