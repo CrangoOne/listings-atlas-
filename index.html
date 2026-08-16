@@ -226,11 +226,16 @@
 
       <section id="sources" class="section sources">
         <div class="section-head">
-          <h2>Sources</h2>
-          <p>
-            Per-market inventory health from the consolidated pack: last crawl,
-            scraped date coverage, row counts, and column fill rates.
-          </p>
+          <div class="section-head-copy">
+            <h2>Sources</h2>
+            <p>
+              Per-market inventory health from the consolidated pack: last crawl,
+              scraped date coverage, row counts, and column fill rates.
+            </p>
+          </div>
+          <button type="button" class="btn ghost board-refresh" id="sources-refresh" data-board="sources">
+            Refresh
+          </button>
         </div>
         <div class="kpi-row" id="sources-kpis"></div>
         <p class="sources-meta" id="sources-meta">Loading source health…</p>
@@ -239,14 +244,19 @@
 
       <section id="crawls" class="section crawls">
         <div class="section-head">
-          <h2>Crawl monitor</h2>
-          <p>
-            Live board for DAQ workers. Launch with a catalog job id in Cursor
-            chat (e.g. <code>autoscout_by_brand</code>, <code>ka_shard</code>).
-            Agents publish <code>data/crawl_status.json</code> to the public
-            <code>listings-atlas-</code> repo — status updates without
-            redeploying the site pack.
-          </p>
+          <div class="section-head-copy">
+            <h2>Crawl monitor</h2>
+            <p>
+              Live board for DAQ workers. Launch with a catalog job id in Cursor
+              chat (e.g. <code>autoscout_by_brand</code>, <code>ka_shard</code>).
+              Agents publish <code>data/crawl_status.json</code> to the public
+              <code>listings-atlas-</code> repo — status updates without
+              redeploying the site pack.
+            </p>
+          </div>
+          <button type="button" class="btn ghost board-refresh" id="crawls-refresh" data-board="crawls">
+            Refresh
+          </button>
         </div>
 
         <ol class="crawl-phone-steps">
@@ -254,7 +264,7 @@
           <li>Tap <strong>Crawls</strong> in the top nav (or <strong>Monitor crawls</strong>).</li>
           <li>Read the KPI row: Running / Queued / Finished.</li>
           <li>Scroll the runs table for per-worker status, rows, and Agent / PR links.</li>
-          <li>Pull to refresh (or reload) after workers finish so the board updates.</li>
+          <li>Tap <strong>Refresh</strong> (or reload) after workers finish so the board updates.</li>
           <li>
             Status is published with
             <code>python3 daq/jobs/publish_crawl_status.py</code>
