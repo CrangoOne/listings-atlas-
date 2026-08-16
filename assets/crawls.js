@@ -8,7 +8,8 @@ const SOURCE_LABEL = {
 
 const STATUS_ORDER = ["running", "queued", "failed", "finished", "cancelled"];
 
-const PROMPT_DEEPLINK = "https://cursor.com/link/prompt";
+const PROMPT_DEEPLINK_APP = "cursor://anysphere.cursor-deeplink/prompt";
+const PROMPT_DEEPLINK_WEB = "https://cursor.com/link/prompt";
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -169,10 +170,10 @@ function buildLaunchPrompt(job, { workers, durationS, makes }) {
   return parts.join(" ");
 }
 
-function promptDeeplink(text) {
-  const url = new URL(PROMPT_DEEPLINK);
-  url.searchParams.set("text", text);
-  return url.toString();
+/** Native app deeplink (preferred) — skips cursor.com browser auth. */
+function promptDeeplink(text, { web = false } = {}) {
+  const base = web ? PROMPT_DEEPLINK_WEB : PROMPT_DEEPLINK_APP;
+  return `${base}?text=${encodeURIComponent(text)}`;
 }
 
 function flashButton(btn, label) {
@@ -191,23 +192,35 @@ function bindJobLaunch(root, jobsById) {
     const job = jobsById.get(jobId);
     if (!job) return;
     const launchBtn = article.querySelector("[data-action=launch]");
+    const webBtn = article.querySelector("[data-action=launch-web]");
     const copyBtn = article.querySelector("[data-action=copy]");
     const preview = article.querySelector("[data-prompt-preview]");
 
     const refreshPreview = () => {
       const prompt = buildLaunchPrompt(job, readJobParams(article));
       if (preview) preview.textContent = prompt;
+      const appHref = promptDeeplink(prompt, { web: false });
+      const webHref = promptDeeplink(prompt, { web: true });
+      const tooLong = appHref.length > 7800 || webHref.length > 7800;
       if (launchBtn) {
-        const href = promptDeeplink(prompt);
-        if (href.length > 7800) {
+        if (tooLong) {
           launchBtn.setAttribute("aria-disabled", "true");
           launchBtn.removeAttribute("href");
           launchBtn.title =
             "Prompt too long for a deeplink — narrow makes or use Copy prompt";
         } else {
           launchBtn.removeAttribute("aria-disabled");
-          launchBtn.href = href;
-          launchBtn.title = "Open Cursor with this launch prompt";
+          launchBtn.href = appHref;
+          launchBtn.title = "Open the Cursor app with this launch prompt";
+        }
+      }
+      if (webBtn) {
+        if (tooLong) {
+          webBtn.setAttribute("aria-disabled", "true");
+          webBtn.removeAttribute("href");
+        } else {
+          webBtn.removeAttribute("aria-disabled");
+          webBtn.href = webHref;
         }
       }
       return prompt;
@@ -225,7 +238,11 @@ function bindJobLaunch(root, jobsById) {
         window.alert(
           "Prompt is too long for a Cursor deeplink. Narrow the makes list, then try again — or use Copy prompt."
         );
+        return;
       }
+      // Custom schemes should not open via target=_blank (blank tab + auth wall).
+      ev.preventDefault();
+      window.location.href = launchBtn.href;
     });
 
     copyBtn?.addEventListener("click", async () => {
@@ -290,8 +307,9 @@ function renderJobCatalog(jobs) {
           <p class="crawl-prompt-preview" data-prompt-preview></p>
         </div>
         <div class="crawl-job-actions">
-          <a class="btn primary" data-action="launch" target="_blank" rel="noopener noreferrer">Launch in Cursor</a>
+          <a class="btn primary" data-action="launch">Launch in Cursor</a>
           <button type="button" class="btn ghost" data-action="copy">Copy prompt</button>
+          <a class="crawl-launch-web" data-action="launch-web" target="_blank" rel="noopener noreferrer">Web link</a>
         </div>
       </article>`
     )
