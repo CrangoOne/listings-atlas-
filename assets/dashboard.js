@@ -169,7 +169,21 @@ async function main() {
   renderMarketMakes(data);
 
   const meta = document.getElementById("generated-meta");
-  meta.textContent = `Summary generated ${data.generated_at} from ${data.db_file} · ${fmt.format(data.total)} listings`;
+  const generatedLabel = (() => {
+    if (!data.generated_at) return "—";
+    const d = new Date(data.generated_at);
+    if (Number.isNaN(d.getTime())) return String(data.generated_at);
+    return d.toLocaleString("de-AT", {
+      timeZone: "Europe/Vienna",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZoneName: "short",
+    });
+  })();
+  meta.textContent = `Summary generated ${generatedLabel} from ${data.db_file} · ${fmt.format(data.total)} listings`;
 
   initExplore(data);
   initSources();
