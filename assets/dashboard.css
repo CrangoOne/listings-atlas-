@@ -919,8 +919,13 @@ body {
 }
 
 .crawl-catalog {
-  margin-top: 2rem;
-  padding-top: 0.5rem;
+  margin: 0 0 1.75rem;
+  padding-top: 0.15rem;
+}
+
+.crawl-launch-intro {
+  margin-top: 0.35rem;
+  max-width: 42rem;
 }
 
 .crawl-jobs {
@@ -931,9 +936,9 @@ body {
 
 .crawl-job-row {
   display: grid;
-  grid-template-columns: minmax(9rem, 12rem) 1fr minmax(8rem, 12rem);
+  grid-template-columns: minmax(9rem, 12rem) 1fr minmax(9rem, 11rem);
   gap: 0.85rem 1.25rem;
-  padding: 0.85rem 0;
+  padding: 1rem 0;
   border-bottom: 1px solid var(--line);
   align-items: start;
 }
@@ -941,7 +946,7 @@ body {
 @media (max-width: 760px) {
   .crawl-job-row {
     grid-template-columns: 1fr;
-    gap: 0.35rem;
+    gap: 0.45rem;
   }
 }
 
@@ -953,7 +958,7 @@ body {
 .crawl-job-copy {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.25rem;
   color: var(--ink-soft);
   font-size: 0.92rem;
 }
@@ -963,18 +968,87 @@ body {
   font-weight: 650;
 }
 
-.crawl-job-meta {
+.crawl-job-meta-inline {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+  flex-wrap: wrap;
+  gap: 0.35rem;
   font-size: 0.82rem;
   color: var(--ink-soft);
-  text-align: right;
+}
+
+.crawl-launch-params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 0.85rem;
+  margin-top: 0.55rem;
+}
+
+.crawl-launch-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.crawl-launch-field input {
+  min-width: 5.5rem;
+  max-width: 11rem;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.crawl-launch-field--makes {
+  flex: 1 1 12rem;
+}
+
+.crawl-launch-field--makes input {
+  max-width: none;
+  width: 100%;
+}
+
+.crawl-prompt-preview {
+  margin: 0.55rem 0 0;
+  padding: 0.55rem 0.65rem;
+  border-left: 2px solid var(--line);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+  max-width: 40rem;
+}
+
+.crawl-job-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  align-items: stretch;
+}
+
+.crawl-job-actions .btn {
+  width: 100%;
+  text-align: center;
 }
 
 @media (max-width: 760px) {
-  .crawl-job-meta {
-    text-align: left;
+  .crawl-job-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .crawl-job-actions .btn {
+    width: auto;
+    flex: 1 1 auto;
   }
 }
 
