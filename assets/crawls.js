@@ -192,6 +192,19 @@ function bindJobLaunch(root, jobsById) {
     const refreshPreview = () => {
       const prompt = buildLaunchPrompt(job, readJobParams(article));
       if (preview) preview.textContent = prompt;
+      if (launchBtn) {
+        const href = promptDeeplink(prompt);
+        if (href.length > 7800) {
+          launchBtn.setAttribute("aria-disabled", "true");
+          launchBtn.removeAttribute("href");
+          launchBtn.title =
+            "Prompt too long for a deeplink — narrow makes or use Copy prompt";
+        } else {
+          launchBtn.removeAttribute("aria-disabled");
+          launchBtn.href = href;
+          launchBtn.title = "Open Cursor with this launch prompt";
+        }
+      }
       return prompt;
     };
 
@@ -201,16 +214,13 @@ function bindJobLaunch(root, jobsById) {
     });
     refreshPreview();
 
-    launchBtn?.addEventListener("click", () => {
-      const prompt = refreshPreview();
-      const href = promptDeeplink(prompt);
-      if (href.length > 7800) {
+    launchBtn?.addEventListener("click", (ev) => {
+      if (!launchBtn.getAttribute("href")) {
+        ev.preventDefault();
         window.alert(
           "Prompt is too long for a Cursor deeplink. Narrow the makes list, then try again — or use Copy prompt."
         );
-        return;
       }
-      window.open(href, "_blank", "noopener,noreferrer");
     });
 
     copyBtn?.addEventListener("click", async () => {
@@ -275,7 +285,7 @@ function renderJobCatalog(jobs) {
           <p class="crawl-prompt-preview" data-prompt-preview></p>
         </div>
         <div class="crawl-job-actions">
-          <button type="button" class="btn" data-action="launch">Launch in Cursor</button>
+          <a class="btn" data-action="launch" target="_blank" rel="noopener noreferrer">Launch in Cursor</a>
           <button type="button" class="btn ghost" data-action="copy">Copy prompt</button>
         </div>
       </article>`
