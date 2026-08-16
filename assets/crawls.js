@@ -285,7 +285,7 @@ function renderJobCatalog(jobs) {
           <p class="crawl-prompt-preview" data-prompt-preview></p>
         </div>
         <div class="crawl-job-actions">
-          <a class="btn" data-action="launch" target="_blank" rel="noopener noreferrer">Launch in Cursor</a>
+          <a class="btn primary" data-action="launch" target="_blank" rel="noopener noreferrer">Launch in Cursor</a>
           <button type="button" class="btn ghost" data-action="copy">Copy prompt</button>
         </div>
       </article>`
