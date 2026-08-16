@@ -174,6 +174,26 @@ async function main() {
   initExplore(data);
   initSources();
   initCrawls();
+  wireBoardRefresh();
+}
+
+function wireBoardRefresh() {
+  const buttons = document.querySelectorAll(".board-refresh");
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const board = btn.dataset.board;
+      const label = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Refreshing…";
+      try {
+        if (board === "sources") await initSources();
+        else if (board === "crawls") await initCrawls();
+      } finally {
+        btn.disabled = false;
+        btn.textContent = label || "Refresh";
+      }
+    });
+  });
 }
 
 main().catch((err) => {
