@@ -1041,10 +1041,24 @@ body {
   box-sizing: border-box;
 }
 
-.crawl-job-actions a.btn[aria-disabled="true"] {
+.crawl-job-actions a.btn[aria-disabled="true"],
+.crawl-job-actions a.crawl-launch-web[aria-disabled="true"] {
   opacity: 0.45;
   pointer-events: none;
   cursor: not-allowed;
+}
+
+.crawl-launch-web {
+  display: block;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.crawl-launch-web:hover {
+  color: var(--accent-deep);
 }
 
 @media (max-width: 760px) {
