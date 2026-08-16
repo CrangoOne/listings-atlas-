@@ -1,6 +1,6 @@
-import { initExplore } from "./explore.js";
-import { initCrawls } from "./crawls.js";
-import { initSources } from "./sources.js";
+import { initExplore } from "./explore.js?v=20260816-launch-app";
+import { initCrawls } from "./crawls.js?v=20260816-launch-app";
+import { initSources } from "./sources.js?v=20260816-launch-app";
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
