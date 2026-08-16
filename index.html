@@ -247,11 +247,9 @@
           <div class="section-head-copy">
             <h2>Crawl monitor</h2>
             <p>
-              Live board for DAQ workers. Launch with a catalog job id in Cursor
-              chat (e.g. <code>autoscout_by_brand</code>, <code>ka_shard</code>).
-              Agents publish <code>data/crawl_status.json</code> to the public
-              <code>listings-atlas-</code> repo — status updates without
-              redeploying the site pack.
+              Start a catalog job from this page — <strong>Launch in Cursor</strong>
+              opens a pre-filled agent prompt — then watch workers on the live board.
+              Status publishes to <code>listings-atlas-</code> without redeploying the site pack.
             </p>
           </div>
           <button type="button" class="btn ghost board-refresh" id="crawls-refresh" data-board="crawls">
@@ -259,17 +257,22 @@
           </button>
         </div>
 
+        <div class="crawl-catalog">
+          <div class="chart-label">Start a crawl</div>
+          <p class="crawl-hint crawl-launch-intro">
+            Pick a job, tweak workers / duration / makes if needed, then
+            <strong>Launch in Cursor</strong> (or <strong>Copy prompt</strong> into chat).
+            Duration <code>0</code> means full scrape until exhausted.
+          </p>
+          <div id="crawl-jobs" class="crawl-jobs"></div>
+        </div>
+
         <ol class="crawl-phone-steps">
-          <li>Open this page on your phone (bookmark the site).</li>
-          <li>Tap <strong>Crawls</strong> in the top nav (or <strong>Monitor crawls</strong>).</li>
-          <li>Read the KPI row: Running / Queued / Finished.</li>
-          <li>Scroll the runs table for per-worker status, rows, and Agent / PR links.</li>
-          <li>Tap <strong>Refresh</strong> (or reload) after workers finish so the board updates.</li>
-          <li>
-            Status is published with
-            <code>python3 daq/jobs/publish_crawl_status.py</code>
-            (Cursor needs write access to <code>listings-atlas-</code>).
-          </li>
+          <li>Open this page (bookmark on phone).</li>
+          <li>Under <strong>Start a crawl</strong>, tap <strong>Launch in Cursor</strong> on a job.</li>
+          <li>Confirm the prompt in Cursor — it spawns cloud workers via the launch-crawl skill.</li>
+          <li>Come back here: tap <strong>Refresh</strong> to see Running / Queued / Finished.</li>
+          <li>Open Agent / PR links from the runs table when you need detail.</li>
         </ol>
 
         <div class="kpi-row" id="crawl-kpis"></div>
@@ -296,16 +299,6 @@
           No crawls recorded yet. After your next start, workers update this
           board so you can watch progress here.
         </p>
-
-        <div class="crawl-catalog">
-          <div class="chart-label">Catalog jobs you can launch</div>
-          <div id="crawl-jobs" class="crawl-jobs"></div>
-          <p class="crawl-hint">
-            Full scrape without a timeout: omit <code>--duration</code> or set
-            it to <code>0</code>. Prefer <code>autoscout_by_brand</code> for one
-            worker per AutoScout brand.
-          </p>
-        </div>
       </section>
 
       <dialog id="row-dialog" class="row-dialog">
