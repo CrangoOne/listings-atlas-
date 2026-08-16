@@ -1038,6 +1038,13 @@ body {
 .crawl-job-actions .btn {
   width: 100%;
   text-align: center;
+  box-sizing: border-box;
+}
+
+.crawl-job-actions a.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 @media (max-width: 760px) {
