@@ -198,7 +198,16 @@ body {
 
 .section-head {
   margin-bottom: 1.5rem;
-  max-width: 40rem;
+  max-width: 46rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-head-copy {
+  min-width: 0;
+  flex: 1;
 }
 
 .section-head h2 {
@@ -212,6 +221,16 @@ body {
 .section-head p {
   margin: 0.55rem 0 0;
   color: var(--ink-soft);
+}
+
+.board-refresh {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
+.board-refresh:disabled {
+  opacity: 0.65;
+  cursor: wait;
 }
 
 .kpi-row {
