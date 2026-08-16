@@ -133,7 +133,9 @@ export async function initSources() {
   const meta = document.getElementById("sources-meta");
   const root = document.getElementById("sources-board");
   try {
-    const res = await fetch("data/sources_summary.json", { cache: "no-cache" });
+    const res = await fetch(`data/sources_summary.json?t=${Date.now()}`, {
+      cache: "no-store",
+    });
     if (!res.ok) throw new Error(`sources_summary.json (${res.status})`);
     const payload = await res.json();
     renderSourcesKpis(payload);
