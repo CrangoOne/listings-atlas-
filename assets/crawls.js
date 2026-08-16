@@ -8,6 +8,8 @@ const SOURCE_LABEL = {
 
 const STATUS_ORDER = ["running", "queued", "failed", "finished", "cancelled"];
 
+const PROMPT_DEEPLINK = "https://cursor.com/link/prompt";
+
 function escapeHtml(s) {
   return String(s ?? "")
     .replaceAll("&", "&amp;")
@@ -122,6 +124,133 @@ function renderRunsTable(runs) {
     .join("");
 }
 
+function readJobParams(article) {
+  const workersEl = article.querySelector("[data-param=workers]");
+  const durationEl = article.querySelector("[data-param=duration]");
+  const makesEl = article.querySelector("[data-param=makes]");
+  const workersRaw = workersEl?.value?.trim();
+  const durationRaw = durationEl?.value?.trim();
+  const makes = makesEl?.value?.trim() || "";
+  let workers = null;
+  let durationS = null;
+  if (workersRaw) {
+    const n = Number.parseInt(workersRaw, 10);
+    if (Number.isFinite(n) && n > 0) workers = n;
+  }
+  if (durationRaw !== undefined && durationRaw !== "" && durationEl) {
+    const n = Number.parseInt(durationRaw, 10);
+    if (Number.isFinite(n) && n >= 0) durationS = n;
+  }
+  return { workers, durationS, makes };
+}
+
+/** Short coordinator prompt — opens Cursor chat; agent expands via launch-crawl skill. */
+function buildLaunchPrompt(job, { workers, durationS, makes }) {
+  const parts = [
+    `Launch the DAQ crawl job \`${job.id}\` using the launch-crawl skill in this repo.`,
+  ];
+  if (workers != null) parts.push(`Use ${workers} workers.`);
+  if (makes) parts.push(`Only these makes: ${makes}.`);
+  if (durationS === 0) {
+    parts.push("Full scrape (duration 0 — run until exhausted).");
+  } else if (durationS != null) {
+    parts.push(`Time cap: ${durationS} seconds.`);
+  } else {
+    parts.push("Use the catalog defaults for duration.");
+  }
+  parts.push(
+    "Resolve with `python3 daq/jobs/launch_crawl.py prompt … --json`, spawn one cloud worker per shard, update `docs/data/crawl_status.json`, and publish with `python3 daq/jobs/publish_crawl_status.py`."
+  );
+  return parts.join(" ");
+}
+
+function promptDeeplink(text) {
+  const url = new URL(PROMPT_DEEPLINK);
+  url.searchParams.set("text", text);
+  return url.toString();
+}
+
+function flashButton(btn, label) {
+  const prev = btn.textContent;
+  btn.textContent = label;
+  btn.disabled = true;
+  window.setTimeout(() => {
+    btn.textContent = prev;
+    btn.disabled = false;
+  }, 1400);
+}
+
+function bindJobLaunch(root, jobsById) {
+  root.querySelectorAll("[data-job-id]").forEach((article) => {
+    const jobId = article.getAttribute("data-job-id");
+    const job = jobsById.get(jobId);
+    if (!job) return;
+    const launchBtn = article.querySelector("[data-action=launch]");
+    const copyBtn = article.querySelector("[data-action=copy]");
+    const preview = article.querySelector("[data-prompt-preview]");
+
+    const refreshPreview = () => {
+      const prompt = buildLaunchPrompt(job, readJobParams(article));
+      if (preview) preview.textContent = prompt;
+      return prompt;
+    };
+
+    article.querySelectorAll("[data-param]").forEach((el) => {
+      el.addEventListener("input", refreshPreview);
+      el.addEventListener("change", refreshPreview);
+    });
+    refreshPreview();
+
+    launchBtn?.addEventListener("click", () => {
+      const prompt = refreshPreview();
+      const href = promptDeeplink(prompt);
+      if (href.length > 7800) {
+        window.alert(
+          "Prompt is too long for a Cursor deeplink. Narrow the makes list, then try again — or use Copy prompt."
+        );
+        return;
+      }
+      window.open(href, "_blank", "noopener,noreferrer");
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+      const prompt = refreshPreview();
+      try {
+        await navigator.clipboard.writeText(prompt);
+        flashButton(copyBtn, "Copied");
+      } catch {
+        window.prompt("Copy this launch prompt:", prompt);
+      }
+    });
+  });
+}
+
+function paramFields(job) {
+  const supports = job.supports || {};
+  const defaults = job.defaults || {};
+  const fields = [];
+  if (supports.workers) {
+    const v = defaults.workers != null ? String(defaults.workers) : "5";
+    fields.push(`<label class="crawl-launch-field">Workers
+      <input type="number" min="1" max="40" step="1" data-param="workers" value="${escapeHtml(v)}" inputmode="numeric" />
+    </label>`);
+  }
+  if (supports.duration) {
+    const v = defaults.duration_s != null ? String(defaults.duration_s) : "0";
+    fields.push(`<label class="crawl-launch-field">Duration (s)
+      <input type="number" min="0" step="60" data-param="duration" value="${escapeHtml(v)}" inputmode="numeric" title="0 = until exhausted" />
+    </label>`);
+  }
+  if (supports.makes) {
+    const sample = Array.isArray(job.makes_sample) ? job.makes_sample.join(",") : "";
+    fields.push(`<label class="crawl-launch-field crawl-launch-field--makes">Makes
+      <input type="text" data-param="makes" placeholder="${escapeHtml(sample || "bmw,audi,…")}" spellcheck="false" autocomplete="off" />
+    </label>`);
+  }
+  if (!fields.length) return "";
+  return `<div class="crawl-launch-params">${fields.join("")}</div>`;
+}
+
 function renderJobCatalog(jobs) {
   const root = document.getElementById("crawl-jobs");
   if (!root) return;
@@ -129,43 +258,81 @@ function renderJobCatalog(jobs) {
     root.innerHTML = `<p class="crawl-hint">Job catalog not loaded.</p>`;
     return;
   }
+  const jobsById = new Map(jobs.map((j) => [j.id, j]));
   root.innerHTML = jobs
     .map(
-      (j) => `<article class="crawl-job-row">
+      (j) => `<article class="crawl-job-row" data-job-id="${escapeHtml(j.id)}">
         <div class="crawl-job-id"><code>${escapeHtml(j.id)}</code></div>
         <div class="crawl-job-copy">
           <strong>${escapeHtml(niceSource(j.source))}</strong>
           <span>${escapeHtml(j.summary || "")}</span>
+          <div class="crawl-job-meta-inline">
+            <span>${escapeHtml(j.workers || "—")} worker(s)</span>
+            <span>·</span>
+            <span>${escapeHtml(j.duration_default || "—")}</span>
+          </div>
+          ${paramFields(j)}
+          <p class="crawl-prompt-preview" data-prompt-preview></p>
         </div>
-        <div class="crawl-job-meta">
-          <span>${escapeHtml(j.workers || "—")} worker(s)</span>
-          <span>${escapeHtml(j.duration_default || "—")}</span>
+        <div class="crawl-job-actions">
+          <button type="button" class="btn" data-action="launch">Launch in Cursor</button>
+          <button type="button" class="btn ghost" data-action="copy">Copy prompt</button>
         </div>
       </article>`
     )
     .join("");
+  bindJobLaunch(root, jobsById);
+}
+
+/** Live board on the public Pages repo — agents push this file; no site-pack redeploy. */
+const LIVE_STATUS_URL =
+  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_status.json";
+const LIVE_JOBS_URL =
+  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_jobs.json";
+
+async function fetchJsonPreferLive(liveUrl, localUrl) {
+  const bust = `t=${Date.now()}`;
+  const candidates = [
+    `${liveUrl}${liveUrl.includes("?") ? "&" : "?"}${bust}`,
+    `${localUrl}${localUrl.includes("?") ? "&" : "?"}${bust}`,
+  ];
+  let lastErr = null;
+  for (const url of candidates) {
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) {
+        lastErr = new Error(`${url} (${res.status})`);
+        continue;
+      }
+      return { data: await res.json(), url };
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr || new Error("Could not load JSON");
 }
 
 export async function initCrawls() {
   const meta = document.getElementById("crawl-board-meta");
   try {
-    const [statusRes, jobsRes] = await Promise.all([
-      fetch("data/crawl_status.json", { cache: "no-cache" }),
-      fetch("data/crawl_jobs.json", { cache: "no-cache" }),
+    const [statusPack, jobsPack] = await Promise.all([
+      fetchJsonPreferLive(LIVE_STATUS_URL, "data/crawl_status.json"),
+      fetchJsonPreferLive(LIVE_JOBS_URL, "data/crawl_jobs.json").catch(() => null),
     ]);
-    if (!statusRes.ok) throw new Error(`crawl_status.json (${statusRes.status})`);
-    const status = await statusRes.json();
+    const status = statusPack.data;
     const runs = Array.isArray(status.runs) ? status.runs : [];
     renderCrawlKpis(runs, status.updated_at);
     renderRunsTable(runs);
     if (meta) {
+      const source = statusPack.url.includes("raw.githubusercontent.com")
+        ? "live listings-atlas-"
+        : "local data/";
       meta.textContent = runs.length
-        ? `${runs.length} run(s) in crawl_status.json`
-        : "Board is empty — launch a catalog job, then workers append rows here.";
+        ? `${runs.length} run(s) · ${source}`
+        : "Board is empty — launch a catalog job below, then publish crawl_status.json.";
     }
-    if (jobsRes.ok) {
-      const jobsPayload = await jobsRes.json();
-      renderJobCatalog(jobsPayload.jobs || []);
+    if (jobsPack?.data) {
+      renderJobCatalog(jobsPack.data.jobs || []);
     } else {
       renderJobCatalog([]);
     }
