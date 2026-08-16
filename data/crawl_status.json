@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-15T20:05:36Z",
+  "updated_at": "2026-08-16T11:26:14Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -644,14 +644,14 @@
         "jeep",
         "mg"
       ],
-      "status": "running",
+      "status": "finished",
       "started_at": "2026-08-15T12:32:26Z",
-      "finished_at": null,
-      "rows_added": null,
-      "rows_total": null,
+      "finished_at": "2026-08-15T23:24:33Z",
+      "rows_added": 63097,
+      "rows_total": 224379,
       "agent_url": "https://cursor.com/agents/bc-47fb167c-98ab-5165-97f7-dc694c952a92",
-      "pr_url": null,
-      "notes": "Wave: ka_shard-w2 duration=0"
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/97",
+      "notes": "Finished: +63097 KA rows (volkswagen–mg)"
     },
     {
       "job_id": "ka_shard",
