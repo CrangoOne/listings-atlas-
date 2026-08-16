@@ -248,8 +248,10 @@
             <h2>Crawl monitor</h2>
             <p>
               Start a catalog job from this page — <strong>Launch in Cursor</strong>
-              opens a pre-filled agent prompt — then watch workers on the live board.
-              Status publishes to <code>listings-atlas-</code> without redeploying the site pack.
+              opens the Cursor <em>app</em> with a pre-filled prompt (not the
+              browser login page). Prefer <strong>Copy prompt</strong> if the
+              app deeplink is blocked. Status publishes to
+              <code>listings-atlas-</code> without redeploying the site pack.
             </p>
           </div>
           <button type="button" class="btn ghost board-refresh" id="crawls-refresh" data-board="crawls">
@@ -261,7 +263,8 @@
           <div class="chart-label">Start a crawl</div>
           <p class="crawl-hint crawl-launch-intro">
             Pick a job, tweak workers / duration / makes if needed, then
-            <strong>Launch in Cursor</strong> (or <strong>Copy prompt</strong> into chat).
+            <strong>Launch in Cursor</strong> (opens the desktop/mobile Cursor app)
+            or <strong>Copy prompt</strong> into Agent chat.
             Duration <code>0</code> means full scrape until exhausted.
           </p>
           <div id="crawl-jobs" class="crawl-jobs"></div>
