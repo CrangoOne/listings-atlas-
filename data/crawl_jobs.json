@@ -1,75 +1,316 @@
 {
   "generated_from": "daq/jobs/catalog.yaml",
+  "generated_at": "2026-08-16T11:44:43Z",
   "jobs": [
-    {
-      "id": "willhaben_direct",
-      "source": "willhaben",
-      "summary": "Willhaben AT car listings (direct Chrome TLS / __NEXT_DATA__)",
-      "workers": "1",
-      "duration_default": "3600s (0 = until exhausted)"
-    },
-    {
-      "id": "willhaben_1h",
-      "source": "willhaben",
-      "summary": "Willhaben direct crawl capped at 1 hour",
-      "workers": "1",
-      "duration_default": "3600s"
-    },
-    {
-      "id": "autoscout_collect",
-      "source": "autoscout",
-      "summary": "AutoScout24.at facet crawl — single process until exhausted",
-      "workers": "1",
-      "duration_default": "0 (until exhausted)"
-    },
     {
       "id": "autoscout_by_brand",
       "source": "autoscout",
       "summary": "One AutoScout cloud worker per brand — full scrape until exhausted",
+      "notes": "Each worker owns one make via DAQ_AS24_MAKES and writes autoscout_<slug>.csv. No time cap by default. Prefer this over a single timed overnight process when you want all brands covered.",
       "workers": "one per brand",
-      "duration_default": "0 (until exhausted)"
+      "duration_default": "0 (until exhausted)",
+      "supports": {
+        "workers": false,
+        "duration": true,
+        "makes": true
+      },
+      "defaults": {
+        "workers": null,
+        "duration_s": 0
+      },
+      "makes_key": "autoscout_makes",
+      "makes_sample": [
+        "bmw",
+        "volkswagen",
+        "audi",
+        "mercedes-benz",
+        "skoda",
+        "ford",
+        "opel",
+        "renault"
+      ],
+      "chat_hint": "launch autoscout_by_brand"
+    },
+    {
+      "id": "autoscout_collect",
+      "source": "autoscout",
+      "summary": "AutoScout24.at facet crawl → autoscout_data.csv (until exhausted)",
+      "notes": "Default has no time cap (DAQ_COLLECT_DURATION_SECONDS=0). Pass --duration only when you intentionally want a timed stop.",
+      "workers": "1",
+      "duration_default": "0 (until exhausted)",
+      "supports": {
+        "workers": false,
+        "duration": true,
+        "makes": false
+      },
+      "defaults": {
+        "workers": 1,
+        "duration_s": 0
+      },
+      "makes_key": null,
+      "makes_sample": [],
+      "chat_hint": "launch autoscout_collect"
     },
     {
       "id": "autoscout_shard",
       "source": "autoscout",
       "summary": "Parallel AutoScout workers — splits brands across N agents",
+      "notes": "Disjoint DAQ_AS24_MAKES shards; runs until exhausted unless --duration set.",
       "workers": "param (default 5)",
-      "duration_default": "0 (until exhausted)"
-    },
-    {
-      "id": "coches_collect",
-      "source": "coches",
-      "summary": "coches.net Spain facet crawl until exhausted",
-      "workers": "1",
-      "duration_default": "0 (until exhausted)"
+      "duration_default": "0 (until exhausted)",
+      "supports": {
+        "workers": true,
+        "duration": true,
+        "makes": true
+      },
+      "defaults": {
+        "workers": 5,
+        "duration_s": 0
+      },
+      "makes_key": "autoscout_makes",
+      "makes_sample": [
+        "bmw",
+        "volkswagen",
+        "audi",
+        "mercedes-benz",
+        "skoda",
+        "ford",
+        "opel",
+        "renault"
+      ],
+      "chat_hint": "launch autoscout_shard"
     },
     {
       "id": "coches_1h",
       "source": "coches",
       "summary": "coches.net incremental 1h single-worker crawl",
+      "notes": "Resets exhausted facets; keeps known Ad IDs from coches_data.csv.",
       "workers": "1",
-      "duration_default": "3600s"
+      "duration_default": "3600s",
+      "supports": {
+        "workers": false,
+        "duration": true,
+        "makes": false
+      },
+      "defaults": {
+        "workers": 1,
+        "duration_s": 3600
+      },
+      "makes_key": null,
+      "makes_sample": [],
+      "chat_hint": "launch coches_1h"
+    },
+    {
+      "id": "coches_collect",
+      "source": "coches",
+      "summary": "coches.net Spain facet crawl → coches_data.csv",
+      "notes": "Requires coches scraper on the branch (PR cursor/coches-es-scraper-1a84 if not yet on main).",
+      "workers": "1",
+      "duration_default": "0 (until exhausted)",
+      "supports": {
+        "workers": false,
+        "duration": true,
+        "makes": false
+      },
+      "defaults": {
+        "workers": 1,
+        "duration_s": 0
+      },
+      "makes_key": null,
+      "makes_sample": [],
+      "chat_hint": "launch coches_collect"
     },
     {
       "id": "ka_all",
       "source": "kleinanzeigen",
       "summary": "Kleinanzeigen SERP+enrich for all makes in one process",
+      "notes": null,
       "workers": "1",
-      "duration_default": "none"
-    },
-    {
-      "id": "ka_shard",
-      "source": "kleinanzeigen",
-      "summary": "Parallel Kleinanzeigen workers — splits makes across N agents",
-      "workers": "param (default 5)",
-      "duration_default": "none"
+      "duration_default": "none",
+      "supports": {
+        "workers": false,
+        "duration": false,
+        "makes": false
+      },
+      "defaults": {
+        "workers": 1,
+        "duration_s": null
+      },
+      "makes_key": null,
+      "makes_sample": [],
+      "chat_hint": "launch ka_all"
     },
     {
       "id": "ka_pack5",
       "source": "kleinanzeigen",
-      "summary": "Preset 5-worker Kleinanzeigen pack",
-      "workers": "5",
-      "duration_default": "none"
+      "summary": "Preset 5-worker Kleinanzeigen pack (equal make shards)",
+      "notes": null,
+      "workers": "param (default 5)",
+      "duration_default": "none",
+      "supports": {
+        "workers": true,
+        "duration": false,
+        "makes": true
+      },
+      "defaults": {
+        "workers": 5,
+        "duration_s": null
+      },
+      "makes_key": "kleinanzeigen_makes",
+      "makes_sample": [
+        "bmw",
+        "volkswagen",
+        "audi",
+        "mercedes_benz",
+        "opel",
+        "ford",
+        "renault",
+        "skoda"
+      ],
+      "chat_hint": "launch ka_pack5"
+    },
+    {
+      "id": "ka_shard",
+      "source": "kleinanzeigen",
+      "summary": "Parallel Kleinanzeigen workers — splits makes across N cloud agents",
+      "notes": null,
+      "workers": "param (default 5)",
+      "duration_default": "none",
+      "supports": {
+        "workers": true,
+        "duration": false,
+        "makes": true
+      },
+      "defaults": {
+        "workers": 5,
+        "duration_s": null
+      },
+      "makes_key": "kleinanzeigen_makes",
+      "makes_sample": [
+        "bmw",
+        "volkswagen",
+        "audi",
+        "mercedes_benz",
+        "opel",
+        "ford",
+        "renault",
+        "skoda"
+      ],
+      "chat_hint": "launch ka_shard"
+    },
+    {
+      "id": "willhaben_1h",
+      "source": "willhaben",
+      "summary": "Willhaben direct crawl capped at 1 hour",
+      "notes": null,
+      "workers": "1",
+      "duration_default": "3600s",
+      "supports": {
+        "workers": false,
+        "duration": true,
+        "makes": false
+      },
+      "defaults": {
+        "workers": 1,
+        "duration_s": 3600
+      },
+      "makes_key": null,
+      "makes_sample": [],
+      "chat_hint": "launch willhaben_1h"
+    },
+    {
+      "id": "willhaben_direct",
+      "source": "willhaben",
+      "summary": "Willhaben AT car listings (direct Chrome TLS / __NEXT_DATA__)",
+      "notes": null,
+      "workers": "1",
+      "duration_default": "3600s",
+      "supports": {
+        "workers": false,
+        "duration": true,
+        "makes": false
+      },
+      "defaults": {
+        "workers": 1,
+        "duration_s": 3600
+      },
+      "makes_key": null,
+      "makes_sample": [],
+      "chat_hint": "launch willhaben_direct"
     }
-  ]
+  ],
+  "makes": {
+    "kleinanzeigen_makes": [
+      "bmw",
+      "volkswagen",
+      "audi",
+      "mercedes_benz",
+      "opel",
+      "ford",
+      "renault",
+      "skoda",
+      "toyota",
+      "hyundai",
+      "seat",
+      "peugeot",
+      "mazda",
+      "fiat",
+      "citroen",
+      "nissan",
+      "volvo",
+      "porsche",
+      "mini",
+      "kia",
+      "dacia",
+      "tesla",
+      "cupra",
+      "suzuki",
+      "mitsubishi",
+      "honda",
+      "jeep",
+      "alfa_romeo",
+      "land_rover",
+      "smart",
+      "chevrolet",
+      "mg",
+      "byd"
+    ],
+    "autoscout_makes": [
+      "bmw",
+      "volkswagen",
+      "audi",
+      "mercedes-benz",
+      "skoda",
+      "ford",
+      "opel",
+      "renault",
+      "toyota",
+      "hyundai",
+      "seat",
+      "peugeot",
+      "mazda",
+      "volvo",
+      "porsche",
+      "tesla",
+      "kia",
+      "cupra",
+      "mini",
+      "fiat",
+      "dacia",
+      "citroen",
+      "nissan",
+      "suzuki",
+      "mitsubishi",
+      "jeep",
+      "land-rover",
+      "alfa-romeo",
+      "honda",
+      "mg",
+      "smart",
+      "subaru",
+      "lexus",
+      "jaguar",
+      "byd"
+    ]
+  }
 }
