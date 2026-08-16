@@ -22,16 +22,21 @@ function niceSource(id) {
   return SOURCE_LABEL[id] || id || "—";
 }
 
+/** Display timestamps in Vienna local time (stored values stay UTC). */
+const DISPLAY_TZ = "Europe/Vienna";
+
 function formatWhen(iso) {
   if (!iso) return "—";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return escapeHtml(iso);
-  return d.toLocaleString(undefined, {
+  return d.toLocaleString("de-AT", {
+    timeZone: DISPLAY_TZ,
     year: "numeric",
     month: "short",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    timeZoneName: "short",
   });
 }
 
