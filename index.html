@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/dashboard.css?v=20260816-launch-app" />
+    <link rel="stylesheet" href="assets/dashboard.css?v=20260817-wave" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
@@ -247,11 +247,9 @@
           <div class="section-head-copy">
             <h2>Crawl monitor</h2>
             <p>
-              Start a catalog job from this page — <strong>Launch in Cursor</strong>
-              opens the Cursor <em>app</em> with a pre-filled prompt (not the
-              browser login page). Prefer <strong>Copy prompt</strong> if the
-              app deeplink is blocked. Status publishes to
-              <code>listings-atlas-</code> without redeploying the site pack.
+              Compose a crawl wave here, press <strong>Launch wave</strong>, then
+              monitor workers on this board. The button calls your Cursor
+              Automation webhook — no prompt pasting.
             </p>
           </div>
           <button type="button" class="btn ghost board-refresh" id="crawls-refresh" data-board="crawls">
@@ -260,26 +258,60 @@
         </div>
 
         <div class="crawl-catalog">
-          <div class="chart-label">Start a crawl</div>
+          <div class="chart-label">Compose a crawl wave</div>
           <p class="crawl-hint crawl-launch-intro">
-            Pick a job, tweak workers / duration / makes if needed, then
-            <strong>Launch in Cursor</strong> (opens the desktop/mobile Cursor app)
-            or <strong>Copy prompt</strong> into Agent chat.
-            Duration <code>0</code> means full scrape until exhausted.
+            Tick the sources you want, set workers / duration / makes, then
+            <strong>Launch wave</strong>. Duration <code>0</code> = full scrape
+            until exhausted. Status publishes to this board — tap
+            <strong>Refresh</strong> after launch.
           </p>
+
+          <details class="crawl-automation-settings" id="crawl-automation-settings">
+            <summary>Automation webhook (once per browser)</summary>
+            <p class="crawl-hint">
+              From <a href="https://cursor.com/automations" target="_blank" rel="noopener noreferrer">cursor.com/automations</a>:
+              paste the webhook URL and the Bearer token (Generate authentication header).
+              Stored only on this phone/laptop — never committed.
+            </p>
+            <p class="crawl-hint">
+              Automation prompt: paste <code>daq/jobs/WAVE_AUTOMATION.md</code>
+              from the Cursor repo into the automation instructions.
+            </p>
+            <label class="crawl-launch-field crawl-launch-field--makes">Webhook URL
+              <input id="crawl-webhook-url" type="url" autocomplete="off" spellcheck="false" placeholder="https://api2.cursor.sh/automations/webhook/…" />
+            </label>
+            <label class="crawl-launch-field crawl-launch-field--makes">Bearer token
+              <input id="crawl-webhook-token" type="password" autocomplete="off" spellcheck="false" placeholder="crsr_… or Bearer crsr_…" />
+            </label>
+            <button type="button" class="btn ghost" id="crawl-webhook-save">Save on this device</button>
+          </details>
+
+          <label class="crawl-launch-field">Wave name
+            <input id="crawl-wave-name" type="text" maxlength="40" placeholder="eu-nightly" autocomplete="off" />
+          </label>
+
           <div id="crawl-jobs" class="crawl-jobs"></div>
+
+          <div class="crawl-wave-bar">
+            <span id="crawl-wave-summary">Select jobs below, then Launch wave</span>
+            <button type="button" class="btn primary" id="crawl-wave-launch" disabled>Launch wave</button>
+          </div>
+          <p class="crawl-wave-status" id="crawl-wave-status" hidden></p>
         </div>
 
         <ol class="crawl-phone-steps">
-          <li>Open this page (bookmark on phone).</li>
-          <li>Under <strong>Start a crawl</strong>, tap <strong>Launch in Cursor</strong> on a job.</li>
-          <li>Confirm the prompt in Cursor — it spawns cloud workers via the launch-crawl skill.</li>
-          <li>Come back here: tap <strong>Refresh</strong> to see Running / Queued / Finished.</li>
-          <li>Open Agent / PR links from the runs table when you need detail.</li>
+          <li>Once: open <strong>Automation webhook</strong>, paste URL + Bearer, Save.</li>
+          <li>Tick jobs, optional params, <strong>Launch wave</strong>.</li>
+          <li>Tap <strong>Refresh</strong> to see Running / Queued / Finished.</li>
+          <li>Open Agent / PR links from the table when you need detail.</li>
         </ol>
 
         <div class="kpi-row" id="crawl-kpis"></div>
         <p class="crawl-board-meta" id="crawl-board-meta">Loading crawl status…</p>
+        <label class="crawl-wave-filter" id="crawl-wave-filter-label" hidden>
+          <input type="checkbox" id="crawl-filter-wave" />
+          <span id="crawl-filter-wave-text"></span>
+        </label>
 
         <div class="table-wrap crawl-table-wrap">
           <table class="results crawl-table" id="crawl-runs-table">
@@ -400,6 +432,6 @@
       <span>Willhaben · AutoScout24 · Kleinanzeigen</span>
     </footer>
 
-    <script src="assets/dashboard.js?v=20260816-launch-app" type="module"></script>
+    <script src="assets/dashboard.js?v=20260817-wave" type="module"></script>
   </body>
 </html>
