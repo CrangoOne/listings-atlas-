@@ -936,7 +936,7 @@ body {
 
 .crawl-job-row {
   display: grid;
-  grid-template-columns: minmax(9rem, 12rem) 1fr minmax(9rem, 11rem);
+  grid-template-columns: minmax(10rem, 13rem) 1fr;
   gap: 0.85rem 1.25rem;
   padding: 1rem 0;
   border-bottom: 1px solid var(--line);
@@ -951,6 +951,26 @@ body {
 }
 
 .crawl-job-id code {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.crawl-job-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.crawl-job-check input {
+  margin-top: 0.25rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  accent-color: var(--accent-deep);
+}
+
+.crawl-job-check code {
   font-size: 0.88rem;
   font-weight: 600;
 }
@@ -1033,6 +1053,56 @@ body {
   flex-direction: column;
   gap: 0.45rem;
   align-items: stretch;
+}
+
+.crawl-wave-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+  margin: 1rem 0 0.35rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  position: sticky;
+  bottom: 0;
+  background: var(--paper, #f6f3ec);
+  z-index: 2;
+}
+
+.crawl-wave-status {
+  margin: 0.35rem 0 0;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.crawl-wave-status--error {
+  color: #9f1239;
+}
+
+.crawl-automation-settings {
+  margin: 0.85rem 0 1rem;
+  padding: 0.65rem 0;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+}
+
+.crawl-automation-settings summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.crawl-automation-settings .crawl-launch-field {
+  margin: 0.65rem 0;
+}
+
+.crawl-wave-filter {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
 }
 
 .crawl-job-actions .btn {
