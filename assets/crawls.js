@@ -1,3 +1,12 @@
+import {
+  loadWebhookSettings,
+  saveWebhookSettings,
+  lastWaveId,
+  rememberWaveId,
+  buildWavePayload,
+  postCrawlWave,
+} from "./crawl_wave.js?v=20260817-wave";
+
 const SOURCE_LABEL = {
   willhaben: "Willhaben",
   autoscout: "AutoScout24",
@@ -7,9 +16,6 @@ const SOURCE_LABEL = {
 };
 
 const STATUS_ORDER = ["running", "queued", "failed", "finished", "cancelled"];
-
-const PROMPT_DEEPLINK_APP = "cursor://anysphere.cursor-deeplink/prompt";
-const PROMPT_DEEPLINK_WEB = "https://cursor.com/link/prompt";
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -113,7 +119,9 @@ function renderRunsTable(runs) {
         <td><span class="crawl-status crawl-status--${escapeHtml(r.status || "queued")}">${escapeHtml(r.status || "queued")}</span></td>
         <td>
           <div class="crawl-job">${escapeHtml(r.job_id || "—")}</div>
-          <div class="crawl-meta">${escapeHtml(r.worker_id || "")}</div>
+          <div class="crawl-meta">${escapeHtml(r.worker_id || "")}${
+            r.wave_id ? ` · ${escapeHtml(r.wave_id)}` : ""
+          }</div>
         </td>
         <td>${escapeHtml(niceSource(r.source))}</td>
         <td class="crawl-makes" title="${escapeHtml(makes)}">${escapeHtml(makes)}</td>
@@ -150,110 +158,128 @@ function readJobParams(article) {
   return { workers, durationS, makes };
 }
 
-/** Short coordinator prompt — opens Cursor chat; agent expands via launch-crawl skill. */
-function buildLaunchPrompt(job, { workers, durationS, makes }) {
-  const parts = [
-    `Launch the DAQ crawl job \`${job.id}\` using the launch-crawl skill in this repo.`,
-  ];
-  if (workers != null) parts.push(`Use ${workers} workers.`);
-  if (makes) parts.push(`Only these makes: ${makes}.`);
-  if (durationS === 0) {
-    parts.push("Full scrape (duration 0 — run until exhausted).");
-  } else if (durationS != null) {
-    parts.push(`Time cap: ${durationS} seconds.`);
-  } else {
-    parts.push("Use the catalog defaults for duration.");
-  }
-  parts.push(
-    "Resolve with `python3 daq/jobs/launch_crawl.py prompt … --json`, spawn one cloud worker per shard, update `docs/data/crawl_status.json`, and publish with `python3 daq/jobs/publish_crawl_status.py`."
-  );
-  return parts.join(" ");
-}
-
-/** Native app deeplink (preferred) — skips cursor.com browser auth. */
-function promptDeeplink(text, { web = false } = {}) {
-  const base = web ? PROMPT_DEEPLINK_WEB : PROMPT_DEEPLINK_APP;
-  return `${base}?text=${encodeURIComponent(text)}`;
-}
-
-function flashButton(btn, label) {
-  const prev = btn.textContent;
-  btn.textContent = label;
-  btn.disabled = true;
-  window.setTimeout(() => {
-    btn.textContent = prev;
-    btn.disabled = false;
-  }, 1400);
-}
-
-function bindJobLaunch(root, jobsById) {
+function collectSelectedJobs(jobsById) {
+  const root = document.getElementById("crawl-jobs");
+  if (!root) return [];
+  const selected = [];
   root.querySelectorAll("[data-job-id]").forEach((article) => {
-    const jobId = article.getAttribute("data-job-id");
-    const job = jobsById.get(jobId);
+    const box = article.querySelector("[data-wave-include]");
+    if (!box?.checked) return;
+    const job = jobsById.get(article.getAttribute("data-job-id"));
     if (!job) return;
-    const launchBtn = article.querySelector("[data-action=launch]");
-    const webBtn = article.querySelector("[data-action=launch-web]");
-    const copyBtn = article.querySelector("[data-action=copy]");
-    const preview = article.querySelector("[data-prompt-preview]");
+    const { workers, durationS, makes } = readJobParams(article);
+    const entry = { job_id: job.id, source: job.source || null };
+    if (job.supports?.workers && workers != null) entry.workers = workers;
+    if (job.supports?.duration && durationS != null) entry.duration_s = durationS;
+    if (job.supports?.makes && makes) entry.makes = makes;
+    selected.push(entry);
+  });
+  return selected;
+}
 
-    const refreshPreview = () => {
-      const prompt = buildLaunchPrompt(job, readJobParams(article));
-      if (preview) preview.textContent = prompt;
-      const appHref = promptDeeplink(prompt, { web: false });
-      const webHref = promptDeeplink(prompt, { web: true });
-      const tooLong = appHref.length > 7800 || webHref.length > 7800;
-      if (launchBtn) {
-        if (tooLong) {
-          launchBtn.setAttribute("aria-disabled", "true");
-          launchBtn.removeAttribute("href");
-          launchBtn.title =
-            "Prompt too long for a deeplink — narrow makes or use Copy prompt";
-        } else {
-          launchBtn.removeAttribute("aria-disabled");
-          launchBtn.href = appHref;
-          launchBtn.title = "Open the Cursor app with this launch prompt";
-        }
-      }
-      if (webBtn) {
-        if (tooLong) {
-          webBtn.setAttribute("aria-disabled", "true");
-          webBtn.removeAttribute("href");
-        } else {
-          webBtn.removeAttribute("aria-disabled");
-          webBtn.href = webHref;
-        }
-      }
-      return prompt;
-    };
+function setWaveStatus(message, { error = false } = {}) {
+  const el = document.getElementById("crawl-wave-status");
+  if (!el) return;
+  el.hidden = !message;
+  el.textContent = message || "";
+  el.classList.toggle("crawl-wave-status--error", Boolean(error));
+}
 
-    article.querySelectorAll("[data-param]").forEach((el) => {
-      el.addEventListener("input", refreshPreview);
-      el.addEventListener("change", refreshPreview);
+function refreshWaveSummary(jobsById) {
+  const n = collectSelectedJobs(jobsById).length;
+  const summary = document.getElementById("crawl-wave-summary");
+  const launchBtn = document.getElementById("crawl-wave-launch");
+  if (summary) {
+    summary.textContent = n
+      ? `${n} job${n === 1 ? "" : "s"} in this wave`
+      : "Select jobs below, then Launch wave";
+  }
+  if (launchBtn) launchBtn.disabled = n < 1;
+}
+
+function bindWebhookSettings() {
+  const urlEl = document.getElementById("crawl-webhook-url");
+  const tokenEl = document.getElementById("crawl-webhook-token");
+  const saveBtn = document.getElementById("crawl-webhook-save");
+  const saved = loadWebhookSettings();
+  if (urlEl && !urlEl.value) urlEl.value = saved.url;
+  if (tokenEl && saved.token && !tokenEl.value) {
+    tokenEl.placeholder = "Bearer token saved on this device";
+  }
+  const details = document.getElementById("crawl-automation-settings");
+  if (details && !saved.url) details.open = true;
+  if (saveBtn?.dataset.bound) return;
+  if (saveBtn) saveBtn.dataset.bound = "1";
+  saveBtn?.addEventListener("click", () => {
+    const url = urlEl?.value?.trim() || "";
+    const token = tokenEl?.value?.trim() || loadWebhookSettings().token;
+    if (!url || !token) {
+      setWaveStatus("Need both webhook URL and Bearer token.", { error: true });
+      return;
+    }
+    saveWebhookSettings({ url, token });
+    if (tokenEl) {
+      tokenEl.value = "";
+      tokenEl.placeholder = "Bearer token saved on this device";
+    }
+    setWaveStatus("Automation credentials saved in this browser only.");
+  });
+  const filter = document.getElementById("crawl-filter-wave");
+  filter?.addEventListener("change", () => {
+    initCrawls();
+  });
+}
+
+let currentJobsById = new Map();
+
+function bindWaveComposer(jobsById) {
+  currentJobsById = jobsById;
+  const root = document.getElementById("crawl-jobs");
+  const launchBtn = document.getElementById("crawl-wave-launch");
+  root?.querySelectorAll("[data-wave-include]").forEach((box) => {
+    box.addEventListener("change", () => refreshWaveSummary(currentJobsById));
+  });
+  refreshWaveSummary(currentJobsById);
+  if (launchBtn?.dataset.bound) return;
+  if (launchBtn) launchBtn.dataset.bound = "1";
+
+  launchBtn?.addEventListener("click", async () => {
+    const jobs = collectSelectedJobs(currentJobsById);
+    if (!jobs.length) {
+      setWaveStatus("Select at least one job.", { error: true });
+      return;
+    }
+    const settings = loadWebhookSettings();
+    const urlEl = document.getElementById("crawl-webhook-url");
+    const tokenEl = document.getElementById("crawl-webhook-token");
+    const nameEl = document.getElementById("crawl-wave-name");
+    const url = urlEl?.value?.trim() || settings.url;
+    const token = tokenEl?.value?.trim() || settings.token;
+    if (!url || !token) {
+      document.getElementById("crawl-automation-settings")?.setAttribute("open", "");
+      setWaveStatus("Save the automation webhook URL and Bearer token first.", {
+        error: true,
+      });
+      return;
+    }
+    saveWebhookSettings({ url, token });
+    const payload = buildWavePayload({
+      name: nameEl?.value?.trim() || "",
+      jobs,
     });
-    refreshPreview();
-
-    launchBtn?.addEventListener("click", (ev) => {
-      if (!launchBtn.getAttribute("href")) {
-        ev.preventDefault();
-        window.alert(
-          "Prompt is too long for a Cursor deeplink. Narrow the makes list, then try again — or use Copy prompt."
-        );
-        return;
-      }
-      // Custom schemes should not open via target=_blank (blank tab + auth wall).
-      ev.preventDefault();
-      window.location.href = launchBtn.href;
-    });
-
-    copyBtn?.addEventListener("click", async () => {
-      const prompt = refreshPreview();
-      try {
-        await navigator.clipboard.writeText(prompt);
-        flashButton(copyBtn, "Copied");
-      } catch {
-        window.prompt("Copy this launch prompt:", prompt);
-      }
-    });
+    launchBtn.disabled = true;
+    setWaveStatus(`Launching ${payload.wave_id}…`);
+    try {
+      await postCrawlWave(payload, { url, token });
+      rememberWaveId(payload.wave_id);
+      setWaveStatus(
+        `Wave ${payload.wave_id} sent. Watch this board — tap Refresh in a minute.`
+      );
+    } catch (err) {
+      setWaveStatus(err.message || String(err), { error: true });
+    } finally {
+      refreshWaveSummary(currentJobsById);
+    }
   });
 }
 
@@ -294,7 +320,10 @@ function renderJobCatalog(jobs) {
   root.innerHTML = jobs
     .map(
       (j) => `<article class="crawl-job-row" data-job-id="${escapeHtml(j.id)}">
-        <div class="crawl-job-id"><code>${escapeHtml(j.id)}</code></div>
+        <label class="crawl-job-check">
+          <input type="checkbox" data-wave-include />
+          <code>${escapeHtml(j.id)}</code>
+        </label>
         <div class="crawl-job-copy">
           <strong>${escapeHtml(niceSource(j.source))}</strong>
           <span>${escapeHtml(j.summary || "")}</span>
@@ -304,17 +333,11 @@ function renderJobCatalog(jobs) {
             <span>${escapeHtml(j.duration_default || "—")}</span>
           </div>
           ${paramFields(j)}
-          <p class="crawl-prompt-preview" data-prompt-preview></p>
-        </div>
-        <div class="crawl-job-actions">
-          <a class="btn primary" data-action="launch">Launch in Cursor</a>
-          <button type="button" class="btn ghost" data-action="copy">Copy prompt</button>
-          <a class="crawl-launch-web" data-action="launch-web" target="_blank" rel="noopener noreferrer">Web link</a>
         </div>
       </article>`
     )
     .join("");
-  bindJobLaunch(root, jobsById);
+  bindWaveComposer(jobsById);
 }
 
 /** Live board on the public Pages repo — agents push this file; no site-pack redeploy. */
@@ -347,22 +370,34 @@ async function fetchJsonPreferLive(liveUrl, localUrl) {
 
 export async function initCrawls() {
   const meta = document.getElementById("crawl-board-meta");
+  bindWebhookSettings();
   try {
     const [statusPack, jobsPack] = await Promise.all([
       fetchJsonPreferLive(LIVE_STATUS_URL, "data/crawl_status.json"),
       fetchJsonPreferLive(LIVE_JOBS_URL, "data/crawl_jobs.json").catch(() => null),
     ]);
     const status = statusPack.data;
-    const runs = Array.isArray(status.runs) ? status.runs : [];
+    let runs = Array.isArray(status.runs) ? status.runs : [];
+    const waveFilter = lastWaveId();
+    const onlyWave = document.getElementById("crawl-filter-wave")?.checked;
+    if (onlyWave && waveFilter) {
+      runs = runs.filter((r) => r.wave_id === waveFilter);
+    }
     renderCrawlKpis(runs, status.updated_at);
     renderRunsTable(runs);
+    const filterHint = document.getElementById("crawl-wave-filter-label");
+    if (filterHint) {
+      filterHint.hidden = !waveFilter;
+      const label = document.getElementById("crawl-filter-wave-text");
+      if (label) label.textContent = waveFilter ? `Only ${waveFilter}` : "";
+    }
     if (meta) {
       const source = statusPack.url.includes("raw.githubusercontent.com")
         ? "live listings-atlas-"
         : "local data/";
       meta.textContent = runs.length
         ? `${runs.length} run(s) · ${source}`
-        : "Board is empty — launch a catalog job below, then publish crawl_status.json.";
+        : "Board is empty — compose a wave above, Launch, then Refresh.";
     }
     if (jobsPack?.data) {
       renderJobCatalog(jobsPack.data.jobs || []);
