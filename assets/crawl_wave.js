@@ -1,17 +1,23 @@
 const LS_URL = "listings-atlas.crawlWebhookUrl";
 const LS_TOKEN = "listings-atlas.crawlWebhookToken";
+const LS_GH = "listings-atlas.githubToken";
 const LS_LAST_WAVE = "listings-atlas.lastWaveId";
+
+const GH_REPO = "CrangoOne/listings-atlas-";
+const GH_WAVE_PATH = "data/pending_wave.json";
 
 export function loadWebhookSettings() {
   return {
     url: (localStorage.getItem(LS_URL) || "").trim(),
     token: (localStorage.getItem(LS_TOKEN) || "").trim(),
+    ghToken: (localStorage.getItem(LS_GH) || "").trim(),
   };
 }
 
-export function saveWebhookSettings({ url, token }) {
-  localStorage.setItem(LS_URL, (url || "").trim());
-  localStorage.setItem(LS_TOKEN, (token || "").trim());
+export function saveWebhookSettings({ url, token, ghToken }) {
+  if (url != null) localStorage.setItem(LS_URL, String(url).trim());
+  if (token != null) localStorage.setItem(LS_TOKEN, String(token).trim());
+  if (ghToken != null) localStorage.setItem(LS_GH, String(ghToken).trim());
 }
 
 export function lastWaveId() {
@@ -91,7 +97,60 @@ function looksLikeWebhookUrl(url) {
   }
 }
 
-export async function postCrawlWave(payload, { url, token }) {
+function utf8ToBase64(text) {
+  const bytes = new TextEncoder().encode(text);
+  let bin = "";
+  bytes.forEach((b) => {
+    bin += String.fromCharCode(b);
+  });
+  return btoa(bin);
+}
+
+function ghHeaders(ghToken) {
+  const auth = ghToken.toLowerCase().startsWith("bearer ")
+    ? ghToken
+    : `Bearer ${ghToken}`;
+  return {
+    Authorization: auth,
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    "Content-Type": "application/json",
+  };
+}
+
+/** Queue the wave via GitHub Contents API (CORS-ok from Pages). */
+export async function queueWaveOnGitHub(payload, ghToken) {
+  if (!ghToken) throw new Error("Save a GitHub token with Contents write on listings-atlas-.");
+  const api = `https://api.github.com/repos/${GH_REPO}/contents/${GH_WAVE_PATH}`;
+  const headers = ghHeaders(ghToken);
+  let sha;
+  const getRes = await fetch(api, { headers, cache: "no-store" });
+  if (getRes.ok) {
+    const current = await getRes.json();
+    sha = current.sha;
+  } else if (getRes.status !== 404) {
+    const t = await getRes.text();
+    throw new Error(`GitHub GET pending_wave ${getRes.status}: ${t.slice(0, 200)}`);
+  }
+  const body = {
+    message: `chore(crawl): queue ${payload.wave_id}`,
+    content: utf8ToBase64(`${JSON.stringify(payload, null, 2)}\n`),
+    branch: "main",
+  };
+  if (sha) body.sha = sha;
+  const putRes = await fetch(api, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(body),
+  });
+  const text = await putRes.text();
+  if (!putRes.ok) {
+    throw new Error(`GitHub queue ${putRes.status}: ${text.slice(0, 240)}`);
+  }
+  return { status: putRes.status, via: "github" };
+}
+
+export async function postCrawlWaveDirect(payload, { url, token }) {
   if (!url) throw new Error("Save the automation webhook URL first.");
   if (!token) throw new Error("Save the automation Bearer token first.");
   if (!looksLikeWebhookUrl(url)) {
@@ -106,23 +165,12 @@ export async function postCrawlWave(payload, { url, token }) {
     "Content-Type": "application/json",
     Accept: "application/json",
   };
-  let res;
-  try {
-    res = await fetch(url, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(payload),
-      mode: "cors",
-    });
-  } catch (err) {
-    const msg = err?.message || String(err);
-    if (/failed to fetch|networkerror|cors/i.test(msg)) {
-      throw new Error(
-        "Browser blocked the webhook (CORS or network). Check the URL/token, or run the automation once from cursor.com/automations to confirm the endpoint."
-      );
-    }
-    throw err;
-  }
+  const res = await fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+    mode: "cors",
+  });
   const bodyText = await res.text();
   let body = bodyText;
   try {
@@ -137,5 +185,29 @@ export async function postCrawlWave(payload, { url, token }) {
       res.statusText;
     throw new Error(`Webhook ${res.status}: ${detail}`);
   }
-  return { status: res.status, body };
+  return { status: res.status, body, via: "webhook" };
+}
+
+/**
+ * Phone/Pages cannot POST to Cursor webhooks (no Access-Control-Allow-Origin).
+ * Prefer GitHub queue; fall back to direct webhook.
+ */
+export async function postCrawlWave(payload, settings) {
+  const { url, token, ghToken } = settings;
+  if (ghToken) {
+    return queueWaveOnGitHub(payload, ghToken);
+  }
+  try {
+    return await postCrawlWaveDirect(payload, { url, token });
+  } catch (err) {
+    const msg = err?.message || String(err);
+    if (/failed to fetch|networkerror|cors/i.test(msg)) {
+      throw new Error(
+        "Launch failed: GitHub Pages cannot call the Cursor webhook (browser CORS). " +
+          "Paste your listings-atlas- GitHub PAT (Contents: Read and write) in settings, " +
+          "and add repo secrets CRAWL_WAVE_WEBHOOK_URL + CRAWL_WAVE_WEBHOOK_BEARER, then Launch again."
+      );
+    }
+    throw new Error(msg.startsWith("Launch failed") ? msg : `Launch failed: ${msg}`);
+  }
 }
