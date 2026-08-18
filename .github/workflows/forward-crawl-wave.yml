@@ -1,0 +1,41 @@
+name: Forward crawl wave
+
+on:
+  push:
+    paths:
+      - data/pending_wave.json
+  workflow_dispatch:
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: POST wave to Cursor automation
+        env:
+          URL: ${{ secrets.CRAWL_WAVE_WEBHOOK_URL }}
+          TOKEN: ${{ secrets.CRAWL_WAVE_WEBHOOK_BEARER }}
+        run: |
+          set -euo pipefail
+          if [ -z "${URL:-}" ] || [ -z "${TOKEN:-}" ]; then
+            echo "Set repository secrets CRAWL_WAVE_WEBHOOK_URL and CRAWL_WAVE_WEBHOOK_BEARER."
+            exit 1
+          fi
+          if [ ! -f data/pending_wave.json ]; then
+            echo "No data/pending_wave.json"
+            exit 1
+          fi
+          python3 -c 'import json,pathlib; p=json.loads(pathlib.Path("data/pending_wave.json").read_text()); assert p.get("kind")=="listings-atlas-crawl-wave", p.get("kind"); print("wave_id=%s jobs=%s" % (p.get("wave_id"), len(p.get("jobs") or [])))'
+          AUTH="$TOKEN"
+          case "$AUTH" in
+            Bearer\ *|bearer\ *) ;;
+            *) AUTH="Bearer $TOKEN" ;;
+          esac
+          curl -sS -f -X POST "$URL" \
+            -H "Authorization: $AUTH" \
+            -H "Content-Type: application/json" \
+            --data-binary @data/pending_wave.json
+          echo
+          echo "Forwarded to Cursor automation."
