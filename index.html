@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/dashboard.css?v=20260817-wave" />
+    <link rel="stylesheet" href="assets/dashboard.css?v=20260818-wave-proxy" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
@@ -269,18 +269,28 @@
           <details class="crawl-automation-settings" id="crawl-automation-settings">
             <summary>Automation webhook (once per browser)</summary>
             <p class="crawl-hint">
-              From <a href="https://cursor.com/automations" target="_blank" rel="noopener noreferrer">cursor.com/automations</a>:
-              paste the webhook URL and the Bearer token (Generate authentication header).
-              Stored only on this phone/laptop — never committed.
+              GitHub Pages cannot call Cursor webhooks directly (browser CORS).
+              Launch queues <code>data/pending_wave.json</code> on
+              <code>listings-atlas-</code>; an Action forwards it to Cursor.
+            </p>
+            <p class="crawl-hint">
+              Once: add secrets <code>CRAWL_WAVE_WEBHOOK_URL</code> and
+              <code>CRAWL_WAVE_WEBHOOK_BEARER</code> on the
+              <a href="https://github.com/CrangoOne/listings-atlas-/settings/secrets/actions" target="_blank" rel="noopener noreferrer">listings-atlas- Actions secrets</a>
+              page (same URL + Bearer you already generated). Then paste a GitHub
+              PAT with <strong>Contents: Read and write</strong> on that repo.
             </p>
             <p class="crawl-hint">
               Automation prompt: paste <code>daq/jobs/WAVE_AUTOMATION.md</code>
-              from the Cursor repo into the automation instructions.
+              into the Cursor automation instructions.
             </p>
-            <label class="crawl-launch-field crawl-launch-field--makes">Webhook URL
+            <label class="crawl-launch-field crawl-launch-field--makes">GitHub PAT (listings-atlas-)
+              <input id="crawl-github-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_… Contents write" />
+            </label>
+            <label class="crawl-launch-field crawl-launch-field--makes">Webhook URL (for the GitHub secret)
               <input id="crawl-webhook-url" type="url" autocomplete="off" spellcheck="false" placeholder="https://api2.cursor.sh/automations/webhook/…" />
             </label>
-            <label class="crawl-launch-field crawl-launch-field--makes">Bearer token
+            <label class="crawl-launch-field crawl-launch-field--makes">Bearer token (for the GitHub secret)
               <input id="crawl-webhook-token" type="password" autocomplete="off" spellcheck="false" placeholder="crsr_… or Bearer crsr_…" />
             </label>
             <button type="button" class="btn ghost" id="crawl-webhook-save">Save on this device</button>
@@ -300,7 +310,7 @@
         </div>
 
         <ol class="crawl-phone-steps">
-          <li>Once: open <strong>Automation webhook</strong>, paste URL + Bearer, Save.</li>
+          <li>Once: GitHub secrets on listings-atlas- + PAT in <strong>Automation webhook</strong>.</li>
           <li>Tick jobs, optional params, <strong>Launch wave</strong>.</li>
           <li>Tap <strong>Refresh</strong> to see Running / Queued / Finished.</li>
           <li>Open Agent / PR links from the table when you need detail.</li>
@@ -432,6 +442,6 @@
       <span>Willhaben · AutoScout24 · Kleinanzeigen</span>
     </footer>
 
-    <script src="assets/dashboard.js?v=20260817-wave" type="module"></script>
+    <script src="assets/dashboard.js?v=20260818-wave-proxy" type="module"></script>
   </body>
 </html>
