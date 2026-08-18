@@ -5,7 +5,7 @@ import {
   rememberWaveId,
   buildWavePayload,
   postCrawlWave,
-} from "./crawl_wave.js?v=20260817-wave";
+} from "./crawl_wave.js?v=20260818-wave-proxy";
 
 const SOURCE_LABEL = {
   willhaben: "Willhaben",
@@ -200,29 +200,41 @@ function refreshWaveSummary(jobsById) {
 function bindWebhookSettings() {
   const urlEl = document.getElementById("crawl-webhook-url");
   const tokenEl = document.getElementById("crawl-webhook-token");
+  const ghEl = document.getElementById("crawl-github-token");
   const saveBtn = document.getElementById("crawl-webhook-save");
   const saved = loadWebhookSettings();
   if (urlEl && !urlEl.value) urlEl.value = saved.url;
   if (tokenEl && saved.token && !tokenEl.value) {
     tokenEl.placeholder = "Bearer token saved on this device";
   }
+  if (ghEl && saved.ghToken && !ghEl.value) {
+    ghEl.placeholder = "GitHub PAT saved on this device";
+  }
   const details = document.getElementById("crawl-automation-settings");
-  if (details && !saved.url) details.open = true;
+  if (details && !saved.ghToken) details.open = true;
   if (saveBtn?.dataset.bound) return;
   if (saveBtn) saveBtn.dataset.bound = "1";
   saveBtn?.addEventListener("click", () => {
-    const url = urlEl?.value?.trim() || "";
+    const url = urlEl?.value?.trim() || saved.url;
     const token = tokenEl?.value?.trim() || loadWebhookSettings().token;
-    if (!url || !token) {
-      setWaveStatus("Need both webhook URL and Bearer token.", { error: true });
+    const ghToken = ghEl?.value?.trim() || loadWebhookSettings().ghToken;
+    if (!ghToken && !(url && token)) {
+      setWaveStatus(
+        "Need a listings-atlas- GitHub PAT (recommended) or webhook URL + Bearer.",
+        { error: true }
+      );
       return;
     }
-    saveWebhookSettings({ url, token });
-    if (tokenEl) {
+    saveWebhookSettings({ url, token, ghToken });
+    if (tokenEl && tokenEl.value) {
       tokenEl.value = "";
       tokenEl.placeholder = "Bearer token saved on this device";
     }
-    setWaveStatus("Automation credentials saved in this browser only.");
+    if (ghEl && ghEl.value) {
+      ghEl.value = "";
+      ghEl.placeholder = "GitHub PAT saved on this device";
+    }
+    setWaveStatus("Credentials saved in this browser only.");
   });
   const filter = document.getElementById("crawl-filter-wave");
   filter?.addEventListener("change", () => {
@@ -252,17 +264,20 @@ function bindWaveComposer(jobsById) {
     const settings = loadWebhookSettings();
     const urlEl = document.getElementById("crawl-webhook-url");
     const tokenEl = document.getElementById("crawl-webhook-token");
+    const ghEl = document.getElementById("crawl-github-token");
     const nameEl = document.getElementById("crawl-wave-name");
     const url = urlEl?.value?.trim() || settings.url;
     const token = tokenEl?.value?.trim() || settings.token;
-    if (!url || !token) {
+    const ghToken = ghEl?.value?.trim() || settings.ghToken;
+    if (!ghToken && !(url && token)) {
       document.getElementById("crawl-automation-settings")?.setAttribute("open", "");
-      setWaveStatus("Save the automation webhook URL and Bearer token first.", {
-        error: true,
-      });
+      setWaveStatus(
+        "Save a listings-atlas- GitHub PAT (Contents write), or webhook URL + Bearer.",
+        { error: true }
+      );
       return;
     }
-    saveWebhookSettings({ url, token });
+    saveWebhookSettings({ url, token, ghToken });
     const payload = buildWavePayload({
       name: nameEl?.value?.trim() || "",
       jobs,
@@ -270,10 +285,11 @@ function bindWaveComposer(jobsById) {
     launchBtn.disabled = true;
     setWaveStatus(`Launching ${payload.wave_id}…`);
     try {
-      await postCrawlWave(payload, { url, token });
+      const result = await postCrawlWave(payload, { url, token, ghToken });
       rememberWaveId(payload.wave_id);
+      const via = result?.via === "github" ? "queued on GitHub (Action forwards to Cursor)" : "sent to Cursor webhook";
       setWaveStatus(
-        `Wave ${payload.wave_id} sent. Watch this board — tap Refresh in a minute.`
+        `Wave ${payload.wave_id} ${via}. Tap Refresh in a minute.`
       );
     } catch (err) {
       setWaveStatus(err.message || String(err), { error: true });
