@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-20T15:10:44Z",
+  "updated_at": "2026-08-20T15:11:41Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -794,7 +794,7 @@
       "rows_added": null,
       "rows_total": 305325,
       "agent_url": "https://cursor.com/agents/bc-9ac07fe3-c5a1-5146-b222-17b179d2991b",
-      "pr_url": null,
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/112",
       "wave_id": "wave-20260820t150647z-5s96",
       "notes": "Running: incremental 1h crawl from 305325 known IDs; facets reset"
     }
