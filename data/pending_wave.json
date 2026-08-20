@@ -1,15 +1,15 @@
 {
   "kind": "listings-atlas-crawl-wave",
-  "wave_id": "wave-20260820t144531z-npad",
+  "wave_id": "wave-20260820t150647z-5s96",
   "name": null,
-  "requested_at": "2026-08-20T14:45:31Z",
+  "requested_at": "2026-08-20T15:06:47Z",
   "jobs": [
     {
-      "job_id": "coches_collect",
+      "job_id": "coches_1h",
       "source": "coches",
-      "duration_s": 360
+      "duration_s": 3600
     }
   ],
-  "prompt": "Launch Listings Atlas crawl wave `wave-20260820t144531z-npad`.\nYou are the crawl-wave dispatcher. Follow daq/jobs/WAVE_AUTOMATION.md and the launch-crawl skill.\nDo not ask for confirmation.\nJobs:\n- `coches_collect` --duration 360\nFor each job run `python3 daq/jobs/launch_crawl.py prompt <job_id> [flags] --wave-id wave-20260820t144531z-npad --json`, spawn one cloud worker per returned prompt, stamp wave_id on docs/data/crawl_status.json, and publish with python3 daq/jobs/publish_crawl_status.py.",
-  "text": "Launch Listings Atlas crawl wave `wave-20260820t144531z-npad`.\nYou are the crawl-wave dispatcher. Follow daq/jobs/WAVE_AUTOMATION.md and the launch-crawl skill.\nDo not ask for confirmation.\nJobs:\n- `coches_collect` --duration 360\nFor each job run `python3 daq/jobs/launch_crawl.py prompt <job_id> [flags] --wave-id wave-20260820t144531z-npad --json`, spawn one cloud worker per returned prompt, stamp wave_id on docs/data/crawl_status.json, and publish with python3 daq/jobs/publish_crawl_status.py."
+  "prompt": "Launch Listings Atlas crawl wave `wave-20260820t150647z-5s96`.\nYou are the crawl-wave dispatcher. Follow daq/jobs/WAVE_AUTOMATION.md and the launch-crawl skill.\nDo not ask for confirmation.\nJobs:\n- `coches_1h` --duration 3600\nFor each job run `python3 daq/jobs/launch_crawl.py prompt <job_id> [flags] --wave-id wave-20260820t150647z-5s96 --json`, spawn one cloud worker per returned prompt, stamp wave_id on docs/data/crawl_status.json, and publish with python3 daq/jobs/publish_crawl_status.py.",
+  "text": "Launch Listings Atlas crawl wave `wave-20260820t150647z-5s96`.\nYou are the crawl-wave dispatcher. Follow daq/jobs/WAVE_AUTOMATION.md and the launch-crawl skill.\nDo not ask for confirmation.\nJobs:\n- `coches_1h` --duration 3600\nFor each job run `python3 daq/jobs/launch_crawl.py prompt <job_id> [flags] --wave-id wave-20260820t150647z-5s96 --json`, spawn one cloud worker per returned prompt, stamp wave_id on docs/data/crawl_status.json, and publish with python3 daq/jobs/publish_crawl_status.py."
 }
