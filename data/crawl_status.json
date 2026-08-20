@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-20T14:23:48Z",
+  "updated_at": "2026-08-20T15:09:29Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -781,7 +781,23 @@
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/107",
       "wave_id": "wave-20260820t140712z-bekj",
       "notes": "Finished: +1133 rows (305325 unique), time cap 360s, 900 pages, 9/175 facets completed (~188.8 listings/min)"
+    },
+    {
+      "job_id": "coches_1h",
+      "source": "coches",
+      "worker_id": "coches_1h",
+      "branch": "cursor/daq-coches-1h-1a84",
+      "makes": null,
+      "status": "running",
+      "started_at": "2026-08-20T15:07:56Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-9ac07fe3-c5a1-5146-b222-17b179d2991b",
+      "pr_url": null,
+      "wave_id": "wave-20260820t150647z-5s96",
+      "notes": "Queued/spawned by dispatcher bc-9e23dcbe-6851-4ded-ae5e-6397f0b7419c; duration 3600s"
     }
   ],
-  "wave_id": "wave-20260820t140712z-bekj"
+  "wave_id": "wave-20260820t150647z-5s96"
 }
