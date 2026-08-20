@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-20T15:11:41Z",
+  "updated_at": "2026-08-20T15:35:25Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -788,15 +788,15 @@
       "worker_id": "coches_1h",
       "branch": "cursor/daq-coches-1h-1a84",
       "makes": null,
-      "status": "running",
+      "status": "finished",
       "started_at": "2026-08-20T15:09:20Z",
-      "finished_at": null,
-      "rows_added": null,
-      "rows_total": 305325,
+      "finished_at": "2026-08-20T15:31:04Z",
+      "rows_added": 3439,
+      "rows_total": 308764,
       "agent_url": "https://cursor.com/agents/bc-9ac07fe3-c5a1-5146-b222-17b179d2991b",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/112",
       "wave_id": "wave-20260820t150647z-5s96",
-      "notes": "Running: incremental 1h crawl from 305325 known IDs; facets reset"
+      "notes": "Finished: +3439 rows (308764 unique), 175/175 facets exhausted (~20m of 1h cap, 2982 pages, ~171.9 listings/min)"
     }
   ],
   "wave_id": "wave-20260820t150647z-5s96"
