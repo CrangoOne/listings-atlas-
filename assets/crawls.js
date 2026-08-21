@@ -5,7 +5,7 @@ import {
   rememberWaveId,
   buildWavePayload,
   postCrawlWave,
-} from "./crawl_wave.js?v=20260818-wave-proxy";
+} from "./crawl_wave.js?v=20260820-status-fresh";
 
 const SOURCE_LABEL = {
   willhaben: "Willhaben",
@@ -356,22 +356,42 @@ function renderJobCatalog(jobs) {
   bindWaveComposer(jobsById);
 }
 
-/** Live board on the public Pages repo — agents push this file; no site-pack redeploy. */
-const LIVE_STATUS_URL =
-  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_status.json";
-const LIVE_JOBS_URL =
-  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_jobs.json";
+/**
+ * Live board sources (newest first). Prefer CDNs that honor cache-bust query
+ * params. Avoid falling back to same-origin Pages `data/` while Pages is mid-
+ * build or failed — that copy goes stale and looks like “still 45 runs”.
+ */
+const LIVE_STATUS_URLS = [
+  "https://cdn.jsdelivr.net/gh/CrangoOne/listings-atlas-@main/data/crawl_status.json",
+  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_status.json",
+];
+const LIVE_JOBS_URLS = [
+  "https://cdn.jsdelivr.net/gh/CrangoOne/listings-atlas-@main/data/crawl_jobs.json",
+  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_jobs.json",
+];
 
-async function fetchJsonPreferLive(liveUrl, localUrl) {
-  const bust = `t=${Date.now()}`;
-  const candidates = [
-    `${liveUrl}${liveUrl.includes("?") ? "&" : "?"}${bust}`,
-    `${localUrl}${localUrl.includes("?") ? "&" : "?"}${bust}`,
-  ];
+function withCacheBust(url) {
+  const sep = url.includes("?") ? "&" : "?";
+  return `${url}${sep}t=${Date.now()}&r=${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function isHostedAtlas() {
+  return /\.github\.io$/i.test(window.location.hostname);
+}
+
+async function fetchJsonPreferLive(liveUrls, localUrl) {
+  const candidates = liveUrls.map(withCacheBust);
+  // Local/relative is for laptop preview only — not the public Pages deploy.
+  if (localUrl && !isHostedAtlas()) {
+    candidates.push(withCacheBust(localUrl));
+  }
   let lastErr = null;
   for (const url of candidates) {
     try {
-      const res = await fetch(url, { cache: "no-store" });
+      const res = await fetch(url, {
+        cache: "no-store",
+        headers: { Accept: "application/json" },
+      });
       if (!res.ok) {
         lastErr = new Error(`${url} (${res.status})`);
         continue;
@@ -389,11 +409,12 @@ export async function initCrawls() {
   bindWebhookSettings();
   try {
     const [statusPack, jobsPack] = await Promise.all([
-      fetchJsonPreferLive(LIVE_STATUS_URL, "data/crawl_status.json"),
-      fetchJsonPreferLive(LIVE_JOBS_URL, "data/crawl_jobs.json").catch(() => null),
+      fetchJsonPreferLive(LIVE_STATUS_URLS, "data/crawl_status.json"),
+      fetchJsonPreferLive(LIVE_JOBS_URLS, "data/crawl_jobs.json").catch(() => null),
     ]);
     const status = statusPack.data;
     let runs = Array.isArray(status.runs) ? status.runs : [];
+    const totalRuns = runs.length;
     const waveFilter = lastWaveId();
     const onlyWave = document.getElementById("crawl-filter-wave")?.checked;
     if (onlyWave && waveFilter) {
@@ -408,11 +429,18 @@ export async function initCrawls() {
       if (label) label.textContent = waveFilter ? `Only ${waveFilter}` : "";
     }
     if (meta) {
-      const source = statusPack.url.includes("raw.githubusercontent.com")
-        ? "live listings-atlas-"
-        : "local data/";
-      meta.textContent = runs.length
-        ? `${runs.length} run(s) · ${source}`
+      let source = "live";
+      if (statusPack.url.includes("jsdelivr")) source = "live jsDelivr";
+      else if (statusPack.url.includes("raw.githubusercontent.com")) {
+        source = "live raw";
+      } else if (statusPack.url.includes("data/crawl_status")) {
+        source = "local data/";
+      }
+      const when = status.updated_at ? formatWhen(status.updated_at) : "—";
+      const filterNote =
+        onlyWave && waveFilter ? ` · filtered ${runs.length}/${totalRuns}` : "";
+      meta.textContent = totalRuns
+        ? `${totalRuns} run(s)${filterNote} · updated ${when} · ${source}`
         : "Board is empty — compose a wave above, Launch, then Refresh.";
     }
     if (jobsPack?.data) {
