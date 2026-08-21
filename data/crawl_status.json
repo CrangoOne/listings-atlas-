@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T16:10:47Z",
+  "updated_at": "2026-08-21T16:12:00Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -727,6 +727,21 @@
       "branch": "cursor/daq-coches-collect-1a84",
       "makes": null,
       "status": "finished",
+      "started_at": "2026-08-15T14:33:34Z",
+      "finished_at": "2026-08-15T14:59:27Z",
+      "rows_added": 7673,
+      "rows_total": 282293,
+      "agent_url": "https://cursor.com/agents/bc-e4727c81-fd4e-5d1e-9684-169f303bc85f",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/91",
+      "notes": "Finished: +7673 rows (282293 unique), 175/175 facets exhausted"
+    },
+    {
+      "job_id": "coches_collect",
+      "source": "coches",
+      "worker_id": "coches_collect",
+      "branch": "cursor/daq-coches-collect-1a84",
+      "makes": null,
+      "status": "finished",
       "started_at": "2026-08-19T16:23:34Z",
       "finished_at": "2026-08-19T16:45:17Z",
       "rows_added": 20181,
@@ -933,7 +948,7 @@
       "rows_added": 690,
       "rows_total": 133223,
       "agent_url": "https://cursor.com/agents/bc-96a74b04-1489-5e85-82df-e4ec92cf7272",
-      "pr_url": null,
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/123",
       "wave_id": "wave-20260821t153047z-3vn7",
       "notes": "Finished: +690 rows (Opel 354, Citroen 336; 133223 unique known), 24/24 facets exhausted in 162s (~255.8 listings/min)"
     },
@@ -946,15 +961,15 @@
         "renault",
         "nissan"
       ],
-      "status": "queued",
-      "started_at": "2026-08-21T15:35:17Z",
+      "status": "running",
+      "started_at": "2026-08-21T16:09:43Z",
       "finished_at": null,
       "rows_added": null,
       "rows_total": null,
-      "agent_url": null,
+      "agent_url": "https://cursor.com/agents/bc-a9d848ee-ea08-596f-87eb-eea1e92f7d16",
       "pr_url": null,
       "wave_id": "wave-20260821t153047z-3vn7",
-      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+      "notes": "Spawned cloud worker; full scrape (duration 0)"
     },
     {
       "job_id": "autoscout_shard",
@@ -965,15 +980,15 @@
         "toyota",
         "suzuki"
       ],
-      "status": "queued",
-      "started_at": "2026-08-21T15:35:17Z",
+      "status": "running",
+      "started_at": "2026-08-21T16:09:43Z",
       "finished_at": null,
       "rows_added": null,
       "rows_total": null,
-      "agent_url": null,
+      "agent_url": "https://cursor.com/agents/bc-32382dc7-0f03-59c4-9666-95f24cc69829",
       "pr_url": null,
       "wave_id": "wave-20260821t153047z-3vn7",
-      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+      "notes": "Spawned cloud worker; full scrape (duration 0)"
     },
     {
       "job_id": "autoscout_shard",
@@ -984,15 +999,15 @@
         "hyundai",
         "mitsubishi"
       ],
-      "status": "queued",
-      "started_at": "2026-08-21T15:35:17Z",
+      "status": "running",
+      "started_at": "2026-08-21T16:11:01Z",
       "finished_at": null,
       "rows_added": null,
       "rows_total": null,
-      "agent_url": null,
+      "agent_url": "https://cursor.com/agents/bc-41de7bd5-5804-51ea-96ba-8cbbf0c40b8b",
       "pr_url": null,
       "wave_id": "wave-20260821t153047z-3vn7",
-      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+      "notes": "Spawned cloud worker; full scrape (duration 0)"
     },
     {
       "job_id": "autoscout_shard",
