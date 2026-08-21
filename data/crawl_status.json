@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T15:40:09Z",
+  "updated_at": "2026-08-21T15:43:58Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -801,22 +801,22 @@
     {
       "job_id": "autoscout_shard",
       "source": "autoscout",
-      "worker_id": "autoscout_shard-w4",
-      "branch": "cursor/daq-autoscout-shard-w4-1a84",
+      "worker_id": "autoscout_shard-w1",
+      "branch": "cursor/daq-autoscout-shard-w1-1a84",
       "makes": [
-        "mercedes-benz",
-        "mini",
-        "jaguar"
+        "bmw",
+        "tesla",
+        "smart"
       ],
-      "status": "running",
-      "started_at": "2026-08-21T15:34:26Z",
-      "finished_at": null,
-      "rows_added": 0,
-      "rows_total": null,
-      "agent_url": "https://cursor.com/agents/bc-b99c1961-7cad-58e9-ba3e-a673a79c47d6",
-      "pr_url": null,
+      "status": "finished",
+      "started_at": "2026-08-21T15:34:43Z",
+      "finished_at": "2026-08-21T15:41:21Z",
+      "rows_added": 1137,
+      "rows_total": 134529,
+      "agent_url": "https://cursor.com/agents/bc-2e49d1ae-e2c6-532b-b98c-8be737ceba66",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/116",
       "wave_id": "wave-20260821t153047z-3vn7",
-      "notes": "Running AutoScout shard w4/15 (mercedes-benz, mini, jaguar)"
+      "notes": "Finished: +1137 rows (134529 unique known), 25/25 facets exhausted in 360s (~189.7 listings/min, 568 pages). Makes bmw/tesla/smart → autoscout_shard_bmw_tesla_smart.csv"
     }
   ],
   "wave_id": "wave-20260821t153047z-3vn7"
