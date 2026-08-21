@@ -1,6 +1,5 @@
 {
-  "updated_at": "2026-08-21T16:09:45Z",
-  "wave_id": "wave-20260821t153047z-3vn7",
+  "updated_at": "2026-08-21T16:10:47Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -728,6 +727,53 @@
       "branch": "cursor/daq-coches-collect-1a84",
       "makes": null,
       "status": "finished",
+      "started_at": "2026-08-19T16:23:34Z",
+      "finished_at": "2026-08-19T16:45:17Z",
+      "rows_added": 20181,
+      "rows_total": 302474,
+      "agent_url": "https://cursor.com/agents/bc-ba337573-b533-5b7b-875b-4fcff27ba796",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/103",
+      "notes": "Finished: +20181 rows (302474 unique), 175/175 facets exhausted (~20m of 1h cap)"
+    },
+    {
+      "job_id": "coches_1h",
+      "source": "coches",
+      "worker_id": "coches_1h",
+      "branch": "cursor/daq-coches-1h-1a84",
+      "makes": null,
+      "status": "finished",
+      "started_at": "2026-08-19T20:51:42Z",
+      "finished_at": "2026-08-19T21:14:29Z",
+      "rows_added": 1718,
+      "rows_total": 304192,
+      "agent_url": "https://cursor.com/agents/bc-4e21c426-cb81-597f-a516-25a1d40a1d8d",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/105",
+      "wave_id": "wave-20260819t205035z-skqg",
+      "notes": "Finished: +1718 rows (304192 unique), 175/175 facets exhausted (~20m of 1h cap, 2978 pages)"
+    },
+    {
+      "job_id": "coches_1h",
+      "source": "coches",
+      "worker_id": "coches_1h",
+      "branch": "cursor/daq-coches-1h-1a84",
+      "makes": null,
+      "status": "finished",
+      "started_at": "2026-08-20T14:08:57Z",
+      "finished_at": "2026-08-20T14:17:06Z",
+      "rows_added": 1133,
+      "rows_total": 305325,
+      "agent_url": "https://cursor.com/agents/bc-de6479a8-3162-5db9-817a-135835541dc6",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/107",
+      "wave_id": "wave-20260820t140712z-bekj",
+      "notes": "Finished: +1133 rows (305325 unique), time cap 360s, 900 pages, 9/175 facets completed (~188.8 listings/min)"
+    },
+    {
+      "job_id": "coches_collect",
+      "source": "coches",
+      "worker_id": "coches_collect",
+      "branch": "cursor/daq-coches-collect-1a84",
+      "makes": null,
+      "status": "finished",
       "started_at": "2026-08-20T14:47:50Z",
       "finished_at": "2026-08-20T14:55:23Z",
       "rows_added": 1186,
@@ -881,15 +927,15 @@
         "opel",
         "citroen"
       ],
-      "status": "running",
+      "status": "finished",
       "started_at": "2026-08-21T16:01:31Z",
-      "finished_at": null,
-      "rows_added": null,
-      "rows_total": null,
+      "finished_at": "2026-08-21T16:09:32Z",
+      "rows_added": 690,
+      "rows_total": 133223,
       "agent_url": "https://cursor.com/agents/bc-96a74b04-1489-5e85-82df-e4ec92cf7272",
       "pr_url": null,
       "wave_id": "wave-20260821t153047z-3vn7",
-      "notes": "Spawned cloud worker; full scrape (duration 0)"
+      "notes": "Finished: +690 rows (Opel 354, Citroen 336; 133223 unique known), 24/24 facets exhausted in 162s (~255.8 listings/min)"
     },
     {
       "job_id": "autoscout_shard",
@@ -1043,5 +1089,6 @@
       "wave_id": "wave-20260821t153047z-3vn7",
       "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
     }
-  ]
+  ],
+  "wave_id": "wave-20260821t153047z-3vn7"
 }
