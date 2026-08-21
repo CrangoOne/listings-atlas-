@@ -1,16 +1,21 @@
 {
-  "updated_at": "2026-08-21T18:38:15Z",
+  "updated_at": "2026-08-21T18:39:48Z",
   "runs": [
     {
-      "worker_id": "willhaben_1h",
-      "status": "running",
       "job_id": "willhaben_1h",
-      "wave_id": "wave-20260821t183118z-9b4q",
       "source": "willhaben",
+      "worker_id": "willhaben_1h",
       "branch": "cursor/daq-willhaben-1h-1a84",
+      "makes": null,
+      "status": "running",
+      "started_at": "2026-08-21T18:34:04Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
       "agent_url": "https://cursor.com/agents/bc-7cfda173-cdc1-5de6-9d44-6bcbedf58fe9",
-      "notes": "Spawned cloud worker",
-      "started_at": "2026-08-21T18:33:06Z"
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/136",
+      "wave_id": "wave-20260821t183118z-9b4q",
+      "notes": "Direct crawl running (1h cap, concurrency=4, pause=0.6); coordinator bc-126f5329-9f59-44f3-b458-dc20795bf135; PR #136"
     },
     {
       "job_id": "coches_collect",
