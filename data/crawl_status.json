@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T16:12:00Z",
+  "updated_at": "2026-08-21T16:16:55Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -1007,7 +1007,7 @@
       "agent_url": "https://cursor.com/agents/bc-41de7bd5-5804-51ea-96ba-8cbbf0c40b8b",
       "pr_url": null,
       "wave_id": "wave-20260821t153047z-3vn7",
-      "notes": "Spawned cloud worker; full scrape (duration 0)"
+      "notes": "Running: hyundai, mitsubishi (shard CSV autoscout_shard_hyundai_mitsubishi.csv)"
     },
     {
       "job_id": "autoscout_shard",
