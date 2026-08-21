@@ -5,7 +5,10 @@ import {
   rememberWaveId,
   buildWavePayload,
   postCrawlWave,
-} from "./crawl_wave.js?v=20260821-monitor";
+} from "./crawl_wave.js?v=20260821b";
+
+/** Bumped whenever status-fetch logic changes — shown in board meta so stale caches are obvious. */
+const ASSET_BUILD = "20260821b";
 
 const SOURCE_LABEL = {
   willhaben: "Willhaben",
@@ -443,8 +446,8 @@ export async function initCrawls() {
       const filterNote =
         onlyWave && waveFilter ? ` · filtered ${runs.length}/${totalRuns}` : "";
       meta.textContent = totalRuns
-        ? `${totalRuns} run(s)${filterNote} · updated ${when} · ${source}`
-        : "Board is empty — compose a wave above, Launch, then Refresh.";
+        ? `${totalRuns} run(s)${filterNote} · updated ${when} · ${source} · UI ${ASSET_BUILD}`
+        : `Board is empty — compose a wave above, Launch, then Refresh. · UI ${ASSET_BUILD}`;
     }
     if (jobsPack?.data) {
       renderJobCatalog(jobsPack.data.jobs || []);
