@@ -1,6 +1,17 @@
 {
-  "updated_at": "2026-08-21T18:30:58Z",
+  "updated_at": "2026-08-21T18:38:15Z",
   "runs": [
+    {
+      "worker_id": "willhaben_1h",
+      "status": "running",
+      "job_id": "willhaben_1h",
+      "wave_id": "wave-20260821t183118z-9b4q",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-1h-1a84",
+      "agent_url": "https://cursor.com/agents/bc-7cfda173-cdc1-5de6-9d44-6bcbedf58fe9",
+      "notes": "Spawned cloud worker",
+      "started_at": "2026-08-21T18:33:06Z"
+    },
     {
       "job_id": "coches_collect",
       "source": "coches",
@@ -1043,5 +1054,5 @@
       "notes": "Finished: +33030 rows (mercedes_benz/toyota/fiat/mini/suzuki/land_rover)"
     }
   ],
-  "wave_id": "wave-20260821t175548z-0l80"
+  "wave_id": "wave-20260821t183118z-9b4q"
 }
