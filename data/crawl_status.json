@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T18:39:48Z",
+  "updated_at": "2026-08-21T19:38:59Z",
   "runs": [
     {
       "job_id": "willhaben_1h",
@@ -7,15 +7,15 @@
       "worker_id": "willhaben_1h",
       "branch": "cursor/daq-willhaben-1h-1a84",
       "makes": null,
-      "status": "running",
+      "status": "finished",
       "started_at": "2026-08-21T18:34:04Z",
-      "finished_at": null,
-      "rows_added": null,
-      "rows_total": null,
+      "finished_at": "2026-08-21T19:34:36Z",
+      "rows_added": 18005,
+      "rows_total": 238190,
       "agent_url": "https://cursor.com/agents/bc-7cfda173-cdc1-5de6-9d44-6bcbedf58fe9",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/136",
       "wave_id": "wave-20260821t183118z-9b4q",
-      "notes": "Direct crawl running (1h cap, concurrency=4, pause=0.6); coordinator bc-126f5329-9f59-44f3-b458-dc20795bf135; PR #136"
+      "notes": "Finished: +18005 rows (238190 unique ads, 238262 CSV rows), time cap 3601s (~300.0 listings/min, 2948 pages). Quality: Ad ID/Title/Price/Mileage/Fuel/Location 100%; Year 95.0%; Power 99.9%. Direct publish 401 (env token); Atlas via Action on PR #136. Coordinator bc-126f5329-9f59-44f3-b458-dc20795bf135."
     },
     {
       "job_id": "coches_collect",
