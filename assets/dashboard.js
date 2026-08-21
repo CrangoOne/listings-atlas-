@@ -1,6 +1,6 @@
-import { initExplore } from "./explore.js?v=20260820-status-fresh";
-import { initCrawls } from "./crawls.js?v=20260820-status-fresh";
-import { initSources } from "./sources.js?v=20260820-status-fresh";
+import { initExplore } from "./explore.js?v=20260821-monitor";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260821-monitor";
+import { initSources } from "./sources.js?v=20260821-monitor";
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
@@ -188,6 +188,7 @@ async function main() {
   initExplore(data);
   initSources();
   initCrawls();
+  startCrawlsAutoRefresh(30000);
   wireBoardRefresh();
 }
 
