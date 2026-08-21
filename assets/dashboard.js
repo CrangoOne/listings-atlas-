@@ -1,6 +1,6 @@
-import { initExplore } from "./explore.js?v=20260818-wave-proxy";
-import { initCrawls } from "./crawls.js?v=20260818-wave-proxy";
-import { initSources } from "./sources.js?v=20260818-wave-proxy";
+import { initExplore } from "./explore.js?v=20260820-status-fresh";
+import { initCrawls } from "./crawls.js?v=20260820-status-fresh";
+import { initSources } from "./sources.js?v=20260820-status-fresh";
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
