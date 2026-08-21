@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-21T15:46:12Z",
+  "updated_at": "2026-08-21T15:48:33Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -801,22 +801,22 @@
     {
       "job_id": "autoscout_shard",
       "source": "autoscout",
-      "worker_id": "autoscout_shard-w1",
-      "branch": "cursor/daq-autoscout-shard-w1-1a84",
+      "worker_id": "autoscout_shard-w2",
+      "branch": "cursor/daq-autoscout-shard-w2-1a84",
       "makes": [
-        "bmw",
-        "tesla",
-        "smart"
+        "volkswagen",
+        "kia",
+        "subaru"
       ],
       "status": "finished",
-      "started_at": "2026-08-21T15:34:43Z",
-      "finished_at": "2026-08-21T15:41:21Z",
-      "rows_added": 1137,
-      "rows_total": 134529,
-      "agent_url": "https://cursor.com/agents/bc-2e49d1ae-e2c6-532b-b98c-8be737ceba66",
-      "pr_url": "https://github.com/CrangoOne/Cursor/pull/116",
+      "started_at": "2026-08-21T15:33:31Z",
+      "finished_at": "2026-08-21T15:43:58Z",
+      "rows_added": 4996,
+      "rows_total": 136250,
+      "agent_url": "https://cursor.com/agents/bc-6ed7b7ab-bfc4-5674-a5dc-149ff3d56482",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/115",
       "wave_id": "wave-20260821t153047z-3vn7",
-      "notes": "Finished: +1137 rows (134529 unique known), 25/25 facets exhausted in 360s (~189.7 listings/min, 568 pages). Makes bmw/tesla/smart → autoscout_shard_bmw_tesla_smart.csv"
+      "notes": "Finished: +4996 rows in daq/autoscout_shard_volkswagen_kia_subaru.csv (136250 unique known), 35/35 facets exhausted in 582s (~9.7m, 931 pages, ~515.0 listings/min). Makes: volkswagen +4286, kia +681, subaru +29."
     }
   ],
   "wave_id": "wave-20260821t153047z-3vn7"
