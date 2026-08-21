@@ -5,7 +5,7 @@ import {
   rememberWaveId,
   buildWavePayload,
   postCrawlWave,
-} from "./crawl_wave.js?v=20260820-status-fresh";
+} from "./crawl_wave.js?v=20260821-monitor";
 
 const SOURCE_LABEL = {
   willhaben: "Willhaben",
@@ -357,16 +357,18 @@ function renderJobCatalog(jobs) {
 }
 
 /**
- * Live board sources (newest first). Prefer CDNs that honor cache-bust query
- * params. Avoid falling back to same-origin Pages `data/` while Pages is mid-
- * build or failed — that copy goes stale and looks like “still 45 runs”.
+ * Live board sources (newest first).
+ *
+ * Never use jsDelivr / long-lived CDNs for crawl_status — they can stay stale
+ * for hours/days while workers update the board. Prefer same-origin Pages
+ * (cache-busted) then raw.githubusercontent.
  */
 const LIVE_STATUS_URLS = [
-  "https://cdn.jsdelivr.net/gh/CrangoOne/listings-atlas-@main/data/crawl_status.json",
+  "data/crawl_status.json",
   "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_status.json",
 ];
 const LIVE_JOBS_URLS = [
-  "https://cdn.jsdelivr.net/gh/CrangoOne/listings-atlas-@main/data/crawl_jobs.json",
+  "data/crawl_jobs.json",
   "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_jobs.json",
 ];
 
@@ -375,33 +377,38 @@ function withCacheBust(url) {
   return `${url}${sep}t=${Date.now()}&r=${Math.random().toString(36).slice(2, 8)}`;
 }
 
-function isHostedAtlas() {
-  return /\.github\.io$/i.test(window.location.hostname);
+function parseUpdatedAt(data) {
+  const raw = data?.updated_at;
+  if (!raw) return 0;
+  const ms = Date.parse(raw);
+  return Number.isFinite(ms) ? ms : 0;
 }
 
-async function fetchJsonPreferLive(liveUrls, localUrl) {
-  const candidates = liveUrls.map(withCacheBust);
-  // Local/relative is for laptop preview only — not the public Pages deploy.
-  if (localUrl && !isHostedAtlas()) {
-    candidates.push(withCacheBust(localUrl));
+async function fetchOneJson(url) {
+  const res = await fetch(withCacheBust(url), {
+    cache: "no-store",
+    headers: { Accept: "application/json" },
+  });
+  if (!res.ok) throw new Error(`${url} (${res.status})`);
+  return { data: await res.json(), url: res.url || url };
+}
+
+/**
+ * Fetch all candidates and keep the freshest board by updated_at.
+ * This avoids silently sticking to a stale first success.
+ */
+async function fetchJsonPreferLive(liveUrls) {
+  const results = await Promise.allSettled(liveUrls.map((u) => fetchOneJson(u)));
+  const ok = results
+    .filter((r) => r.status === "fulfilled")
+    .map((r) => r.value)
+    .filter((v) => v?.data && typeof v.data === "object");
+  if (!ok.length) {
+    const last = results.find((r) => r.status === "rejected");
+    throw last?.reason || new Error("Could not load JSON");
   }
-  let lastErr = null;
-  for (const url of candidates) {
-    try {
-      const res = await fetch(url, {
-        cache: "no-store",
-        headers: { Accept: "application/json" },
-      });
-      if (!res.ok) {
-        lastErr = new Error(`${url} (${res.status})`);
-        continue;
-      }
-      return { data: await res.json(), url };
-    } catch (err) {
-      lastErr = err;
-    }
-  }
-  throw lastErr || new Error("Could not load JSON");
+  ok.sort((a, b) => parseUpdatedAt(b.data) - parseUpdatedAt(a.data));
+  return ok[0];
 }
 
 export async function initCrawls() {
@@ -409,8 +416,8 @@ export async function initCrawls() {
   bindWebhookSettings();
   try {
     const [statusPack, jobsPack] = await Promise.all([
-      fetchJsonPreferLive(LIVE_STATUS_URLS, "data/crawl_status.json"),
-      fetchJsonPreferLive(LIVE_JOBS_URLS, "data/crawl_jobs.json").catch(() => null),
+      fetchJsonPreferLive(LIVE_STATUS_URLS),
+      fetchJsonPreferLive(LIVE_JOBS_URLS).catch(() => null),
     ]);
     const status = statusPack.data;
     let runs = Array.isArray(status.runs) ? status.runs : [];
@@ -430,12 +437,8 @@ export async function initCrawls() {
     }
     if (meta) {
       let source = "live";
-      if (statusPack.url.includes("jsdelivr")) source = "live jsDelivr";
-      else if (statusPack.url.includes("raw.githubusercontent.com")) {
-        source = "live raw";
-      } else if (statusPack.url.includes("data/crawl_status")) {
-        source = "local data/";
-      }
+      if (statusPack.url.includes("raw.githubusercontent.com")) source = "live raw";
+      else if (statusPack.url.includes("data/crawl_status")) source = "live pages";
       const when = status.updated_at ? formatWhen(status.updated_at) : "—";
       const filterNote =
         onlyWave && waveFilter ? ` · filtered ${runs.length}/${totalRuns}` : "";
@@ -454,4 +457,17 @@ export async function initCrawls() {
     if (meta) meta.textContent = `Could not load crawl board: ${err.message}`;
     console.error(err);
   }
+}
+
+/** Auto-refresh the board while the Crawls section is visible. */
+let crawlsRefreshTimer = null;
+export function startCrawlsAutoRefresh(intervalMs = 30000) {
+  if (crawlsRefreshTimer) return;
+  crawlsRefreshTimer = window.setInterval(() => {
+    const section = document.getElementById("crawls");
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    const visible = rect.bottom > 0 && rect.top < window.innerHeight;
+    if (visible) initCrawls();
+  }, intervalMs);
 }
