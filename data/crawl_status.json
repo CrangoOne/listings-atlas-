@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-20T15:37:40Z",
+  "updated_at": "2026-08-21T15:36:37Z",
   "runs": [
     {
       "job_id": "autoscout_by_brand",
@@ -783,6 +783,22 @@
       "notes": "Finished: +1133 rows (305325 unique), time cap 360s, 900 pages, 9/175 facets completed (~188.8 listings/min)"
     },
     {
+      "job_id": "coches_collect",
+      "source": "coches",
+      "worker_id": "coches_collect",
+      "branch": "cursor/daq-coches-collect-1a84",
+      "makes": null,
+      "status": "finished",
+      "started_at": "2026-08-20T14:47:50Z",
+      "finished_at": "2026-08-20T14:55:23Z",
+      "rows_added": 1186,
+      "rows_total": 305378,
+      "agent_url": "https://cursor.com/agents/bc-676315f8-d030-5941-adb5-a8236e016f9f",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/110",
+      "wave_id": "wave-20260820t144531z-npad",
+      "notes": "Finished: +1186 rows (305378 unique), time cap 360s, 898 pages, 9/175 facets completed (~197.5 listings/min)"
+    },
+    {
       "job_id": "coches_1h",
       "source": "coches",
       "worker_id": "coches_1h",
@@ -797,7 +813,297 @@
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/112",
       "wave_id": "wave-20260820t150647z-5s96",
       "notes": "Finished: +3439 rows (308764 unique), 175/175 facets exhausted (~20m of 1h cap, 2982 pages, ~171.9 listings/min)"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w1",
+      "branch": "cursor/daq-autoscout-shard-w1-1a84",
+      "makes": [
+        "bmw",
+        "tesla",
+        "smart"
+      ],
+      "status": "running",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-2e49d1ae-e2c6-532b-b98c-8be737ceba66",
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Spawned cloud worker; full scrape (duration 0)"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w2",
+      "branch": "cursor/daq-autoscout-shard-w2-1a84",
+      "makes": [
+        "volkswagen",
+        "kia",
+        "subaru"
+      ],
+      "status": "running",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-6ed7b7ab-bfc4-5674-a5dc-149ff3d56482",
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Spawned cloud worker; full scrape (duration 0)"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w3",
+      "branch": "cursor/daq-autoscout-shard-w3-1a84",
+      "makes": [
+        "audi",
+        "cupra",
+        "lexus"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w4",
+      "branch": "cursor/daq-autoscout-shard-w4-1a84",
+      "makes": [
+        "mercedes-benz",
+        "mini",
+        "jaguar"
+      ],
+      "status": "running",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": "https://cursor.com/agents/bc-b99c1961-7cad-58e9-ba3e-a673a79c47d6",
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Spawned cloud worker; full scrape (duration 0)"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w5",
+      "branch": "cursor/daq-autoscout-shard-w5-1a84",
+      "makes": [
+        "skoda",
+        "fiat",
+        "byd"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w6",
+      "branch": "cursor/daq-autoscout-shard-w6-1a84",
+      "makes": [
+        "ford",
+        "dacia"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w7",
+      "branch": "cursor/daq-autoscout-shard-w7-1a84",
+      "makes": [
+        "opel",
+        "citroen"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w8",
+      "branch": "cursor/daq-autoscout-shard-w8-1a84",
+      "makes": [
+        "renault",
+        "nissan"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w9",
+      "branch": "cursor/daq-autoscout-shard-w9-1a84",
+      "makes": [
+        "toyota",
+        "suzuki"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w10",
+      "branch": "cursor/daq-autoscout-shard-w10-1a84",
+      "makes": [
+        "hyundai",
+        "mitsubishi"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w11",
+      "branch": "cursor/daq-autoscout-shard-w11-1a84",
+      "makes": [
+        "seat",
+        "jeep"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w12",
+      "branch": "cursor/daq-autoscout-shard-w12-1a84",
+      "makes": [
+        "peugeot",
+        "land-rover"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w13",
+      "branch": "cursor/daq-autoscout-shard-w13-1a84",
+      "makes": [
+        "mazda",
+        "alfa-romeo"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w14",
+      "branch": "cursor/daq-autoscout-shard-w14-1a84",
+      "makes": [
+        "volvo",
+        "honda"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "worker_id": "autoscout_shard-w15",
+      "branch": "cursor/daq-autoscout-shard-w15-1a84",
+      "makes": [
+        "porsche",
+        "mg"
+      ],
+      "status": "queued",
+      "started_at": "2026-08-21T15:35:17Z",
+      "finished_at": null,
+      "rows_added": null,
+      "rows_total": null,
+      "agent_url": null,
+      "pr_url": null,
+      "wave_id": "wave-20260821t153047z-3vn7",
+      "notes": "Queued behind 3-VM async cap; dispatcher/helper will spawn"
     }
   ],
-  "wave_id": "wave-20260820t150647z-5s96"
+  "wave_id": "wave-20260821t153047z-3vn7"
 }
