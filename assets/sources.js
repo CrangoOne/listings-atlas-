@@ -1,3 +1,6 @@
+/** Bumped whenever sources-fetch logic changes — shown in board meta. */
+const ASSET_BUILD = "20260823a";
+
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
 const SOURCE_LABEL = {
@@ -6,6 +9,23 @@ const SOURCE_LABEL = {
   kleinanzeigen: "Kleinanzeigen",
   coches: "coches.net",
 };
+
+/**
+ * Live sources pack (newest first).
+ *
+ * Same-origin Pages can lag behind raw GitHub; prefer the freshest
+ * generated_at across candidates (mirrors crawl board fetch logic).
+ */
+const LIVE_SOURCES_URLS = [
+  "data/sources_summary.json",
+  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/sources_summary.json",
+];
+
+/** Live crawl status — merged into last_crawl on every refresh. */
+const LIVE_STATUS_URLS = [
+  "data/crawl_status.json",
+  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_status.json",
+];
 
 const fmt = new Intl.NumberFormat("en-US");
 
@@ -44,6 +64,101 @@ function formatDateSpan(min, max) {
   if (min && max && min === max) return escapeHtml(String(min));
   if (min && max) return `${escapeHtml(String(min))} → ${escapeHtml(String(max))}`;
   return escapeHtml(String(min || max));
+}
+
+function withCacheBust(url) {
+  const sep = url.includes("?") ? "&" : "?";
+  return `${url}${sep}t=${Date.now()}&r=${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function parseTimestamp(raw) {
+  if (!raw) return 0;
+  const ms = Date.parse(raw);
+  return Number.isFinite(ms) ? ms : 0;
+}
+
+async function fetchOneJson(url) {
+  const res = await fetch(withCacheBust(url), {
+    cache: "no-store",
+    headers: { Accept: "application/json" },
+  });
+  if (!res.ok) throw new Error(`${url} (${res.status})`);
+  return { data: await res.json(), url: res.url || url };
+}
+
+async function fetchJsonPreferLive(liveUrls, timestampKey) {
+  const results = await Promise.allSettled(liveUrls.map((u) => fetchOneJson(u)));
+  const ok = results
+    .filter((r) => r.status === "fulfilled")
+    .map((r) => r.value)
+    .filter((v) => v?.data && typeof v.data === "object");
+  if (!ok.length) {
+    const last = results.find((r) => r.status === "rejected");
+    throw last?.reason || new Error("Could not load JSON");
+  }
+  ok.sort((a, b) => parseTimestamp(b.data[timestampKey]) - parseTimestamp(a.data[timestampKey]));
+  return ok[0];
+}
+
+function lastCrawlScore(run) {
+  const status = run?.status || "";
+  const rank = status === "finished" ? 2 : status === "running" ? 1 : 0;
+  return [rank, run?.finished_at || run?.started_at || ""];
+}
+
+function compactLastCrawl(run) {
+  return {
+    job_id: run.job_id,
+    worker_id: run.worker_id,
+    status: run.status,
+    started_at: run.started_at,
+    finished_at: run.finished_at,
+    rows_added: run.rows_added,
+    rows_total: run.rows_total,
+    agent_url: run.agent_url,
+    pr_url: run.pr_url,
+    notes: run.notes,
+  };
+}
+
+/** Latest finished (else latest any) crawl_status run per source — matches build_sources_summary.py. */
+function loadLastCrawlsFromStatus(runs) {
+  const best = {};
+  for (const run of runs) {
+    const source = run?.source;
+    if (!source) continue;
+    if (!best[source]) {
+      best[source] = run;
+      continue;
+    }
+    const score = lastCrawlScore(run);
+    const prevScore = lastCrawlScore(best[source]);
+    if (score[0] > prevScore[0] || (score[0] === prevScore[0] && score[1] > prevScore[1])) {
+      best[source] = run;
+    }
+  }
+  const out = {};
+  for (const [source, run] of Object.entries(best)) {
+    out[source] = compactLastCrawl(run);
+  }
+  return out;
+}
+
+function mergeLiveLastCrawls(payload, statusPayload) {
+  const runs = Array.isArray(statusPayload?.runs) ? statusPayload.runs : [];
+  const live = loadLastCrawlsFromStatus(runs);
+  let merged = 0;
+  for (const [sourceId, lastCrawl] of Object.entries(live)) {
+    if (!payload.sources?.[sourceId]) continue;
+    const existing = payload.sources[sourceId].last_crawl;
+    const liveScore = lastCrawlScore(lastCrawl);
+    const existingScore = existing ? lastCrawlScore(existing) : [-1, ""];
+    if (liveScore[0] > existingScore[0] || (liveScore[0] === existingScore[0] && liveScore[1] > existingScore[1])) {
+      payload.sources[sourceId].last_crawl = lastCrawl;
+      merged += 1;
+    }
+  }
+  return { merged, statusUpdatedAt: statusPayload?.updated_at || null };
 }
 
 function qualityRows(columns) {
@@ -101,11 +216,14 @@ function renderSourceCard(id, src) {
   </article>`;
 }
 
-function renderSourcesKpis(payload) {
+function renderSourcesKpis(payload, { statusUpdatedAt = null, mergedCrawls = 0 } = {}) {
   const root = document.getElementById("sources-kpis");
   if (!root) return;
   const sources = payload.sources || {};
   const present = Object.values(sources).filter((s) => (s.rows || 0) > 0).length;
+  const crawlSub = statusUpdatedAt
+    ? `crawl board ${formatWhen(statusUpdatedAt)}${mergedCrawls ? ` · ${mergedCrawls} updated` : ""}`
+    : "crawl board not loaded";
   const items = [
     {
       label: "Listings in pack",
@@ -118,9 +236,9 @@ function renderSourcesKpis(payload) {
       sub: "with rows in the pack",
     },
     {
-      label: "Generated",
+      label: "Pack snapshot",
       value: formatWhen(payload.generated_at),
-      sub: "sources_summary.json",
+      sub: crawlSub,
     },
   ];
   root.innerHTML = items
@@ -138,12 +256,16 @@ export async function initSources() {
   const meta = document.getElementById("sources-meta");
   const root = document.getElementById("sources-board");
   try {
-    const res = await fetch(`data/sources_summary.json?t=${Date.now()}`, {
-      cache: "no-store",
-    });
-    if (!res.ok) throw new Error(`sources_summary.json (${res.status})`);
-    const payload = await res.json();
-    renderSourcesKpis(payload);
+    const [sourcesPack, statusPack] = await Promise.all([
+      fetchJsonPreferLive(LIVE_SOURCES_URLS, "generated_at"),
+      fetchJsonPreferLive(LIVE_STATUS_URLS, "updated_at").catch(() => null),
+    ]);
+    const payload = sourcesPack.data;
+    const { merged, statusUpdatedAt } = statusPack?.data
+      ? mergeLiveLastCrawls(payload, statusPack.data)
+      : { merged: 0, statusUpdatedAt: null };
+
+    renderSourcesKpis(payload, { statusUpdatedAt, mergedCrawls: merged });
 
     const sources = payload.sources || {};
     const order = [
@@ -159,9 +281,12 @@ export async function initSources() {
       });
     }
     if (meta) {
-      meta.textContent = `${fmt.format(payload.total || 0)} listings across ${order.length} sources · ${
-        payload.db_file || "listings.db"
-      }`;
+      let source = "live";
+      if (sourcesPack.url.includes("raw.githubusercontent.com")) source = "live raw";
+      else if (sourcesPack.url.includes("data/sources_summary")) source = "live pages";
+      const packWhen = payload.generated_at ? formatWhen(payload.generated_at) : "—";
+      const crawlWhen = statusUpdatedAt ? formatWhen(statusUpdatedAt) : "—";
+      meta.textContent = `${fmt.format(payload.total || 0)} listings across ${order.length} sources · pack ${packWhen} · crawls ${crawlWhen} · ${source} · UI ${ASSET_BUILD}`;
     }
   } catch (err) {
     if (root) root.innerHTML = "";
