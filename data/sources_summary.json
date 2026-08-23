@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-15T22:12:09Z",
+  "generated_at": "2026-08-16T11:04:47Z",
   "db_file": "daq/merged/20260815_all_car_listings.db",
   "total": 1315162,
   "sources": {
@@ -323,15 +323,15 @@
       "in_listings_db": true,
       "last_crawl": {
         "job_id": "ka_shard",
-        "worker_id": "ka_shard-w1",
+        "worker_id": "ka_shard-w2",
         "status": "finished",
-        "started_at": "2026-08-15T12:30:53Z",
-        "finished_at": "2026-08-15T15:23:26Z",
-        "rows_added": 41646,
-        "rows_total": null,
-        "agent_url": "https://cursor.com/agents/bc-80bedd0c-a7fa-5145-88ea-3bae02fc67bf",
-        "pr_url": "https://github.com/CrangoOne/Cursor/pull/92",
-        "notes": "Finished: +41646 KA rows (bmw–chevrolet)"
+        "started_at": "2026-08-15T12:32:26Z",
+        "finished_at": "2026-08-15T23:24:33Z",
+        "rows_added": 63097,
+        "rows_total": 224379,
+        "agent_url": "https://cursor.com/agents/bc-47fb167c-98ab-5165-97f7-dc694c952a92",
+        "pr_url": "https://github.com/CrangoOne/Cursor/pull/97",
+        "notes": "Finished: +63097 KA rows (volkswagen–mg)"
       },
       "dates": {
         "scraped_at_min": "2026-07-31 11:47:23",
