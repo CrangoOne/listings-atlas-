@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/dashboard.css?v=20260821b" />
+    <link rel="stylesheet" href="assets/dashboard.css?v=20260823a" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
@@ -22,8 +22,8 @@
     <header class="site-nav">
       <a class="brand-mark" href="#top">Listings Atlas</a>
       <nav>
-        <a href="#explore">Explore</a>
         <a href="#sources">Sources</a>
+        <a href="#explore">Explore</a>
         <a href="#crawls">Crawls</a>
         <a href="#markets">Markets</a>
         <a href="#prices">Prices</a>
@@ -33,19 +33,22 @@
     </header>
 
     <main id="top">
-      <section class="hero">
-        <p class="brand">Listings Atlas</p>
-        <h1>Three markets. One inventory pulse.</h1>
-        <p class="lede">
-          Filter and drill into merged Willhaben, AutoScout24, Kleinanzeigen,
-          and coches.net listings — then scan source health and the market
-          overview below.
-        </p>
-        <div class="cta-row">
-          <a class="btn primary" href="#explore">Explore listings</a>
-          <a class="btn ghost" href="#sources">Source health</a>
-          <a class="btn ghost" href="#crawls">Monitor crawls</a>
+      <section id="sources" class="section sources">
+        <div class="section-head">
+          <div class="section-head-copy">
+            <h2>Sources</h2>
+            <p>
+              Per-market inventory health from the consolidated pack: last crawl,
+              scraped date coverage, row counts, and column fill rates.
+            </p>
+          </div>
+          <button type="button" class="btn ghost board-refresh" id="sources-refresh" data-board="sources">
+            Refresh
+          </button>
         </div>
+        <div class="kpi-row" id="sources-kpis"></div>
+        <p class="sources-meta" id="sources-meta">Loading source health…</p>
+        <div id="sources-board" class="sources-board"></div>
       </section>
 
       <section id="explore" class="section explore">
@@ -222,24 +225,6 @@
             <button type="button" class="btn ghost" id="page-next">Next</button>
           </div>
         </div>
-      </section>
-
-      <section id="sources" class="section sources">
-        <div class="section-head">
-          <div class="section-head-copy">
-            <h2>Sources</h2>
-            <p>
-              Per-market inventory health from the consolidated pack: last crawl,
-              scraped date coverage, row counts, and column fill rates.
-            </p>
-          </div>
-          <button type="button" class="btn ghost board-refresh" id="sources-refresh" data-board="sources">
-            Refresh
-          </button>
-        </div>
-        <div class="kpi-row" id="sources-kpis"></div>
-        <p class="sources-meta" id="sources-meta">Loading source health…</p>
-        <div id="sources-board" class="sources-board"></div>
       </section>
 
       <section id="crawls" class="section crawls">
