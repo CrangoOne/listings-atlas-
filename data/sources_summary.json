@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-25T17:32:11Z",
-  "db_file": "daq/merged/20260825_all_car_listings.db",
+  "generated_at": "2026-08-25T22:07:35Z",
+  "db_file": "daq/merged/car_library.db",
   "total": 1439972,
   "sources": {
     "willhaben": {
