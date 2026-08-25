@@ -1,159 +1,159 @@
 {
-  "generated_at": "2026-08-25T22:07:35Z",
-  "db_file": "daq/merged/car_library.db",
-  "total": 1439972,
+  "generated_at": "2026-08-16T11:04:47Z",
+  "db_file": "daq/merged/20260815_all_car_listings.db",
+  "total": 1315162,
   "sources": {
     "willhaben": {
       "label": "Willhaben",
-      "rows": 238191,
+      "rows": 220186,
       "in_listings_db": true,
       "last_crawl": {
-        "job_id": "willhaben_1h",
-        "worker_id": "willhaben_1h",
+        "job_id": "willhaben_direct",
+        "worker_id": "willhaben_direct",
         "status": "finished",
-        "started_at": "2026-08-21T18:34:04Z",
-        "finished_at": "2026-08-21T19:34:36Z",
-        "rows_added": 18005,
-        "rows_total": 238190,
-        "agent_url": "https://cursor.com/agents/bc-7cfda173-cdc1-5de6-9d44-6bcbedf58fe9",
-        "pr_url": "https://github.com/CrangoOne/Cursor/pull/136",
-        "notes": "Finished: +18005 rows (238190 unique ads, 238262 CSV rows), time cap 3601s (~300.0 listings/min, 2948 pages). Quality: Ad ID/Title/Price/Mileage/Fuel/Location 100%; Year 95.0%; Power 99.9%. Direct publish 401 (env token); Atlas via Action on PR #136. Coordinator bc-126f5329-9f59-44f3-b458-dc20795bf135."
+        "started_at": "2026-08-14T21:10:46Z",
+        "finished_at": "2026-08-15T12:25:07Z",
+        "rows_added": 68442,
+        "rows_total": 220257,
+        "agent_url": "https://cursor.com/agents/bc-831677ad-5f2e-50e6-9c81-f959c7d63677",
+        "pr_url": "https://github.com/CrangoOne/Cursor/pull/82",
+        "notes": "Finished: +68442 rows, 93 facets exhausted (~14.2h)"
       },
       "dates": {
         "scraped_at_min": "2026-07-28 23:24:43",
-        "scraped_at_max": "2026-08-21 21:34:36",
+        "scraped_at_max": "2026-08-15 13:23:38",
         "updated_min": "2026-03-03 11:28",
-        "updated_max": "2026-08-21 21:07"
+        "updated_max": "2026-08-15 12:23"
       },
       "columns": {
         "ad_id": {
-          "filled": 238190,
+          "filled": 220185,
           "missing": 1,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "make": {
-          "filled": 238190,
+          "filled": 220185,
           "missing": 1,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "model": {
-          "filled": 238189,
+          "filled": 220184,
           "missing": 2,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "body_type": {
-          "filled": 238188,
+          "filled": 220183,
           "missing": 3,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "title": {
-          "filled": 238189,
+          "filled": 220184,
           "missing": 2,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "price": {
-          "filled": 238188,
+          "filled": 220183,
           "missing": 3,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "price_eur": {
-          "filled": 238188,
+          "filled": 220183,
           "missing": 3,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "year": {
-          "filled": 226247,
-          "missing": 11944,
-          "fill_pct": 94.99,
-          "null_pct": 5.01
+          "filled": 208638,
+          "missing": 11548,
+          "fill_pct": 94.76,
+          "null_pct": 5.24
         },
         "year_int": {
-          "filled": 226247,
-          "missing": 11944,
-          "fill_pct": 94.99,
-          "null_pct": 5.01
+          "filled": 208638,
+          "missing": 11548,
+          "fill_pct": 94.76,
+          "null_pct": 5.24
         },
         "new_car": {
-          "filled": 238191,
+          "filled": 220186,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "mileage": {
-          "filled": 238190,
+          "filled": 220185,
           "missing": 1,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "mileage_km": {
-          "filled": 238183,
+          "filled": 220178,
           "missing": 8,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "power": {
-          "filled": 238053,
-          "missing": 138,
+          "filled": 220052,
+          "missing": 134,
           "fill_pct": 99.94,
           "null_pct": 0.06
         },
         "power_ps": {
-          "filled": 237972,
-          "missing": 219,
-          "fill_pct": 99.91,
-          "null_pct": 0.09
+          "filled": 219971,
+          "missing": 215,
+          "fill_pct": 99.9,
+          "null_pct": 0.1
         },
         "fuel_type": {
-          "filled": 238135,
-          "missing": 56,
+          "filled": 220131,
+          "missing": 55,
           "fill_pct": 99.98,
           "null_pct": 0.02
         },
         "transmission": {
-          "filled": 238177,
+          "filled": 220172,
           "missing": 14,
           "fill_pct": 99.99,
           "null_pct": 0.01
         },
         "location": {
-          "filled": 238154,
+          "filled": 220149,
           "missing": 37,
           "fill_pct": 99.98,
           "null_pct": 0.02
         },
         "updated": {
-          "filled": 238171,
+          "filled": 220166,
           "missing": 20,
           "fill_pct": 99.99,
           "null_pct": 0.01
         },
         "vin": {
           "filled": 335,
-          "missing": 237856,
-          "fill_pct": 0.14,
-          "null_pct": 99.86
+          "missing": 219851,
+          "fill_pct": 0.15,
+          "null_pct": 99.85
         },
         "url": {
-          "filled": 238191,
+          "filled": 220186,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "preview_desc": {
-          "filled": 235737,
-          "missing": 2454,
-          "fill_pct": 98.97,
-          "null_pct": 1.03
+          "filled": 217785,
+          "missing": 2401,
+          "fill_pct": 98.91,
+          "null_pct": 1.09
         },
         "scraped_at": {
-          "filled": 238191,
+          "filled": 220186,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
@@ -162,155 +162,155 @@
     },
     "autoscout": {
       "label": "AutoScout24",
-      "rows": 162516,
+      "rows": 152218,
       "in_listings_db": true,
       "last_crawl": {
-        "job_id": "autoscout_shard",
-        "worker_id": "autoscout_shard-w15",
+        "job_id": "autoscout_by_brand",
+        "worker_id": "autoscout_by_brand-jaguar",
         "status": "finished",
-        "started_at": "2026-08-21T16:24:29Z",
-        "finished_at": "2026-08-21T16:25:13Z",
-        "rows_added": 262,
-        "rows_total": 132044,
-        "agent_url": "https://cursor.com/agents/bc-f57945d1-0d11-5562-aa09-332c66933ae1",
-        "pr_url": "https://github.com/CrangoOne/Cursor/pull/131",
-        "notes": "Finished: +262 rows (Porsche 112, MG 150; 132044 unique known), 2/2 facets exhausted in 40s (~394.9 listings/min, 64 pages). Makes porsche/mg → autoscout_shard_porsche_mg.csv"
+        "started_at": "2026-08-15T12:29:18Z",
+        "finished_at": "2026-08-15T12:34:16Z",
+        "rows_added": 67,
+        "rows_total": null,
+        "agent_url": "https://cursor.com/agents/bc-91b5c4d9-6f9f-510c-85f9-c8aa27058cab",
+        "pr_url": "https://github.com/CrangoOne/Cursor/pull/88",
+        "notes": "Finished: +67 Jaguar rows, facets exhausted"
       },
       "dates": {
         "scraped_at_min": "2026-07-31 02:14:58",
-        "scraped_at_max": "2026-08-21 18:25:13",
+        "scraped_at_max": "2026-08-15 14:30:28",
         "updated_min": null,
         "updated_max": null
       },
       "columns": {
         "ad_id": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "make": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "model": {
-          "filled": 158638,
-          "missing": 3878,
-          "fill_pct": 97.61,
-          "null_pct": 2.39
+          "filled": 148626,
+          "missing": 3592,
+          "fill_pct": 97.64,
+          "null_pct": 2.36
         },
         "body_type": {
-          "filled": 113767,
-          "missing": 48749,
-          "fill_pct": 70.0,
-          "null_pct": 30.0
+          "filled": 106204,
+          "missing": 46014,
+          "fill_pct": 69.77,
+          "null_pct": 30.23
         },
         "title": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "price": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "price_eur": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "year": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "year_int": {
-          "filled": 148230,
-          "missing": 14286,
-          "fill_pct": 91.21,
-          "null_pct": 8.79
+          "filled": 138718,
+          "missing": 13500,
+          "fill_pct": 91.13,
+          "null_pct": 8.87
         },
         "new_car": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "mileage": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "mileage_km": {
-          "filled": 161863,
-          "missing": 653,
+          "filled": 151603,
+          "missing": 615,
           "fill_pct": 99.6,
           "null_pct": 0.4
         },
         "power": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "power_ps": {
-          "filled": 162249,
-          "missing": 267,
+          "filled": 151980,
+          "missing": 238,
           "fill_pct": 99.84,
           "null_pct": 0.16
         },
         "fuel_type": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "transmission": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "location": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "updated": {
           "filled": 0,
-          "missing": 162516,
+          "missing": 152218,
           "fill_pct": 0.0,
           "null_pct": 100.0
         },
         "vin": {
           "filled": 0,
-          "missing": 162516,
+          "missing": 152218,
           "fill_pct": 0.0,
           "null_pct": 100.0
         },
         "url": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "preview_desc": {
-          "filled": 8343,
-          "missing": 154173,
-          "fill_pct": 5.13,
-          "null_pct": 94.87
+          "filled": 7515,
+          "missing": 144703,
+          "fill_pct": 4.94,
+          "null_pct": 95.06
         },
         "scraped_at": {
-          "filled": 162516,
+          "filled": 152218,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
@@ -319,7 +319,7 @@
     },
     "kleinanzeigen": {
       "label": "Kleinanzeigen",
-      "rows": 723532,
+      "rows": 660465,
       "in_listings_db": true,
       "last_crawl": {
         "job_id": "ka_shard",
@@ -335,139 +335,139 @@
       },
       "dates": {
         "scraped_at_min": "2026-07-31 11:47:23",
-        "scraped_at_max": "2026-08-16 01:24:31",
+        "scraped_at_max": "2026-08-15 17:23:24",
         "updated_min": null,
         "updated_max": null
       },
       "columns": {
         "ad_id": {
-          "filled": 723532,
+          "filled": 660465,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "make": {
-          "filled": 723532,
+          "filled": 660465,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "model": {
-          "filled": 641637,
-          "missing": 81895,
-          "fill_pct": 88.68,
-          "null_pct": 11.32
+          "filled": 592368,
+          "missing": 68097,
+          "fill_pct": 89.69,
+          "null_pct": 10.31
         },
         "body_type": {
-          "filled": 561474,
-          "missing": 162058,
-          "fill_pct": 77.6,
-          "null_pct": 22.4
+          "filled": 503996,
+          "missing": 156469,
+          "fill_pct": 76.31,
+          "null_pct": 23.69
         },
         "title": {
-          "filled": 721161,
-          "missing": 2371,
-          "fill_pct": 99.67,
-          "null_pct": 0.33
+          "filled": 658095,
+          "missing": 2370,
+          "fill_pct": 99.64,
+          "null_pct": 0.36
         },
         "price": {
-          "filled": 723488,
+          "filled": 660421,
           "missing": 44,
           "fill_pct": 99.99,
           "null_pct": 0.01
         },
         "price_eur": {
-          "filled": 723250,
-          "missing": 282,
+          "filled": 660213,
+          "missing": 252,
           "fill_pct": 99.96,
           "null_pct": 0.04
         },
         "year": {
-          "filled": 723516,
-          "missing": 16,
-          "fill_pct": 100.0,
-          "null_pct": 0.0
-        },
-        "year_int": {
-          "filled": 723515,
+          "filled": 660448,
           "missing": 17,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
+        "year_int": {
+          "filled": 660447,
+          "missing": 18,
+          "fill_pct": 100.0,
+          "null_pct": 0.0
+        },
         "new_car": {
-          "filled": 723532,
+          "filled": 660465,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "mileage": {
-          "filled": 723517,
-          "missing": 15,
+          "filled": 660449,
+          "missing": 16,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "mileage_km": {
-          "filled": 723117,
-          "missing": 415,
+          "filled": 660084,
+          "missing": 381,
           "fill_pct": 99.94,
           "null_pct": 0.06
         },
         "power": {
-          "filled": 564008,
-          "missing": 159524,
-          "fill_pct": 77.95,
-          "null_pct": 22.05
+          "filled": 505139,
+          "missing": 155326,
+          "fill_pct": 76.48,
+          "null_pct": 23.52
         },
         "power_ps": {
-          "filled": 564008,
-          "missing": 159524,
-          "fill_pct": 77.95,
-          "null_pct": 22.05
+          "filled": 505139,
+          "missing": 155326,
+          "fill_pct": 76.48,
+          "null_pct": 23.52
         },
         "fuel_type": {
-          "filled": 596314,
-          "missing": 127218,
-          "fill_pct": 82.42,
-          "null_pct": 17.58
+          "filled": 534342,
+          "missing": 126123,
+          "fill_pct": 80.9,
+          "null_pct": 19.1
         },
         "transmission": {
-          "filled": 590492,
-          "missing": 133040,
-          "fill_pct": 81.61,
-          "null_pct": 18.39
+          "filled": 529223,
+          "missing": 131242,
+          "fill_pct": 80.13,
+          "null_pct": 19.87
         },
         "location": {
-          "filled": 723532,
+          "filled": 660465,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "updated": {
           "filled": 0,
-          "missing": 723532,
+          "missing": 660465,
           "fill_pct": 0.0,
           "null_pct": 100.0
         },
         "vin": {
           "filled": 0,
-          "missing": 723532,
+          "missing": 660465,
           "fill_pct": 0.0,
           "null_pct": 100.0
         },
         "url": {
-          "filled": 723532,
+          "filled": 660465,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "preview_desc": {
-          "filled": 620982,
-          "missing": 102550,
-          "fill_pct": 85.83,
-          "null_pct": 14.17
+          "filled": 557934,
+          "missing": 102531,
+          "fill_pct": 84.48,
+          "null_pct": 15.52
         },
         "scraped_at": {
-          "filled": 723532,
+          "filled": 660465,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
@@ -476,155 +476,155 @@
     },
     "coches": {
       "label": "coches.net",
-      "rows": 315733,
+      "rows": 282293,
       "in_listings_db": true,
       "last_crawl": {
         "job_id": "coches_collect",
         "worker_id": "coches_collect",
         "status": "finished",
-        "started_at": "2026-08-21T17:58:42Z",
-        "finished_at": "2026-08-21T18:21:06Z",
-        "rows_added": 10284,
-        "rows_total": 315609,
-        "agent_url": "https://cursor.com/agents/bc-d3d75d64-3f37-517f-8685-b401644afbd0",
-        "pr_url": "https://github.com/CrangoOne/Cursor/pull/110",
-        "notes": "Finished: +10284 rows (305325 → 315609 unique), 175/175 facets exhausted in 1254s (~20.9m, 2992 pages, ~492.2 listings/min). Full scrape duration 0. Quality: Ad ID/Title/Price/URL 100%; Make 98.8%; VIN 0%. Direct publish 401."
+        "started_at": "2026-08-15T14:33:34Z",
+        "finished_at": "2026-08-15T14:59:27Z",
+        "rows_added": 7673,
+        "rows_total": 282293,
+        "agent_url": "https://cursor.com/agents/bc-e4727c81-fd4e-5d1e-9684-169f303bc85f",
+        "pr_url": "https://github.com/CrangoOne/Cursor/pull/91",
+        "notes": "Finished: +7673 rows (282293 unique), 175/175 facets exhausted"
       },
       "dates": {
         "scraped_at_min": "2026-08-13 16:26:55",
-        "scraped_at_max": "2026-08-21 20:21:06",
+        "scraped_at_max": "2026-08-15 16:57:17",
         "updated_min": "2021-10-27T09:53:44Z",
-        "updated_max": "2026-08-21T20:14:19Z"
+        "updated_max": "2026-08-15T16:51:35Z"
       },
       "columns": {
         "ad_id": {
-          "filled": 315733,
+          "filled": 282293,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "make": {
-          "filled": 312057,
-          "missing": 3676,
-          "fill_pct": 98.84,
-          "null_pct": 1.16
+          "filled": 278869,
+          "missing": 3424,
+          "fill_pct": 98.79,
+          "null_pct": 1.21
         },
         "model": {
-          "filled": 314123,
-          "missing": 1610,
+          "filled": 280855,
+          "missing": 1438,
           "fill_pct": 99.49,
           "null_pct": 0.51
         },
         "body_type": {
-          "filled": 253337,
-          "missing": 62396,
-          "fill_pct": 80.24,
-          "null_pct": 19.76
+          "filled": 226554,
+          "missing": 55739,
+          "fill_pct": 80.25,
+          "null_pct": 19.75
         },
         "title": {
-          "filled": 315733,
+          "filled": 282293,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "price": {
-          "filled": 315733,
+          "filled": 282293,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "price_eur": {
-          "filled": 315733,
+          "filled": 282293,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "year": {
-          "filled": 314276,
-          "missing": 1457,
+          "filled": 280991,
+          "missing": 1302,
           "fill_pct": 99.54,
           "null_pct": 0.46
         },
         "year_int": {
-          "filled": 314273,
-          "missing": 1460,
+          "filled": 280988,
+          "missing": 1305,
           "fill_pct": 99.54,
           "null_pct": 0.46
         },
         "new_car": {
-          "filled": 315733,
+          "filled": 282293,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "mileage": {
-          "filled": 307296,
-          "missing": 8437,
-          "fill_pct": 97.33,
-          "null_pct": 2.67
+          "filled": 274318,
+          "missing": 7975,
+          "fill_pct": 97.17,
+          "null_pct": 2.83
         },
         "mileage_km": {
-          "filled": 307296,
-          "missing": 8437,
-          "fill_pct": 97.33,
-          "null_pct": 2.67
+          "filled": 274318,
+          "missing": 7975,
+          "fill_pct": 97.17,
+          "null_pct": 2.83
         },
         "power": {
-          "filled": 250331,
-          "missing": 65402,
-          "fill_pct": 79.29,
-          "null_pct": 20.71
+          "filled": 223663,
+          "missing": 58630,
+          "fill_pct": 79.23,
+          "null_pct": 20.77
         },
         "power_ps": {
-          "filled": 250331,
-          "missing": 65402,
-          "fill_pct": 79.29,
-          "null_pct": 20.71
+          "filled": 223663,
+          "missing": 58630,
+          "fill_pct": 79.23,
+          "null_pct": 20.77
         },
         "fuel_type": {
-          "filled": 308600,
-          "missing": 7133,
-          "fill_pct": 97.74,
-          "null_pct": 2.26
+          "filled": 275626,
+          "missing": 6667,
+          "fill_pct": 97.64,
+          "null_pct": 2.36
         },
         "transmission": {
-          "filled": 310592,
-          "missing": 5141,
-          "fill_pct": 98.37,
-          "null_pct": 1.63
+          "filled": 277444,
+          "missing": 4849,
+          "fill_pct": 98.28,
+          "null_pct": 1.72
         },
         "location": {
-          "filled": 315651,
-          "missing": 82,
+          "filled": 282212,
+          "missing": 81,
           "fill_pct": 99.97,
           "null_pct": 0.03
         },
         "updated": {
-          "filled": 315733,
+          "filled": 282293,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "vin": {
           "filled": 0,
-          "missing": 315733,
+          "missing": 282293,
           "fill_pct": 0.0,
           "null_pct": 100.0
         },
         "url": {
-          "filled": 315733,
+          "filled": 282293,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
         },
         "preview_desc": {
           "filled": 0,
-          "missing": 315733,
+          "missing": 282293,
           "fill_pct": 0.0,
           "null_pct": 100.0
         },
         "scraped_at": {
-          "filled": 315733,
+          "filled": 282293,
           "missing": 0,
           "fill_pct": 100.0,
           "null_pct": 0.0
