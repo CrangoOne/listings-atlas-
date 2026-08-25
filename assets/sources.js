@@ -1,5 +1,5 @@
 /** Bumped whenever sources-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260823a";
+const ASSET_BUILD = "20260825a";
 
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
@@ -9,6 +9,9 @@ const SOURCE_LABEL = {
   kleinanzeigen: "Kleinanzeigen",
   coches: "coches.net",
 };
+
+/** Column fill-rate rows per quality page. */
+const QUALITY_PAGE_SIZE = 6;
 
 /**
  * Live sources pack (newest first).
@@ -167,6 +170,54 @@ function qualityRows(columns) {
   return entries;
 }
 
+function renderQualityBarRow(name, q) {
+  const pct = Number(q.fill_pct) || 0;
+  const width = Math.max(1.5, pct);
+  return `<div class="bar-row">
+    <span class="bar-name" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
+    <div class="bar-track"><div class="bar-fill" data-width="${width.toFixed(2)}"></div></div>
+    <span class="bar-val">${pct.toFixed(1)}%</span>
+  </div>`;
+}
+
+function renderQualityPages(cols) {
+  if (!cols.length) return "";
+  const pages = [];
+  for (let i = 0; i < cols.length; i += QUALITY_PAGE_SIZE) {
+    pages.push(cols.slice(i, i + QUALITY_PAGE_SIZE));
+  }
+  const pageHtml = pages
+    .map(
+      (pageCols, idx) =>
+        `<div class="quality-page${idx === 0 ? " is-active" : ""}" data-page="${idx}" ${
+          idx === 0 ? "" : 'hidden'
+        }>
+          ${pageCols.map(([name, q]) => renderQualityBarRow(name, q)).join("")}
+        </div>`
+    )
+    .join("");
+
+  const totalPages = pages.length;
+  const pager =
+    totalPages > 1
+      ? `<div class="quality-pager pager">
+          <button type="button" class="btn ghost quality-prev" aria-label="Previous columns">←</button>
+          <span class="quality-page-info">1–${Math.min(QUALITY_PAGE_SIZE, cols.length)} of ${cols.length}</span>
+          <button type="button" class="btn ghost quality-next" aria-label="Next columns">→</button>
+        </div>`
+      : `<span class="quality-page-info quality-page-info--solo">${cols.length} columns</span>`;
+
+  return `<div class="source-quality" data-total-pages="${totalPages}">
+    <div class="quality-head">
+      <div class="chart-label">Column fill rates</div>
+      ${pager}
+    </div>
+    <div class="bar-chart source-quality-bars">
+      ${pageHtml}
+    </div>
+  </div>`;
+}
+
 function renderSourceCard(id, src) {
   const dates = src.dates || {};
   const last = src.last_crawl || null;
@@ -179,25 +230,10 @@ function renderSourceCard(id, src) {
     : "No crawl_status row yet";
 
   const qualityHtml = cols.length
-    ? `<div class="source-quality">
-        <div class="chart-label">Column fill rates</div>
-        <div class="bar-chart source-quality-bars">
-          ${cols
-            .map(([name, q]) => {
-              const pct = Number(q.fill_pct) || 0;
-              const width = Math.max(1.5, pct);
-              return `<div class="bar-row">
-                <span class="bar-name" title="${escapeHtml(name)}">${escapeHtml(name)}</span>
-                <div class="bar-track"><div class="bar-fill" data-width="${width.toFixed(2)}"></div></div>
-                <span class="bar-val">${pct.toFixed(1)}%</span>
-              </div>`;
-            })
-            .join("")}
-        </div>
-      </div>`
+    ? renderQualityPages(cols)
     : `<p class="source-empty">No rows in the consolidated DB for this source.</p>`;
 
-  return `<article class="source-card" id="source-${escapeHtml(id)}">
+  return `<article class="source-card carousel-slide" id="source-${escapeHtml(id)}" data-source-id="${escapeHtml(id)}">
     <header class="source-card-head">
       <h3>${escapeHtml(src.label || niceSource(id))}</h3>
       <p class="source-rows">${fmt.format(src.rows || 0)} listings</p>
@@ -214,6 +250,148 @@ function renderSourceCard(id, src) {
     </dl>
     ${qualityHtml}
   </article>`;
+}
+
+function renderSourcesCarousel(order, sources) {
+  const tabs = order
+    .map(
+      (id, idx) =>
+        `<button type="button" class="carousel-tab${idx === 0 ? " is-active" : ""}" data-index="${idx}" role="tab" aria-selected="${
+          idx === 0 ? "true" : "false"
+        }" aria-controls="source-${escapeHtml(id)}">${escapeHtml(sources[id].label || niceSource(id))}</button>`
+    )
+    .join("");
+
+  const slides = order.map((id) => renderSourceCard(id, sources[id])).join("");
+  const dots = order
+    .map(
+      (_, idx) =>
+        `<button type="button" class="carousel-dot${idx === 0 ? " is-active" : ""}" data-index="${idx}" aria-label="Source ${
+          idx + 1
+        }"></button>`
+    )
+    .join("");
+
+  return `<div class="sources-carousel" data-slide-count="${order.length}">
+    <div class="carousel-toolbar">
+      <div class="carousel-tabs" role="tablist">${tabs}</div>
+      <div class="carousel-nav">
+        <button type="button" class="btn ghost carousel-prev" aria-label="Previous source">←</button>
+        <span class="carousel-counter">1 / ${order.length}</span>
+        <button type="button" class="btn ghost carousel-next" aria-label="Next source">→</button>
+      </div>
+    </div>
+    <div class="carousel-viewport">
+      <div class="carousel-track" style="transform: translateX(0%)">${slides}</div>
+    </div>
+    <div class="carousel-dots" role="group" aria-label="Source slides">${dots}</div>
+  </div>`;
+}
+
+function animateBarFills(root) {
+  requestAnimationFrame(() => {
+    root.querySelectorAll(".bar-fill").forEach((fill) => {
+      fill.style.width = `${fill.dataset.width}%`;
+    });
+  });
+}
+
+function updateQualityPageInfo(qualityRoot, pageIndex, pageCount, totalCols) {
+  const info = qualityRoot.querySelector(".quality-page-info");
+  if (!info || info.classList.contains("quality-page-info--solo")) return;
+  const start = pageIndex * QUALITY_PAGE_SIZE + 1;
+  const end = Math.min((pageIndex + 1) * QUALITY_PAGE_SIZE, totalCols);
+  info.textContent = `${start}–${end} of ${totalCols}`;
+}
+
+function setQualityPage(qualityRoot, pageIndex) {
+  const pages = qualityRoot.querySelectorAll(".quality-page");
+  if (!pages.length) return;
+  const clamped = Math.max(0, Math.min(pageIndex, pages.length - 1));
+  pages.forEach((page, idx) => {
+    const active = idx === clamped;
+    page.classList.toggle("is-active", active);
+    page.hidden = !active;
+  });
+  qualityRoot.dataset.currentPage = String(clamped);
+
+  const prev = qualityRoot.querySelector(".quality-prev");
+  const next = qualityRoot.querySelector(".quality-next");
+  if (prev) prev.disabled = clamped === 0;
+  if (next) next.disabled = clamped >= pages.length - 1;
+
+  const totalCols = Array.from(pages).reduce((n, p) => n + p.querySelectorAll(".bar-row").length, 0);
+  updateQualityPageInfo(qualityRoot, clamped, pages.length, totalCols);
+  animateBarFills(qualityRoot);
+}
+
+function initQualityPagers(root) {
+  root.querySelectorAll(".source-quality").forEach((qualityRoot) => {
+    const totalPages = Number(qualityRoot.dataset.totalPages) || 1;
+    if (totalPages <= 1) return;
+
+    qualityRoot.dataset.currentPage = "0";
+    setQualityPage(qualityRoot, 0);
+
+    qualityRoot.querySelector(".quality-prev")?.addEventListener("click", () => {
+      const current = Number(qualityRoot.dataset.currentPage) || 0;
+      setQualityPage(qualityRoot, current - 1);
+    });
+    qualityRoot.querySelector(".quality-next")?.addEventListener("click", () => {
+      const current = Number(qualityRoot.dataset.currentPage) || 0;
+      setQualityPage(qualityRoot, current + 1);
+    });
+  });
+}
+
+function initSourcesCarousel(root) {
+  const carousel = root.querySelector(".sources-carousel");
+  if (!carousel) return;
+
+  const track = carousel.querySelector(".carousel-track");
+  const tabs = [...carousel.querySelectorAll(".carousel-tab")];
+  const dots = [...carousel.querySelectorAll(".carousel-dot")];
+  const counter = carousel.querySelector(".carousel-counter");
+  const prevBtn = carousel.querySelector(".carousel-prev");
+  const nextBtn = carousel.querySelector(".carousel-next");
+  const slideCount = Number(carousel.dataset.slideCount) || tabs.length;
+  let current = 0;
+
+  function goTo(index) {
+    if (!slideCount) return;
+    current = ((index % slideCount) + slideCount) % slideCount;
+    track.style.transform = `translateX(-${current * 100}%)`;
+
+    tabs.forEach((tab, idx) => {
+      const active = idx === current;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    dots.forEach((dot, idx) => dot.classList.toggle("is-active", idx === current));
+    if (counter) counter.textContent = `${current + 1} / ${slideCount}`;
+    if (prevBtn) prevBtn.disabled = slideCount <= 1;
+    if (nextBtn) nextBtn.disabled = slideCount <= 1;
+
+    const activeSlide = track.children[current];
+    if (activeSlide) animateBarFills(activeSlide);
+  }
+
+  tabs.forEach((tab) => tab.addEventListener("click", () => goTo(Number(tab.dataset.index))));
+  dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
+  prevBtn?.addEventListener("click", () => goTo(current - 1));
+  nextBtn?.addEventListener("click", () => goTo(current + 1));
+
+  carousel.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      goTo(current - 1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      goTo(current + 1);
+    }
+  });
+
+  goTo(0);
 }
 
 function renderSourcesKpis(payload, { statusUpdatedAt = null, mergedCrawls = 0 } = {}) {
@@ -273,12 +451,10 @@ export async function initSources() {
       ...Object.keys(sources).filter((id) => !SOURCE_ORDER.includes(id)),
     ];
     if (root) {
-      root.innerHTML = order.map((id) => renderSourceCard(id, sources[id])).join("");
-      requestAnimationFrame(() => {
-        root.querySelectorAll(".bar-fill").forEach((fill) => {
-          fill.style.width = `${fill.dataset.width}%`;
-        });
-      });
+      root.innerHTML = renderSourcesCarousel(order, sources);
+      initSourcesCarousel(root);
+      initQualityPagers(root);
+      animateBarFills(root);
     }
     if (meta) {
       let source = "live";
