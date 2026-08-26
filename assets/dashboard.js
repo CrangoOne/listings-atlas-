@@ -1,5 +1,5 @@
 import { initExplore } from "./explore.js?v=20260821b";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260821b";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260826a";
 import { initSources } from "./sources.js?v=20260825a";
 
 const fmt = new Intl.NumberFormat("en-US");
