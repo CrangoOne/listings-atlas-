@@ -1,6 +1,6 @@
 {
   "generated_from": "daq/jobs/catalog.yaml",
-  "generated_at": "2026-08-26T18:58:59Z",
+  "generated_at": "2026-08-26T22:06:58Z",
   "jobs": [
     {
       "id": "autoscout_by_brand",
@@ -461,5 +461,1436 @@
       "1990-1999",
       "to-1989"
     ]
+  },
+  "wave_defaults": {
+    "source_order": [
+      "willhaben",
+      "autoscout",
+      "kleinanzeigen",
+      "coches"
+    ],
+    "shard_job": {
+      "willhaben": "willhaben_shard",
+      "autoscout": "autoscout_shard",
+      "kleinanzeigen": "ka_shard",
+      "coches": "coches_shard"
+    },
+    "makes_key": {
+      "willhaben": "willhaben_makes",
+      "autoscout": "autoscout_makes",
+      "kleinanzeigen": "kleinanzeigen_makes",
+      "coches": "coches_years"
+    },
+    "fresh_hours": 168,
+    "default_workers": 5,
+    "default_duration_s": 0
+  },
+  "stale": {
+    "generated_at": "2026-08-26T22:06:58Z",
+    "fresh_hours": 168,
+    "sources": {
+      "willhaben": {
+        "shard_job": "willhaben_shard",
+        "keys_key": "willhaben_makes",
+        "keys_total": 37,
+        "keys_stale": 37,
+        "keys_never": 37,
+        "stale_keys": [
+          "bmw",
+          "vw",
+          "audi",
+          "mercedes",
+          "skoda",
+          "ford",
+          "opel",
+          "renault",
+          "toyota",
+          "hyundai",
+          "mazda",
+          "seat",
+          "peugeot",
+          "fiat",
+          "volvo",
+          "nissan",
+          "kia",
+          "dacia",
+          "citroen",
+          "cupra",
+          "suzuki",
+          "mitsubishi",
+          "mini",
+          "porsche",
+          "jeep",
+          "land-rover",
+          "tesla",
+          "mg",
+          "honda",
+          "subaru",
+          "alfa-romeo",
+          "jaguar",
+          "lexus",
+          "smart",
+          "chevrolet",
+          "chrysler",
+          "dodge"
+        ],
+        "ordered_keys": [
+          "bmw",
+          "vw",
+          "audi",
+          "mercedes",
+          "skoda",
+          "ford",
+          "opel",
+          "renault",
+          "toyota",
+          "hyundai",
+          "mazda",
+          "seat",
+          "peugeot",
+          "fiat",
+          "volvo",
+          "nissan",
+          "kia",
+          "dacia",
+          "citroen",
+          "cupra",
+          "suzuki",
+          "mitsubishi",
+          "mini",
+          "porsche",
+          "jeep",
+          "land-rover",
+          "tesla",
+          "mg",
+          "honda",
+          "subaru",
+          "alfa-romeo",
+          "jaguar",
+          "lexus",
+          "smart",
+          "chevrolet",
+          "chrysler",
+          "dodge"
+        ],
+        "freshness": [
+          {
+            "key": "bmw",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "vw",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "audi",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "mercedes",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "skoda",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "ford",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "opel",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "renault",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "toyota",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "hyundai",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "mazda",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "seat",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "peugeot",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "fiat",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "volvo",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "nissan",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "kia",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "dacia",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "citroen",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "cupra",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "suzuki",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "mitsubishi",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "mini",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "porsche",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "jeep",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "land-rover",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "tesla",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "mg",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "honda",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "subaru",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "alfa-romeo",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "jaguar",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "lexus",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "smart",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "chevrolet",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "chrysler",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "dodge",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          }
+        ]
+      },
+      "autoscout": {
+        "shard_job": "autoscout_shard",
+        "keys_key": "autoscout_makes",
+        "keys_total": 35,
+        "keys_stale": 0,
+        "keys_never": 0,
+        "stale_keys": [],
+        "ordered_keys": [
+          "bmw",
+          "tesla",
+          "smart",
+          "volkswagen",
+          "kia",
+          "subaru",
+          "audi",
+          "cupra",
+          "lexus",
+          "skoda",
+          "fiat",
+          "byd",
+          "ford",
+          "dacia",
+          "mercedes-benz",
+          "mini",
+          "jaguar",
+          "opel",
+          "citroen",
+          "renault",
+          "nissan",
+          "toyota",
+          "suzuki",
+          "hyundai",
+          "mitsubishi",
+          "seat",
+          "jeep",
+          "mazda",
+          "alfa-romeo",
+          "peugeot",
+          "land-rover",
+          "volvo",
+          "honda",
+          "porsche",
+          "mg"
+        ],
+        "freshness": [
+          {
+            "key": "bmw",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:41:21Z",
+            "last_started_at": "2026-08-21T15:34:43Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "tesla",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:41:21Z",
+            "last_started_at": "2026-08-21T15:34:43Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "smart",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:41:21Z",
+            "last_started_at": "2026-08-21T15:34:43Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "volkswagen",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:43:58Z",
+            "last_started_at": "2026-08-21T15:33:31Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "kia",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:43:58Z",
+            "last_started_at": "2026-08-21T15:33:31Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "subaru",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:43:58Z",
+            "last_started_at": "2026-08-21T15:33:31Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "audi",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:55:10Z",
+            "last_started_at": "2026-08-21T15:47:24Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "cupra",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:55:10Z",
+            "last_started_at": "2026-08-21T15:47:24Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "lexus",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:55:10Z",
+            "last_started_at": "2026-08-21T15:47:24Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "skoda",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:56:28Z",
+            "last_started_at": "2026-08-21T15:51:07Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "fiat",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:56:28Z",
+            "last_started_at": "2026-08-21T15:51:07Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "byd",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T15:56:28Z",
+            "last_started_at": "2026-08-21T15:51:07Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "ford",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:03:40Z",
+            "last_started_at": "2026-08-21T15:59:12Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "dacia",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:03:40Z",
+            "last_started_at": "2026-08-21T15:59:12Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "mercedes-benz",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:06:18Z",
+            "last_started_at": "2026-08-21T16:00:32Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "mini",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:06:18Z",
+            "last_started_at": "2026-08-21T16:00:32Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "jaguar",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:06:18Z",
+            "last_started_at": "2026-08-21T16:00:32Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "opel",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:09:32Z",
+            "last_started_at": "2026-08-21T16:01:31Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "citroen",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:09:32Z",
+            "last_started_at": "2026-08-21T16:01:31Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "renault",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:11:55Z",
+            "last_started_at": "2026-08-21T16:09:43Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "nissan",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:11:55Z",
+            "last_started_at": "2026-08-21T16:09:43Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "toyota",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:13:20Z",
+            "last_started_at": "2026-08-21T16:09:43Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "suzuki",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:13:20Z",
+            "last_started_at": "2026-08-21T16:09:43Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "hyundai",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:14:46Z",
+            "last_started_at": "2026-08-21T16:11:01Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "mitsubishi",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:14:46Z",
+            "last_started_at": "2026-08-21T16:11:01Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "seat",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:19:36Z",
+            "last_started_at": "2026-08-21T16:15:03Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "jeep",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:19:36Z",
+            "last_started_at": "2026-08-21T16:15:03Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "mazda",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:21:19Z",
+            "last_started_at": "2026-08-21T16:20:09Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "alfa-romeo",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:21:19Z",
+            "last_started_at": "2026-08-21T16:20:09Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "peugeot",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:22:04Z",
+            "last_started_at": "2026-08-21T16:19:21Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "land-rover",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:22:04Z",
+            "last_started_at": "2026-08-21T16:19:21Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "volvo",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:25:02Z",
+            "last_started_at": "2026-08-21T16:24:31Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "honda",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:25:02Z",
+            "last_started_at": "2026-08-21T16:24:31Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "porsche",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:25:13Z",
+            "last_started_at": "2026-08-21T16:24:29Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          },
+          {
+            "key": "mg",
+            "never_touched": false,
+            "last_finished_at": "2026-08-21T16:25:13Z",
+            "last_started_at": "2026-08-21T16:24:29Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": false
+          }
+        ]
+      },
+      "kleinanzeigen": {
+        "shard_job": "ka_shard",
+        "keys_key": "kleinanzeigen_makes",
+        "keys_total": 33,
+        "keys_stale": 33,
+        "keys_never": 6,
+        "stale_keys": [
+          "ford",
+          "seat",
+          "nissan",
+          "dacia",
+          "honda",
+          "chevrolet",
+          "audi",
+          "skoda",
+          "mazda",
+          "porsche",
+          "cupra",
+          "alfa_romeo",
+          "byd",
+          "mercedes_benz",
+          "fiat",
+          "mini",
+          "suzuki",
+          "land_rover",
+          "hyundai",
+          "citroen",
+          "kia",
+          "mitsubishi",
+          "smart",
+          "bmw",
+          "opel",
+          "toyota",
+          "volkswagen",
+          "renault",
+          "peugeot",
+          "volvo",
+          "tesla",
+          "jeep",
+          "mg"
+        ],
+        "ordered_keys": [
+          "ford",
+          "seat",
+          "nissan",
+          "dacia",
+          "honda",
+          "chevrolet",
+          "audi",
+          "skoda",
+          "mazda",
+          "porsche",
+          "cupra",
+          "alfa_romeo",
+          "byd",
+          "mercedes_benz",
+          "fiat",
+          "mini",
+          "suzuki",
+          "land_rover",
+          "hyundai",
+          "citroen",
+          "kia",
+          "mitsubishi",
+          "smart",
+          "bmw",
+          "opel",
+          "toyota",
+          "volkswagen",
+          "renault",
+          "peugeot",
+          "volvo",
+          "tesla",
+          "jeep",
+          "mg"
+        ],
+        "freshness": [
+          {
+            "key": "ford",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "seat",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "nissan",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "dacia",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "honda",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "chevrolet",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "audi",
+            "never_touched": false,
+            "last_finished_at": "2026-08-14T22:52:51Z",
+            "last_started_at": "2026-08-14T21:11:23Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "skoda",
+            "never_touched": false,
+            "last_finished_at": "2026-08-14T22:52:51Z",
+            "last_started_at": "2026-08-14T21:11:23Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "mazda",
+            "never_touched": false,
+            "last_finished_at": "2026-08-14T22:52:51Z",
+            "last_started_at": "2026-08-14T21:11:23Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "porsche",
+            "never_touched": false,
+            "last_finished_at": "2026-08-14T22:52:51Z",
+            "last_started_at": "2026-08-14T21:11:23Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "cupra",
+            "never_touched": false,
+            "last_finished_at": "2026-08-14T22:52:51Z",
+            "last_started_at": "2026-08-14T21:11:23Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "alfa_romeo",
+            "never_touched": false,
+            "last_finished_at": "2026-08-14T22:52:51Z",
+            "last_started_at": "2026-08-14T21:11:23Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "byd",
+            "never_touched": false,
+            "last_finished_at": "2026-08-14T22:52:51Z",
+            "last_started_at": "2026-08-14T21:11:23Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "mercedes_benz",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T00:20:51Z",
+            "last_started_at": "2026-08-14T21:10:46Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "fiat",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T00:20:51Z",
+            "last_started_at": "2026-08-14T21:10:46Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "mini",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T00:20:51Z",
+            "last_started_at": "2026-08-14T21:10:46Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "suzuki",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T00:20:51Z",
+            "last_started_at": "2026-08-14T21:10:46Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "land_rover",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T00:20:51Z",
+            "last_started_at": "2026-08-14T21:10:46Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "hyundai",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T14:33:34Z",
+            "last_started_at": "2026-08-15T12:34:16Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "citroen",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T14:33:34Z",
+            "last_started_at": "2026-08-15T12:34:16Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "kia",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T14:33:34Z",
+            "last_started_at": "2026-08-15T12:34:16Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "mitsubishi",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T14:33:34Z",
+            "last_started_at": "2026-08-15T12:34:16Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "smart",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T14:33:34Z",
+            "last_started_at": "2026-08-15T12:34:16Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "bmw",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T15:23:26Z",
+            "last_started_at": "2026-08-15T12:30:53Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "opel",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T15:23:26Z",
+            "last_started_at": "2026-08-15T12:34:16Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": true
+          },
+          {
+            "key": "toyota",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T15:23:26Z",
+            "last_started_at": "2026-08-15T12:30:53Z",
+            "last_status": "finished",
+            "run_count": 2,
+            "stale": true
+          },
+          {
+            "key": "volkswagen",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T23:24:33Z",
+            "last_started_at": "2026-08-15T12:32:26Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "renault",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T23:24:33Z",
+            "last_started_at": "2026-08-15T12:32:26Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "peugeot",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T23:24:33Z",
+            "last_started_at": "2026-08-15T12:32:26Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "volvo",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T23:24:33Z",
+            "last_started_at": "2026-08-15T12:32:26Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "tesla",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T23:24:33Z",
+            "last_started_at": "2026-08-15T12:32:26Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "jeep",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T23:24:33Z",
+            "last_started_at": "2026-08-15T12:32:26Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          },
+          {
+            "key": "mg",
+            "never_touched": false,
+            "last_finished_at": "2026-08-15T23:24:33Z",
+            "last_started_at": "2026-08-15T12:32:26Z",
+            "last_status": "finished",
+            "run_count": 1,
+            "stale": true
+          }
+        ]
+      },
+      "coches": {
+        "shard_job": "coches_shard",
+        "keys_key": "coches_years",
+        "keys_total": 21,
+        "keys_stale": 21,
+        "keys_never": 21,
+        "stale_keys": [
+          "2026",
+          "2025",
+          "2024",
+          "2023",
+          "2022",
+          "2021",
+          "2020",
+          "2019",
+          "2018",
+          "2017",
+          "2016",
+          "2015",
+          "2014",
+          "2013",
+          "2012",
+          "2011",
+          "2010",
+          "2005-2009",
+          "2000-2004",
+          "1990-1999",
+          "to-1989"
+        ],
+        "ordered_keys": [
+          "2026",
+          "2025",
+          "2024",
+          "2023",
+          "2022",
+          "2021",
+          "2020",
+          "2019",
+          "2018",
+          "2017",
+          "2016",
+          "2015",
+          "2014",
+          "2013",
+          "2012",
+          "2011",
+          "2010",
+          "2005-2009",
+          "2000-2004",
+          "1990-1999",
+          "to-1989"
+        ],
+        "freshness": [
+          {
+            "key": "2026",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2025",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2024",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2023",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2022",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2021",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2020",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2019",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2018",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2017",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2016",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2015",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2014",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2013",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2012",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2011",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2010",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2005-2009",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "2000-2004",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "1990-1999",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          },
+          {
+            "key": "to-1989",
+            "never_touched": true,
+            "last_finished_at": null,
+            "last_started_at": null,
+            "last_status": null,
+            "run_count": 0,
+            "stale": true
+          }
+        ]
+      }
+    }
   }
 }
