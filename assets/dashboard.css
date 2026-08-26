@@ -869,6 +869,87 @@ body {
   border-bottom-color: var(--warn);
 }
 
+.crawl-launch-panel {
+  margin-bottom: 1.25rem;
+}
+
+.crawl-launch-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+  margin: 1rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.crawl-wave-summary {
+  flex: 1 1 12rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  min-width: 10rem;
+}
+
+.crawl-stale-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.crawl-launch-field--inline {
+  min-width: 8rem;
+}
+
+.crawl-launch-field--wide input {
+  min-width: min(100%, 22rem);
+}
+
+.crawl-sources-board {
+  margin-top: 0.5rem;
+}
+
+.crawl-source-card .source-card-head {
+  align-items: center;
+}
+
+.crawl-source-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.crawl-source-meta dd {
+  overflow-wrap: anywhere;
+}
+
+.crawl-stale-keys code {
+  font-size: 0.78rem;
+  margin-right: 0.25rem;
+}
+
+.crawl-stale-more,
+.crawl-never {
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+.crawl-stale-empty {
+  color: var(--ink-soft);
+  font-size: 0.88rem;
+}
+
+.crawl-source-params {
+  margin-top: 0.75rem;
+}
+
 .crawl-catalog {
   margin: 0 0 1.75rem;
   padding-top: 0.15rem;
