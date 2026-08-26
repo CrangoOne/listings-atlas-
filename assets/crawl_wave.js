@@ -62,6 +62,9 @@ export function buildDispatcherPrompt(payload) {
   for (const j of payload.jobs) {
     const extra = jobFlags(j);
     lines.push(`- \`${j.job_id}\`${extra ? ` ${extra}` : ""}`);
+    if (j.stale_first && j.makes) {
+      lines.push(`  (stale-first shard keys — keep \`--makes\` order as sent)`);
+    }
   }
   lines.push(
     `For each job run \`python3 daq/jobs/launch_crawl.py prompt <job_id> ${payload.jobs.length ? "[flags]" : ""} --wave-id ${payload.wave_id} --json\`, spawn one cloud worker per returned prompt, stamp wave_id on docs/data/crawl_status.json, and publish with python3 daq/jobs/publish_crawl_status.py.`
