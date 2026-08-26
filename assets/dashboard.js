@@ -1,6 +1,6 @@
-import { initExplore } from "./explore.js?v=20260826a";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260826a";
-import { initSources } from "./sources.js?v=20260826a";
+import { initExplore } from "./explore.js?v=20260821b";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260821b";
+import { initSources } from "./sources.js?v=20260825a";
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
@@ -8,43 +8,6 @@ const euro = new Intl.NumberFormat("en-US", {
   currency: "EUR",
   maximumFractionDigits: 0,
 });
-
-/** Prefer freshest pack KPI JSON (Pages can lag behind raw GitHub). */
-const LIVE_SUMMARY_URLS = [
-  "data/summary.json",
-  "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/summary.json",
-];
-
-function withCacheBust(url) {
-  const sep = url.includes("?") ? "&" : "?";
-  return `${url}${sep}t=${Date.now()}&r=${Math.random().toString(36).slice(2, 8)}`;
-}
-
-async function fetchSummaryPreferLive() {
-  const results = await Promise.allSettled(
-    LIVE_SUMMARY_URLS.map(async (url) => {
-      const res = await fetch(withCacheBust(url), {
-        cache: "no-store",
-        headers: { Accept: "application/json" },
-      });
-      if (!res.ok) throw new Error(`${url} (${res.status})`);
-      return { data: await res.json(), url: res.url || url };
-    })
-  );
-  const ok = results
-    .filter((r) => r.status === "fulfilled")
-    .map((r) => r.value)
-    .filter((v) => v?.data && typeof v.data === "object");
-  if (!ok.length) {
-    const last = results.find((r) => r.status === "rejected");
-    throw last?.reason || new Error("Could not load summary.json");
-  }
-  ok.sort(
-    (a, b) =>
-      (Date.parse(b.data.generated_at) || 0) - (Date.parse(a.data.generated_at) || 0)
-  );
-  return ok[0];
-}
 
 const SOURCE_LABEL = {
   willhaben: "Willhaben",
@@ -152,8 +115,9 @@ function renderMarketMakes(data) {
 }
 
 async function main() {
-  const pack = await fetchSummaryPreferLive();
-  const data = pack.data;
+  const res = await fetch("data/summary.json", { cache: "no-cache" });
+  if (!res.ok) throw new Error(`Failed to load summary.json (${res.status})`);
+  const data = await res.json();
 
   renderKpis(data);
 
