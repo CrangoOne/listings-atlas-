@@ -5,20 +5,24 @@ import {
   rememberWaveId,
   buildWavePayload,
   postCrawlWave,
-} from "./crawl_wave.js?v=20260821b";
+} from "./crawl_wave.js?v=20260826a";
+import {
+  SOURCE_ORDER,
+  SOURCE_LABEL,
+  SOURCE_SHARD_JOB,
+  SOURCE_MAKES_KEY,
+  buildStaleSummary,
+  planWaveJobs,
+  lastSourceCrawl,
+} from "./crawl_stale.js?v=20260826a";
 
-/** Bumped whenever status-fetch logic changes — shown in board meta so stale caches are obvious. */
-const ASSET_BUILD = "20260821b";
-
-const SOURCE_LABEL = {
-  willhaben: "Willhaben",
-  autoscout: "AutoScout24",
-  kleinanzeigen: "Kleinanzeigen",
-  coches: "coches.net",
-  wko: "WKO",
-};
+/** Bumped whenever status-fetch logic changes — shown in board meta. */
+const ASSET_BUILD = "20260826a";
 
 const STATUS_ORDER = ["running", "queued", "failed", "finished", "cancelled"];
+const DISPLAY_TZ = "Europe/Vienna";
+const DEFAULT_FRESH_HOURS = 168;
+const DEFAULT_WORKERS = 5;
 
 function escapeHtml(s) {
   return String(s ?? "")
@@ -32,13 +36,10 @@ function niceSource(id) {
   return SOURCE_LABEL[id] || id || "—";
 }
 
-/** Display timestamps in Vienna local time (stored values stay UTC). */
-const DISPLAY_TZ = "Europe/Vienna";
-
 function formatWhen(iso) {
   if (!iso) return "—";
   const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return escapeHtml(iso);
+  if (Number.isNaN(d.getTime())) return escapeHtml(String(iso));
   return d.toLocaleString("de-AT", {
     timeZone: DISPLAY_TZ,
     year: "numeric",
@@ -65,17 +66,25 @@ function renderCrawlKpis(runs, updatedAt) {
   if (!root) return;
   const counts = countByStatus(runs);
   const items = [
-    { label: "Runs", value: String(runs.length), sub: updatedAt ? `Updated ${formatWhen(updatedAt)}` : "No status yet" },
+    {
+      label: "Runs",
+      value: String(runs.length),
+      sub: updatedAt ? `Updated ${formatWhen(updatedAt)}` : "No status yet",
+    },
     { label: "Running", value: String(counts.running), sub: "live workers" },
-    { label: "Queued", value: String(counts.queued), sub: "waiting / pending" },
-    { label: "Finished", value: String(counts.finished), sub: `${counts.failed} failed` },
+    { label: "Queued", value: String(counts.queued), sub: "waiting" },
+    {
+      label: "Finished",
+      value: String(counts.finished),
+      sub: `${counts.failed} failed`,
+    },
   ];
   root.innerHTML = items
     .map(
       (k) => `<div class="kpi">
         <span class="label">${k.label}</span>
         <span class="value">${k.value}</span>
-        <span class="sub">${k.sub}</span>
+        <span class="sub">${escapeHtml(k.sub)}</span>
       </div>`
     )
     .join("");
@@ -141,45 +150,6 @@ function renderRunsTable(runs) {
     .join("");
 }
 
-function readJobParams(article) {
-  const workersEl = article.querySelector("[data-param=workers]");
-  const durationEl = article.querySelector("[data-param=duration]");
-  const makesEl = article.querySelector("[data-param=makes]");
-  const workersRaw = workersEl?.value?.trim();
-  const durationRaw = durationEl?.value?.trim();
-  const makes = makesEl?.value?.trim() || "";
-  let workers = null;
-  let durationS = null;
-  if (workersRaw) {
-    const n = Number.parseInt(workersRaw, 10);
-    if (Number.isFinite(n) && n > 0) workers = n;
-  }
-  if (durationRaw !== undefined && durationRaw !== "" && durationEl) {
-    const n = Number.parseInt(durationRaw, 10);
-    if (Number.isFinite(n) && n >= 0) durationS = n;
-  }
-  return { workers, durationS, makes };
-}
-
-function collectSelectedJobs(jobsById) {
-  const root = document.getElementById("crawl-jobs");
-  if (!root) return [];
-  const selected = [];
-  root.querySelectorAll("[data-job-id]").forEach((article) => {
-    const box = article.querySelector("[data-wave-include]");
-    if (!box?.checked) return;
-    const job = jobsById.get(article.getAttribute("data-job-id"));
-    if (!job) return;
-    const { workers, durationS, makes } = readJobParams(article);
-    const entry = { job_id: job.id, source: job.source || null };
-    if (job.supports?.workers && workers != null) entry.workers = workers;
-    if (job.supports?.duration && durationS != null) entry.duration_s = durationS;
-    if (job.supports?.makes && makes) entry.makes = makes;
-    selected.push(entry);
-  });
-  return selected;
-}
-
 function setWaveStatus(message, { error = false } = {}) {
   const el = document.getElementById("crawl-wave-status");
   if (!el) return;
@@ -188,16 +158,182 @@ function setWaveStatus(message, { error = false } = {}) {
   el.classList.toggle("crawl-wave-status--error", Boolean(error));
 }
 
-function refreshWaveSummary(jobsById) {
-  const n = collectSelectedJobs(jobsById).length;
+function readSourceParams(sourceId) {
+  const card = document.querySelector(`[data-crawl-source="${sourceId}"]`);
+  if (!card) return { include: false, workers: DEFAULT_WORKERS, durationS: 0 };
+  const include = card.querySelector("[data-source-include]")?.checked ?? true;
+  const workersRaw = card.querySelector("[data-param=workers]")?.value?.trim();
+  const durationRaw = card.querySelector("[data-param=duration]")?.value?.trim();
+  let workers = DEFAULT_WORKERS;
+  let durationS = 0;
+  if (workersRaw) {
+    const n = Number.parseInt(workersRaw, 10);
+    if (Number.isFinite(n) && n > 0) workers = n;
+  }
+  if (durationRaw !== undefined && durationRaw !== "") {
+    const n = Number.parseInt(durationRaw, 10);
+    if (Number.isFinite(n) && n >= 0) durationS = n;
+  }
+  return { include, workers, durationS };
+}
+
+function collectWaveJobs(runs, makesCatalog) {
+  const staleOnly = document.getElementById("crawl-stale-only")?.checked ?? false;
+  const freshHours =
+    Number.parseInt(document.getElementById("crawl-fresh-hours")?.value || "", 10) ||
+    DEFAULT_FRESH_HOURS;
+  const include = {};
+  const perSourceWorkers = {};
+  const perSourceDuration = {};
+  for (const source of SOURCE_ORDER) {
+    const p = readSourceParams(source);
+    include[source] = p.include;
+    perSourceWorkers[source] = p.workers;
+    perSourceDuration[source] = p.durationS;
+  }
+
+  const baseJobs = planWaveJobs({
+    runs,
+    makesCatalog,
+    staleOnly,
+    freshHours,
+    include,
+    workers: DEFAULT_WORKERS,
+    durationS: 0,
+  });
+
+  return baseJobs.map((job) => ({
+    ...job,
+    workers: perSourceWorkers[job.source] ?? job.workers,
+    duration_s: perSourceDuration[job.source] ?? job.duration_s,
+  }));
+}
+
+function refreshLaunchSummary(runs, makesCatalog) {
+  const jobs = collectWaveJobs(runs, makesCatalog);
   const summary = document.getElementById("crawl-wave-summary");
   const launchBtn = document.getElementById("crawl-wave-launch");
+  const n = jobs.length;
+  const workers = jobs.reduce((acc, j) => acc + (j.workers || 1), 0);
   if (summary) {
     summary.textContent = n
-      ? `${n} job${n === 1 ? "" : "s"} in this wave`
-      : "Select jobs below, then Launch wave";
+      ? `${n} source${n === 1 ? "" : "s"} · ~${workers} workers · stale-first`
+      : "Enable at least one source with stale keys";
   }
   if (launchBtn) launchBtn.disabled = n < 1;
+}
+
+function renderStaleKeyList(keys, { limit = 8 } = {}) {
+  if (!keys?.length) return `<span class="crawl-stale-empty">All keys recently crawled</span>`;
+  const shown = keys.slice(0, limit);
+  const rest = keys.length - shown.length;
+  return `<span class="crawl-stale-keys">${shown.map((k) => `<code>${escapeHtml(k)}</code>`).join(" ")}${
+    rest > 0 ? ` <span class="crawl-stale-more">+${rest}</span>` : ""
+  }</span>`;
+}
+
+function renderSourceSlide(source, staleInfo, lastRun) {
+  const label = niceSource(source);
+  const shard = SOURCE_SHARD_JOB[source];
+  const lastWhen = lastRun?.finished_at || lastRun?.started_at;
+  const lastLabel = lastRun
+    ? `${formatWhen(lastWhen)} · ${escapeHtml(lastRun.status || "—")}`
+    : "No crawl recorded";
+
+  const stale = staleInfo?.keys_stale ?? 0;
+  const total = staleInfo?.keys_total ?? 0;
+  const never = staleInfo?.keys_never ?? 0;
+  const staleKeys = staleInfo?.stale_keys || [];
+
+  return `<article class="source-card crawl-source-card carousel-slide" data-crawl-source="${escapeHtml(source)}" id="crawl-source-${escapeHtml(source)}">
+    <header class="source-card-head">
+      <h3>${escapeHtml(label)}</h3>
+      <label class="crawl-source-toggle">
+        <input type="checkbox" data-source-include checked />
+        Include
+      </label>
+    </header>
+    <dl class="source-meta crawl-source-meta">
+      <div><dt>Shard job</dt><dd><code>${escapeHtml(shard)}</code></dd></div>
+      <div><dt>Last crawl</dt><dd>${lastLabel}</dd></div>
+      <div><dt>Stale keys</dt><dd>${stale} / ${total} <span class="crawl-never">(${never} never)</span></dd></div>
+      <div><dt>Stale-first queue</dt><dd>${renderStaleKeyList(staleKeys)}</dd></div>
+    </dl>
+    <div class="crawl-launch-params crawl-source-params">
+      <label class="crawl-launch-field">Workers
+        <input type="number" min="1" max="40" step="1" data-param="workers" value="${DEFAULT_WORKERS}" inputmode="numeric" />
+      </label>
+      <label class="crawl-launch-field">Duration (s)
+        <input type="number" min="0" step="60" data-param="duration" value="0" inputmode="numeric" title="0 = until exhausted" />
+      </label>
+    </div>
+  </article>`;
+}
+
+function renderSourcesCarousel(runs, makesCatalog, freshHours) {
+  const summary = buildStaleSummary(runs, makesCatalog, freshHours);
+  const tabs = SOURCE_ORDER.map(
+    (id, idx) =>
+      `<button type="button" class="carousel-tab${idx === 0 ? " is-active" : ""}" data-index="${idx}" role="tab" aria-selected="${
+        idx === 0 ? "true" : "false"
+      }" aria-controls="crawl-source-${escapeHtml(id)}">${escapeHtml(niceSource(id))}</button>`
+  ).join("");
+  const slides = SOURCE_ORDER.map((id) =>
+    renderSourceSlide(id, summary.sources[id], lastSourceCrawl(runs, id))
+  ).join("");
+  const dots = SOURCE_ORDER.map(
+    (_, idx) =>
+      `<button type="button" class="carousel-dot${idx === 0 ? " is-active" : ""}" data-index="${idx}" aria-label="Source ${idx + 1}"></button>`
+  ).join("");
+
+  return `<div class="sources-carousel crawl-sources-carousel" data-slide-count="${SOURCE_ORDER.length}">
+    <div class="carousel-toolbar">
+      <div class="carousel-tabs" role="tablist">${tabs}</div>
+      <div class="carousel-nav">
+        <button type="button" class="btn ghost carousel-prev" aria-label="Previous source">←</button>
+        <span class="carousel-counter">1 / ${SOURCE_ORDER.length}</span>
+        <button type="button" class="btn ghost carousel-next" aria-label="Next source">→</button>
+      </div>
+    </div>
+    <div class="carousel-viewport">
+      <div class="carousel-track">${slides}</div>
+    </div>
+    <div class="carousel-dots" role="group" aria-label="Crawl source slides">${dots}</div>
+  </div>`;
+}
+
+function initCrawlCarousel(root) {
+  const carousel = root.querySelector(".crawl-sources-carousel");
+  if (!carousel) return;
+  const track = carousel.querySelector(".carousel-track");
+  const tabs = [...carousel.querySelectorAll(".carousel-tab")];
+  const dots = [...carousel.querySelectorAll(".carousel-dot")];
+  const counter = carousel.querySelector(".carousel-counter");
+  const prevBtn = carousel.querySelector(".carousel-prev");
+  const nextBtn = carousel.querySelector(".carousel-next");
+  const slideCount = Number(carousel.dataset.slideCount) || tabs.length;
+  let current = 0;
+
+  function goTo(index) {
+    if (!slideCount) return;
+    current = ((index % slideCount) + slideCount) % slideCount;
+    track.style.transform = `translateX(-${current * 100}%)`;
+    tabs.forEach((tab, idx) => {
+      const active = idx === current;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    dots.forEach((dot, idx) => dot.classList.toggle("is-active", idx === current));
+    if (counter) counter.textContent = `${current + 1} / ${slideCount}`;
+    if (prevBtn) prevBtn.disabled = slideCount <= 1;
+    if (nextBtn) nextBtn.disabled = slideCount <= 1;
+  }
+
+  tabs.forEach((tab) => tab.addEventListener("click", () => goTo(Number(tab.dataset.index))));
+  dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
+  prevBtn?.addEventListener("click", () => goTo(current - 1));
+  nextBtn?.addEventListener("click", () => goTo(current + 1));
+  goTo(0);
 }
 
 function bindWebhookSettings() {
@@ -239,29 +375,45 @@ function bindWebhookSettings() {
     }
     setWaveStatus("Credentials saved in this browser only.");
   });
-  const filter = document.getElementById("crawl-filter-wave");
-  filter?.addEventListener("change", () => {
+  document.getElementById("crawl-filter-wave")?.addEventListener("change", () => {
     initCrawls();
   });
 }
 
-let currentJobsById = new Map();
+let currentRuns = [];
+let currentMakes = {};
 
-function bindWaveComposer(jobsById) {
-  currentJobsById = jobsById;
-  const root = document.getElementById("crawl-jobs");
+function bindLaunchPanel() {
   const launchBtn = document.getElementById("crawl-wave-launch");
-  root?.querySelectorAll("[data-wave-include]").forEach((box) => {
-    box.addEventListener("change", () => refreshWaveSummary(currentJobsById));
-  });
-  refreshWaveSummary(currentJobsById);
+  const board = document.getElementById("crawl-sources-board");
   if (launchBtn?.dataset.bound) return;
   if (launchBtn) launchBtn.dataset.bound = "1";
 
+  board?.addEventListener("change", (e) => {
+    if (
+      e.target.matches("[data-source-include]") ||
+      e.target.matches("[data-param=workers]") ||
+      e.target.matches("[data-param=duration]")
+    ) {
+      refreshLaunchSummary(currentRuns, currentMakes);
+    }
+  });
+  board?.addEventListener("input", (e) => {
+    if (e.target.matches("[data-param=workers]") || e.target.matches("[data-param=duration]")) {
+      refreshLaunchSummary(currentRuns, currentMakes);
+    }
+  });
+  document.getElementById("crawl-stale-only")?.addEventListener("change", () => {
+    renderLaunchBoard(currentRuns, currentMakes);
+  });
+  document.getElementById("crawl-fresh-hours")?.addEventListener("change", () => {
+    renderLaunchBoard(currentRuns, currentMakes);
+  });
+
   launchBtn?.addEventListener("click", async () => {
-    const jobs = collectSelectedJobs(currentJobsById);
+    const jobs = collectWaveJobs(currentRuns, currentMakes);
     if (!jobs.length) {
-      setWaveStatus("Select at least one job.", { error: true });
+      setWaveStatus("Enable at least one source with keys to crawl.", { error: true });
       return;
     }
     const settings = loadWebhookSettings();
@@ -282,7 +434,7 @@ function bindWaveComposer(jobsById) {
     }
     saveWebhookSettings({ url, token, ghToken });
     const payload = buildWavePayload({
-      name: nameEl?.value?.trim() || "",
+      name: nameEl?.value?.trim() || "stale-first",
       jobs,
     });
     launchBtn.disabled = true;
@@ -290,82 +442,32 @@ function bindWaveComposer(jobsById) {
     try {
       const result = await postCrawlWave(payload, { url, token, ghToken });
       rememberWaveId(payload.wave_id);
-      const via = result?.via === "github" ? "queued on GitHub (Action forwards to Cursor)" : "sent to Cursor webhook";
-      setWaveStatus(
-        `Wave ${payload.wave_id} ${via}. Tap Refresh in a minute.`
-      );
+      const via =
+        result?.via === "github"
+          ? "queued on GitHub (Action forwards to Cursor)"
+          : "sent to Cursor webhook";
+      setWaveStatus(`Wave ${payload.wave_id} ${via}. Tap Refresh in a minute.`);
     } catch (err) {
       setWaveStatus(err.message || String(err), { error: true });
     } finally {
-      refreshWaveSummary(currentJobsById);
+      refreshLaunchSummary(currentRuns, currentMakes);
     }
   });
 }
 
-function paramFields(job) {
-  const supports = job.supports || {};
-  const defaults = job.defaults || {};
-  const fields = [];
-  if (supports.workers) {
-    const v = defaults.workers != null ? String(defaults.workers) : "5";
-    fields.push(`<label class="crawl-launch-field">Workers
-      <input type="number" min="1" max="40" step="1" data-param="workers" value="${escapeHtml(v)}" inputmode="numeric" />
-    </label>`);
-  }
-  if (supports.duration) {
-    const v = defaults.duration_s != null ? String(defaults.duration_s) : "0";
-    fields.push(`<label class="crawl-launch-field">Duration (s)
-      <input type="number" min="0" step="60" data-param="duration" value="${escapeHtml(v)}" inputmode="numeric" title="0 = until exhausted" />
-    </label>`);
-  }
-  if (supports.makes) {
-    const sample = Array.isArray(job.makes_sample) ? job.makes_sample.join(",") : "";
-    fields.push(`<label class="crawl-launch-field crawl-launch-field--makes">Makes
-      <input type="text" data-param="makes" placeholder="${escapeHtml(sample || "bmw,audi,…")}" spellcheck="false" autocomplete="off" />
-    </label>`);
-  }
-  if (!fields.length) return "";
-  return `<div class="crawl-launch-params">${fields.join("")}</div>`;
-}
-
-function renderJobCatalog(jobs) {
-  const root = document.getElementById("crawl-jobs");
+function renderLaunchBoard(runs, makesCatalog) {
+  currentRuns = runs;
+  currentMakes = makesCatalog;
+  const root = document.getElementById("crawl-sources-board");
   if (!root) return;
-  if (!jobs?.length) {
-    root.innerHTML = `<p class="crawl-hint">Job catalog not loaded.</p>`;
-    return;
-  }
-  const jobsById = new Map(jobs.map((j) => [j.id, j]));
-  root.innerHTML = jobs
-    .map(
-      (j) => `<article class="crawl-job-row" data-job-id="${escapeHtml(j.id)}">
-        <label class="crawl-job-check">
-          <input type="checkbox" data-wave-include />
-          <code>${escapeHtml(j.id)}</code>
-        </label>
-        <div class="crawl-job-copy">
-          <strong>${escapeHtml(niceSource(j.source))}</strong>
-          <span>${escapeHtml(j.summary || "")}</span>
-          <div class="crawl-job-meta-inline">
-            <span>${escapeHtml(j.workers || "—")} worker(s)</span>
-            <span>·</span>
-            <span>${escapeHtml(j.duration_default || "—")}</span>
-          </div>
-          ${paramFields(j)}
-        </div>
-      </article>`
-    )
-    .join("");
-  bindWaveComposer(jobsById);
+  const freshHours =
+    Number.parseInt(document.getElementById("crawl-fresh-hours")?.value || "", 10) ||
+    DEFAULT_FRESH_HOURS;
+  root.innerHTML = renderSourcesCarousel(runs, makesCatalog, freshHours);
+  initCrawlCarousel(root);
+  refreshLaunchSummary(runs, makesCatalog);
 }
 
-/**
- * Live board sources (newest first).
- *
- * Never use jsDelivr / long-lived CDNs for crawl_status — they can stay stale
- * for hours/days while workers update the board. Prefer same-origin Pages
- * (cache-busted) then raw.githubusercontent.
- */
 const LIVE_STATUS_URLS = [
   "data/crawl_status.json",
   "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_status.json",
@@ -396,10 +498,6 @@ async function fetchOneJson(url) {
   return { data: await res.json(), url: res.url || url };
 }
 
-/**
- * Fetch all candidates and keep the freshest board by updated_at.
- * This avoids silently sticking to a stale first success.
- */
 async function fetchJsonPreferLive(liveUrls) {
   const results = await Promise.allSettled(liveUrls.map((u) => fetchOneJson(u)));
   const ok = results
@@ -417,6 +515,7 @@ async function fetchJsonPreferLive(liveUrls) {
 export async function initCrawls() {
   const meta = document.getElementById("crawl-board-meta");
   bindWebhookSettings();
+  bindLaunchPanel();
   try {
     const [statusPack, jobsPack] = await Promise.all([
       fetchJsonPreferLive(LIVE_STATUS_URLS),
@@ -432,6 +531,10 @@ export async function initCrawls() {
     }
     renderCrawlKpis(runs, status.updated_at);
     renderRunsTable(runs);
+
+    const makesCatalog = jobsPack?.data?.makes || {};
+    renderLaunchBoard(runs, makesCatalog);
+
     const filterHint = document.getElementById("crawl-wave-filter-label");
     if (filterHint) {
       filterHint.hidden = !waveFilter;
@@ -447,12 +550,7 @@ export async function initCrawls() {
         onlyWave && waveFilter ? ` · filtered ${runs.length}/${totalRuns}` : "";
       meta.textContent = totalRuns
         ? `${totalRuns} run(s)${filterNote} · updated ${when} · ${source} · UI ${ASSET_BUILD}`
-        : `Board is empty — compose a wave above, Launch, then Refresh. · UI ${ASSET_BUILD}`;
-    }
-    if (jobsPack?.data) {
-      renderJobCatalog(jobsPack.data.jobs || []);
-    } else {
-      renderJobCatalog([]);
+        : `Compose a stale-first wave above, Launch, then Refresh. · UI ${ASSET_BUILD}`;
     }
   } catch (err) {
     renderCrawlKpis([], null);
@@ -462,7 +560,6 @@ export async function initCrawls() {
   }
 }
 
-/** Auto-refresh the board while the Crawls section is visible. */
 let crawlsRefreshTimer = null;
 export function startCrawlsAutoRefresh(intervalMs = 30000) {
   if (crawlsRefreshTimer) return;
