@@ -230,11 +230,11 @@
       <section id="crawls" class="section crawls">
         <div class="section-head">
           <div class="section-head-copy">
-            <h2>Crawl monitor <span class="crawl-ui-build" title="Asset build id">UI 20260821b</span></h2>
+            <h2>Crawls <span class="crawl-ui-build" title="Asset build id">UI 20260826a</span></h2>
             <p>
-              Compose a crawl wave here, press <strong>Launch wave</strong>, then
-              monitor workers on this board. The button calls your Cursor
-              Automation webhook — no prompt pasting.
+              One-tap <strong>Launch all sources</strong> runs a stale-first wave across
+              Willhaben, AutoScout, Kleinanzeigen, and coches.net. Tap
+              <strong>Refresh</strong> to monitor workers.
             </p>
           </div>
           <button type="button" class="btn ghost board-refresh" id="crawls-refresh" data-board="crawls">
@@ -242,64 +242,44 @@
           </button>
         </div>
 
-        <div class="crawl-catalog">
-          <div class="chart-label">Compose a crawl wave</div>
-          <p class="crawl-hint crawl-launch-intro">
-            Tick the sources you want, set workers / duration / makes, then
-            <strong>Launch wave</strong>. Duration <code>0</code> = full scrape
-            until exhausted. Status publishes to this board — tap
-            <strong>Refresh</strong> after launch.
-          </p>
-
+        <div class="crawl-launch-panel">
           <details class="crawl-automation-settings" id="crawl-automation-settings">
-            <summary>Automation webhook (once per browser)</summary>
+            <summary>Automation credentials (once per browser)</summary>
             <p class="crawl-hint">
-              GitHub Pages cannot call Cursor webhooks directly (browser CORS).
               Launch queues <code>data/pending_wave.json</code> on
               <code>listings-atlas-</code>; an Action forwards it to Cursor.
             </p>
-            <p class="crawl-hint">
-              Once: add secrets <code>CRAWL_WAVE_WEBHOOK_URL</code> and
-              <code>CRAWL_WAVE_WEBHOOK_BEARER</code> on the
-              <a href="https://github.com/CrangoOne/listings-atlas-/settings/secrets/actions" target="_blank" rel="noopener noreferrer">listings-atlas- Actions secrets</a>
-              page (same URL + Bearer you already generated). Then paste a GitHub
-              PAT with <strong>Contents: Read and write</strong> on that repo.
-            </p>
-            <p class="crawl-hint">
-              Automation prompt: paste <code>daq/jobs/WAVE_AUTOMATION.md</code>
-              into the Cursor automation instructions.
-            </p>
-            <label class="crawl-launch-field crawl-launch-field--makes">GitHub PAT (listings-atlas-)
+            <label class="crawl-launch-field crawl-launch-field--wide">GitHub PAT (listings-atlas-)
               <input id="crawl-github-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_… Contents write" />
             </label>
-            <label class="crawl-launch-field crawl-launch-field--makes">Webhook URL (for the GitHub secret)
+            <label class="crawl-launch-field crawl-launch-field--wide">Webhook URL (optional)
               <input id="crawl-webhook-url" type="url" autocomplete="off" spellcheck="false" placeholder="https://api2.cursor.sh/automations/webhook/…" />
             </label>
-            <label class="crawl-launch-field crawl-launch-field--makes">Bearer token (for the GitHub secret)
-              <input id="crawl-webhook-token" type="password" autocomplete="off" spellcheck="false" placeholder="crsr_… or Bearer crsr_…" />
+            <label class="crawl-launch-field crawl-launch-field--wide">Bearer token (optional)
+              <input id="crawl-webhook-token" type="password" autocomplete="off" spellcheck="false" placeholder="crsr_…" />
             </label>
             <button type="button" class="btn ghost" id="crawl-webhook-save">Save on this device</button>
           </details>
 
-          <label class="crawl-launch-field">Wave name
-            <input id="crawl-wave-name" type="text" maxlength="40" placeholder="eu-nightly" autocomplete="off" />
-          </label>
-
-          <div id="crawl-jobs" class="crawl-jobs"></div>
-
-          <div class="crawl-wave-bar">
-            <span id="crawl-wave-summary">Select jobs below, then Launch wave</span>
-            <button type="button" class="btn primary" id="crawl-wave-launch" disabled>Launch wave</button>
+          <div class="crawl-launch-toolbar">
+            <label class="crawl-launch-field crawl-launch-field--inline">Wave name
+              <input id="crawl-wave-name" type="text" maxlength="40" placeholder="stale-first" autocomplete="off" />
+            </label>
+            <label class="crawl-stale-toggle">
+              <input type="checkbox" id="crawl-stale-only" />
+              Stale only
+            </label>
+            <label class="crawl-launch-field crawl-launch-field--inline crawl-fresh-hours">
+              Fresh within (h)
+              <input id="crawl-fresh-hours" type="number" min="1" max="720" value="168" inputmode="numeric" title="Keys crawled within this window are skipped when Stale only is checked" />
+            </label>
+            <span id="crawl-wave-summary" class="crawl-wave-summary">Loading sources…</span>
+            <button type="button" class="btn primary" id="crawl-wave-launch" disabled>Launch all sources</button>
           </div>
           <p class="crawl-wave-status" id="crawl-wave-status" hidden></p>
-        </div>
 
-        <ol class="crawl-phone-steps">
-          <li>Once: GitHub secrets on listings-atlas- + PAT in <strong>Automation webhook</strong>.</li>
-          <li>Tick jobs, optional params, <strong>Launch wave</strong>.</li>
-          <li>Tap <strong>Refresh</strong> to see Running / Queued / Finished.</li>
-          <li>Open Agent / PR links from the table when you need detail.</li>
-        </ol>
+          <div id="crawl-sources-board" class="crawl-sources-board"></div>
+        </div>
 
         <div class="kpi-row" id="crawl-kpis"></div>
         <p class="crawl-board-meta" id="crawl-board-meta">Loading crawl status…</p>
@@ -326,8 +306,7 @@
           </table>
         </div>
         <p class="crawl-empty" id="crawl-empty" hidden>
-          No crawls recorded yet. After your next start, workers update this
-          board so you can watch progress here.
+          No crawls recorded yet. Launch a wave above, then Refresh to watch progress.
         </p>
       </section>
 
