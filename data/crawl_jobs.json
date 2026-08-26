@@ -1,6 +1,6 @@
 {
   "generated_from": "daq/jobs/catalog.yaml",
-  "generated_at": "2026-08-16T11:44:43Z",
+  "generated_at": "2026-08-26T18:58:59Z",
   "jobs": [
     {
       "id": "autoscout_by_brand",
@@ -104,7 +104,7 @@
       "id": "coches_collect",
       "source": "coches",
       "summary": "coches.net Spain facet crawl → coches_data.csv",
-      "notes": "Requires coches scraper on the branch (PR cursor/coches-es-scraper-1a84 if not yet on main).",
+      "notes": "Single-worker full scrape (year×price facets). For parallel year-band ownership use coches_shard.",
       "workers": "1",
       "duration_default": "0 (until exhausted)",
       "supports": {
@@ -121,20 +121,49 @@
       "chat_hint": "launch coches_collect"
     },
     {
+      "id": "coches_shard",
+      "source": "coches",
+      "summary": "Parallel coches.net workers — splits year bands across N agents",
+      "notes": "Disjoint DAQ_COCHES_YEARS shards (catalog keys like 2024, 2005-2009, to-1989). Pass --makes with those keys to filter. Runs until exhausted unless --duration set.",
+      "workers": "param (default 5)",
+      "duration_default": "0 (until exhausted)",
+      "supports": {
+        "workers": true,
+        "duration": true,
+        "makes": true
+      },
+      "defaults": {
+        "workers": 5,
+        "duration_s": 0
+      },
+      "makes_key": "coches_years",
+      "makes_sample": [
+        "2026",
+        "2025",
+        "2024",
+        "2023",
+        "2022",
+        "2021",
+        "2020",
+        "2019"
+      ],
+      "chat_hint": "launch coches_shard"
+    },
+    {
       "id": "ka_all",
       "source": "kleinanzeigen",
       "summary": "Kleinanzeigen SERP+enrich for all makes in one process",
       "notes": null,
       "workers": "1",
-      "duration_default": "none",
+      "duration_default": "0 (until exhausted)",
       "supports": {
         "workers": false,
-        "duration": false,
+        "duration": true,
         "makes": false
       },
       "defaults": {
         "workers": 1,
-        "duration_s": null
+        "duration_s": 0
       },
       "makes_key": null,
       "makes_sample": [],
@@ -146,15 +175,15 @@
       "summary": "Preset 5-worker Kleinanzeigen pack (equal make shards)",
       "notes": null,
       "workers": "param (default 5)",
-      "duration_default": "none",
+      "duration_default": "0 (until exhausted)",
       "supports": {
         "workers": true,
-        "duration": false,
+        "duration": true,
         "makes": true
       },
       "defaults": {
         "workers": 5,
-        "duration_s": null
+        "duration_s": 0
       },
       "makes_key": "kleinanzeigen_makes",
       "makes_sample": [
@@ -175,15 +204,15 @@
       "summary": "Parallel Kleinanzeigen workers — splits makes across N cloud agents",
       "notes": null,
       "workers": "param (default 5)",
-      "duration_default": "none",
+      "duration_default": "0 (until exhausted)",
       "supports": {
         "workers": true,
-        "duration": false,
+        "duration": true,
         "makes": true
       },
       "defaults": {
         "workers": 5,
-        "duration_s": null
+        "duration_s": 0
       },
       "makes_key": "kleinanzeigen_makes",
       "makes_sample": [
@@ -202,7 +231,7 @@
       "id": "willhaben_1h",
       "source": "willhaben",
       "summary": "Willhaben direct crawl capped at 1 hour",
-      "notes": null,
+      "notes": "Single-worker full scrape. Default duration 0 (until facets exhausted). For parallel brand ownership use willhaben_shard / willhaben_by_brand.",
       "workers": "1",
       "duration_default": "3600s",
       "supports": {
@@ -219,12 +248,41 @@
       "chat_hint": "launch willhaben_1h"
     },
     {
+      "id": "willhaben_by_brand",
+      "source": "willhaben",
+      "summary": "One Willhaben cloud worker per brand — full scrape until exhausted",
+      "notes": "Each worker owns one brand via DAQ_WH_MAKES (brand SERP + brand×price facets) and writes willhaben_<slug>.csv. Cross-cutting price/year/region facets are excluded from sharded runs.",
+      "workers": "one per brand",
+      "duration_default": "0 (until exhausted)",
+      "supports": {
+        "workers": false,
+        "duration": true,
+        "makes": true
+      },
+      "defaults": {
+        "workers": null,
+        "duration_s": 0
+      },
+      "makes_key": "willhaben_makes",
+      "makes_sample": [
+        "bmw",
+        "vw",
+        "audi",
+        "mercedes",
+        "skoda",
+        "ford",
+        "opel",
+        "renault"
+      ],
+      "chat_hint": "launch willhaben_by_brand"
+    },
+    {
       "id": "willhaben_direct",
       "source": "willhaben",
       "summary": "Willhaben AT car listings (direct Chrome TLS / __NEXT_DATA__)",
-      "notes": null,
+      "notes": "Single-worker full scrape. Default duration 0 (until facets exhausted). For parallel brand ownership use willhaben_shard / willhaben_by_brand.",
       "workers": "1",
-      "duration_default": "3600s",
+      "duration_default": "0 (until exhausted)",
       "supports": {
         "workers": false,
         "duration": true,
@@ -232,11 +290,40 @@
       },
       "defaults": {
         "workers": 1,
-        "duration_s": 3600
+        "duration_s": 0
       },
       "makes_key": null,
       "makes_sample": [],
       "chat_hint": "launch willhaben_direct"
+    },
+    {
+      "id": "willhaben_shard",
+      "source": "willhaben",
+      "summary": "Parallel Willhaben workers — splits brands across N agents",
+      "notes": "Disjoint DAQ_WH_MAKES shards; runs until exhausted unless --duration set. Prefer this over a single ~14h willhaben_direct when targeting a time box.",
+      "workers": "param (default 5)",
+      "duration_default": "0 (until exhausted)",
+      "supports": {
+        "workers": true,
+        "duration": true,
+        "makes": true
+      },
+      "defaults": {
+        "workers": 5,
+        "duration_s": 0
+      },
+      "makes_key": "willhaben_makes",
+      "makes_sample": [
+        "bmw",
+        "vw",
+        "audi",
+        "mercedes",
+        "skoda",
+        "ford",
+        "opel",
+        "renault"
+      ],
+      "chat_hint": "launch willhaben_shard"
     }
   ],
   "makes": {
@@ -311,6 +398,68 @@
       "lexus",
       "jaguar",
       "byd"
+    ],
+    "willhaben_makes": [
+      "bmw",
+      "vw",
+      "audi",
+      "mercedes",
+      "skoda",
+      "ford",
+      "opel",
+      "renault",
+      "toyota",
+      "hyundai",
+      "mazda",
+      "seat",
+      "peugeot",
+      "fiat",
+      "volvo",
+      "nissan",
+      "kia",
+      "dacia",
+      "citroen",
+      "cupra",
+      "suzuki",
+      "mitsubishi",
+      "mini",
+      "porsche",
+      "jeep",
+      "land-rover",
+      "tesla",
+      "mg",
+      "honda",
+      "subaru",
+      "alfa-romeo",
+      "jaguar",
+      "lexus",
+      "smart",
+      "chevrolet",
+      "chrysler",
+      "dodge"
+    ],
+    "coches_years": [
+      "2026",
+      "2025",
+      "2024",
+      "2023",
+      "2022",
+      "2021",
+      "2020",
+      "2019",
+      "2018",
+      "2017",
+      "2016",
+      "2015",
+      "2014",
+      "2013",
+      "2012",
+      "2011",
+      "2010",
+      "2005-2009",
+      "2000-2004",
+      "1990-1999",
+      "to-1989"
     ]
   }
 }
