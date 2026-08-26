@@ -1,5 +1,5 @@
 /** Bumped whenever sources-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260826a";
+const ASSET_BUILD = "20260825a";
 
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
