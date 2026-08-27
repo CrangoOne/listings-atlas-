@@ -1,7 +1,7 @@
 import { initExplore } from "./explore.js?v=20260821b";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260827c";
-import { initSources } from "./sources.js?v=20260827a";
-import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827a";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260827b";
+import { initSources } from "./sources.js?v=20260827c";
+import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
