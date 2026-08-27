@@ -1,14 +1,15 @@
 {
-  "updated_at": "2026-08-26T23:09:35Z",
+  "updated_at": "2026-08-27T00:09:44Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w1",
-      "status": "running",
+      "status": "finished",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w1-1a84",
-      "notes": "Running crawl (sync trigger)",
+      "agent_url": "https://cursor.com/agents/bc-03227520-60b0-5c55-b61b-ac7f45da4b26",
+      "notes": "Finished: +35422 rows",
       "makes": [
         "bmw",
         "ford",
@@ -19,7 +20,10 @@
         "alfa-romeo",
         "chrysler"
       ],
-      "started_at": "2026-08-26T23:03:59Z"
+      "started_at": "2026-08-26T23:06:50Z",
+      "rows_added": 35422,
+      "rows_total": 35422,
+      "finished_at": "2026-08-27T00:07:29Z"
     },
     {
       "worker_id": "coches_shard-w5",
