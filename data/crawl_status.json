@@ -1,6 +1,29 @@
 {
-  "updated_at": "2026-08-27T00:09:44Z",
+  "updated_at": "2026-08-27T00:39:58Z",
   "runs": [
+    {
+      "worker_id": "willhaben_shard-w2",
+      "status": "finished",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20260826t2245z-9645",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w2-1a84",
+      "agent_url": "https://cursor.com/agents/bc-18a3c6a7-9471-5cb4-8fa5-213c8f9120a7",
+      "notes": "Finished: +42360 rows",
+      "makes": [
+        "vw",
+        "opel",
+        "seat",
+        "kia",
+        "mitsubishi",
+        "tesla",
+        "jaguar",
+        "dodge"
+      ],
+      "rows_added": 42360,
+      "finished_at": "2026-08-27T00:36:49Z",
+      "started_at": "2026-08-27T00:36:49Z"
+    },
     {
       "worker_id": "willhaben_shard-w1",
       "status": "finished",
@@ -348,26 +371,6 @@
         "mini",
         "mg",
         "lexus"
-      ],
-      "started_at": "2026-08-26T23:01:53Z"
-    },
-    {
-      "worker_id": "willhaben_shard-w2",
-      "status": "running",
-      "job_id": "willhaben_shard",
-      "wave_id": "wave-stale-first-20260826t2245z-9645",
-      "source": "willhaben",
-      "branch": "cursor/daq-willhaben-shard-w2-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
-      "makes": [
-        "vw",
-        "opel",
-        "seat",
-        "kia",
-        "mitsubishi",
-        "tesla",
-        "jaguar",
-        "dodge"
       ],
       "started_at": "2026-08-26T23:01:53Z"
     },
