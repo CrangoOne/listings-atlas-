@@ -18,9 +18,9 @@ import {
 import { formatWhen, formatWhenHtml, TZ_HINT } from "./time_display.js?v=20260827a";
 
 /** Bumped whenever status-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260827a";
+const ASSET_BUILD = "20260827b";
 
-const STATUS_ORDER = ["running", "queued", "failed", "finished", "cancelled"];
+const STATUS_ORDER = ["running", "unspawned", "queued", "failed", "finished", "cancelled"];
 const DEFAULT_FRESH_HOURS = 168;
 const DEFAULT_WORKERS = 5;
 
@@ -36,10 +36,28 @@ function niceSource(id) {
   return SOURCE_LABEL[id] || id || "—";
 }
 
+/** running/queued without agent_url = dispatcher never spawned a worker. */
+function isUnspawned(run) {
+  const s = run?.status || "queued";
+  if (s !== "running" && s !== "queued") return false;
+  return !String(run?.agent_url || "").trim();
+}
+
+function displayStatus(run) {
+  return isUnspawned(run) ? "unspawned" : run?.status || "queued";
+}
+
 function countByStatus(runs) {
-  const out = { running: 0, queued: 0, finished: 0, failed: 0, cancelled: 0 };
+  const out = {
+    running: 0,
+    unspawned: 0,
+    queued: 0,
+    finished: 0,
+    failed: 0,
+    cancelled: 0,
+  };
   for (const r of runs) {
-    const s = r.status || "queued";
+    const s = displayStatus(r);
     if (s in out) out[s] += 1;
     else out.queued += 1;
   }
@@ -56,7 +74,12 @@ function renderCrawlKpis(runs, updatedAt) {
       value: String(runs.length),
       sub: updatedAt ? `Updated ${formatWhen(updatedAt)}` : "No status yet",
     },
-    { label: "Running", value: String(counts.running), sub: "live workers" },
+    { label: "Running", value: String(counts.running), sub: "spawned workers" },
+    {
+      label: "Unspawned",
+      value: String(counts.unspawned),
+      sub: counts.unspawned ? "stamped, no agent" : "none",
+    },
     { label: "Queued", value: String(counts.queued), sub: "waiting" },
     {
       label: "Finished",
@@ -77,8 +100,8 @@ function renderCrawlKpis(runs, updatedAt) {
 
 function sortRuns(runs) {
   return [...runs].sort((a, b) => {
-    const sa = STATUS_ORDER.indexOf(a.status);
-    const sb = STATUS_ORDER.indexOf(b.status);
+    const sa = STATUS_ORDER.indexOf(displayStatus(a));
+    const sb = STATUS_ORDER.indexOf(displayStatus(b));
     if (sa !== sb) return (sa < 0 ? 99 : sa) - (sb < 0 ? 99 : sb);
     const ta = Date.parse(a.started_at || a.finished_at || "") || 0;
     const tb = Date.parse(b.started_at || b.finished_at || "") || 0;
@@ -112,8 +135,13 @@ function renderRunsTable(runs) {
           : r.rows_total != null
             ? Number(r.rows_total).toLocaleString()
             : "—";
+      const status = displayStatus(r);
+      const statusNote =
+        status === "unspawned"
+          ? ' title="Stamped running/queued but no cloud agent URL — worker never started"'
+          : "";
       return `<tr>
-        <td><span class="crawl-status crawl-status--${escapeHtml(r.status || "queued")}">${escapeHtml(r.status || "queued")}</span></td>
+        <td><span class="crawl-status crawl-status--${escapeHtml(status)}"${statusNote}>${escapeHtml(status)}</span></td>
         <td>
           <div class="crawl-job">${escapeHtml(r.job_id || "—")}</div>
           <div class="crawl-meta">${escapeHtml(r.worker_id || "")}${
