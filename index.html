@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/dashboard.css?v=20260825a" />
+    <link rel="stylesheet" href="assets/dashboard.css?v=20260827c" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
@@ -37,17 +37,13 @@
         <div class="section-head">
           <div class="section-head-copy">
             <h2>Sources</h2>
-            <p>
-              Per-market inventory health from the consolidated pack: last crawl,
-              scraped date coverage, row counts, and column fill rates.
-            </p>
           </div>
           <button type="button" class="btn ghost board-refresh" id="sources-refresh" data-board="sources">
             Refresh
           </button>
         </div>
         <div class="kpi-row" id="sources-kpis"></div>
-        <p class="sources-meta" id="sources-meta">Loading source health…</p>
+        <p class="sources-meta" id="sources-meta" hidden></p>
         <div id="sources-board" class="sources-board"></div>
       </section>
 
@@ -230,7 +226,7 @@
       <section id="crawls" class="section crawls">
         <div class="section-head">
           <div class="section-head-copy">
-            <h2>Crawls <span class="crawl-ui-build" title="Asset build id">UI 20260827c</span></h2>
+            <h2>Crawls <span class="crawl-ui-build" title="Asset build id">UI 20260827b</span></h2>
             <p>
               One-tap <strong>Launch all sources</strong> runs a stale-first wave across
               Willhaben, AutoScout, Kleinanzeigen, and coches.net. Tap
