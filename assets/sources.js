@@ -1,5 +1,5 @@
 /** Bumped whenever sources-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260826a";
+const ASSET_BUILD = "20260827a";
 
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
@@ -44,23 +44,7 @@ function niceSource(id) {
   return SOURCE_LABEL[id] || id || "—";
 }
 
-/** Display timestamps in Vienna local time (stored values stay UTC). */
-const DISPLAY_TZ = "Europe/Vienna";
-
-function formatWhen(iso) {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return escapeHtml(String(iso));
-  return d.toLocaleString("de-AT", {
-    timeZone: DISPLAY_TZ,
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZoneName: "short",
-  });
-}
+import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827a";
 
 function formatDateSpan(min, max) {
   if (!min && !max) return "—";
@@ -462,7 +446,7 @@ export async function initSources() {
       else if (sourcesPack.url.includes("data/sources_summary")) source = "live pages";
       const packWhen = payload.generated_at ? formatWhen(payload.generated_at) : "—";
       const crawlWhen = statusUpdatedAt ? formatWhen(statusUpdatedAt) : "—";
-      meta.textContent = `${fmt.format(payload.total || 0)} listings across ${order.length} sources · pack ${packWhen} · crawls ${crawlWhen} · ${source} · UI ${ASSET_BUILD}`;
+      meta.textContent = `${fmt.format(payload.total || 0)} listings across ${order.length} sources · pack ${packWhen} · crawls ${crawlWhen} · times ${TZ_HINT} · ${source} · UI ${ASSET_BUILD}`;
     }
   } catch (err) {
     if (root) root.innerHTML = "";
