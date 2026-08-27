@@ -5,7 +5,7 @@ import {
   rememberWaveId,
   buildWavePayload,
   postCrawlWave,
-} from "./crawl_wave.js?v=20260826a";
+} from "./crawl_wave.js?v=20260827a";
 import {
   SOURCE_ORDER,
   SOURCE_LABEL,
@@ -14,13 +14,13 @@ import {
   buildStaleSummary,
   planWaveJobs,
   lastSourceCrawl,
-} from "./crawl_stale.js?v=20260826a";
+} from "./crawl_stale.js?v=20260827a";
+import { formatWhen, formatWhenHtml, TZ_HINT } from "./time_display.js?v=20260827a";
 
 /** Bumped whenever status-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260826a";
+const ASSET_BUILD = "20260827a";
 
 const STATUS_ORDER = ["running", "queued", "failed", "finished", "cancelled"];
-const DISPLAY_TZ = "Europe/Vienna";
 const DEFAULT_FRESH_HOURS = 168;
 const DEFAULT_WORKERS = 5;
 
@@ -34,21 +34,6 @@ function escapeHtml(s) {
 
 function niceSource(id) {
   return SOURCE_LABEL[id] || id || "—";
-}
-
-function formatWhen(iso) {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return escapeHtml(String(iso));
-  return d.toLocaleString("de-AT", {
-    timeZone: DISPLAY_TZ,
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZoneName: "short",
-  });
 }
 
 function countByStatus(runs) {
@@ -137,8 +122,8 @@ function renderRunsTable(runs) {
         </td>
         <td>${escapeHtml(niceSource(r.source))}</td>
         <td class="crawl-makes" title="${escapeHtml(makes)}">${escapeHtml(makes)}</td>
-        <td>${formatWhen(r.started_at)}</td>
-        <td>${formatWhen(r.finished_at)}</td>
+        <td>${formatWhenHtml(r.started_at)}</td>
+        <td>${formatWhenHtml(r.finished_at)}</td>
         <td class="num">${escapeHtml(String(rows))}</td>
         <td class="crawl-links">
           ${linkCell(r.agent_url, "Agent")}
@@ -549,8 +534,8 @@ export async function initCrawls() {
       const filterNote =
         onlyWave && waveFilter ? ` · filtered ${runs.length}/${totalRuns}` : "";
       meta.textContent = totalRuns
-        ? `${totalRuns} run(s)${filterNote} · updated ${when} · ${source} · UI ${ASSET_BUILD}`
-        : `Compose a stale-first wave above, Launch, then Refresh. · UI ${ASSET_BUILD}`;
+        ? `${totalRuns} run(s)${filterNote} · updated ${when} · ${source} · times ${TZ_HINT} · UI ${ASSET_BUILD}`
+        : `Compose a stale-first wave above, Launch, then Refresh. · times ${TZ_HINT} · UI ${ASSET_BUILD}`;
     }
   } catch (err) {
     renderCrawlKpis([], null);
