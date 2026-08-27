@@ -1,6 +1,7 @@
 import { initExplore } from "./explore.js?v=20260821b";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260826a";
-import { initSources } from "./sources.js?v=20260825a";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260827a";
+import { initSources } from "./sources.js?v=20260827a";
+import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827a";
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
@@ -205,21 +206,8 @@ async function main() {
   renderMarketMakes(data);
 
   const meta = document.getElementById("generated-meta");
-  const generatedLabel = (() => {
-    if (!data.generated_at) return "—";
-    const d = new Date(data.generated_at);
-    if (Number.isNaN(d.getTime())) return String(data.generated_at);
-    return d.toLocaleString("de-AT", {
-      timeZone: "Europe/Vienna",
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      timeZoneName: "short",
-    });
-  })();
-  meta.textContent = `Summary generated ${generatedLabel} from ${data.db_file} · ${fmt.format(data.total)} listings`;
+  const generatedLabel = formatWhen(data.generated_at);
+  meta.textContent = `Summary generated ${generatedLabel} (${TZ_HINT}) from ${data.db_file} · ${fmt.format(data.total)} listings`;
 
   initExplore(data);
   initSources();
