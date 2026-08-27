@@ -854,6 +854,11 @@ body {
   border-bottom-color: rgba(61, 75, 99, 0.35);
 }
 
+.crawl-status--unspawned {
+  color: var(--warn);
+  border-bottom-color: var(--warn);
+}
+
 .crawl-status--finished {
   color: var(--ink);
   border-bottom-color: var(--ink);
