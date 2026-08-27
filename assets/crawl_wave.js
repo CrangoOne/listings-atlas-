@@ -67,15 +67,7 @@ export function buildDispatcherPrompt(payload) {
     }
   }
   lines.push(
-    "Before spawning: save webhook JSON to /tmp/wave.json, run " +
-      "`python3 daq/jobs/wave_spawn_gap.py --wave-file /tmp/wave.json --board docs/data/crawl_status.json --stamp-queued` " +
-      "so all expected workers appear as queued on the board."
-  );
-  lines.push(
-    `For each job run \`python3 daq/jobs/launch_crawl.py prompt <job_id> ${payload.jobs.length ? "[flags]" : ""} --wave-id ${payload.wave_id} --json\`. ` +
-      "Spawn one cloud worker per returned prompt (or only \`spawn_only\` ids on retry). " +
-      "Stamp running only with --agent-url. Loop \`wave_spawn_gap.py --json\` until gap_count is 0 " +
-      "(retry up to 10 rounds; scheduled Action retries every 15 min if needed)."
+    `For each job run \`python3 daq/jobs/launch_crawl.py prompt <job_id> ${payload.jobs.length ? "[flags]" : ""} --wave-id ${payload.wave_id} --json\`, spawn one cloud worker per returned prompt, stamp wave_id on docs/data/crawl_status.json, and publish with python3 daq/jobs/publish_crawl_status.py.`
   );
   return lines.join("\n");
 }
