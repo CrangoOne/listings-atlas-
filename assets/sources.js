@@ -1,5 +1,5 @@
-/** Bumped whenever sources-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260827a";
+/** Bumped whenever sources-fetch logic changes. */
+const ASSET_BUILD = "20260827c";
 
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
@@ -8,6 +8,13 @@ const SOURCE_LABEL = {
   autoscout: "AutoScout24",
   kleinanzeigen: "Kleinanzeigen",
   coches: "coches.net",
+};
+
+const SOURCE_LOGO = {
+  willhaben: "assets/logos/willhaben.png",
+  autoscout: "assets/logos/autoscout.png",
+  kleinanzeigen: "assets/logos/kleinanzeigen.png",
+  coches: "assets/logos/coches.png",
 };
 
 /** Column fill-rate rows per quality page. */
@@ -44,7 +51,7 @@ function niceSource(id) {
   return SOURCE_LABEL[id] || id || "—";
 }
 
-import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827a";
+import { formatWhen, formatWhenCompact } from "./time_display.js?v=20260827c";
 
 function formatDateSpan(min, max) {
   if (!min && !max) return "—";
@@ -378,40 +385,43 @@ function initSourcesCarousel(root) {
   goTo(0);
 }
 
-function renderSourcesKpis(payload, { statusUpdatedAt = null, mergedCrawls = 0 } = {}) {
+function renderSourceChips(sources) {
+  const order = [
+    ...SOURCE_ORDER.filter((id) => id in sources),
+    ...Object.keys(sources).filter((id) => !SOURCE_ORDER.includes(id)),
+  ];
+  return `<div class="kpi-source-chips">${order
+    .map((id) => {
+      const label = escapeHtml(sources[id]?.label || niceSource(id));
+      const logo = SOURCE_LOGO[id];
+      const img = logo
+        ? `<img class="source-logo" src="${escapeHtml(logo)}" alt="" width="22" height="22" />`
+        : "";
+      return `<span class="source-chip">${img}<span class="source-chip-name">${label}</span></span>`;
+    })
+    .join("")}</div>`;
+}
+
+function renderSourcesKpis(payload) {
   const root = document.getElementById("sources-kpis");
   if (!root) return;
   const sources = payload.sources || {};
-  const present = Object.values(sources).filter((s) => (s.rows || 0) > 0).length;
-  const crawlSub = statusUpdatedAt
-    ? `crawl board ${formatWhen(statusUpdatedAt)}${mergedCrawls ? ` · ${mergedCrawls} updated` : ""}`
-    : "crawl board not loaded";
-  const items = [
-    {
-      label: "Listings in pack",
-      value: fmt.format(payload.total || 0),
-      sub: payload.db_file || "consolidated DB",
-    },
-    {
-      label: "Sources",
-      value: String(present),
-      sub: "with rows in the pack",
-    },
-    {
-      label: "Pack snapshot",
-      value: formatWhen(payload.generated_at),
-      sub: crawlSub,
-    },
-  ];
-  root.innerHTML = items
-    .map(
-      (k) => `<div class="kpi">
-        <span class="label">${k.label}</span>
-        <span class="value">${k.value}</span>
-        <span class="sub">${escapeHtml(k.sub)}</span>
-      </div>`
-    )
-    .join("");
+  const when = formatWhenCompact(payload.generated_at);
+  const whenFull = formatWhen(payload.generated_at);
+  root.dataset.uiBuild = ASSET_BUILD;
+  root.innerHTML = `
+    <div class="kpi">
+      <span class="label">Listings in pack</span>
+      <span class="value">${fmt.format(payload.total || 0)}</span>
+    </div>
+    <div class="kpi kpi--sources">
+      <span class="label">Sources</span>
+      ${renderSourceChips(sources)}
+    </div>
+    <div class="kpi">
+      <span class="label">Pack snapshot</span>
+      <span class="value kpi-when" title="${escapeHtml(whenFull)}">${escapeHtml(when)}</span>
+    </div>`;
 }
 
 export async function initSources() {
@@ -423,11 +433,9 @@ export async function initSources() {
       fetchJsonPreferLive(LIVE_STATUS_URLS, "updated_at").catch(() => null),
     ]);
     const payload = sourcesPack.data;
-    const { merged, statusUpdatedAt } = statusPack?.data
-      ? mergeLiveLastCrawls(payload, statusPack.data)
-      : { merged: 0, statusUpdatedAt: null };
+    if (statusPack?.data) mergeLiveLastCrawls(payload, statusPack.data);
 
-    renderSourcesKpis(payload, { statusUpdatedAt, mergedCrawls: merged });
+    renderSourcesKpis(payload);
 
     const sources = payload.sources || {};
     const order = [
@@ -441,16 +449,15 @@ export async function initSources() {
       animateBarFills(root);
     }
     if (meta) {
-      let source = "live";
-      if (sourcesPack.url.includes("raw.githubusercontent.com")) source = "live raw";
-      else if (sourcesPack.url.includes("data/sources_summary")) source = "live pages";
-      const packWhen = payload.generated_at ? formatWhen(payload.generated_at) : "—";
-      const crawlWhen = statusUpdatedAt ? formatWhen(statusUpdatedAt) : "—";
-      meta.textContent = `${fmt.format(payload.total || 0)} listings across ${order.length} sources · pack ${packWhen} · crawls ${crawlWhen} · times ${TZ_HINT} · ${source} · UI ${ASSET_BUILD}`;
+      meta.hidden = true;
+      meta.textContent = "";
     }
   } catch (err) {
     if (root) root.innerHTML = "";
-    if (meta) meta.textContent = `Could not load sources board: ${err.message}`;
+    if (meta) {
+      meta.hidden = false;
+      meta.textContent = `Could not load sources board: ${err.message}`;
+    }
     console.error(err);
   }
 }
