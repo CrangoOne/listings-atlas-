@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-27T19:28:43Z",
+  "updated_at": "2026-08-27T19:59:15Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w2",
@@ -50,44 +50,46 @@
     },
     {
       "worker_id": "coches_shard-w5",
-      "status": "running",
+      "status": "failed",
       "job_id": "coches_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w5-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "2022",
         "2017",
         "2012",
         "1990-1999"
       ],
-      "started_at": "2026-08-26T23:01:57Z"
+      "started_at": "2026-08-26T23:01:57Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "coches_shard-w4",
-      "status": "running",
+      "status": "failed",
       "job_id": "coches_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w4-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "2023",
         "2018",
         "2013",
         "2000-2004"
       ],
-      "started_at": "2026-08-26T23:01:57Z"
+      "started_at": "2026-08-26T23:01:57Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "ka_shard-w5",
-      "status": "running",
+      "status": "failed",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w5-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "opel",
         "hyundai",
@@ -96,16 +98,17 @@
         "mitsubishi",
         "smart"
       ],
-      "started_at": "2026-08-26T23:01:56Z"
+      "started_at": "2026-08-26T23:01:56Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "ka_shard-w4",
-      "status": "running",
+      "status": "failed",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w4-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "mercedes_benz",
         "toyota",
@@ -114,48 +117,51 @@
         "suzuki",
         "land_rover"
       ],
-      "started_at": "2026-08-26T23:01:56Z"
+      "started_at": "2026-08-26T23:01:56Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "coches_shard-w3",
-      "status": "running",
+      "status": "failed",
       "job_id": "coches_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w3-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "2024",
         "2019",
         "2014",
         "2005-2009"
       ],
-      "started_at": "2026-08-26T23:01:56Z"
+      "started_at": "2026-08-26T23:01:56Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "coches_shard-w2",
-      "status": "running",
+      "status": "failed",
       "job_id": "coches_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w2-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "2025",
         "2020",
         "2015",
         "2010"
       ],
-      "started_at": "2026-08-26T23:01:56Z"
+      "started_at": "2026-08-26T23:01:56Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "coches_shard-w1",
-      "status": "running",
+      "status": "failed",
       "job_id": "coches_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w1-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "2026",
         "2021",
@@ -163,16 +169,17 @@
         "2011",
         "to-1989"
       ],
-      "started_at": "2026-08-26T23:01:56Z"
+      "started_at": "2026-08-26T23:01:56Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "ka_shard-w3",
-      "status": "running",
+      "status": "failed",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w3-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "audi",
         "skoda",
@@ -182,16 +189,17 @@
         "alfa_romeo",
         "byd"
       ],
-      "started_at": "2026-08-26T23:01:55Z"
+      "started_at": "2026-08-26T23:01:55Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "ka_shard-w2",
-      "status": "running",
+      "status": "failed",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w2-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "volkswagen",
         "renault",
@@ -201,16 +209,17 @@
         "jeep",
         "mg"
       ],
-      "started_at": "2026-08-26T23:01:55Z"
+      "started_at": "2026-08-26T23:01:55Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "ka_shard-w1",
-      "status": "running",
+      "status": "failed",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w1-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "bmw",
         "ford",
@@ -220,16 +229,17 @@
         "honda",
         "chevrolet"
       ],
-      "started_at": "2026-08-26T23:01:55Z"
+      "started_at": "2026-08-26T23:01:55Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "autoscout_shard-w5",
-      "status": "running",
+      "status": "failed",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w5-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "skoda",
         "hyundai",
@@ -239,16 +249,17 @@
         "mg",
         "byd"
       ],
-      "started_at": "2026-08-26T23:01:55Z"
+      "started_at": "2026-08-26T23:01:55Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "willhaben_shard-w5",
-      "status": "running",
+      "status": "failed",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w5-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "skoda",
         "hyundai",
@@ -258,16 +269,17 @@
         "subaru",
         "chevrolet"
       ],
-      "started_at": "2026-08-26T23:01:54Z"
+      "started_at": "2026-08-26T23:01:54Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "autoscout_shard-w4",
-      "status": "running",
+      "status": "failed",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w4-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "mercedes-benz",
         "toyota",
@@ -277,16 +289,17 @@
         "honda",
         "jaguar"
       ],
-      "started_at": "2026-08-26T23:01:54Z"
+      "started_at": "2026-08-26T23:01:54Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "autoscout_shard-w3",
-      "status": "running",
+      "status": "failed",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w3-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "audi",
         "renault",
@@ -296,16 +309,17 @@
         "alfa-romeo",
         "lexus"
       ],
-      "started_at": "2026-08-26T23:01:54Z"
+      "started_at": "2026-08-26T23:01:54Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "autoscout_shard-w2",
-      "status": "running",
+      "status": "failed",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w2-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "volkswagen",
         "opel",
@@ -315,16 +329,17 @@
         "land-rover",
         "subaru"
       ],
-      "started_at": "2026-08-26T23:01:54Z"
+      "started_at": "2026-08-26T23:01:54Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "autoscout_shard-w1",
-      "status": "running",
+      "status": "failed",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w1-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "bmw",
         "ford",
@@ -334,16 +349,17 @@
         "jeep",
         "smart"
       ],
-      "started_at": "2026-08-26T23:01:54Z"
+      "started_at": "2026-08-26T23:01:54Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "willhaben_shard-w4",
-      "status": "running",
+      "status": "failed",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w4-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "mercedes",
         "toyota",
@@ -353,16 +369,17 @@
         "honda",
         "smart"
       ],
-      "started_at": "2026-08-26T23:01:53Z"
+      "started_at": "2026-08-26T23:01:53Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "worker_id": "willhaben_shard-w3",
-      "status": "running",
+      "status": "failed",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20260826t2245z-9645",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w3-1a84",
-      "notes": "Spawned by wave dispatcher (cursor/dispatch-stale-wave-2346)",
+      "notes": "Unspawned: running for 20.8h without agent_url (auto-reconciled; worker was never started)",
       "makes": [
         "audi",
         "renault",
@@ -372,7 +389,8 @@
         "mg",
         "lexus"
       ],
-      "started_at": "2026-08-26T23:01:53Z"
+      "started_at": "2026-08-26T23:01:53Z",
+      "finished_at": "2026-08-27T19:52:42Z"
     },
     {
       "job_id": "willhaben_1h",
