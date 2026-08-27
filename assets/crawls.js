@@ -5,7 +5,7 @@ import {
   rememberWaveId,
   buildWavePayload,
   postCrawlWave,
-} from "./crawl_wave.js?v=20260827a";
+} from "./crawl_wave.js?v=20260827c";
 import {
   SOURCE_ORDER,
   SOURCE_LABEL,
@@ -18,7 +18,7 @@ import {
 import { formatWhen, formatWhenHtml, TZ_HINT } from "./time_display.js?v=20260827a";
 
 /** Bumped whenever status-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260827b";
+const ASSET_BUILD = "20260827c";
 
 const STATUS_ORDER = ["running", "unspawned", "queued", "failed", "finished", "cancelled"];
 const DEFAULT_FRESH_HOURS = 168;
