@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-08-28T16:47:41Z",
+  "updated_at": "2026-08-28T16:52:44Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w3",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "running",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w3-1a84",
+      "makes": [
+        "audi",
+        "renault",
+        "mazda",
+        "cupra",
+        "nissan",
+        "alfa-romeo",
+        "lexus"
+      ],
+      "started_at": "2026-08-28T16:48:34Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-23f21b9c-d655-56fb-a696-b360c1d52d96"
+    },
     {
       "worker_id": "autoscout_shard-w2",
       "job_id": "autoscout_shard",
@@ -37,13 +57,13 @@
         "jeep",
         "smart"
       ],
-      "started_at": "2026-08-28T16:29:37Z",
+      "started_at": "2026-08-28T16:27:31Z",
       "notes": "Finished: +2538 rows (BMW 1146, Ford 664, SEAT 383, Dacia 213, Jeep 81, Tesla 33, smart 18; 140978 unique known). 70/70 facets exhausted in 712s (~214/min)",
       "agent_url": "https://cursor.com/agents/bc-749878f0-dcfe-5ea6-8d1a-c4b1a856129d",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/162",
       "rows_added": 2538,
       "rows_total": 2538,
-      "finished_at": "2026-08-28T16:45:51Z"
+      "finished_at": "2026-08-28T16:48:02Z"
     },
     {
       "worker_id": "willhaben_shard-w5",
@@ -371,25 +391,6 @@
         "suzuki",
         "honda",
         "jaguar"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
-    },
-    {
-      "worker_id": "autoscout_shard-w3",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w3-1a84",
-      "makes": [
-        "audi",
-        "renault",
-        "mazda",
-        "cupra",
-        "nissan",
-        "alfa-romeo",
-        "lexus"
       ],
       "started_at": "2026-08-28T15:30:12Z",
       "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
