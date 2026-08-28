@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T16:29:18Z",
+  "updated_at": "2026-08-28T16:31:37Z",
   "runs": [
     {
       "worker_id": "autoscout_shard-w1",
@@ -17,8 +17,8 @@
         "jeep",
         "smart"
       ],
-      "started_at": "2026-08-28T16:27:31Z",
-      "notes": "Spawned cloud worker",
+      "started_at": "2026-08-28T16:29:37Z",
+      "notes": "Running crawl",
       "agent_url": "https://cursor.com/agents/bc-749878f0-dcfe-5ea6-8d1a-c4b1a856129d"
     },
     {
