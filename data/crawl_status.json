@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T17:06:35Z",
+  "updated_at": "2026-08-28T17:08:09Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
@@ -45,7 +45,7 @@
       "worker_id": "autoscout_shard-w4",
       "job_id": "autoscout_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w4-1a84",
       "makes": [
@@ -58,8 +58,12 @@
         "jaguar"
       ],
       "started_at": "2026-08-28T16:55:57Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-a38e1d8c-902d-5184-a1a5-19927b7b16f3"
+      "notes": "Finished: +1557 rows (Mercedes-Benz 861, Toyota 290, Volvo 151, Suzuki 126, MINI 66, Honda 43, Jaguar 20; 137301 unique known). 29/29 facets exhausted in 401s (~233/min)",
+      "agent_url": "https://cursor.com/agents/bc-a38e1d8c-902d-5184-a1a5-19927b7b16f3",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/165",
+      "rows_added": 1557,
+      "rows_total": 1557,
+      "finished_at": "2026-08-28T17:05:26Z"
     },
     {
       "worker_id": "autoscout_shard-w3",
