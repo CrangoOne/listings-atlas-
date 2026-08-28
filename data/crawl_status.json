@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T19:04:24Z",
+  "updated_at": "2026-08-28T19:06:00Z",
   "runs": [
     {
       "worker_id": "coches_shard-w3",
@@ -14,13 +14,12 @@
         "2014",
         "2005-2009"
       ],
-      "started_at": "2026-08-28T18:50:20Z",
-      "notes": "Finished: +7909 rows (37/37 facets, 773 pages, 309s ~1535/min). Years 2024=1767 2019=1930 2014=969 2005-2009=3243. Quality: Ad ID/Title/Price/Year/Mileage/Location/URL 100%; Make 99.5%.",
-      "finished_at": "2026-08-28T18:56:24Z",
+      "started_at": "2026-08-28T18:48:40Z",
+      "notes": "Finished: +7909 rows (37/37 facets, 773 pages, 309s ~1535/min)",
+      "finished_at": "2026-08-28T19:03:17Z",
       "agent_url": "https://cursor.com/agents/bc-d9e848f1-45d4-59ed-9b67-bb8f4e92ad7c",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/172",
-      "rows_added": 7909,
-      "rows_total": 7909
+      "rows_added": 7909
     },
     {
       "worker_id": "coches_shard-w1",
@@ -36,13 +35,12 @@
         "2011",
         "to-1989"
       ],
-      "started_at": "2026-08-28T18:50:05Z",
+      "started_at": "2026-08-28T18:48:39Z",
       "notes": "Finished: +6023 rows (38/38 facets, 561 pages, 226s ~1602/min)",
-      "finished_at": "2026-08-28T18:54:43Z",
+      "finished_at": "2026-08-28T19:02:25Z",
       "agent_url": "https://cursor.com/agents/bc-821357c0-31f3-5630-9943-a8e503b8ef60",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/171",
-      "rows_added": 6023,
-      "rows_total": 6023
+      "rows_added": 6023
     },
     {
       "worker_id": "ka_shard-w3",
