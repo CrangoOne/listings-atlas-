@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T16:01:21Z",
+  "updated_at": "2026-08-28T16:06:25Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w4",
@@ -70,7 +70,7 @@
       "worker_id": "willhaben_shard-w1",
       "job_id": "willhaben_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w1-1a84",
       "makes": [
@@ -84,8 +84,12 @@
         "smart"
       ],
       "started_at": "2026-08-28T15:31:35Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-3524d4f9-e74a-520f-9b1f-28e680d1588d"
+      "notes": "Finished: +30975 rows. 10/11 facets exhausted; bmw SERP stopped at p481 after HTTP 429 (price shards done; unique plateaued).",
+      "agent_url": "https://cursor.com/agents/bc-3524d4f9-e74a-520f-9b1f-28e680d1588d",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/159",
+      "rows_added": 30975,
+      "rows_total": 30975,
+      "finished_at": "2026-08-28T15:59:47Z"
     },
     {
       "worker_id": "willhaben_shard-w5",
