@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T16:33:05Z",
+  "updated_at": "2026-08-28T16:47:41Z",
   "runs": [
     {
       "worker_id": "autoscout_shard-w2",
@@ -25,7 +25,7 @@
       "worker_id": "autoscout_shard-w1",
       "job_id": "autoscout_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w1-1a84",
       "makes": [
@@ -38,8 +38,12 @@
         "smart"
       ],
       "started_at": "2026-08-28T16:29:37Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-749878f0-dcfe-5ea6-8d1a-c4b1a856129d"
+      "notes": "Finished: +2538 rows (BMW 1146, Ford 664, SEAT 383, Dacia 213, Jeep 81, Tesla 33, smart 18; 140978 unique known). 70/70 facets exhausted in 712s (~214/min)",
+      "agent_url": "https://cursor.com/agents/bc-749878f0-dcfe-5ea6-8d1a-c4b1a856129d",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/162",
+      "rows_added": 2538,
+      "rows_total": 2538,
+      "finished_at": "2026-08-28T16:45:51Z"
     },
     {
       "worker_id": "willhaben_shard-w5",
