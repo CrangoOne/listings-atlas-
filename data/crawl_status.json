@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T19:54:36Z",
+  "updated_at": "2026-08-28T19:56:25Z",
   "runs": [
     {
       "worker_id": "coches_shard-w5",
@@ -106,7 +106,7 @@
       "worker_id": "ka_shard-w3",
       "job_id": "ka_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w3-1a84",
       "makes": [
@@ -119,9 +119,11 @@
         "byd"
       ],
       "started_at": "2026-08-28T17:25:16Z",
-      "notes": "Spawned cloud worker",
+      "notes": "Finished: +17739 rows (audi +4132, skoda +8297, mazda +2996, porsche +1233, cupra +439, alfa_romeo +633, byd +9; 5306 pages, 9240s)",
       "agent_url": "https://cursor.com/agents/bc-a69df10d-4c7d-5f1d-9e82-0469ce840b24",
-      "pr_url": "https://github.com/CrangoOne/Cursor/pull/169"
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/169",
+      "rows_added": 17739,
+      "finished_at": "2026-08-28T19:52:39Z"
     },
     {
       "worker_id": "ka_shard-w2",
