@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-08-28T16:57:44Z",
+  "updated_at": "2026-08-28T17:02:33Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w5",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "running",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w5-1a84",
+      "makes": [
+        "skoda",
+        "hyundai",
+        "porsche",
+        "fiat",
+        "mitsubishi",
+        "mg",
+        "byd"
+      ],
+      "started_at": "2026-08-28T17:00:52Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-092f6ccb-17ae-5abe-95ba-b0868cf7b74e"
+    },
     {
       "worker_id": "autoscout_shard-w4",
       "job_id": "autoscout_shard",
@@ -45,7 +65,7 @@
       "worker_id": "autoscout_shard-w2",
       "job_id": "autoscout_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w2-1a84",
       "makes": [
@@ -58,8 +78,12 @@
         "subaru"
       ],
       "started_at": "2026-08-28T16:31:07Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-0c939ae6-6782-56fb-afb1-8823f664972e"
+      "notes": "Finished: +3449 rows (Volkswagen 1906, Opel 471, Peugeot 458, Citroen 282, Kia 233, Land Rover 75, Subaru 24). 82/82 facets exhausted in 897s (~231/min)",
+      "agent_url": "https://cursor.com/agents/bc-0c939ae6-6782-56fb-afb1-8823f664972e",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/163",
+      "rows_added": 3449,
+      "rows_total": 3449,
+      "finished_at": "2026-08-28T17:00:29Z"
     },
     {
       "worker_id": "autoscout_shard-w1",
@@ -377,25 +401,6 @@
         "2016",
         "2011",
         "to-1989"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
-    },
-    {
-      "worker_id": "autoscout_shard-w5",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w5-1a84",
-      "makes": [
-        "skoda",
-        "hyundai",
-        "porsche",
-        "fiat",
-        "mitsubishi",
-        "mg",
-        "byd"
       ],
       "started_at": "2026-08-28T15:30:12Z",
       "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
