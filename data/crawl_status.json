@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T17:22:01Z",
+  "updated_at": "2026-08-28T17:29:13Z",
   "runs": [
     {
       "worker_id": "ka_shard-w3",
@@ -17,9 +17,10 @@
         "alfa_romeo",
         "byd"
       ],
-      "started_at": "2026-08-28T17:17:19Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-a69df10d-4c7d-5f1d-9e82-0469ce840b24"
+      "started_at": "2026-08-28T17:25:16Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-a69df10d-4c7d-5f1d-9e82-0469ce840b24",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/169"
     },
     {
       "worker_id": "ka_shard-w2",
@@ -37,9 +38,10 @@
         "jeep",
         "mg"
       ],
-      "started_at": "2026-08-28T17:11:10Z",
+      "started_at": "2026-08-28T17:25:16Z",
       "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-2acaa27e-915e-55b1-93a2-279f7b536ac9"
+      "agent_url": "https://cursor.com/agents/bc-2acaa27e-915e-55b1-93a2-279f7b536ac9",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/167"
     },
     {
       "worker_id": "ka_shard-w1",
@@ -57,8 +59,8 @@
         "honda",
         "chevrolet"
       ],
-      "started_at": "2026-08-28T17:06:33Z",
-      "notes": "Running crawl",
+      "started_at": "2026-08-28T17:25:15Z",
+      "notes": "Spawned cloud worker",
       "agent_url": "https://cursor.com/agents/bc-07b4da6f-08a5-561d-a569-9825d4ce5dea",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/166"
     },
