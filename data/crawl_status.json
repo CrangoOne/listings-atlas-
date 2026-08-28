@@ -1,6 +1,28 @@
 {
-  "updated_at": "2026-08-28T18:56:39Z",
+  "updated_at": "2026-08-28T19:00:58Z",
   "runs": [
+    {
+      "worker_id": "coches_shard-w1",
+      "job_id": "coches_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "finished",
+      "source": "coches",
+      "branch": "cursor/daq-coches-shard-w1-1a84",
+      "makes": [
+        "2026",
+        "2021",
+        "2016",
+        "2011",
+        "to-1989"
+      ],
+      "started_at": "2026-08-28T18:50:05Z",
+      "notes": "Finished: +6023 rows (38/38 facets, 561 pages, 226s ~1602/min)",
+      "finished_at": "2026-08-28T18:54:43Z",
+      "agent_url": "https://cursor.com/agents/bc-821357c0-31f3-5630-9943-a8e503b8ef60",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/171",
+      "rows_added": 6023,
+      "rows_total": 6023
+    },
     {
       "worker_id": "ka_shard-w3",
       "job_id": "ka_shard",
@@ -407,24 +429,6 @@
         "2020",
         "2015",
         "2010"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
-      "finished_at": "2026-08-28T17:54:51Z"
-    },
-    {
-      "worker_id": "coches_shard-w1",
-      "job_id": "coches_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "failed",
-      "source": "coches",
-      "branch": "cursor/daq-coches-shard-w1-1a84",
-      "makes": [
-        "2026",
-        "2021",
-        "2016",
-        "2011",
-        "to-1989"
       ],
       "started_at": "2026-08-28T15:30:12Z",
       "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
