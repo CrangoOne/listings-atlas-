@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T17:29:13Z",
+  "updated_at": "2026-08-28T17:54:51Z",
   "runs": [
     {
       "worker_id": "ka_shard-w3",
@@ -310,7 +310,7 @@
       "worker_id": "ka_shard-w5",
       "job_id": "ka_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
+      "status": "failed",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w5-1a84",
       "makes": [
@@ -322,13 +322,14 @@
         "smart"
       ],
       "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
+      "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
+      "finished_at": "2026-08-28T17:54:51Z"
     },
     {
       "worker_id": "ka_shard-w4",
       "job_id": "ka_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
+      "status": "failed",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w4-1a84",
       "makes": [
@@ -340,13 +341,14 @@
         "land_rover"
       ],
       "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
+      "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
+      "finished_at": "2026-08-28T17:54:51Z"
     },
     {
       "worker_id": "coches_shard-w5",
       "job_id": "coches_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
+      "status": "failed",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w5-1a84",
       "makes": [
@@ -356,13 +358,14 @@
         "1990-1999"
       ],
       "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
+      "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
+      "finished_at": "2026-08-28T17:54:51Z"
     },
     {
       "worker_id": "coches_shard-w4",
       "job_id": "coches_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
+      "status": "failed",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w4-1a84",
       "makes": [
@@ -372,13 +375,14 @@
         "2000-2004"
       ],
       "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
+      "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
+      "finished_at": "2026-08-28T17:54:51Z"
     },
     {
       "worker_id": "coches_shard-w3",
       "job_id": "coches_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
+      "status": "failed",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w3-1a84",
       "makes": [
@@ -388,13 +392,14 @@
         "2005-2009"
       ],
       "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
+      "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
+      "finished_at": "2026-08-28T17:54:51Z"
     },
     {
       "worker_id": "coches_shard-w2",
       "job_id": "coches_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
+      "status": "failed",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w2-1a84",
       "makes": [
@@ -404,13 +409,14 @@
         "2010"
       ],
       "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
+      "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
+      "finished_at": "2026-08-28T17:54:51Z"
     },
     {
       "worker_id": "coches_shard-w1",
       "job_id": "coches_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
+      "status": "failed",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w1-1a84",
       "makes": [
@@ -421,7 +427,8 @@
         "to-1989"
       ],
       "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
+      "notes": "Unspawned: queued for 2.4h without agent_url (auto-reconciled; worker was never started)",
+      "finished_at": "2026-08-28T17:54:51Z"
     },
     {
       "worker_id": "willhaben_shard-w2",
