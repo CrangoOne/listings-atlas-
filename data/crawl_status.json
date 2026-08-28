@@ -1,11 +1,31 @@
 {
-  "updated_at": "2026-08-28T15:42:08Z",
+  "updated_at": "2026-08-28T16:01:21Z",
   "runs": [
+    {
+      "worker_id": "willhaben_shard-w4",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "running",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w4-1a84",
+      "makes": [
+        "nissan",
+        "vw",
+        "tesla",
+        "skoda",
+        "fiat",
+        "mini",
+        "subaru"
+      ],
+      "started_at": "2026-08-28T15:59:22Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-758674e8-5523-533b-888b-1e3c4742566d"
+    },
     {
       "worker_id": "willhaben_shard-w3",
       "job_id": "willhaben_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w3-1a84",
       "makes": [
@@ -18,8 +38,12 @@
         "honda"
       ],
       "started_at": "2026-08-28T15:31:35Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-3d1cd897-a164-550d-8b14-28ca39cfc981"
+      "notes": "Finished: +24431 rows (9/10 facets exhausted; mercedes SERP overlap hit HTTP 429 at page 332 with 0 novelty)",
+      "agent_url": "https://cursor.com/agents/bc-3d1cd897-a164-550d-8b14-28ca39cfc981",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/158",
+      "rows_added": 24431,
+      "rows_total": 24431,
+      "finished_at": "2026-08-28T15:59:13Z"
     },
     {
       "worker_id": "willhaben_shard-w2",
@@ -78,25 +102,6 @@
         "volvo",
         "porsche",
         "lexus"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
-    },
-    {
-      "worker_id": "willhaben_shard-w4",
-      "job_id": "willhaben_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
-      "source": "willhaben",
-      "branch": "cursor/daq-willhaben-shard-w4-1a84",
-      "makes": [
-        "nissan",
-        "vw",
-        "tesla",
-        "skoda",
-        "fiat",
-        "mini",
-        "subaru"
       ],
       "started_at": "2026-08-28T15:30:12Z",
       "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
