@@ -1,5 +1,5 @@
 import { initExplore } from "./explore.js?v=20260821b";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260828a";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260827c";
 import { initSources } from "./sources.js?v=20260827c";
 import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
 
@@ -89,8 +89,103 @@ function escapeHtml(s) {
     .replaceAll('"', "&quot;");
 }
 
-function renderKpis(data) {
-  const root = document.getElementById("kpi-row");
+const MARKETS_SLIDES = [
+  { id: "overview", label: "Overview" },
+  { id: "by-source", label: "By source" },
+];
+
+function renderMarketsCarouselShell() {
+  const tabs = MARKETS_SLIDES.map(
+    (slide, idx) =>
+      `<button type="button" class="carousel-tab${idx === 0 ? " is-active" : ""}" data-index="${idx}" role="tab" aria-selected="${
+        idx === 0 ? "true" : "false"
+      }" aria-controls="markets-${slide.id}">${slide.label}</button>`
+  ).join("");
+
+  const slides = MARKETS_SLIDES.map(
+    (slide, idx) =>
+      `<article class="carousel-slide markets-slide" id="markets-${slide.id}" data-slide-id="${slide.id}"></article>`
+  ).join("");
+
+  const dots = MARKETS_SLIDES.map(
+    (_, idx) =>
+      `<button type="button" class="carousel-dot${idx === 0 ? " is-active" : ""}" data-index="${idx}" aria-label="${MARKETS_SLIDES[idx].label}"></button>`
+  ).join("");
+
+  return `<div class="sources-carousel markets-carousel" data-slide-count="${MARKETS_SLIDES.length}">
+    <div class="carousel-toolbar">
+      <div class="carousel-tabs" role="tablist">${tabs}</div>
+      <div class="carousel-nav">
+        <button type="button" class="btn ghost carousel-prev" aria-label="Previous view">←</button>
+        <span class="carousel-counter">1 / ${MARKETS_SLIDES.length}</span>
+        <button type="button" class="btn ghost carousel-next" aria-label="Next view">→</button>
+      </div>
+    </div>
+    <div class="carousel-viewport">
+      <div class="carousel-track">${slides}</div>
+    </div>
+    <div class="carousel-dots" role="group" aria-label="Market views">${dots}</div>
+  </div>`;
+}
+
+function initMarketsCarousel(root) {
+  const carousel = root.querySelector(".markets-carousel");
+  if (!carousel) return;
+
+  const track = carousel.querySelector(".carousel-track");
+  const tabs = [...carousel.querySelectorAll(".carousel-tab")];
+  const dots = [...carousel.querySelectorAll(".carousel-dot")];
+  const counter = carousel.querySelector(".carousel-counter");
+  const prevBtn = carousel.querySelector(".carousel-prev");
+  const nextBtn = carousel.querySelector(".carousel-next");
+  const slideCount = Number(carousel.dataset.slideCount) || tabs.length;
+  let current = 0;
+
+  function goTo(index) {
+    if (!slideCount) return;
+    current = ((index % slideCount) + slideCount) % slideCount;
+    track.style.transform = `translateX(-${current * 100}%)`;
+
+    tabs.forEach((tab, idx) => {
+      const active = idx === current;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    dots.forEach((dot, idx) => dot.classList.toggle("is-active", idx === current));
+    if (counter) counter.textContent = `${current + 1} / ${slideCount}`;
+    if (prevBtn) prevBtn.disabled = slideCount <= 1;
+    if (nextBtn) nextBtn.disabled = slideCount <= 1;
+
+    const activeSlide = track.children[current];
+    if (activeSlide) {
+      requestAnimationFrame(() => {
+        activeSlide.querySelectorAll(".bar-fill").forEach((fill) => {
+          fill.style.width = `${fill.dataset.width}%`;
+        });
+      });
+    }
+  }
+
+  tabs.forEach((tab) => tab.addEventListener("click", () => goTo(Number(tab.dataset.index))));
+  dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
+  prevBtn?.addEventListener("click", () => goTo(current - 1));
+  nextBtn?.addEventListener("click", () => goTo(current + 1));
+
+  carousel.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      goTo(current - 1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      goTo(current + 1);
+    }
+  });
+
+  goTo(0);
+}
+
+function renderKpis(data, root) {
+  if (!root) return;
   const by = Object.fromEntries(data.by_source.map((d) => [d.source, d.count]));
   const avg = data.price_stats?.avg_price;
   const items = [
@@ -152,16 +247,33 @@ function renderMarketMakes(data) {
   }
 }
 
+function renderMarketsBoard(data) {
+  const board = document.getElementById("markets-board");
+  if (!board) return;
+
+  board.innerHTML = renderMarketsCarouselShell();
+  const overviewSlide = board.querySelector('[data-slide-id="overview"]');
+  const bySourceSlide = board.querySelector('[data-slide-id="by-source"]');
+
+  overviewSlide.innerHTML = `<div class="kpi-row" id="kpi-row"></div>`;
+  bySourceSlide.innerHTML = `<div class="chart-block">
+    <div class="chart-label">Listings by source</div>
+    <div id="source-bars" class="bar-chart" role="img" aria-label="Listings by source"></div>
+  </div>`;
+
+  renderKpis(data, overviewSlide.querySelector("#kpi-row"));
+  renderBars(
+    bySourceSlide.querySelector("#source-bars"),
+    data.by_source.map((d) => ({ label: niceSource(d.source), count: d.count }))
+  );
+  initMarketsCarousel(board);
+}
+
 async function main() {
   const pack = await fetchSummaryPreferLive();
   const data = pack.data;
 
-  renderKpis(data);
-
-  renderBars(
-    document.getElementById("source-bars"),
-    data.by_source.map((d) => ({ label: niceSource(d.source), count: d.count }))
-  );
+  renderMarketsBoard(data);
 
   renderBars(
     document.getElementById("price-bars"),
