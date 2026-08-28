@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-08-28T17:12:58Z",
+  "updated_at": "2026-08-28T17:22:01Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w3",
+      "job_id": "ka_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w3-1a84",
+      "makes": [
+        "audi",
+        "skoda",
+        "mazda",
+        "porsche",
+        "cupra",
+        "alfa_romeo",
+        "byd"
+      ],
+      "started_at": "2026-08-28T17:17:19Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-a69df10d-4c7d-5f1d-9e82-0469ce840b24"
+    },
     {
       "worker_id": "ka_shard-w2",
       "job_id": "ka_shard",
@@ -46,7 +66,7 @@
       "worker_id": "autoscout_shard-w5",
       "job_id": "autoscout_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w5-1a84",
       "makes": [
@@ -59,8 +79,12 @@
         "byd"
       ],
       "started_at": "2026-08-28T17:00:52Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-092f6ccb-17ae-5abe-95ba-b0868cf7b74e"
+      "notes": "Finished: +1871 rows (Skoda 743, Hyundai 371, Fiat 260, MG 162, BYD 159, Porsche 100, Mitsubishi 76). 49/49 facets exhausted in 445s (~252/min)",
+      "agent_url": "https://cursor.com/agents/bc-092f6ccb-17ae-5abe-95ba-b0868cf7b74e",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/168",
+      "rows_added": 1871,
+      "rows_total": 1871,
+      "finished_at": "2026-08-28T17:15:35Z"
     },
     {
       "worker_id": "autoscout_shard-w4",
@@ -312,25 +336,6 @@
         "mini",
         "suzuki",
         "land_rover"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
-    },
-    {
-      "worker_id": "ka_shard-w3",
-      "job_id": "ka_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w3-1a84",
-      "makes": [
-        "audi",
-        "skoda",
-        "mazda",
-        "porsche",
-        "cupra",
-        "alfa_romeo",
-        "byd"
       ],
       "started_at": "2026-08-28T15:30:12Z",
       "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
