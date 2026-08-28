@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-08-28T16:52:44Z",
+  "updated_at": "2026-08-28T16:55:43Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w4",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "running",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w4-1a84",
+      "makes": [
+        "mercedes-benz",
+        "toyota",
+        "volvo",
+        "mini",
+        "suzuki",
+        "honda",
+        "jaguar"
+      ],
+      "started_at": "2026-08-28T16:53:58Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-a38e1d8c-902d-5184-a1a5-19927b7b16f3"
+    },
     {
       "worker_id": "autoscout_shard-w3",
       "job_id": "autoscout_shard",
@@ -93,7 +113,7 @@
       "worker_id": "willhaben_shard-w4",
       "job_id": "willhaben_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w4-1a84",
       "makes": [
@@ -106,8 +126,12 @@
         "subaru"
       ],
       "started_at": "2026-08-28T15:59:22Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-758674e8-5523-533b-888b-1e3c4742566d"
+      "notes": "Finished: +39585 rows (VW 24348, Skoda 8372, Fiat 3185, Nissan 1668, MINI 1346, Subaru 340, Tesla 326). 12/13 facets exhausted; leftover VW brand SERP stopped after price shards (0-novelty + HTTP 429)",
+      "agent_url": "https://cursor.com/agents/bc-758674e8-5523-533b-888b-1e3c4742566d",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/160",
+      "rows_added": 39585,
+      "rows_total": 39585,
+      "finished_at": "2026-08-28T16:53:41Z"
     },
     {
       "worker_id": "willhaben_shard-w3",
@@ -372,25 +396,6 @@
         "mitsubishi",
         "mg",
         "byd"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
-    },
-    {
-      "worker_id": "autoscout_shard-w4",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w4-1a84",
-      "makes": [
-        "mercedes-benz",
-        "toyota",
-        "volvo",
-        "mini",
-        "suzuki",
-        "honda",
-        "jaguar"
       ],
       "started_at": "2026-08-28T15:30:12Z",
       "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
