@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T23:30:43Z",
+  "updated_at": "2026-08-28T23:32:13Z",
   "runs": [
     {
       "worker_id": "coches_shard-w5",
@@ -60,6 +60,28 @@
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/174",
       "rows_added": 6150,
       "finished_at": "2026-08-28T19:15:41Z"
+    },
+    {
+      "worker_id": "ka_shard-w5",
+      "job_id": "ka_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "finished",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w5-1a84",
+      "makes": [
+        "opel",
+        "hyundai",
+        "citroen",
+        "kia",
+        "mitsubishi",
+        "smart"
+      ],
+      "started_at": "2026-08-28T19:02:24Z",
+      "notes": "Finished: +38108 rows (opel/hyundai/citroen/kia/mitsubishi/smart)",
+      "finished_at": "2026-08-28T23:30:40Z",
+      "agent_url": "https://cursor.com/agents/bc-df5888fd-4119-53a8-84b4-6966bb061908",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/179",
+      "rows_added": 38108
     },
     {
       "worker_id": "coches_shard-w3",
@@ -408,28 +430,6 @@
       "rows_added": 30975,
       "rows_total": 30975,
       "finished_at": "2026-08-28T16:01:04Z"
-    },
-    {
-      "worker_id": "ka_shard-w5",
-      "job_id": "ka_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "finished",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w5-1a84",
-      "makes": [
-        "opel",
-        "hyundai",
-        "citroen",
-        "kia",
-        "mitsubishi",
-        "smart"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Finished: +38108 rows (opel 21540, hyundai 5072, citroen 4071, kia 3329, mitsubishi 1734, smart 2362). Completeness Ad ID/Title/Price/Year/Mileage/Location 100%; Power 75-90%; Fuel 79-98%; VIN 0%. Last session 6645 pages, 8896s ~152/min.",
-      "finished_at": "2026-08-28T23:28:41Z",
-      "agent_url": "https://cursor.com/agents/bc-df5888fd-4119-53a8-84b4-6966bb061908",
-      "rows_added": 38108,
-      "rows_total": 171823
     },
     {
       "worker_id": "ka_shard-w4",
