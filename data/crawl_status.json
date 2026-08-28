@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T17:02:33Z",
+  "updated_at": "2026-08-28T17:04:14Z",
   "runs": [
     {
       "worker_id": "autoscout_shard-w5",
@@ -45,7 +45,7 @@
       "worker_id": "autoscout_shard-w3",
       "job_id": "autoscout_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w3-1a84",
       "makes": [
@@ -58,8 +58,12 @@
         "lexus"
       ],
       "started_at": "2026-08-28T16:48:34Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-23f21b9c-d655-56fb-a696-b360c1d52d96"
+      "notes": "Finished: +2823 rows (Audi 1834, Renault 273, Mazda 266, CUPRA 251, Nissan 113, Alfa Romeo 60, Lexus 26); 29/29 facets, 728 pages, 458s (~370/min)",
+      "agent_url": "https://cursor.com/agents/bc-23f21b9c-d655-56fb-a696-b360c1d52d96",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/164",
+      "rows_added": 2823,
+      "rows_total": 2823,
+      "finished_at": "2026-08-28T17:01:38Z"
     },
     {
       "worker_id": "autoscout_shard-w2",
