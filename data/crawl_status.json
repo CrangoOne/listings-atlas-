@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T16:55:43Z",
+  "updated_at": "2026-08-28T16:57:44Z",
   "runs": [
     {
       "worker_id": "autoscout_shard-w4",
@@ -17,8 +17,8 @@
         "honda",
         "jaguar"
       ],
-      "started_at": "2026-08-28T16:53:58Z",
-      "notes": "Spawned cloud worker",
+      "started_at": "2026-08-28T16:55:57Z",
+      "notes": "Running crawl",
       "agent_url": "https://cursor.com/agents/bc-a38e1d8c-902d-5184-a1a5-19927b7b16f3"
     },
     {
