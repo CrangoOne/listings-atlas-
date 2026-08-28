@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T17:08:09Z",
+  "updated_at": "2026-08-28T17:09:57Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
@@ -17,9 +17,10 @@
         "honda",
         "chevrolet"
       ],
-      "started_at": "2026-08-28T17:04:39Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-07b4da6f-08a5-561d-a569-9825d4ce5dea"
+      "started_at": "2026-08-28T17:06:33Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-07b4da6f-08a5-561d-a569-9825d4ce5dea",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/166"
     },
     {
       "worker_id": "autoscout_shard-w5",
