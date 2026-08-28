@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T16:06:25Z",
+  "updated_at": "2026-08-28T16:25:04Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w4",
@@ -95,7 +95,7 @@
       "worker_id": "willhaben_shard-w5",
       "job_id": "willhaben_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
+      "status": "finished",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w5-1a84",
       "makes": [
@@ -108,7 +108,12 @@
         "lexus"
       ],
       "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
+      "notes": "Finished: +17941 rows (opel 6628, renault 4578, volvo 2065, suzuki 1947, porsche 1859, jaguar 670, lexus 194; 661s, 7 facets exhausted)",
+      "agent_url": "https://cursor.com/agents/bc-25f6175a-e447-5c45-b0e3-034ea97d5fad",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/161",
+      "rows_added": 17941,
+      "rows_total": 17941,
+      "finished_at": "2026-08-28T16:16:43Z"
     },
     {
       "worker_id": "ka_shard-w5",
