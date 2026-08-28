@@ -1,15 +1,46 @@
 {
   "kind": "listings-atlas-crawl-wave",
-  "wave_id": "wave-20260821t183118z-9b4q",
-  "name": null,
-  "requested_at": "2026-08-21T18:31:18Z",
+  "wave_id": "wave-tst-20260828-2f0w",
+  "name": "tst",
+  "requested_at": "2026-08-28T15:28:35Z",
   "jobs": [
     {
-      "job_id": "willhaben_1h",
+      "job_id": "willhaben_shard",
       "source": "willhaben",
-      "duration_s": 3600
+      "workers": 5,
+      "duration_s": 0,
+      "makes": "bmw,ford,mazda,nissan,suzuki,land-rover,alfa-romeo,chrysler,vw,opel,seat,kia,mitsubishi,tesla,jaguar,dodge,audi,mercedes,skoda,renault,toyota,hyundai,peugeot,fiat,volvo,dacia,citroen,cupra,mini,porsche,jeep,mg,honda,subaru,lexus,smart,chevrolet",
+      "stale_first": true,
+      "stale_only": false
+    },
+    {
+      "job_id": "autoscout_shard",
+      "source": "autoscout",
+      "workers": 5,
+      "duration_s": 0,
+      "makes": "bmw,volkswagen,audi,mercedes-benz,skoda,ford,opel,renault,toyota,hyundai,seat,peugeot,mazda,volvo,porsche,tesla,kia,cupra,mini,fiat,dacia,citroen,nissan,suzuki,mitsubishi,jeep,land-rover,alfa-romeo,honda,mg,smart,subaru,lexus,jaguar,byd",
+      "stale_first": true,
+      "stale_only": false
+    },
+    {
+      "job_id": "ka_shard",
+      "source": "kleinanzeigen",
+      "workers": 5,
+      "duration_s": 0,
+      "makes": "bmw,volkswagen,audi,mercedes_benz,opel,ford,renault,skoda,toyota,hyundai,seat,peugeot,mazda,fiat,citroen,nissan,volvo,porsche,mini,kia,dacia,tesla,cupra,suzuki,mitsubishi,honda,jeep,alfa_romeo,land_rover,smart,chevrolet,mg,byd",
+      "stale_first": true,
+      "stale_only": false
+    },
+    {
+      "job_id": "coches_shard",
+      "source": "coches",
+      "workers": 5,
+      "duration_s": 0,
+      "makes": "2026,2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2005-2009,2000-2004,1990-1999,to-1989",
+      "stale_first": true,
+      "stale_only": false
     }
   ],
-  "prompt": "Launch Listings Atlas crawl wave `wave-20260821t183118z-9b4q`.\nYou are the crawl-wave dispatcher. Follow daq/jobs/WAVE_AUTOMATION.md and the launch-crawl skill.\nDo not ask for confirmation.\nJobs:\n- `willhaben_1h` --duration 3600\nFor each job run `python3 daq/jobs/launch_crawl.py prompt <job_id> [flags] --wave-id wave-20260821t183118z-9b4q --json`, spawn one cloud worker per returned prompt, stamp wave_id on docs/data/crawl_status.json, and publish with python3 daq/jobs/publish_crawl_status.py.",
-  "text": "Launch Listings Atlas crawl wave `wave-20260821t183118z-9b4q`.\nYou are the crawl-wave dispatcher. Follow daq/jobs/WAVE_AUTOMATION.md and the launch-crawl skill.\nDo not ask for confirmation.\nJobs:\n- `willhaben_1h` --duration 3600\nFor each job run `python3 daq/jobs/launch_crawl.py prompt <job_id> [flags] --wave-id wave-20260821t183118z-9b4q --json`, spawn one cloud worker per returned prompt, stamp wave_id on docs/data/crawl_status.json, and publish with python3 daq/jobs/publish_crawl_status.py."
+  "prompt": "Launch Listings Atlas crawl wave `wave-tst-20260828-2f0w`.\nYou are the crawl-wave dispatcher. Follow daq/jobs/WAVE_AUTOMATION.md and the launch-crawl skill.\nDo not ask for confirmation.\nWave name: tst.\nJobs:\n- `willhaben_shard` --workers 5 --duration 0 --makes bmw,ford,mazda,nissan,suzuki,land-rover,alfa-romeo,chrysler,vw,opel,seat,kia,mitsubishi,tesla,jaguar,dodge,audi,mercedes,skoda,renault,toyota,hyundai,peugeot,fiat,volvo,dacia,citroen,cupra,mini,porsche,jeep,mg,honda,subaru,lexus,smart,chevrolet\n  (stale-first shard keys — keep `--makes` order as sent)\n- `autoscout_shard` --workers 5 --duration 0 --makes bmw,volkswagen,audi,mercedes-benz,skoda,ford,opel,renault,toyota,hyundai,seat,peugeot,mazda,volvo,porsche,tesla,kia,cupra,mini,fiat,dacia,citroen,nissan,suzuki,mitsubishi,jeep,land-rover,alfa-romeo,honda,mg,smart,subaru,lexus,jaguar,byd\n  (stale-first shard keys — keep `--makes` order as sent)\n- `ka_shard` --workers 5 --duration 0 --makes bmw,volkswagen,audi,mercedes_benz,opel,ford,renault,skoda,toyota,hyundai,seat,peugeot,mazda,fiat,citroen,nissan,volvo,porsche,mini,kia,dacia,tesla,cupra,suzuki,mitsubishi,honda,jeep,alfa_romeo,land_rover,smart,chevrolet,mg,byd\n  (stale-first shard keys — keep `--makes` order as sent)\n- `coches_shard` --workers 5 --duration 0 --makes 2026,2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2005-2009,2000-2004,1990-1999,to-1989\n  (stale-first shard keys — keep `--makes` order as sent)\nBefore spawning: save webhook JSON to /tmp/wave.json, run `python3 daq/jobs/wave_spawn_gap.py --wave-file /tmp/wave.json --board docs/data/crawl_status.json --stamp-queued` so all expected workers appear as queued on the board.\nFor each job run `python3 daq/jobs/launch_crawl.py prompt <job_id> [flags] --wave-id wave-tst-20260828-2f0w --json`. Spawn one cloud worker per returned prompt (or only `spawn_only` ids on retry). Stamp running only with --agent-url. Loop `wave_spawn_gap.py --json` until gap_count is 0 (retry up to 10 rounds; scheduled Action retries every 15 min if needed).",
+  "text": "Launch Listings Atlas crawl wave `wave-tst-20260828-2f0w`.\nYou are the crawl-wave dispatcher. Follow daq/jobs/WAVE_AUTOMATION.md and the launch-crawl skill.\nDo not ask for confirmation.\nWave name: tst.\nJobs:\n- `willhaben_shard` --workers 5 --duration 0 --makes bmw,ford,mazda,nissan,suzuki,land-rover,alfa-romeo,chrysler,vw,opel,seat,kia,mitsubishi,tesla,jaguar,dodge,audi,mercedes,skoda,renault,toyota,hyundai,peugeot,fiat,volvo,dacia,citroen,cupra,mini,porsche,jeep,mg,honda,subaru,lexus,smart,chevrolet\n  (stale-first shard keys — keep `--makes` order as sent)\n- `autoscout_shard` --workers 5 --duration 0 --makes bmw,volkswagen,audi,mercedes-benz,skoda,ford,opel,renault,toyota,hyundai,seat,peugeot,mazda,volvo,porsche,tesla,kia,cupra,mini,fiat,dacia,citroen,nissan,suzuki,mitsubishi,jeep,land-rover,alfa-romeo,honda,mg,smart,subaru,lexus,jaguar,byd\n  (stale-first shard keys — keep `--makes` order as sent)\n- `ka_shard` --workers 5 --duration 0 --makes bmw,volkswagen,audi,mercedes_benz,opel,ford,renault,skoda,toyota,hyundai,seat,peugeot,mazda,fiat,citroen,nissan,volvo,porsche,mini,kia,dacia,tesla,cupra,suzuki,mitsubishi,honda,jeep,alfa_romeo,land_rover,smart,chevrolet,mg,byd\n  (stale-first shard keys — keep `--makes` order as sent)\n- `coches_shard` --workers 5 --duration 0 --makes 2026,2025,2024,2023,2022,2021,2020,2019,2018,2017,2016,2015,2014,2013,2012,2011,2010,2005-2009,2000-2004,1990-1999,to-1989\n  (stale-first shard keys — keep `--makes` order as sent)\nBefore spawning: save webhook JSON to /tmp/wave.json, run `python3 daq/jobs/wave_spawn_gap.py --wave-file /tmp/wave.json --board docs/data/crawl_status.json --stamp-queued` so all expected workers appear as queued on the board.\nFor each job run `python3 daq/jobs/launch_crawl.py prompt <job_id> [flags] --wave-id wave-tst-20260828-2f0w --json`. Spawn one cloud worker per returned prompt (or only `spawn_only` ids on retry). Stamp running only with --agent-url. Loop `wave_spawn_gap.py --json` until gap_count is 0 (retry up to 10 rounds; scheduled Action retries every 15 min if needed)."
 }
