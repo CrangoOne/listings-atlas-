@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-08-28T17:04:14Z",
+  "updated_at": "2026-08-28T17:06:35Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w1",
+      "job_id": "ka_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w1-1a84",
+      "makes": [
+        "bmw",
+        "ford",
+        "seat",
+        "nissan",
+        "dacia",
+        "honda",
+        "chevrolet"
+      ],
+      "started_at": "2026-08-28T17:04:39Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-07b4da6f-08a5-561d-a569-9825d4ce5dea"
+    },
     {
       "worker_id": "autoscout_shard-w5",
       "job_id": "autoscout_shard",
@@ -58,12 +78,12 @@
         "lexus"
       ],
       "started_at": "2026-08-28T16:48:34Z",
-      "notes": "Finished: +2823 rows (Audi 1834, Renault 273, Mazda 266, CUPRA 251, Nissan 113, Alfa Romeo 60, Lexus 26); 29/29 facets, 728 pages, 458s (~370/min)",
+      "notes": "Finished: +2823 rows (Audi 1834, Renault 273, Mazda 266, CUPRA 251, Nissan 113, Alfa Romeo 60, Lexus 26). 29/29 facets exhausted in 458s (~370/min)",
       "agent_url": "https://cursor.com/agents/bc-23f21b9c-d655-56fb-a696-b360c1d52d96",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/164",
       "rows_added": 2823,
       "rows_total": 2823,
-      "finished_at": "2026-08-28T17:01:38Z"
+      "finished_at": "2026-08-28T17:04:22Z"
     },
     {
       "worker_id": "autoscout_shard-w2",
@@ -305,25 +325,6 @@
         "tesla",
         "jeep",
         "mg"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
-    },
-    {
-      "worker_id": "ka_shard-w1",
-      "job_id": "ka_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w1-1a84",
-      "makes": [
-        "bmw",
-        "ford",
-        "seat",
-        "nissan",
-        "dacia",
-        "honda",
-        "chevrolet"
       ],
       "started_at": "2026-08-28T15:30:12Z",
       "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
