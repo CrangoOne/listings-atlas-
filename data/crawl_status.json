@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T19:25:57Z",
+  "updated_at": "2026-08-28T19:27:31Z",
   "runs": [
     {
       "worker_id": "coches_shard-w4",
@@ -14,12 +14,12 @@
         "2013",
         "2000-2004"
       ],
-      "started_at": "2026-08-28T19:14:17Z",
+      "started_at": "2026-08-28T19:15:41Z",
       "notes": "Finished: +6871 rows (37/37 facets, 583 pages, 233s ~1768/min)",
-      "finished_at": "2026-08-28T19:23:03Z",
       "agent_url": "https://cursor.com/agents/bc-fa5873e1-28b6-5530-9acd-e6e8f3102f75",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/175",
-      "rows_added": 6871
+      "rows_added": 6871,
+      "finished_at": "2026-08-28T19:24:30Z"
     },
     {
       "worker_id": "coches_shard-w2",
@@ -34,12 +34,12 @@
         "2015",
         "2010"
       ],
-      "started_at": "2026-08-28T19:03:17Z",
+      "started_at": "2026-08-28T19:06:58Z",
       "notes": "Finished: +6150 rows (37/37 facets, 542 pages, 218s ~1691/min)",
-      "finished_at": "2026-08-28T19:14:17Z",
       "agent_url": "https://cursor.com/agents/bc-098e462a-b58f-5425-bd67-fcbf21d548dc",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/174",
-      "rows_added": 6150
+      "rows_added": 6150,
+      "finished_at": "2026-08-28T19:15:41Z"
     },
     {
       "worker_id": "coches_shard-w3",
@@ -54,12 +54,12 @@
         "2014",
         "2005-2009"
       ],
-      "started_at": "2026-08-28T18:48:40Z",
+      "started_at": "2026-08-28T18:49:29Z",
       "notes": "Finished: +7909 rows (37/37 facets, 773 pages, 309s ~1535/min)",
-      "finished_at": "2026-08-28T19:03:17Z",
       "agent_url": "https://cursor.com/agents/bc-d9e848f1-45d4-59ed-9b67-bb8f4e92ad7c",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/172",
-      "rows_added": 7909
+      "rows_added": 7909,
+      "finished_at": "2026-08-28T19:06:58Z"
     },
     {
       "worker_id": "coches_shard-w1",
@@ -75,12 +75,12 @@
         "2011",
         "to-1989"
       ],
-      "started_at": "2026-08-28T18:48:39Z",
+      "started_at": "2026-08-28T18:49:29Z",
       "notes": "Finished: +6023 rows (38/38 facets, 561 pages, 226s ~1602/min)",
-      "finished_at": "2026-08-28T19:02:25Z",
       "agent_url": "https://cursor.com/agents/bc-821357c0-31f3-5630-9943-a8e503b8ef60",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/171",
-      "rows_added": 6023
+      "rows_added": 6023,
+      "finished_at": "2026-08-28T19:06:58Z"
     },
     {
       "worker_id": "ka_shard-w3",
