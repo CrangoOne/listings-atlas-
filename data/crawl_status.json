@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-08-28T16:26:53Z",
+  "updated_at": "2026-08-28T16:29:18Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w1",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "running",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w1-1a84",
+      "makes": [
+        "bmw",
+        "ford",
+        "seat",
+        "tesla",
+        "dacia",
+        "jeep",
+        "smart"
+      ],
+      "started_at": "2026-08-28T16:27:31Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-749878f0-dcfe-5ea6-8d1a-c4b1a856129d"
+    },
     {
       "worker_id": "willhaben_shard-w5",
       "job_id": "willhaben_shard",
@@ -361,25 +381,6 @@
         "citroen",
         "land-rover",
         "subaru"
-      ],
-      "started_at": "2026-08-28T15:30:12Z",
-      "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
-    },
-    {
-      "worker_id": "autoscout_shard-w1",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "queued",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w1-1a84",
-      "makes": [
-        "bmw",
-        "ford",
-        "seat",
-        "tesla",
-        "dacia",
-        "jeep",
-        "smart"
       ],
       "started_at": "2026-08-28T15:30:12Z",
       "notes": "Waiting for cloud spawn (parent 3-VM cap; willhaben w1-w3 running)"
