@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-28T19:24:06Z",
+  "updated_at": "2026-08-28T19:25:57Z",
   "runs": [
     {
       "worker_id": "coches_shard-w4",
@@ -14,10 +14,11 @@
         "2013",
         "2000-2004"
       ],
-      "started_at": "2026-08-28T19:16:05Z",
-      "notes": "Finished: +6871 rows (37/37 facets, 583 pages, 233s ~1768.5/min). Years 2023=2456 2018=1714 2013=796 2000-2004=1905",
-      "finished_at": "2026-08-28T19:21:02Z",
+      "started_at": "2026-08-28T19:14:17Z",
+      "notes": "Finished: +6871 rows (37/37 facets, 583 pages, 233s ~1768/min)",
+      "finished_at": "2026-08-28T19:23:03Z",
       "agent_url": "https://cursor.com/agents/bc-fa5873e1-28b6-5530-9acd-e6e8f3102f75",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/175",
       "rows_added": 6871
     },
     {
