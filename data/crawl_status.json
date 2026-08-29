@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-29T00:08:36Z",
+  "updated_at": "2026-08-29T00:10:03Z",
   "runs": [
     {
       "worker_id": "coches_shard-w5",
@@ -84,29 +84,6 @@
       "rows_added": 38108
     },
     {
-      "worker_id": "ka_shard-w4",
-      "job_id": "ka_shard",
-      "wave_id": "wave-tst-20260828-2f0w",
-      "status": "finished",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w4-1a84",
-      "makes": [
-        "mercedes_benz",
-        "toyota",
-        "fiat",
-        "mini",
-        "suzuki",
-        "land_rover"
-      ],
-      "started_at": "2026-08-28T18:50:46Z",
-      "notes": "Finished: +38771 rows (mercedes_benz 27664, toyota 3360, fiat 1512, mini 3726, suzuki 1455, land_rover 1054). 8537 pages, 18737s, ~124/min",
-      "finished_at": "2026-08-29T00:06:50Z",
-      "agent_url": "https://cursor.com/agents/bc-6dd3a330-d195-5185-8d1e-7c66b2e239a8",
-      "pr_url": "https://github.com/CrangoOne/Cursor/pull/173",
-      "rows_added": 38771,
-      "rows_total": 208339
-    },
-    {
       "worker_id": "coches_shard-w3",
       "job_id": "coches_shard",
       "wave_id": "wave-tst-20260828-2f0w",
@@ -146,6 +123,28 @@
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/171",
       "rows_added": 6023,
       "finished_at": "2026-08-28T19:06:58Z"
+    },
+    {
+      "worker_id": "ka_shard-w4",
+      "job_id": "ka_shard",
+      "wave_id": "wave-tst-20260828-2f0w",
+      "status": "finished",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w4-1a84",
+      "makes": [
+        "mercedes_benz",
+        "toyota",
+        "fiat",
+        "mini",
+        "suzuki",
+        "land_rover"
+      ],
+      "started_at": "2026-08-28T18:48:39Z",
+      "notes": "Finished: +38771 rows (mercedes_benz/mini/toyota/fiat/suzuki/land_rover)",
+      "finished_at": "2026-08-29T00:08:06Z",
+      "agent_url": "https://cursor.com/agents/bc-6dd3a330-d195-5185-8d1e-7c66b2e239a8",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/173",
+      "rows_added": 38771
     },
     {
       "worker_id": "ka_shard-w3",
