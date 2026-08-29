@@ -940,6 +940,17 @@ body {
   background: rgba(255, 255, 255, 0.45);
 }
 
+.crawl-consolidate-toolbar {
+  margin-top: 0;
+  align-items: center;
+}
+
+.crawl-consolidate-hint {
+  flex: 1 1 14rem;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
 .crawl-wave-summary {
   flex: 1 1 12rem;
   font-size: 0.92rem;
@@ -1351,6 +1362,16 @@ body {
 .carousel-dot.is-active {
   background: var(--accent);
   transform: scale(1.15);
+}
+
+.dashboard-carousel .kpi-row {
+  margin-bottom: 0;
+}
+
+.dashboard-slide .chart-block:last-child,
+.dashboard-slide .split:last-child,
+.dashboard-slide .market-grid:last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 640px) {
