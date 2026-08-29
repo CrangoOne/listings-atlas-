@@ -5,7 +5,9 @@ import {
   rememberWaveId,
   buildWavePayload,
   postCrawlWave,
-} from "./crawl_wave.js?v=20260827c";
+  buildConsolidatePayload,
+  postConsolidateRequest,
+} from "./crawl_wave.js?v=20260828a";
 import {
   SOURCE_ORDER,
   SOURCE_LABEL,
@@ -18,7 +20,7 @@ import {
 import { formatWhen, formatWhenHtml, TZ_HINT } from "./time_display.js?v=20260827a";
 
 /** Bumped whenever status-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260827c";
+const ASSET_BUILD = "20260828a";
 
 const STATUS_ORDER = ["running", "unspawned", "queued", "failed", "finished", "cancelled"];
 const DEFAULT_FRESH_HOURS = 168;
@@ -468,6 +470,58 @@ function bindLaunchPanel() {
   });
 }
 
+function bindConsolidatePanel() {
+  const btn = document.getElementById("crawl-consolidate");
+  const waveOnly = document.getElementById("crawl-consolidate-wave-only");
+  if (btn?.dataset.bound) return;
+  if (btn) btn.dataset.bound = "1";
+
+  btn?.addEventListener("click", async () => {
+    const settings = loadWebhookSettings();
+    const urlEl = document.getElementById("crawl-webhook-url");
+    const tokenEl = document.getElementById("crawl-webhook-token");
+    const ghEl = document.getElementById("crawl-github-token");
+    const url = urlEl?.value?.trim() || settings.url;
+    const token = tokenEl?.value?.trim() || settings.token;
+    const ghToken = ghEl?.value?.trim() || settings.ghToken;
+    if (!ghToken && !(url && token)) {
+      document.getElementById("crawl-automation-settings")?.setAttribute("open", "");
+      setWaveStatus(
+        "Save a listings-atlas- GitHub PAT (Contents write), or webhook URL + Bearer.",
+        { error: true }
+      );
+      return;
+    }
+    saveWebhookSettings({ url, token, ghToken });
+    const waveId = waveOnly?.checked ? lastWaveId() || null : null;
+    const payload = buildConsolidatePayload({
+      waveId,
+      allOpen: !waveId,
+    });
+    btn.disabled = true;
+    setWaveStatus(
+      waveId
+        ? `Queuing consolidate for ${waveId}…`
+        : "Queuing consolidate for all open worker PRs…"
+    );
+    try {
+      const result = await postConsolidateRequest(payload, { url, token, ghToken });
+      const via =
+        result?.via === "github"
+          ? "queued on GitHub (Action forwards to Cursor)"
+          : "sent to Cursor webhook";
+      setWaveStatus(
+        `Consolidate request ${via}. Explore/Sources update after the agent finishes (~10–20 min).`,
+        { error: false }
+      );
+    } catch (err) {
+      setWaveStatus(err.message || String(err), { error: true });
+    } finally {
+      btn.disabled = false;
+    }
+  });
+}
+
 function renderLaunchBoard(runs, makesCatalog) {
   currentRuns = runs;
   currentMakes = makesCatalog;
@@ -529,6 +583,7 @@ export async function initCrawls() {
   const meta = document.getElementById("crawl-board-meta");
   bindWebhookSettings();
   bindLaunchPanel();
+  bindConsolidatePanel();
   try {
     const [statusPack, jobsPack] = await Promise.all([
       fetchJsonPreferLive(LIVE_STATUS_URLS),
