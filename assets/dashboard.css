@@ -1353,11 +1353,13 @@ body {
   transform: scale(1.15);
 }
 
-.markets-carousel .kpi-row {
+.dashboard-carousel .kpi-row {
   margin-bottom: 0;
 }
 
-.markets-slide .chart-block {
+.dashboard-slide .chart-block:last-child,
+.dashboard-slide .split:last-child,
+.dashboard-slide .market-grid:last-child {
   margin-bottom: 0;
 }
 
