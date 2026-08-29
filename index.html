@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/dashboard.css?v=20260828a" />
+    <link rel="stylesheet" href="assets/dashboard.css?v=20260829a" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
@@ -327,34 +327,15 @@
       <section id="prices" class="section">
         <div class="section-head">
           <h2>Price landscape</h2>
-          <p>Filtered to €500–€200k to dampen outliers and scrapes errors.</p>
         </div>
-        <div class="split">
-          <div class="chart-block grow">
-            <div class="chart-label">Price bands</div>
-            <div id="price-bars" class="bar-chart"></div>
-          </div>
-          <div class="chart-block">
-            <div class="chart-label">Average price by market</div>
-            <div id="price-source" class="bar-chart"></div>
-          </div>
-        </div>
-        <div class="chart-block">
-          <div class="chart-label">Model year mix (2000–2026)</div>
-          <div id="year-bars" class="bar-chart dense"></div>
-        </div>
+        <div id="prices-board"></div>
       </section>
 
       <section id="makes" class="section">
         <div class="section-head">
           <h2>Makes that dominate</h2>
-          <p>Top brands overall, then the leaders inside each market.</p>
         </div>
-        <div class="chart-block">
-          <div class="chart-label">Top 20 makes</div>
-          <div id="make-bars" class="bar-chart"></div>
-        </div>
-        <div class="market-grid" id="market-makes"></div>
+        <div id="makes-board"></div>
       </section>
 
       <section class="section twin">
@@ -398,6 +379,6 @@
       <span>Willhaben · AutoScout24 · Kleinanzeigen</span>
     </footer>
 
-    <script src="assets/dashboard.js?v=20260828a" type="module"></script>
+    <script src="assets/dashboard.js?v=20260829a" type="module"></script>
   </body>
 </html>
