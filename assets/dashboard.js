@@ -1,5 +1,5 @@
 import { initExplore } from "./explore.js?v=20260821b";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260827c";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260828a";
 import { initSources } from "./sources.js?v=20260827c";
 import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
 
@@ -89,8 +89,121 @@ function escapeHtml(s) {
     .replaceAll('"', "&quot;");
 }
 
-function renderKpis(data) {
-  const root = document.getElementById("kpi-row");
+const MARKETS_SLIDES = [
+  { id: "overview", label: "Overview" },
+  { id: "by-source", label: "By source" },
+];
+
+const PRICES_SLIDES = [
+  { id: "price-bands", label: "Price bands" },
+  { id: "avg-price", label: "By market" },
+  { id: "model-year", label: "Model year" },
+];
+
+const MAKES_SLIDES = [
+  { id: "top-makes", label: "Top makes" },
+  { id: "by-market", label: "By market" },
+];
+
+function renderCarouselShell(slides, { className, ariaLabel, idPrefix }) {
+  const tabs = slides
+    .map(
+      (slide, idx) =>
+        `<button type="button" class="carousel-tab${idx === 0 ? " is-active" : ""}" data-index="${idx}" role="tab" aria-selected="${
+          idx === 0 ? "true" : "false"
+        }" aria-controls="${idPrefix}-${slide.id}">${slide.label}</button>`
+    )
+    .join("");
+
+  const trackSlides = slides
+    .map(
+      (slide) =>
+        `<article class="carousel-slide dashboard-slide" id="${idPrefix}-${slide.id}" data-slide-id="${slide.id}"></article>`
+    )
+    .join("");
+
+  const dots = slides
+    .map(
+      (_, idx) =>
+        `<button type="button" class="carousel-dot${idx === 0 ? " is-active" : ""}" data-index="${idx}" aria-label="${slides[idx].label}"></button>`
+    )
+    .join("");
+
+  return `<div class="sources-carousel dashboard-carousel ${className}" data-slide-count="${slides.length}">
+    <div class="carousel-toolbar">
+      <div class="carousel-tabs" role="tablist">${tabs}</div>
+      <div class="carousel-nav">
+        <button type="button" class="btn ghost carousel-prev" aria-label="Previous view">←</button>
+        <span class="carousel-counter">1 / ${slides.length}</span>
+        <button type="button" class="btn ghost carousel-next" aria-label="Next view">→</button>
+      </div>
+    </div>
+    <div class="carousel-viewport">
+      <div class="carousel-track">${trackSlides}</div>
+    </div>
+    <div class="carousel-dots" role="group" aria-label="${ariaLabel}">${dots}</div>
+  </div>`;
+}
+
+function initCarousel(root, carouselSelector) {
+  const carousel = root.querySelector(carouselSelector);
+  if (!carousel) return;
+
+  const track = carousel.querySelector(".carousel-track");
+  const tabs = [...carousel.querySelectorAll(".carousel-tab")];
+  const dots = [...carousel.querySelectorAll(".carousel-dot")];
+  const counter = carousel.querySelector(".carousel-counter");
+  const prevBtn = carousel.querySelector(".carousel-prev");
+  const nextBtn = carousel.querySelector(".carousel-next");
+  const slideCount = Number(carousel.dataset.slideCount) || tabs.length;
+  let current = 0;
+
+  function animateBars(slide) {
+    if (!slide) return;
+    requestAnimationFrame(() => {
+      slide.querySelectorAll(".bar-fill").forEach((fill) => {
+        fill.style.width = `${fill.dataset.width}%`;
+      });
+    });
+  }
+
+  function goTo(index) {
+    if (!slideCount) return;
+    current = ((index % slideCount) + slideCount) % slideCount;
+    track.style.transform = `translateX(-${current * 100}%)`;
+
+    tabs.forEach((tab, idx) => {
+      const active = idx === current;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    });
+    dots.forEach((dot, idx) => dot.classList.toggle("is-active", idx === current));
+    if (counter) counter.textContent = `${current + 1} / ${slideCount}`;
+    if (prevBtn) prevBtn.disabled = slideCount <= 1;
+    if (nextBtn) nextBtn.disabled = slideCount <= 1;
+    animateBars(track.children[current]);
+  }
+
+  tabs.forEach((tab) => tab.addEventListener("click", () => goTo(Number(tab.dataset.index))));
+  dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
+  prevBtn?.addEventListener("click", () => goTo(current - 1));
+  nextBtn?.addEventListener("click", () => goTo(current + 1));
+
+  carousel.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      goTo(current - 1);
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      goTo(current + 1);
+    }
+  });
+
+  goTo(0);
+}
+
+function renderKpis(data, root) {
+  if (!root) return;
   const by = Object.fromEntries(data.by_source.map((d) => [d.source, d.count]));
   const avg = data.price_stats?.avg_price;
   const items = [
@@ -127,8 +240,8 @@ function share(part, total) {
   return `${((part / total) * 100).toFixed(1)}% of pack`;
 }
 
-function renderMarketMakes(data) {
-  const root = document.getElementById("market-makes");
+function renderMarketMakes(data, root) {
+  if (!root) return;
   const order = ["kleinanzeigen", "willhaben", "autoscout", "coches"];
   root.innerHTML = order
     .map((source) => {
@@ -148,50 +261,118 @@ function renderMarketMakes(data) {
       count: d.count,
     }));
     if (!rows.length) continue;
-    renderBars(document.getElementById(`makes-${source}`), rows);
+    renderBars(root.querySelector(`#makes-${source}`), rows);
   }
 }
 
-async function main() {
-  const pack = await fetchSummaryPreferLive();
-  const data = pack.data;
+function relabelPriceSourceBars(root, rows) {
+  root.querySelectorAll("#price-source .bar-val").forEach((el, i) => {
+    const v = rows[i]?.avg_price;
+    el.textContent = v ? euro.format(v) : "—";
+  });
+}
 
-  renderKpis(data);
+function renderMarketsBoard(data) {
+  const board = document.getElementById("markets-board");
+  if (!board) return;
 
+  board.innerHTML = renderCarouselShell(MARKETS_SLIDES, {
+    className: "markets-carousel",
+    ariaLabel: "Market views",
+    idPrefix: "markets",
+  });
+
+  const overviewSlide = board.querySelector('[data-slide-id="overview"]');
+  const bySourceSlide = board.querySelector('[data-slide-id="by-source"]');
+
+  overviewSlide.innerHTML = `<div class="kpi-row" id="kpi-row"></div>`;
+  bySourceSlide.innerHTML = `<div class="chart-block">
+    <div class="chart-label">Listings by source</div>
+    <div id="source-bars" class="bar-chart" role="img" aria-label="Listings by source"></div>
+  </div>`;
+
+  renderKpis(data, overviewSlide.querySelector("#kpi-row"));
   renderBars(
-    document.getElementById("source-bars"),
+    bySourceSlide.querySelector("#source-bars"),
     data.by_source.map((d) => ({ label: niceSource(d.source), count: d.count }))
   );
+  initCarousel(board, ".markets-carousel");
+}
+
+function renderPricesBoard(data) {
+  const board = document.getElementById("prices-board");
+  if (!board) return;
+
+  board.innerHTML = renderCarouselShell(PRICES_SLIDES, {
+    className: "prices-carousel",
+    ariaLabel: "Price views",
+    idPrefix: "prices",
+  });
+
+  board.querySelector('[data-slide-id="price-bands"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Price bands</div>
+    <div id="price-bars" class="bar-chart"></div>
+  </div>`;
+  board.querySelector('[data-slide-id="avg-price"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Average price by market</div>
+    <div id="price-source" class="bar-chart"></div>
+  </div>`;
+  board.querySelector('[data-slide-id="model-year"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Model year mix (2000–2026)</div>
+    <div id="year-bars" class="bar-chart dense"></div>
+  </div>`;
 
   renderBars(
-    document.getElementById("price-bars"),
+    board.querySelector("#price-bars"),
     data.price_buckets.map((d) => ({ label: d.bucket, count: d.count }))
   );
-
   renderBars(
-    document.getElementById("price-source"),
+    board.querySelector("#price-source"),
     data.price_by_source.map((d) => ({
       label: niceSource(d.source),
       count: d.avg_price || 0,
     })),
     { valueKey: "count" }
   );
-  // Relabel values as currency in the price-by-source chart
-  document.querySelectorAll("#price-source .bar-val").forEach((el, i) => {
-    const v = data.price_by_source[i]?.avg_price;
-    el.textContent = v ? euro.format(v) : "—";
-  });
-
+  relabelPriceSourceBars(board, data.price_by_source);
   renderBars(
-    document.getElementById("year-bars"),
+    board.querySelector("#year-bars"),
     data.by_year.map((d) => ({ label: String(d.year), count: d.count }))
   );
-  document.getElementById("year-bars").classList.add("dense");
+  initCarousel(board, ".prices-carousel");
+}
+
+function renderMakesBoard(data) {
+  const board = document.getElementById("makes-board");
+  if (!board) return;
+
+  board.innerHTML = renderCarouselShell(MAKES_SLIDES, {
+    className: "makes-carousel",
+    ariaLabel: "Make views",
+    idPrefix: "makes",
+  });
+
+  board.querySelector('[data-slide-id="top-makes"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Top 20 makes</div>
+    <div id="make-bars" class="bar-chart"></div>
+  </div>`;
+  board.querySelector('[data-slide-id="by-market"]').innerHTML = `<div class="market-grid" id="market-makes"></div>`;
 
   renderBars(
-    document.getElementById("make-bars"),
+    board.querySelector("#make-bars"),
     data.top_makes.slice(0, 20).map((d) => ({ label: d.make, count: d.count }))
   );
+  renderMarketMakes(data, board.querySelector("#market-makes"));
+  initCarousel(board, ".makes-carousel");
+}
+
+async function main() {
+  const pack = await fetchSummaryPreferLive();
+  const data = pack.data;
+
+  renderMarketsBoard(data);
+  renderPricesBoard(data);
+  renderMakesBoard(data);
 
   renderBars(
     document.getElementById("fuel-bars"),
@@ -202,8 +383,6 @@ async function main() {
     document.getElementById("trans-bars"),
     data.by_transmission.map((d) => ({ label: d.label, count: d.count }))
   );
-
-  renderMarketMakes(data);
 
   const meta = document.getElementById("generated-meta");
   const generatedLabel = formatWhen(data.generated_at);
