@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-08-29T02:51:05Z",
+  "updated_at": "2026-08-29T02:54:05Z",
   "runs": [
     {
       "worker_id": "coches_shard-w5",
@@ -194,7 +194,7 @@
       "worker_id": "ka_shard-w1",
       "job_id": "ka_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "finished",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w1-1a84",
       "makes": [
@@ -207,9 +207,12 @@
         "chevrolet"
       ],
       "started_at": "2026-08-28T17:25:15Z",
-      "notes": "Spawned cloud worker",
+      "notes": "Finished: +45025 rows (bmw +16724, ford +17646, seat +4013, nissan +2208, dacia +2194, honda +1080, chevrolet +1160; 10392 pages, 34926s, ~77/min)",
       "agent_url": "https://cursor.com/agents/bc-07b4da6f-08a5-561d-a569-9825d4ce5dea",
-      "pr_url": "https://github.com/CrangoOne/Cursor/pull/166"
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/166",
+      "rows_added": 45025,
+      "rows_total": 235825,
+      "finished_at": "2026-08-29T02:52:10Z"
     },
     {
       "worker_id": "autoscout_shard-w5",
