@@ -1,0 +1,88 @@
+# Forward queued Atlas automation requests to Cursor (crawl wave + consolidate).
+#
+# Copy to CrangoOne/listings-atlas-/.github/workflows/forward-atlas-webhooks.yml
+# (or merge into the existing forward-crawl-wave.yml on listings-atlas-).
+#
+# Secrets on listings-atlas-:
+#   CRAWL_WAVE_WEBHOOK_URL / CRAWL_WAVE_WEBHOOK_BEARER
+# Optional aliases for consolidate-only automations:
+#   CONSOLIDATE_WEBHOOK_URL / CONSOLIDATE_WEBHOOK_BEARER
+
+name: Forward Atlas automation requests
+
+on:
+  push:
+    paths:
+      - data/pending_wave.json
+      - data/pending_consolidate.json
+  workflow_dispatch:
+
+jobs:
+  forward:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Select queue file
+        id: pick
+        run: |
+          set -euo pipefail
+          FILE=""
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            if [ -f data/pending_consolidate.json ]; then
+              FILE="data/pending_consolidate.json"
+            elif [ -f data/pending_wave.json ]; then
+              FILE="data/pending_wave.json"
+            fi
+          else
+            changed="$(git diff --name-only HEAD~1 HEAD 2>/dev/null || true)"
+            if echo "$changed" | grep -qx 'data/pending_consolidate.json'; then
+              FILE="data/pending_consolidate.json"
+            elif echo "$changed" | grep -qx 'data/pending_wave.json'; then
+              FILE="data/pending_wave.json"
+            fi
+          fi
+          if [ -z "$FILE" ]; then
+            echo "No pending_wave.json or pending_consolidate.json in this push"
+            exit 0
+          fi
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+          python3 -c "import json,pathlib; p=json.loads(pathlib.Path('$FILE').read_text()); print('kind=%s' % p.get('kind'))"
+
+      - name: POST to Cursor automation
+        if: steps.pick.outputs.file != ''
+        env:
+          QUEUE_FILE: ${{ steps.pick.outputs.file }}
+          WAVE_URL: ${{ secrets.CRAWL_WAVE_WEBHOOK_URL }}
+          WAVE_TOKEN: ${{ secrets.CRAWL_WAVE_WEBHOOK_BEARER }}
+          CONSOLIDATE_URL: ${{ secrets.CONSOLIDATE_WEBHOOK_URL }}
+          CONSOLIDATE_TOKEN: ${{ secrets.CONSOLIDATE_WEBHOOK_BEARER }}
+        run: |
+          set -euo pipefail
+          kind="$(python3 -c "import json,pathlib; print(json.loads(pathlib.Path('$QUEUE_FILE').read_text()).get('kind',''))")"
+          if [ "$kind" = "listings-atlas-consolidate" ]; then
+            URL="${CONSOLIDATE_URL:-${WAVE_URL:-}}"
+            TOKEN="${CONSOLIDATE_TOKEN:-${WAVE_TOKEN:-}}"
+          else
+            URL="${WAVE_URL:-}"
+            TOKEN="${WAVE_TOKEN:-}"
+          fi
+          if [ -z "${URL}" ] || [ -z "${TOKEN}" ]; then
+            echo "Set CRAWL_WAVE_* (and optional CONSOLIDATE_*) repository secrets."
+            exit 1
+          fi
+          AUTH="$TOKEN"
+          case "$AUTH" in
+            Bearer\ *|bearer\ *) ;;
+            *) AUTH="Bearer $TOKEN" ;;
+          esac
+          curl -sS -f -X POST "$URL" \
+            -H "Authorization: $AUTH" \
+            -H "Content-Type: application/json" \
+            --data-binary @"$QUEUE_FILE"
+          echo
+          echo "Forwarded $QUEUE_FILE ($kind) to Cursor automation."
