@@ -94,42 +94,59 @@ const MARKETS_SLIDES = [
   { id: "by-source", label: "By source" },
 ];
 
-function renderMarketsCarouselShell() {
-  const tabs = MARKETS_SLIDES.map(
-    (slide, idx) =>
-      `<button type="button" class="carousel-tab${idx === 0 ? " is-active" : ""}" data-index="${idx}" role="tab" aria-selected="${
-        idx === 0 ? "true" : "false"
-      }" aria-controls="markets-${slide.id}">${slide.label}</button>`
-  ).join("");
+const PRICES_SLIDES = [
+  { id: "price-bands", label: "Price bands" },
+  { id: "avg-price", label: "By market" },
+  { id: "model-year", label: "Model year" },
+];
 
-  const slides = MARKETS_SLIDES.map(
-    (slide, idx) =>
-      `<article class="carousel-slide markets-slide" id="markets-${slide.id}" data-slide-id="${slide.id}"></article>`
-  ).join("");
+const MAKES_SLIDES = [
+  { id: "top-makes", label: "Top makes" },
+  { id: "by-market", label: "By market" },
+];
 
-  const dots = MARKETS_SLIDES.map(
-    (_, idx) =>
-      `<button type="button" class="carousel-dot${idx === 0 ? " is-active" : ""}" data-index="${idx}" aria-label="${MARKETS_SLIDES[idx].label}"></button>`
-  ).join("");
+function renderCarouselShell(slides, { className, ariaLabel, idPrefix }) {
+  const tabs = slides
+    .map(
+      (slide, idx) =>
+        `<button type="button" class="carousel-tab${idx === 0 ? " is-active" : ""}" data-index="${idx}" role="tab" aria-selected="${
+          idx === 0 ? "true" : "false"
+        }" aria-controls="${idPrefix}-${slide.id}">${slide.label}</button>`
+    )
+    .join("");
 
-  return `<div class="sources-carousel markets-carousel" data-slide-count="${MARKETS_SLIDES.length}">
+  const trackSlides = slides
+    .map(
+      (slide) =>
+        `<article class="carousel-slide dashboard-slide" id="${idPrefix}-${slide.id}" data-slide-id="${slide.id}"></article>`
+    )
+    .join("");
+
+  const dots = slides
+    .map(
+      (_, idx) =>
+        `<button type="button" class="carousel-dot${idx === 0 ? " is-active" : ""}" data-index="${idx}" aria-label="${slides[idx].label}"></button>`
+    )
+    .join("");
+
+  return `<div class="sources-carousel dashboard-carousel ${className}" data-slide-count="${slides.length}">
     <div class="carousel-toolbar">
       <div class="carousel-tabs" role="tablist">${tabs}</div>
       <div class="carousel-nav">
         <button type="button" class="btn ghost carousel-prev" aria-label="Previous view">←</button>
-        <span class="carousel-counter">1 / ${MARKETS_SLIDES.length}</span>
+        <span class="carousel-counter">1 / ${slides.length}</span>
         <button type="button" class="btn ghost carousel-next" aria-label="Next view">→</button>
       </div>
     </div>
     <div class="carousel-viewport">
-      <div class="carousel-track">${slides}</div>
+      <div class="carousel-track">${trackSlides}</div>
     </div>
-    <div class="carousel-dots" role="group" aria-label="Market views">${dots}</div>
+    <div class="carousel-dots" role="group" aria-label="${ariaLabel}">${dots}</div>
   </div>`;
 }
 
-function initMarketsCarousel(root) {
-  const carousel = root.querySelector(".markets-carousel");
+function initCarousel(root, carouselSelector) {
+  const carousel = root.querySelector(carouselSelector);
   if (!carousel) return;
 
   const track = carousel.querySelector(".carousel-track");
@@ -140,6 +157,15 @@ function initMarketsCarousel(root) {
   const nextBtn = carousel.querySelector(".carousel-next");
   const slideCount = Number(carousel.dataset.slideCount) || tabs.length;
   let current = 0;
+
+  function animateBars(slide) {
+    if (!slide) return;
+    requestAnimationFrame(() => {
+      slide.querySelectorAll(".bar-fill").forEach((fill) => {
+        fill.style.width = `${fill.dataset.width}%`;
+      });
+    });
+  }
 
   function goTo(index) {
     if (!slideCount) return;
@@ -155,15 +181,7 @@ function initMarketsCarousel(root) {
     if (counter) counter.textContent = `${current + 1} / ${slideCount}`;
     if (prevBtn) prevBtn.disabled = slideCount <= 1;
     if (nextBtn) nextBtn.disabled = slideCount <= 1;
-
-    const activeSlide = track.children[current];
-    if (activeSlide) {
-      requestAnimationFrame(() => {
-        activeSlide.querySelectorAll(".bar-fill").forEach((fill) => {
-          fill.style.width = `${fill.dataset.width}%`;
-        });
-      });
-    }
+    animateBars(track.children[current]);
   }
 
   tabs.forEach((tab) => tab.addEventListener("click", () => goTo(Number(tab.dataset.index))));
@@ -222,8 +240,8 @@ function share(part, total) {
   return `${((part / total) * 100).toFixed(1)}% of pack`;
 }
 
-function renderMarketMakes(data) {
-  const root = document.getElementById("market-makes");
+function renderMarketMakes(data, root) {
+  if (!root) return;
   const order = ["kleinanzeigen", "willhaben", "autoscout", "coches"];
   root.innerHTML = order
     .map((source) => {
@@ -243,15 +261,27 @@ function renderMarketMakes(data) {
       count: d.count,
     }));
     if (!rows.length) continue;
-    renderBars(document.getElementById(`makes-${source}`), rows);
+    renderBars(root.querySelector(`#makes-${source}`), rows);
   }
+}
+
+function relabelPriceSourceBars(root, rows) {
+  root.querySelectorAll("#price-source .bar-val").forEach((el, i) => {
+    const v = rows[i]?.avg_price;
+    el.textContent = v ? euro.format(v) : "—";
+  });
 }
 
 function renderMarketsBoard(data) {
   const board = document.getElementById("markets-board");
   if (!board) return;
 
-  board.innerHTML = renderMarketsCarouselShell();
+  board.innerHTML = renderCarouselShell(MARKETS_SLIDES, {
+    className: "markets-carousel",
+    ariaLabel: "Market views",
+    idPrefix: "markets",
+  });
+
   const overviewSlide = board.querySelector('[data-slide-id="overview"]');
   const bySourceSlide = board.querySelector('[data-slide-id="by-source"]');
 
@@ -266,7 +296,74 @@ function renderMarketsBoard(data) {
     bySourceSlide.querySelector("#source-bars"),
     data.by_source.map((d) => ({ label: niceSource(d.source), count: d.count }))
   );
-  initMarketsCarousel(board);
+  initCarousel(board, ".markets-carousel");
+}
+
+function renderPricesBoard(data) {
+  const board = document.getElementById("prices-board");
+  if (!board) return;
+
+  board.innerHTML = renderCarouselShell(PRICES_SLIDES, {
+    className: "prices-carousel",
+    ariaLabel: "Price views",
+    idPrefix: "prices",
+  });
+
+  board.querySelector('[data-slide-id="price-bands"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Price bands</div>
+    <div id="price-bars" class="bar-chart"></div>
+  </div>`;
+  board.querySelector('[data-slide-id="avg-price"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Average price by market</div>
+    <div id="price-source" class="bar-chart"></div>
+  </div>`;
+  board.querySelector('[data-slide-id="model-year"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Model year mix (2000–2026)</div>
+    <div id="year-bars" class="bar-chart dense"></div>
+  </div>`;
+
+  renderBars(
+    board.querySelector("#price-bars"),
+    data.price_buckets.map((d) => ({ label: d.bucket, count: d.count }))
+  );
+  renderBars(
+    board.querySelector("#price-source"),
+    data.price_by_source.map((d) => ({
+      label: niceSource(d.source),
+      count: d.avg_price || 0,
+    })),
+    { valueKey: "count" }
+  );
+  relabelPriceSourceBars(board, data.price_by_source);
+  renderBars(
+    board.querySelector("#year-bars"),
+    data.by_year.map((d) => ({ label: String(d.year), count: d.count }))
+  );
+  initCarousel(board, ".prices-carousel");
+}
+
+function renderMakesBoard(data) {
+  const board = document.getElementById("makes-board");
+  if (!board) return;
+
+  board.innerHTML = renderCarouselShell(MAKES_SLIDES, {
+    className: "makes-carousel",
+    ariaLabel: "Make views",
+    idPrefix: "makes",
+  });
+
+  board.querySelector('[data-slide-id="top-makes"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Top 20 makes</div>
+    <div id="make-bars" class="bar-chart"></div>
+  </div>`;
+  board.querySelector('[data-slide-id="by-market"]').innerHTML = `<div class="market-grid" id="market-makes"></div>`;
+
+  renderBars(
+    board.querySelector("#make-bars"),
+    data.top_makes.slice(0, 20).map((d) => ({ label: d.make, count: d.count }))
+  );
+  renderMarketMakes(data, board.querySelector("#market-makes"));
+  initCarousel(board, ".makes-carousel");
 }
 
 async function main() {
@@ -274,36 +371,8 @@ async function main() {
   const data = pack.data;
 
   renderMarketsBoard(data);
-
-  renderBars(
-    document.getElementById("price-bars"),
-    data.price_buckets.map((d) => ({ label: d.bucket, count: d.count }))
-  );
-
-  renderBars(
-    document.getElementById("price-source"),
-    data.price_by_source.map((d) => ({
-      label: niceSource(d.source),
-      count: d.avg_price || 0,
-    })),
-    { valueKey: "count" }
-  );
-  // Relabel values as currency in the price-by-source chart
-  document.querySelectorAll("#price-source .bar-val").forEach((el, i) => {
-    const v = data.price_by_source[i]?.avg_price;
-    el.textContent = v ? euro.format(v) : "—";
-  });
-
-  renderBars(
-    document.getElementById("year-bars"),
-    data.by_year.map((d) => ({ label: String(d.year), count: d.count }))
-  );
-  document.getElementById("year-bars").classList.add("dense");
-
-  renderBars(
-    document.getElementById("make-bars"),
-    data.top_makes.slice(0, 20).map((d) => ({ label: d.make, count: d.count }))
-  );
+  renderPricesBoard(data);
+  renderMakesBoard(data);
 
   renderBars(
     document.getElementById("fuel-bars"),
@@ -314,8 +383,6 @@ async function main() {
     document.getElementById("trans-bars"),
     data.by_transmission.map((d) => ({ label: d.label, count: d.count }))
   );
-
-  renderMarketMakes(data);
 
   const meta = document.getElementById("generated-meta");
   const generatedLabel = formatWhen(data.generated_at);
