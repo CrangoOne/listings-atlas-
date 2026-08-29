@@ -226,12 +226,13 @@
       <section id="crawls" class="section crawls">
         <div class="section-head">
           <div class="section-head-copy">
-            <h2>Crawls <span class="crawl-ui-build" title="Asset build id">UI 20260827c</span></h2>
+            <h2>Crawls <span class="crawl-ui-build" title="Asset build id">UI 20260828a</span></h2>
             <p>
               One-tap <strong>Launch all sources</strong> runs a stale-first wave across
-              Willhaben, AutoScout, Kleinanzeigen, and coches.net. Tap
-              <strong>Refresh</strong> to monitor workers. Times are shown in
-              <strong>Wien (CET/CEST)</strong>.
+              Willhaben, AutoScout, Kleinanzeigen, and coches.net. After workers finish,
+              <strong>Update listings</strong> merges CSVs into the car library and
+              refreshes Explore/Sources. Tap <strong>Refresh</strong> to monitor workers.
+              Times are shown in <strong>Wien (CET/CEST)</strong>.
             </p>
           </div>
           <button type="button" class="btn ghost board-refresh" id="crawls-refresh" data-board="crawls">
@@ -245,6 +246,9 @@
             <p class="crawl-hint">
               Launch queues <code>data/pending_wave.json</code> on
               <code>listings-atlas-</code>; an Action forwards it to Cursor.
+              <strong>Update listings</strong> queues
+              <code>data/pending_consolidate.json</code> (needs
+              <code>forward-consolidate.yml</code> on listings-atlas-).
             </p>
             <label class="crawl-launch-field crawl-launch-field--wide">GitHub PAT (listings-atlas-)
               <input id="crawl-github-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_… Contents write" />
@@ -272,6 +276,16 @@
             </label>
             <span id="crawl-wave-summary" class="crawl-wave-summary">Loading sources…</span>
             <button type="button" class="btn primary" id="crawl-wave-launch" disabled>Launch all sources</button>
+          </div>
+          <div class="crawl-launch-toolbar crawl-consolidate-toolbar">
+            <label class="crawl-stale-toggle">
+              <input type="checkbox" id="crawl-consolidate-wave-only" checked />
+              Last wave only
+            </label>
+            <button type="button" class="btn ghost" id="crawl-consolidate">
+              Update listings
+            </button>
+            <span class="crawl-consolidate-hint">Integrate worker CSVs → car library → Atlas KPIs</span>
           </div>
           <p class="crawl-wave-status" id="crawl-wave-status" hidden></p>
 
