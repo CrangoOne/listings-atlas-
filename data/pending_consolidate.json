@@ -1,0 +1,8 @@
+{
+  "kind": "listings-atlas-consolidate",
+  "wave_id": "wave-tst-20260828-2f0w",
+  "all_open": false,
+  "requested_at": "2026-08-31T11:59:49Z",
+  "prompt": "Consolidate Listings Atlas car data and publish KPIs to Pages.\nYou are the consolidate dispatcher. Follow daq/jobs/CONSOLIDATE_AUTOMATION.md.\nDo not ask for confirmation.\nWave filter: `wave-tst-20260828-2f0w` (integrate worker PRs for this wave).\nRun integrate_wave_csvs.py → consolidate_cardata.py → one integration PR → publish_atlas_assets.",
+  "text": "Consolidate Listings Atlas car data and publish KPIs to Pages.\nYou are the consolidate dispatcher. Follow daq/jobs/CONSOLIDATE_AUTOMATION.md.\nDo not ask for confirmation.\nWave filter: `wave-tst-20260828-2f0w` (integrate worker PRs for this wave).\nRun integrate_wave_csvs.py → consolidate_cardata.py → one integration PR → publish_atlas_assets."
+}
