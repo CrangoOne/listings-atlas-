@@ -1,6 +1,27 @@
 {
-  "updated_at": "2026-09-01T17:31:44Z",
+  "updated_at": "2026-09-01T17:33:25Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w1",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20260901-6x1n",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w1-1a84",
+      "makes": [
+        "volkswagen",
+        "jeep",
+        "porsche",
+        "hyundai",
+        "mercedes_benz",
+        "land_rover",
+        "dacia"
+      ],
+      "started_at": "2026-09-01T17:30:54Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-fc3c1bf8-2f8b-5476-8e6b-5ac807364170",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/166"
+    },
     {
       "worker_id": "willhaben_shard-w3",
       "job_id": "willhaben_shard",
@@ -20,26 +41,6 @@
       "started_at": "2026-09-01T17:29:44Z",
       "notes": "Spawned cloud worker",
       "agent_url": "https://cursor.com/agents/bc-db0b8ef6-6ba1-53dd-a88d-147eb80cb1c6"
-    },
-    {
-      "worker_id": "ka_shard-w1",
-      "job_id": "ka_shard",
-      "wave_id": "wave-stale-first-20260901-6x1n",
-      "status": "running",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w1-1a84",
-      "makes": [
-        "volkswagen",
-        "jeep",
-        "porsche",
-        "hyundai",
-        "mercedes_benz",
-        "land_rover",
-        "dacia"
-      ],
-      "started_at": "2026-09-01T17:29:44Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-fc3c1bf8-2f8b-5476-8e6b-5ac807364170"
     },
     {
       "worker_id": "willhaben_shard-w1",
