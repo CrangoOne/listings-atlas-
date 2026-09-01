@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-08-29T02:54:05Z",
+  "updated_at": "2026-09-01T17:17:33Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w5",
+      "status": "running",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20260901-6x1n",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w5-1a84",
+      "agent_url": "https://cursor.com/agents/bc-0538323b-7324-5254-a854-d1543acc0592",
+      "notes": "Running crawl",
+      "makes": [
+        "dacia",
+        "peugeot",
+        "audi",
+        "alfa-romeo",
+        "mini",
+        "hyundai",
+        "byd"
+      ],
+      "started_at": "2026-09-01T17:15:35Z"
+    },
     {
       "worker_id": "coches_shard-w5",
       "job_id": "coches_shard",
