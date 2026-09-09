@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-09T21:11:04Z",
+  "updated_at": "2026-09-09T21:39:37Z",
   "runs": [
     {
       "worker_id": "willhaben_direct",
@@ -18,7 +18,7 @@
       "worker_id": "ka_shard-w1",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20260901-6x1n",
-      "status": "running",
+      "status": "failed",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w1-1a84",
       "makes": [
@@ -31,15 +31,16 @@
         "dacia"
       ],
       "started_at": "2026-09-01T17:30:54Z",
-      "notes": "Running crawl",
+      "notes": "Stale running (196.1h); agent no longer crawling (auto-reconciled as failed) | was: Running crawl",
       "agent_url": "https://cursor.com/agents/bc-fc3c1bf8-2f8b-5476-8e6b-5ac807364170",
-      "pr_url": "https://github.com/CrangoOne/Cursor/pull/166"
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/166",
+      "finished_at": "2026-09-09T21:39:37Z"
     },
     {
       "worker_id": "willhaben_shard-w3",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20260901-6x1n",
-      "status": "running",
+      "status": "failed",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w3-1a84",
       "makes": [
@@ -52,14 +53,15 @@
         "fiat"
       ],
       "started_at": "2026-09-01T17:29:44Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-db0b8ef6-6ba1-53dd-a88d-147eb80cb1c6"
+      "notes": "Stale running (196.2h); agent no longer crawling (auto-reconciled as failed) | was: Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-db0b8ef6-6ba1-53dd-a88d-147eb80cb1c6",
+      "finished_at": "2026-09-09T21:39:37Z"
     },
     {
       "worker_id": "willhaben_shard-w1",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20260901-6x1n",
-      "status": "running",
+      "status": "failed",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w1-1a84",
       "makes": [
@@ -73,14 +75,15 @@
         "tesla"
       ],
       "started_at": "2026-09-01T17:27:45Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-d8b3112e-2ea6-5141-ac1e-cc38d9936def"
+      "notes": "Stale running (196.2h); agent no longer crawling (auto-reconciled as failed) | was: Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-d8b3112e-2ea6-5141-ac1e-cc38d9936def",
+      "finished_at": "2026-09-09T21:39:37Z"
     },
     {
       "worker_id": "willhaben_shard-w2",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20260901-6x1n",
-      "status": "running",
+      "status": "failed",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w2-1a84",
       "makes": [
@@ -94,14 +97,15 @@
         "subaru"
       ],
       "started_at": "2026-09-01T17:16:29Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-2627bde9-2375-587f-b775-8dbe6cc4936a"
+      "notes": "Stale running (196.4h); agent no longer crawling (auto-reconciled as failed) | was: Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-2627bde9-2375-587f-b775-8dbe6cc4936a",
+      "finished_at": "2026-09-09T21:39:37Z"
     },
     {
       "worker_id": "autoscout_shard-w5",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20260901-6x1n",
-      "status": "running",
+      "status": "failed",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w5-1a84",
       "makes": [
@@ -114,8 +118,9 @@
         "byd"
       ],
       "started_at": "2026-09-01T17:16:29Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-0538323b-7324-5254-a854-d1543acc0592"
+      "notes": "Stale running (196.4h); agent no longer crawling (auto-reconciled as failed) | was: Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-0538323b-7324-5254-a854-d1543acc0592",
+      "finished_at": "2026-09-09T21:39:37Z"
     },
     {
       "worker_id": "coches_shard-w3",
@@ -576,7 +581,7 @@
       "worker_id": "ka_shard-w2",
       "job_id": "ka_shard",
       "wave_id": "wave-tst-20260828-2f0w",
-      "status": "running",
+      "status": "failed",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w2-1a84",
       "makes": [
@@ -589,9 +594,10 @@
         "mg"
       ],
       "started_at": "2026-08-28T17:25:16Z",
-      "notes": "Spawned cloud worker",
+      "notes": "Stale running (292.2h); agent no longer crawling (auto-reconciled as failed) | was: Spawned cloud worker",
       "agent_url": "https://cursor.com/agents/bc-2acaa27e-915e-55b1-93a2-279f7b536ac9",
-      "pr_url": "https://github.com/CrangoOne/Cursor/pull/167"
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/167",
+      "finished_at": "2026-09-09T21:39:37Z"
     },
     {
       "worker_id": "ka_shard-w1",
