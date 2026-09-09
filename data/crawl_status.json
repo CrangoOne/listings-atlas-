@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-09T20:35:52Z",
+  "updated_at": "2026-09-09T20:36:27Z",
   "runs": [
     {
       "worker_id": "willhaben_direct",
@@ -8,9 +8,9 @@
       "wave_id": "wave-pat-test-20260909t203514z-5785",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-direct-1a84",
-      "notes": "PAT smoke test — cloud worker spawned",
-      "started_at": "2026-09-09T20:35:51Z",
-      "agent_url": "https://cursor.com/agents/bc-3065bc60-b12f-5a81-85b1-10e0a41a9de4"
+      "agent_url": "https://cursor.com/agents/bc-3065bc60-b12f-5a81-85b1-10e0a41a9de4",
+      "notes": "Running crawl",
+      "started_at": "2026-09-09T20:36:25Z"
     },
     {
       "worker_id": "ka_shard-w1",
