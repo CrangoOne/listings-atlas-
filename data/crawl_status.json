@@ -1,16 +1,18 @@
 {
-  "updated_at": "2026-09-09T20:36:27Z",
+  "updated_at": "2026-09-09T20:40:29Z",
   "runs": [
     {
       "worker_id": "willhaben_direct",
-      "status": "running",
+      "status": "finished",
       "job_id": "willhaben_direct",
       "wave_id": "wave-pat-test-20260909t203514z-5785",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-direct-1a84",
       "agent_url": "https://cursor.com/agents/bc-3065bc60-b12f-5a81-85b1-10e0a41a9de4",
-      "notes": "Running crawl",
-      "started_at": "2026-09-09T20:36:25Z"
+      "notes": "Finished: +3447 rows",
+      "started_at": "2026-09-09T20:36:25Z",
+      "rows_added": 3447,
+      "finished_at": "2026-09-09T20:40:16Z"
     },
     {
       "worker_id": "ka_shard-w1",
