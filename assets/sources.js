@@ -1,5 +1,5 @@
 /** Bumped whenever sources-fetch logic changes. */
-const ASSET_BUILD = "20260827c";
+const ASSET_BUILD = "20260918a";
 
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
@@ -390,7 +390,7 @@ function renderSourceChips(sources) {
     ...SOURCE_ORDER.filter((id) => id in sources),
     ...Object.keys(sources).filter((id) => !SOURCE_ORDER.includes(id)),
   ];
-  return `<div class="kpi-source-chips">${order
+  return order
     .map((id) => {
       const label = escapeHtml(sources[id]?.label || niceSource(id));
       const logo = SOURCE_LOGO[id];
@@ -399,13 +399,18 @@ function renderSourceChips(sources) {
         : "";
       return `<span class="source-chip">${img}<span class="source-chip-name">${label}</span></span>`;
     })
-    .join("")}</div>`;
+    .join("");
+}
+
+function renderSourcesHeadLogos(sources) {
+  const root = document.getElementById("sources-head-logos");
+  if (!root) return;
+  root.innerHTML = renderSourceChips(sources);
 }
 
 function renderSourcesKpis(payload) {
   const root = document.getElementById("sources-kpis");
   if (!root) return;
-  const sources = payload.sources || {};
   const when = formatWhenCompact(payload.generated_at);
   const whenFull = formatWhen(payload.generated_at);
   root.dataset.uiBuild = ASSET_BUILD;
@@ -413,10 +418,6 @@ function renderSourcesKpis(payload) {
     <div class="kpi">
       <span class="label">Listings in pack</span>
       <span class="value">${fmt.format(payload.total || 0)}</span>
-    </div>
-    <div class="kpi kpi--sources">
-      <span class="label">Sources</span>
-      ${renderSourceChips(sources)}
     </div>
     <div class="kpi">
       <span class="label">Pack snapshot</span>
@@ -435,9 +436,10 @@ export async function initSources() {
     const payload = sourcesPack.data;
     if (statusPack?.data) mergeLiveLastCrawls(payload, statusPack.data);
 
+    const sources = payload.sources || {};
+    renderSourcesHeadLogos(sources);
     renderSourcesKpis(payload);
 
-    const sources = payload.sources || {};
     const order = [
       ...SOURCE_ORDER.filter((id) => id in sources),
       ...Object.keys(sources).filter((id) => !SOURCE_ORDER.includes(id)),
@@ -454,6 +456,8 @@ export async function initSources() {
     }
   } catch (err) {
     if (root) root.innerHTML = "";
+    const logos = document.getElementById("sources-head-logos");
+    if (logos) logos.innerHTML = "";
     if (meta) {
       meta.hidden = false;
       meta.textContent = `Could not load sources board: ${err.message}`;
