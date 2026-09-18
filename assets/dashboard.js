@@ -1,6 +1,6 @@
 import { initExplore } from "./explore.js?v=20260821b";
 import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260828a";
-import { initSources } from "./sources.js?v=20260827c";
+import { initSources } from "./sources.js?v=20260918a";
 import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
 
 const fmt = new Intl.NumberFormat("en-US");
