@@ -479,6 +479,32 @@ body {
   background: rgba(23, 35, 58, 0.06);
 }
 
+.db-api-fields {
+  display: grid;
+  gap: 0.75rem;
+  max-width: 36rem;
+  margin: 0 0 1rem;
+}
+
+.db-api-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.db-api-field input {
+  font: inherit;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
 .db-actions {
   display: flex;
   flex-wrap: wrap;
