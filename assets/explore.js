@@ -3,6 +3,9 @@ import {
   buildDecodedCompWhere,
   decodeVin,
   fuelNeedles,
+  makeMatchSet,
+  modelMatchNeedles,
+  modelTokens,
   rowMatchesFuel,
   scoreCompMatch,
   summarizePrices,
@@ -11,13 +14,10 @@ import {
 const PAGE_SIZE = 50;
 const IDB_NAME = "listings-atlas";
 const IDB_STORE = "files";
-const IDB_KEY = "20260815_all_car_listings.db";
-
-const DEFAULT_DB_URLS = [
-  // Prefer the branch/main LFS media endpoint for public repos.
-  "https://media.githubusercontent.com/media/CrangoOne/Cursor/main/daq/merged/20260815_all_car_listings.db",
-  "https://media.githubusercontent.com/media/CrangoOne/Cursor/cursor/atlas-sources-tab-d442/daq/merged/20260815_all_car_listings.db",
-];
+const IDB_KEY = "car_library.db";
+const LS_API_URL = "listings-atlas.queryApiUrl";
+const LS_API_KEY = "listings-atlas.queryApiKey";
+const DEFAULT_API_URL = "https://listings-atlas-query.fly.dev";
 
 const SOURCE_LABEL = {
   willhaben: "Willhaben",
@@ -352,11 +352,117 @@ export function initExplore(summary) {
   const vinStats = document.getElementById("vin-decode-stats");
 
   let db = null;
+  /** @type {{ base: string, key: string } | null} */
+  let apiClient = null;
   let page = 0;
   let lastWhere = { sql: "1=1", params: [], vinQuery: "", mode: "filter" };
   let lastCount = 0;
   let lastVinRanked = null;
   let lastDecoded = null;
+
+  const apiUrlEl = document.getElementById("db-api-url");
+  const apiKeyEl = document.getElementById("db-api-key");
+  if (apiUrlEl && !apiUrlEl.value) {
+    apiUrlEl.value = localStorage.getItem(LS_API_URL) || DEFAULT_API_URL;
+  }
+  if (apiKeyEl && localStorage.getItem(LS_API_KEY) && !apiKeyEl.value) {
+    apiKeyEl.placeholder = "Query key saved on this device";
+  }
+
+  function ready() {
+    return Boolean(db || apiClient);
+  }
+
+  async function apiFetch(pathWithQuery) {
+    if (!apiClient) throw new Error("Not connected to query API");
+    const url = `${apiClient.base}${pathWithQuery}`;
+    const res = await fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "X-Atlas-Key": apiClient.key,
+      },
+      cache: "no-store",
+    });
+    if (!res.ok) {
+      let detail = "";
+      try {
+        detail = (await res.json())?.error || "";
+      } catch {
+        /* ignore */
+      }
+      throw new Error(detail || `HTTP ${res.status}`);
+    }
+    return res.json();
+  }
+
+  function collectFilterParams() {
+    const p = new URLSearchParams();
+    for (const s of combos.source.getValues()) p.append("source", s);
+    const makes = combos.make.getValues();
+    if (makes[0]) p.set("make", makes[0]);
+    const fuels = combos.fuel_type.getValues();
+    if (fuels[0]) p.set("fuel_type", fuels[0]);
+    const transmissions = combos.transmission.getValues();
+    if (transmissions[0]) p.set("transmission", transmissions[0]);
+    const bodies = combos.body_type.getValues();
+    if (bodies[0]) p.set("body_type", bodies[0]);
+    const model = form.model.value.trim();
+    if (model) p.set("model", model);
+    const vin = (form.vin?.value || "").trim();
+    if (vin) p.set("vin", vin);
+    const q = form.q.value.trim();
+    if (q) p.set("q", q);
+    for (const [name, key] of [
+      ["price_min", "price_min"],
+      ["price_max", "price_max"],
+      ["year_min", "year_min"],
+      ["year_max", "year_max"],
+      ["km_min", "km_min"],
+      ["km_max", "km_max"],
+      ["ps_min", "ps_min"],
+      ["ps_max", "ps_max"],
+    ]) {
+      const v = form[name]?.value?.trim();
+      if (v) p.set(key, v);
+    }
+    return p;
+  }
+
+  async function unlockExplore(label) {
+    if (apiClient) {
+      try {
+        const facets = await apiFetch("/v1/facets/makes?limit=120");
+        if (facets.makes?.length) combos.make.setOptions(facets.makes);
+      } catch {
+        /* keep summary facets */
+      }
+    }
+    gate.hidden = true;
+    app.hidden = false;
+    progress.hidden = true;
+    resultMeta.textContent = `${label}. Apply filters to browse rows.`;
+  }
+
+  async function connectApi() {
+    const base = (apiUrlEl?.value || DEFAULT_API_URL).trim().replace(/\/+$/, "");
+    const key = (apiKeyEl?.value || "").trim() || localStorage.getItem(LS_API_KEY) || "";
+    if (!base) throw new Error("Enter the Fly query API URL.");
+    if (!key) throw new Error("Enter ATLAS_QUERY_KEY (Fly secret / Cursor Runtime Secret).");
+    setProgress(0.2, "Connecting to Fly query API…");
+    localStorage.setItem(LS_API_URL, base);
+    localStorage.setItem(LS_API_KEY, key);
+    apiClient = { base, key };
+    db = null;
+    const health = await apiFetch("/v1/health");
+    if (!health.db_ready) {
+      throw new Error("API is up but the library DB is not on the volume yet.");
+    }
+    const meta = await apiFetch("/v1/meta");
+    setProgress(0.9, "Connected…");
+    await unlockExplore(
+      `Connected to Fly · ${fmt.format(meta.total || 0)} listings (${meta.db_file || "DB"})`
+    );
+  }
 
   const combos = {
     source: createCombo(document.querySelector('[data-combo="source"]'), {
@@ -402,7 +508,7 @@ export function initExplore(summary) {
     setProgress(0.95, `Opening ${label}…`);
     const SQL = await loadSqlJs();
     db = new SQL.Database(new Uint8Array(buffer));
-    // refresh make list from DB for completeness
+    apiClient = null;
     try {
       const res = db.exec(
         `SELECT make FROM listings
@@ -413,46 +519,13 @@ export function initExplore(summary) {
     } catch {
       /* ignore */
     }
-    gate.hidden = true;
-    app.hidden = false;
-    progress.hidden = true;
-    resultMeta.textContent = `Loaded ${label}. Apply filters to browse rows.`;
+    await unlockExplore(`Loaded ${label}`);
   }
 
   async function loadLocalFile(file) {
     setProgress(0.05, `Reading ${file.name}…`);
     const buffer = await file.arrayBuffer();
     await openDbFromBuffer(buffer, file.name);
-  }
-
-  async function loadRemote() {
-    setProgress(0.01, "Checking browser cache…");
-    const cached = await idbGet(IDB_KEY).catch(() => null);
-    if (cached) {
-      await openDbFromBuffer(cached, "cached DB");
-      return;
-    }
-
-    let lastErr;
-    for (const url of DEFAULT_DB_URLS) {
-      try {
-        setProgress(0.02, `Downloading from GitHub LFS…`);
-        const buffer = await fetchWithProgress(url, (frac, received, total) => {
-          const mb = (received / 1e6).toFixed(1);
-          const tot = total ? `${(total / 1e6).toFixed(0)} MB` : "? MB";
-          setProgress(Math.min(0.9, frac || received / 4.5e8), `Downloading… ${mb} / ${tot}`);
-        });
-        setProgress(0.92, "Saving to browser cache…");
-        await idbSet(IDB_KEY, buffer).catch(() => {});
-        await openDbFromBuffer(buffer, "GitHub LFS DB");
-        return;
-      } catch (err) {
-        lastErr = err;
-      }
-    }
-    progress.hidden = true;
-    resultMeta.textContent = `Remote load failed: ${lastErr?.message || lastErr}. Use “Load local .db”.`;
-    alert(`Could not load DB from GitHub.\n${lastErr?.message || lastErr}\n\nDownload the file and use “Load local .db”.`);
   }
 
   function buildWhere() {
@@ -588,6 +661,7 @@ export function initExplore(summary) {
     else if (decoded.year_source === "nhtsa") meta.push("year from NHTSA");
     if (decoded.series) meta.push(`series ${decoded.series}`);
     if (decoded.eu_zzz) meta.push("US check-digit N/A");
+    if (decoded.eu_no_year) meta.push("year not encoded (EU)");
     if (decoded.note) meta.push(`note: ${decoded.note}`);
     vinSummary.textContent = `${decoded.vin} → ${bits} · ${meta.join(" · ")}`;
     const euroOr = (v) => (v == null ? "—" : euro.format(v));
@@ -678,17 +752,35 @@ export function initExplore(summary) {
     const params = [...comp.params, ...extraParams];
     lastWhere = { sql, params, vinQuery: "", fullVin, mode: "decode" };
 
-    const selectSql = `SELECT source, ad_id, make, model, year, year_int, price, price_eur,
+    let candidates = [];
+    if (apiClient) {
+      const p = new URLSearchParams();
+      p.set("mode", "comps");
+      p.set("year_tol", String(yearTol));
+      if (decoded.year != null) p.set("decoded_year", String(decoded.year));
+      if (decoded.make) p.set("decoded_make", decoded.make);
+      for (const a of makeMatchSet(decoded.make)) p.append("make_alias", a);
+      for (const t of modelTokens(decoded.model)) p.append("model_token", t);
+      for (const n of modelMatchNeedles(decoded.model)) p.append("model_needle", n);
+      for (const s of sources) p.append("source", s);
+      if (kmMin !== "") p.set("km_min", kmMin);
+      if (kmMax !== "") p.set("km_max", kmMax);
+      if (priceMin !== "") p.set("price_min", priceMin);
+      if (priceMax !== "") p.set("price_max", priceMax);
+      resultMeta.textContent = "Fetching comps from Fly…";
+      const body = await apiFetch(`/v1/listings?${p}`);
+      candidates = body.rows || [];
+    } else {
+      const selectSql = `SELECT source, ad_id, make, model, year, year_int, price, price_eur,
               mileage, mileage_km, power, power_ps, fuel_type, transmission,
               body_type, location, vin, url, title, scraped_at, updated
        FROM listings
        WHERE ${sql}`;
-
-    const stmt = db.prepare(`${selectSql} LIMIT 5000`);
-    if (params.length) stmt.bind(params);
-    const candidates = [];
-    while (stmt.step()) candidates.push(stmt.getAsObject());
-    stmt.free();
+      const stmt = db.prepare(`${selectSql} LIMIT 5000`);
+      if (params.length) stmt.bind(params);
+      while (stmt.step()) candidates.push(stmt.getAsObject());
+      stmt.free();
+    }
 
     let comps = candidates;
     let fuelApplied = false;
@@ -738,7 +830,7 @@ export function initExplore(summary) {
   }
 
   async function runQuery(resetPage = true) {
-    if (!db) return;
+    if (!ready()) return;
     if (resetPage) {
       page = 0;
       lastVinRanked = null;
@@ -753,20 +845,26 @@ export function initExplore(summary) {
     hideVinPanel();
     lastWhere = draft;
 
-    const selectSql = `SELECT source, ad_id, make, model, year, year_int, price, price_eur,
+    // Partial VIN similar-match path: pull candidates, rank by edit distance.
+    if (lastWhere.vinQuery) {
+      if (!lastVinRanked) {
+        let candidates = [];
+        if (apiClient) {
+          const p = collectFilterParams();
+          p.set("mode", "vin_similar");
+          const body = await apiFetch(`/v1/listings?${p}`);
+          candidates = body.rows || [];
+        } else {
+          const selectSql = `SELECT source, ad_id, make, model, year, year_int, price, price_eur,
               mileage, mileage_km, power, power_ps, fuel_type, transmission,
               body_type, location, vin, url, title, scraped_at, updated
        FROM listings
        WHERE ${lastWhere.sql}`;
-
-    // Partial VIN similar-match path: pull candidates, rank by edit distance.
-    if (lastWhere.vinQuery) {
-      if (!lastVinRanked) {
-        const stmt = db.prepare(`${selectSql} LIMIT 3000`);
-        if (lastWhere.params.length) stmt.bind(lastWhere.params);
-        const candidates = [];
-        while (stmt.step()) candidates.push(stmt.getAsObject());
-        stmt.free();
+          const stmt = db.prepare(`${selectSql} LIMIT 3000`);
+          if (lastWhere.params.length) stmt.bind(lastWhere.params);
+          while (stmt.step()) candidates.push(stmt.getAsObject());
+          stmt.free();
+        }
 
         const threshold = vinDistanceThreshold(lastWhere.vinQuery);
         lastVinRanked = candidates
@@ -802,6 +900,32 @@ export function initExplore(summary) {
       document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
       return;
     }
+
+    if (apiClient) {
+      const p = collectFilterParams();
+      p.set("mode", "filter");
+      p.set("page", String(page));
+      p.set("page_size", String(PAGE_SIZE));
+      const body = await apiFetch(`/v1/listings?${p}`);
+      lastCount = body.total || 0;
+      const rows = body.rows || [];
+      const offset = page * PAGE_SIZE;
+      renderRows(rows);
+      const from = lastCount ? offset + 1 : 0;
+      const to = Math.min(offset + PAGE_SIZE, lastCount);
+      resultMeta.textContent = `${fmt.format(lastCount)} matches · showing ${from}–${to}`;
+      pager.hidden = lastCount <= PAGE_SIZE;
+      pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
+      document.getElementById("page-prev").disabled = page <= 0;
+      document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+      return;
+    }
+
+    const selectSql = `SELECT source, ad_id, make, model, year, year_int, price, price_eur,
+              mileage, mileage_km, power, power_ps, fuel_type, transmission,
+              body_type, location, vin, url, title, scraped_at, updated
+       FROM listings
+       WHERE ${lastWhere.sql}`;
 
     const countStmt = db.prepare(`SELECT COUNT(*) AS c FROM listings WHERE ${lastWhere.sql}`);
     if (lastWhere.params.length) countStmt.bind(lastWhere.params);
@@ -939,12 +1063,13 @@ export function initExplore(summary) {
     }
   });
 
-  document.getElementById("db-remote").addEventListener("click", async () => {
+  document.getElementById("db-api-connect")?.addEventListener("click", async () => {
     try {
-      await loadRemote();
+      await connectApi();
     } catch (err) {
       progress.hidden = true;
-      alert(`Remote load failed: ${err.message || err}`);
+      apiClient = null;
+      alert(`Fly connect failed: ${err.message || err}`);
     }
   });
 
@@ -992,16 +1117,27 @@ export function initExplore(summary) {
     }
   });
 
-  // Warm path: if IDB already has the DB, offer one-click resume.
+  // Warm path: if IDB already has a local DB, offer one-click resume.
   idbGet(IDB_KEY)
     .then((cached) => {
       if (!cached || !gate || gate.hidden) return;
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "btn ghost";
-      btn.textContent = "Use cached DB";
+      btn.textContent = "Use cached local DB";
       btn.addEventListener("click", () => openDbFromBuffer(cached, "cached DB"));
       document.querySelector(".db-actions")?.append(btn);
     })
     .catch(() => {});
+
+  // Auto-connect when URL + key are already saved (demo convenience).
+  const savedKey = localStorage.getItem(LS_API_KEY);
+  const savedUrl = localStorage.getItem(LS_API_URL) || DEFAULT_API_URL;
+  if (savedKey && apiUrlEl) {
+    connectApi().catch(() => {
+      /* leave gate open */
+    });
+  } else if (savedUrl && apiUrlEl && !apiUrlEl.value) {
+    apiUrlEl.value = savedUrl;
+  }
 }
