@@ -163,6 +163,37 @@ export const AUDI_EU_TYPE_CODES = {
   FV: { model: "TT" },
 };
 
+/** BMW EU Typschlüssel in VIN positions 4–7 (not VW-style 7–8). */
+export const BMW_WMIS = new Set(["WBA", "WBS", "WBY", "WB1", "WBX"]);
+
+/** BMW EU type codes (positions 4–7). Crawl-validated + Typenschein cases. */
+export const BMW_EU_TYPE_CODES = {
+  "11DZ": { model: "3 Series" },
+  "11EV": { model: "X5" },
+  "11FZ": { model: "3 Series" },
+  "15BZ": { model: "X3" },
+  "15GR": { model: "3 Series" },
+  "21BY": { model: "2 Series" },
+  "21EN": { model: "X7" },
+  "21FL": { model: "5 Series" },
+  "2B31": { model: "2 Series" },
+  "2C11": { model: "2 Series" },
+  "31GV": { model: "5 Series" },
+  "31HR": { model: "X3" },
+  "41EG": { model: "X1" },
+  "41EU": { model: "X5" },
+  "48FU": { model: "3 Series" },
+  "51GN": { model: "2 Series" },
+  "5E71": { model: "5 Series", series: "F10" },
+  "61DP": { model: "X3" },
+  "65GP": { model: "3 Series" },
+  "81CA": { model: "X4" },
+  "8T51": { model: "3 Series" },
+  JM71: { model: "5 Series" },
+  VP31: { model: "X1" },
+  YL11: { model: "X2" },
+};
+
 export const MAKE_ALIASES = {
   BMW: ["BMW"],
   VOLKSWAGEN: ["VOLKSWAGEN", "VW"],
@@ -236,6 +267,33 @@ export function isEuZzzStyleVin(vin) {
 }
 
 /**
+ * EU makers (esp. BMW) use 0 at position 10 — year is not encoded in the VIN.
+ * See bimmerarchiv.de/vin and ISO 3779 EU practice.
+ */
+export function isEuNoYearVin(vin) {
+  const v = String(vin || "").toUpperCase();
+  if (v.length !== 17 || v[9] !== "0") return false;
+  const wmi = v.slice(0, 3);
+  return BMW_WMIS.has(wmi) || Boolean(EU_WMI_MAKE[wmi]) || isLikelyEuVin(v);
+}
+
+/**
+ * Maker-specific EU type-code slice. VW Group uses ZZZ + positions 7–8;
+ * BMW uses Typschlüssel at positions 4–7.
+ */
+export function extractEuTypeCode(vin, make, wmi) {
+  const v = String(vin || "").toUpperCase();
+  const w = wmi || v.slice(0, 3);
+  const m = String(make || EU_WMI_MAKE[w] || "").toUpperCase();
+  if (m === "BMW" || BMW_WMIS.has(w)) return v.slice(3, 7);
+  if (isEuZzzStyleVin(v)) return v.slice(6, 8);
+  if (m === "VOLKSWAGEN" || m === "AUDI" || m === "SKODA" || m === "SEAT" || m === "CUPRA") {
+    return v.slice(6, 8);
+  }
+  return v.slice(6, 8);
+}
+
+/**
  * Model year from VIN position 10 (ISO 3779).
  * Covers 2001–2009 (1–9) and 2010–2030 (A–Y, skipping I/O/Q/U/Z).
  */
@@ -281,15 +339,23 @@ function lookupTypeCode(table, typeCode) {
 export function decodeEuropeanVinLocal(vin) {
   const cleaned = normalizeVinStrict(vin);
   const wmi = cleaned.slice(0, 3);
-  const make = EU_WMI_MAKE[wmi] || null;
-  const typeCode = cleaned.slice(6, 8); // positions 7–8
-  const year = yearFromVinPosition10(cleaned);
-  const likelyEu = isLikelyEuVin(cleaned) || isEuZzzStyleVin(cleaned);
+  const make = EU_WMI_MAKE[wmi] || (BMW_WMIS.has(wmi) ? "BMW" : null);
+  const euNoYear = isEuNoYearVin(cleaned);
+  const typeCode = extractEuTypeCode(cleaned, make, wmi);
+  const year = euNoYear ? null : yearFromVinPosition10(cleaned);
+  const likelyEu =
+    isLikelyEuVin(cleaned) || isEuZzzStyleVin(cleaned) || euNoYear;
   let model = null;
   let series = null;
   let body = null;
 
-  if (make === "VOLKSWAGEN" || make === "SEAT" || make === "CUPRA") {
+  if (make === "BMW") {
+    const hit = lookupTypeCode(BMW_EU_TYPE_CODES, typeCode);
+    if (hit) {
+      model = hit.model;
+      series = hit.series || null;
+    }
+  } else if (make === "VOLKSWAGEN" || make === "SEAT" || make === "CUPRA") {
     const hit = lookupTypeCode(VW_EU_TYPE_CODES, typeCode);
     if (hit) {
       model = hit.model;
@@ -334,6 +400,7 @@ export function decodeEuropeanVinLocal(vin) {
     plant: cleaned[10] || null,
     likely_eu: likelyEu,
     eu_zzz: isEuZzzStyleVin(cleaned),
+    eu_no_year: euNoYear,
     source: "eu_local",
   };
 }
@@ -371,6 +438,20 @@ export const MODEL_FAMILY_ALIASES = {
   PASSAT: ["PASSAT"],
   TIGUAN: ["TIGUAN"],
   POLO: ["POLO"],
+  "5 SERIES": ["5ER", "5 SERIES", "520", "530", "540", "550"],
+  "3 SERIES": ["3ER", "3 SERIES", "320", "330", "318", "340"],
+  "2 SERIES": ["2ER", "2 SERIES", "218", "220", "225"],
+  "4 SERIES": ["4ER", "4 SERIES", "420", "430", "440"],
+  "7 SERIES": ["7ER", "7 SERIES", "730", "740", "750"],
+  "1 SERIES": ["1ER", "1 SERIES", "116", "118", "120"],
+  X1: ["X1"],
+  X2: ["X2"],
+  X3: ["X3"],
+  X4: ["X4"],
+  X5: ["X5"],
+  X6: ["X6"],
+  X7: ["X7"],
+  IX3: ["IX3", "I X3"],
 };
 
 export function modelTokens(model) {
@@ -450,7 +531,11 @@ function splitNhtsaMessages(errorText) {
 }
 
 /** Keep only messages that are not the usual benign NHTSA warnings. */
-export function meaningfulNhtsaNote(errorCode, errorText, { hasMakeModel = true } = {}) {
+export function meaningfulNhtsaNote(
+  errorCode,
+  errorText,
+  { hasMakeModel = true, likelyEu = false, euNoYear = false } = {}
+) {
   const codes = splitNhtsaCodes(errorCode);
   const messages = splitNhtsaMessages(errorText);
   if (!messages.length) return null;
@@ -459,12 +544,18 @@ export function meaningfulNhtsaNote(errorCode, errorText, { hasMakeModel = true 
     const codeMatch = msg.match(/^(\d+)\b/);
     const code = codeMatch ? codeMatch[1] : "";
     if (code && BENIGN_NHTSA_CODES.has(code)) return false;
+    // EU BMW/VW: position 10 = 0 is intentional, not a decode failure.
+    if (code === "11" && (euNoYear || likelyEu)) return false;
     // Text fallbacks when code prefix is missing from a fragment.
     const lower = msg.toLowerCase();
-    if (hasMakeModel) {
+    if (hasMakeModel || likelyEu) {
       if (lower.includes("check digit")) return false;
       if (lower.includes("invalid characters present")) return false;
       if (lower.includes("manufacturer is not registered")) return false;
+    }
+    if (euNoYear || likelyEu) {
+      if (lower.includes("incorrect model year")) return false;
+      if (lower.includes("position 10")) return false;
     }
     if (code === "0" || lower === "0 - vin decoded clean. check digit (9th position) is correct") {
       return false;
@@ -548,8 +639,14 @@ export function mergeVinDecodes(local, nhtsa) {
   const hasMakeModel = Boolean(make && model);
   const error_code = (nhtsa && nhtsa.error_code) || null;
   const error_text = (nhtsa && nhtsa.error_text) || null;
+  const euNoYear = Boolean(
+    (local && local.eu_no_year) || isEuNoYearVin(vin)
+  );
   const likelyEu = Boolean(
-    (local && local.likely_eu) || isLikelyEuVin(vin) || isEuZzzStyleVin(vin)
+    (local && local.likely_eu) ||
+      isLikelyEuVin(vin) ||
+      isEuZzzStyleVin(vin) ||
+      euNoYear
   );
 
   if (!make) {
@@ -587,7 +684,12 @@ export function mergeVinDecodes(local, nhtsa) {
     vehicle_type: (nhtsa && nhtsa.vehicle_type) || null,
     error_code,
     error_text,
-    note: meaningfulNhtsaNote(error_code, error_text, { hasMakeModel }),
+    eu_no_year: euNoYear,
+    note: meaningfulNhtsaNote(error_code, error_text, {
+      hasMakeModel,
+      likelyEu,
+      euNoYear,
+    }),
   };
 }
 
