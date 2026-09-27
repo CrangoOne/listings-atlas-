@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/dashboard.css?v=20260918a" />
+    <link rel="stylesheet" href="assets/dashboard.css?v=20260927a" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
@@ -52,27 +52,49 @@
         <div class="section-head">
           <h2>Explore individual listings</h2>
           <p>
-            Load the consolidated SQLite DB once, then filter listings — or enter
-            a 17-character European or US VIN to decode make/model/year (EU local
-            type codes + NHTSA) and show similar comps.
+            Query the private Fly-hosted library (rows only — no public DB in
+            listings-atlas-), or load a local <code>.db</code> for offline use.
+            Enter a 17-character VIN to decode make/model/year and show comps.
           </p>
         </div>
 
         <div id="db-gate" class="db-gate">
           <p class="db-gate-copy">
-            The full pack is ~690&nbsp;MB (Willhaben · AutoScout · Kleinanzeigen ·
-            coches.net). Prefer loading a local copy of
-            <code>20260815_all_car_listings.db</code> (fast, works offline).
-            Remote GitHub LFS load is optional and can take several minutes.
+            Demo path: connect to the Fly query API with your
+            <code>ATLAS_QUERY_KEY</code>. The ~800&nbsp;MB
+            <code>car_library.db</code> stays private; only filter results are
+            returned. Optional: load a local copy for offline browsing.
           </p>
+          <div class="db-api-fields">
+            <label class="db-api-field">
+              Query API URL
+              <input
+                id="db-api-url"
+                type="url"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="https://listings-atlas-query.fly.dev"
+              />
+            </label>
+            <label class="db-api-field">
+              Atlas query key
+              <input
+                id="db-api-key"
+                type="password"
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="ATLAS_QUERY_KEY"
+              />
+            </label>
+          </div>
           <div class="db-actions">
-            <label class="btn primary file-btn">
+            <button type="button" class="btn primary" id="db-api-connect">
+              Connect to Fly query API
+            </button>
+            <label class="btn ghost file-btn">
               Load local .db
               <input id="db-file" type="file" accept=".db,application/octet-stream" hidden />
             </label>
-            <button type="button" class="btn ghost" id="db-remote">
-              Load from GitHub LFS
-            </button>
           </div>
           <div id="db-progress" class="db-progress" hidden>
             <div class="db-progress-track">
