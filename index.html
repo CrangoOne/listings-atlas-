@@ -14,7 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/dashboard.css?v=20260927a" />
+    <link rel="stylesheet" href="assets/dashboard.css?v=20260929a" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
@@ -106,31 +106,29 @@
 
         <div id="explore-app" class="explore-app" hidden>
           <form id="filter-form" class="filter-form" autocomplete="off">
-            <div class="filter-grid">
-              <label class="field">
-                <span>Source</span>
-                <div class="combo" data-combo="source" data-multiple="true"></div>
-              </label>
+            <div class="filter-essentials">
               <label class="field">
                 <span>Make</span>
                 <div class="combo" data-combo="make"></div>
               </label>
               <label class="field">
-                <span>Model contains</span>
+                <span>Model</span>
                 <input name="model" type="search" placeholder="e.g. Golf" />
               </label>
-              <label class="field">
-                <span>Fuel</span>
-                <div class="combo" data-combo="fuel_type"></div>
-              </label>
-              <label class="field">
-                <span>Transmission</span>
-                <div class="combo" data-combo="transmission"></div>
-              </label>
-              <label class="field">
-                <span>Body type</span>
-                <div class="combo" data-combo="body_type"></div>
-              </label>
+            </div>
+
+            <div id="active-filter-chips" class="active-filter-chips" hidden></div>
+
+            <div class="filter-quick-actions">
+              <button type="button" class="btn ghost" id="more-filters-btn" aria-expanded="false" aria-controls="more-filters">
+                More filters
+              </button>
+              <button type="button" class="btn ghost" id="vin-mode-btn" aria-expanded="false" aria-controls="vin-search-panel">
+                Decode VIN
+              </button>
+            </div>
+
+            <div id="vin-search-panel" class="vin-search-panel" hidden>
               <label class="field">
                 <span>VIN</span>
                 <input
@@ -141,7 +139,7 @@
                   placeholder="17-char VIN → decode comps"
                 />
               </label>
-              <label class="field">
+              <label class="field field-narrow">
                 <span>Year ±</span>
                 <input
                   name="year_tol"
@@ -150,60 +148,88 @@
                   min="0"
                   max="10"
                   value="2"
-                  title="Year tolerance for VIN decode comps (EU default ±2)"
-                />
-              </label>
-              <label class="field wide">
-                <span>Title / location / Ad ID</span>
-                <input
-                  name="q"
-                  type="search"
-                  placeholder="Search text across title, location, ad id"
+                  title="Year tolerance for VIN decode comps"
                 />
               </label>
             </div>
 
-            <div class="range-grid">
-              <fieldset class="range-field">
-                <legend>Price (€)</legend>
-                <div class="range-inputs">
-                  <input name="price_min" type="number" inputmode="decimal" placeholder="Min" />
-                  <span>–</span>
-                  <input name="price_max" type="number" inputmode="decimal" placeholder="Max" />
-                </div>
-              </fieldset>
-              <fieldset class="range-field">
-                <legend>Year</legend>
-                <div class="range-inputs">
-                  <input name="year_min" type="number" inputmode="numeric" placeholder="Min" />
-                  <span>–</span>
-                  <input name="year_max" type="number" inputmode="numeric" placeholder="Max" />
-                </div>
-              </fieldset>
-              <fieldset class="range-field">
-                <legend>Mileage (km)</legend>
-                <div class="range-inputs">
-                  <input name="km_min" type="number" inputmode="numeric" placeholder="Min" />
-                  <span>–</span>
-                  <input name="km_max" type="number" inputmode="numeric" placeholder="Max" />
-                </div>
-              </fieldset>
-              <fieldset class="range-field">
-                <legend>Power (PS)</legend>
-                <div class="range-inputs">
-                  <input name="ps_min" type="number" inputmode="numeric" placeholder="Min" />
-                  <span>–</span>
-                  <input name="ps_max" type="number" inputmode="numeric" placeholder="Max" />
-                </div>
-              </fieldset>
+            <div id="more-filters" class="more-filters" hidden>
+              <div class="filter-grid">
+                <label class="field">
+                  <span>Source</span>
+                  <div class="combo" data-combo="source" data-multiple="true"></div>
+                </label>
+                <label class="field">
+                  <span>Fuel</span>
+                  <div class="combo" data-combo="fuel_type"></div>
+                </label>
+                <label class="field">
+                  <span>Transmission</span>
+                  <div class="combo" data-combo="transmission"></div>
+                </label>
+                <label class="field">
+                  <span>Body type</span>
+                  <div class="combo" data-combo="body_type"></div>
+                </label>
+                <label class="field wide">
+                  <span>Title / location / Ad ID</span>
+                  <input
+                    name="q"
+                    type="search"
+                    placeholder="Search title, location, ad id"
+                  />
+                </label>
+              </div>
+
+              <div class="range-grid">
+                <fieldset class="range-field">
+                  <legend>Price (€)</legend>
+                  <div class="range-inputs">
+                    <input name="price_min" type="number" inputmode="decimal" placeholder="Min" />
+                    <span>–</span>
+                    <input name="price_max" type="number" inputmode="decimal" placeholder="Max" />
+                  </div>
+                </fieldset>
+                <fieldset class="range-field">
+                  <legend>Year</legend>
+                  <div class="range-inputs">
+                    <input name="year_min" type="number" inputmode="numeric" placeholder="Min" />
+                    <span>–</span>
+                    <input name="year_max" type="number" inputmode="numeric" placeholder="Max" />
+                  </div>
+                </fieldset>
+                <fieldset class="range-field">
+                  <legend>Mileage (km)</legend>
+                  <div class="range-inputs">
+                    <input name="km_min" type="number" inputmode="numeric" placeholder="Min" />
+                    <span>–</span>
+                    <input name="km_max" type="number" inputmode="numeric" placeholder="Max" />
+                  </div>
+                </fieldset>
+                <fieldset class="range-field">
+                  <legend>Power (PS)</legend>
+                  <div class="range-inputs">
+                    <input name="ps_min" type="number" inputmode="numeric" placeholder="Min" />
+                    <span>–</span>
+                    <input name="ps_max" type="number" inputmode="numeric" placeholder="Max" />
+                  </div>
+                </fieldset>
+              </div>
             </div>
 
-            <div class="filter-actions">
-              <button type="submit" class="btn primary">Apply filters</button>
+            <div class="filter-actions filter-actions--inline">
+              <button type="submit" class="btn primary" id="apply-filters-btn">Show results</button>
               <button type="reset" class="btn ghost">Reset</button>
-              <p id="result-meta" class="result-meta">DB ready — run a filter to list rows.</p>
+              <p id="result-meta" class="result-meta">Connected — set make or filters, then show results.</p>
             </div>
           </form>
+
+          <div id="explore-sticky-bar" class="explore-sticky-bar" hidden>
+            <button type="reset" form="filter-form" class="btn ghost">Reset</button>
+            <button type="submit" form="filter-form" class="btn primary" id="sticky-apply-btn">
+              Show results
+            </button>
+          </div>
 
           <div id="vin-decode-panel" class="vin-decode-panel" hidden>
             <div class="vin-decode-head">
