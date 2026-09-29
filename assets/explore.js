@@ -228,7 +228,10 @@ async function fetchWithProgress(url, onProgress) {
   return out.buffer;
 }
 
-function createCombo(root, { options = [], multiple = false, placeholder = "Any" } = {}) {
+function createCombo(
+  root,
+  { options = [], multiple = false, placeholder = "Any", onChange = null } = {}
+) {
   root.innerHTML = "";
   root.classList.add("combo-ready");
   const selected = new Set();
@@ -249,6 +252,10 @@ function createCombo(root, { options = [], multiple = false, placeholder = "Any"
   control.append(chips, input);
   root.append(control, list);
 
+  function notify() {
+    onChange?.();
+  }
+
   function renderChips() {
     chips.innerHTML = "";
     for (const value of selected) {
@@ -260,8 +267,10 @@ function createCombo(root, { options = [], multiple = false, placeholder = "Any"
       chip.title = "Remove";
       chip.addEventListener("click", () => {
         selected.delete(value);
+        if (!multiple) input.value = "";
         renderChips();
         renderList();
+        notify();
       });
       chips.append(chip);
     }
@@ -293,6 +302,7 @@ function createCombo(root, { options = [], multiple = false, placeholder = "Any"
         input.value = multiple ? "" : SOURCE_LABEL[opt] ? niceSource(opt) : opt;
         renderChips();
         renderList();
+        notify();
       });
       list.append(btn);
     }
@@ -307,6 +317,7 @@ function createCombo(root, { options = [], multiple = false, placeholder = "Any"
     debounce(() => {
       list.hidden = false;
       renderList();
+      notify();
     }, 80)
   );
   document.addEventListener("click", (e) => {
@@ -324,11 +335,24 @@ function createCombo(root, { options = [], multiple = false, placeholder = "Any"
       const typed = input.value.trim();
       return typed ? [typed] : [];
     },
+    clearValue(value) {
+      if (value == null) {
+        selected.clear();
+        input.value = "";
+      } else {
+        selected.delete(value);
+        if (!multiple && !selected.size) input.value = "";
+      }
+      renderChips();
+      renderList();
+      notify();
+    },
     reset() {
       selected.clear();
       input.value = "";
       renderChips();
       renderList();
+      notify();
     },
   };
 }
@@ -350,6 +374,14 @@ export function initExplore(summary) {
   const vinPanel = document.getElementById("vin-decode-panel");
   const vinSummary = document.getElementById("vin-decode-summary");
   const vinStats = document.getElementById("vin-decode-stats");
+  const activeChipsEl = document.getElementById("active-filter-chips");
+  const moreFiltersEl = document.getElementById("more-filters");
+  const moreFiltersBtn = document.getElementById("more-filters-btn");
+  const vinSearchPanel = document.getElementById("vin-search-panel");
+  const vinModeBtn = document.getElementById("vin-mode-btn");
+  const stickyBar = document.getElementById("explore-sticky-bar");
+  const stickyApplyBtn = document.getElementById("sticky-apply-btn");
+  const applyFiltersBtn = document.getElementById("apply-filters-btn");
 
   let db = null;
   /** @type {{ base: string, key: string } | null} */
@@ -371,6 +403,134 @@ export function initExplore(summary) {
 
   function ready() {
     return Boolean(db || apiClient);
+  }
+
+  function euroChip(n) {
+    const v = Number(n);
+    if (!Number.isFinite(v)) return String(n);
+    return euro.format(v);
+  }
+
+  function syncApplyLabels() {
+    const label =
+      lastCount > 0 ? `Show results (${fmt.format(lastCount)})` : "Show results";
+    if (applyFiltersBtn) applyFiltersBtn.textContent = label;
+    if (stickyApplyBtn) stickyApplyBtn.textContent = label;
+  }
+
+  function renderActiveChips() {
+    if (!activeChipsEl) return;
+    const chips = [];
+    for (const s of combos.source.getValues()) {
+      chips.push({ key: "source", value: s, label: niceSource(s) });
+    }
+    const make = combos.make.getValues()[0];
+    if (make) chips.push({ key: "make", value: make, label: make });
+    const model = form.model.value.trim();
+    if (model) chips.push({ key: "model", value: model, label: `Model: ${model}` });
+    const fuel = combos.fuel_type.getValues()[0];
+    if (fuel) chips.push({ key: "fuel_type", value: fuel, label: fuel });
+    const transmission = combos.transmission.getValues()[0];
+    if (transmission) {
+      chips.push({ key: "transmission", value: transmission, label: transmission });
+    }
+    const body = combos.body_type.getValues()[0];
+    if (body) chips.push({ key: "body_type", value: body, label: body });
+    const q = form.q?.value?.trim();
+    if (q) chips.push({ key: "q", value: q, label: `“${q}”` });
+    const vin = form.vin?.value?.trim();
+    if (vin) chips.push({ key: "vin", value: vin, label: `VIN ${vin}` });
+
+    const priceMin = form.price_min?.value?.trim();
+    const priceMax = form.price_max?.value?.trim();
+    if (priceMin || priceMax) {
+      chips.push({
+        key: "price",
+        value: "",
+        label: `€ ${priceMin ? euroChip(priceMin) : "…"}–${priceMax ? euroChip(priceMax) : "…"}`,
+      });
+    }
+    const yearMin = form.year_min?.value?.trim();
+    const yearMax = form.year_max?.value?.trim();
+    if (yearMin || yearMax) {
+      chips.push({
+        key: "year",
+        value: "",
+        label: `Year ${yearMin || "…"}–${yearMax || "…"}`,
+      });
+    }
+    const kmMin = form.km_min?.value?.trim();
+    const kmMax = form.km_max?.value?.trim();
+    if (kmMin || kmMax) {
+      chips.push({
+        key: "km",
+        value: "",
+        label: `Km ${kmMin || "…"}–${kmMax || "…"}`,
+      });
+    }
+    const psMin = form.ps_min?.value?.trim();
+    const psMax = form.ps_max?.value?.trim();
+    if (psMin || psMax) {
+      chips.push({
+        key: "ps",
+        value: "",
+        label: `PS ${psMin || "…"}–${psMax || "…"}`,
+      });
+    }
+
+    activeChipsEl.hidden = chips.length === 0;
+    activeChipsEl.innerHTML = "";
+    for (const chip of chips) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "active-filter-chip";
+      btn.textContent = `${chip.label} ×`;
+      btn.title = `Clear ${chip.label}`;
+      btn.addEventListener("click", () => {
+        clearActiveChip(chip.key, chip.value);
+        renderActiveChips();
+      });
+      activeChipsEl.append(btn);
+    }
+  }
+
+  function clearActiveChip(key, value) {
+    if (key === "source") combos.source.clearValue(value);
+    else if (key === "make") combos.make.clearValue(value);
+    else if (key === "fuel_type") combos.fuel_type.clearValue(value);
+    else if (key === "transmission") combos.transmission.clearValue(value);
+    else if (key === "body_type") combos.body_type.clearValue(value);
+    else if (key === "model") form.model.value = "";
+    else if (key === "q") form.q.value = "";
+    else if (key === "vin") form.vin.value = "";
+    else if (key === "price") {
+      form.price_min.value = "";
+      form.price_max.value = "";
+    } else if (key === "year") {
+      form.year_min.value = "";
+      form.year_max.value = "";
+    } else if (key === "km") {
+      form.km_min.value = "";
+      form.km_max.value = "";
+    } else if (key === "ps") {
+      form.ps_min.value = "";
+      form.ps_max.value = "";
+    }
+  }
+
+  function setMoreFiltersOpen(open) {
+    if (!moreFiltersEl || !moreFiltersBtn) return;
+    moreFiltersEl.hidden = !open;
+    moreFiltersBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    moreFiltersBtn.textContent = open ? "Hide filters" : "More filters";
+  }
+
+  function setVinPanelOpen(open) {
+    if (!vinSearchPanel || !vinModeBtn) return;
+    vinSearchPanel.hidden = !open;
+    vinModeBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    vinModeBtn.textContent = open ? "Hide VIN" : "Decode VIN";
+    if (open) form.vin?.focus();
   }
 
   async function apiFetch(pathWithQuery) {
@@ -439,8 +599,11 @@ export function initExplore(summary) {
     }
     gate.hidden = true;
     app.hidden = false;
+    if (stickyBar) stickyBar.hidden = false;
     progress.hidden = true;
-    resultMeta.textContent = `${label}. Apply filters to browse rows.`;
+    resultMeta.textContent = `${label}. Set make or filters, then Show results.`;
+    renderActiveChips();
+    syncApplyLabels();
   }
 
   async function connectApi() {
@@ -469,22 +632,27 @@ export function initExplore(summary) {
       options: summary.facets?.source || ["kleinanzeigen", "willhaben", "autoscout"],
       multiple: true,
       placeholder: "All sources",
+      onChange: () => renderActiveChips(),
     }),
     make: createCombo(document.querySelector('[data-combo="make"]'), {
       options: summary.facets?.make || [],
       placeholder: "Search make…",
+      onChange: () => renderActiveChips(),
     }),
     fuel_type: createCombo(document.querySelector('[data-combo="fuel_type"]'), {
       options: summary.facets?.fuel_type || [],
       placeholder: "Search fuel…",
+      onChange: () => renderActiveChips(),
     }),
     transmission: createCombo(document.querySelector('[data-combo="transmission"]'), {
       options: summary.facets?.transmission || [],
       placeholder: "Search transmission…",
+      onChange: () => renderActiveChips(),
     }),
     body_type: createCombo(document.querySelector('[data-combo="body_type"]'), {
       options: summary.facets?.body_type || [],
       placeholder: "Search body…",
+      onChange: () => renderActiveChips(),
     }),
   };
 
@@ -693,6 +861,7 @@ export function initExplore(summary) {
       pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
       document.getElementById("page-prev").disabled = page <= 0;
       document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+      syncApplyLabels();
       return;
     }
 
@@ -827,6 +996,7 @@ export function initExplore(summary) {
     pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
     document.getElementById("page-prev").disabled = page <= 0;
     document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+      syncApplyLabels();
   }
 
   async function runQuery(resetPage = true) {
@@ -898,6 +1068,7 @@ export function initExplore(summary) {
       pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
       document.getElementById("page-prev").disabled = page <= 0;
       document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+      syncApplyLabels();
       return;
     }
 
@@ -918,6 +1089,7 @@ export function initExplore(summary) {
       pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
       document.getElementById("page-prev").disabled = page <= 0;
       document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+      syncApplyLabels();
       return;
     }
 
@@ -952,6 +1124,7 @@ export function initExplore(summary) {
     pageLabel.textContent = `Page ${page + 1} / ${Math.max(1, Math.ceil(lastCount / PAGE_SIZE))}`;
     document.getElementById("page-prev").disabled = page <= 0;
     document.getElementById("page-next").disabled = offset + PAGE_SIZE >= lastCount;
+      syncApplyLabels();
   }
 
   function listingUrl(row) {
@@ -1073,22 +1246,50 @@ export function initExplore(summary) {
     }
   });
 
+  moreFiltersBtn?.addEventListener("click", () => {
+    setMoreFiltersOpen(Boolean(moreFiltersEl?.hidden));
+  });
+  vinModeBtn?.addEventListener("click", () => {
+    setVinPanelOpen(Boolean(vinSearchPanel?.hidden));
+  });
+
+  form.addEventListener(
+    "input",
+    debounce(() => {
+      renderActiveChips();
+    }, 100)
+  );
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    runQuery(true).catch((err) => {
-      console.error(err);
-      resultMeta.textContent = `Query failed: ${err.message || err}`;
-    });
+    setMoreFiltersOpen(false);
+    runQuery(true)
+      .then(() => {
+        syncApplyLabels();
+        document.getElementById("results-table")?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        resultMeta.textContent = `Query failed: ${err.message || err}`;
+      });
   });
 
   form.addEventListener("reset", () => {
     Object.values(combos).forEach((c) => c.reset());
     lastVinRanked = null;
+    lastCount = 0;
     hideVinPanel();
+    setVinPanelOpen(false);
+    setMoreFiltersOpen(false);
     setTimeout(() => {
       tbody.innerHTML = `<tr class="empty-row"><td colspan="11">Filters cleared.</td></tr>`;
-      resultMeta.textContent = "Filters reset — apply again to search.";
+      resultMeta.textContent = "Filters reset — show results to search again.";
       pager.hidden = true;
+      renderActiveChips();
+      syncApplyLabels();
     }, 0);
   });
 
