@@ -243,6 +243,7 @@ function createCombo(
   input.type = "search";
   input.placeholder = placeholder;
   input.setAttribute("aria-autocomplete", "list");
+  input.setAttribute("autocomplete", "off");
   const chips = document.createElement("div");
   chips.className = "combo-chips";
   const list = document.createElement("div");
@@ -252,8 +253,16 @@ function createCombo(
   control.append(chips, input);
   root.append(control, list);
 
+  function labelFor(value) {
+    return SOURCE_LABEL[value] ? niceSource(value) : String(value);
+  }
+
   function notify() {
     onChange?.();
+  }
+
+  function syncFilledClass() {
+    control.classList.toggle("has-selection", selected.size > 0);
   }
 
   function renderChips() {
@@ -262,18 +271,47 @@ function createCombo(
       const chip = document.createElement("button");
       chip.type = "button";
       chip.className = "combo-chip";
-      chip.textContent = niceSource(value) === value ? value : niceSource(value);
-      if (SOURCE_LABEL[value]) chip.textContent = niceSource(value);
-      chip.title = "Remove";
-      chip.addEventListener("click", () => {
+      chip.textContent = `${labelFor(value)} ×`;
+      chip.title = `Clear ${labelFor(value)}`;
+      chip.addEventListener("pointerdown", (e) => {
+        // Avoid label/input focus stealing the clear tap on mobile.
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      chip.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         selected.delete(value);
         if (!multiple) input.value = "";
+        input.placeholder = placeholder;
         renderChips();
         renderList();
+        syncFilledClass();
         notify();
       });
       chips.append(chip);
     }
+    syncFilledClass();
+  }
+
+  function pickOption(opt) {
+    if (multiple) {
+      if (selected.has(opt)) selected.delete(opt);
+      else selected.add(opt);
+      input.value = "";
+      input.placeholder = placeholder;
+    } else {
+      selected.clear();
+      selected.add(opt);
+      // Show the choice as a chip; keep the search box free to change it.
+      input.value = "";
+      input.placeholder = "Change…";
+      list.hidden = true;
+    }
+    renderChips();
+    if (multiple) renderList();
+    syncFilledClass();
+    notify();
   }
 
   function renderList() {
@@ -281,7 +319,12 @@ function createCombo(
     filtered = options.filter((o) => String(o).toLowerCase().includes(q));
     list.innerHTML = "";
     if (!filtered.length) {
-      list.innerHTML = `<div class="combo-empty">No matches</div>`;
+      const empty = document.createElement("div");
+      empty.className = "combo-empty";
+      empty.textContent = options.length
+        ? "No matches"
+        : "No options loaded yet — connect/API makes list empty";
+      list.append(empty);
       return;
     }
     for (const opt of filtered.slice(0, 80)) {
@@ -289,20 +332,12 @@ function createCombo(
       btn.type = "button";
       btn.className = "combo-option";
       if (selected.has(opt)) btn.classList.add("is-selected");
-      btn.textContent = SOURCE_LABEL[opt] ? niceSource(opt) : opt;
-      btn.addEventListener("click", () => {
-        if (multiple) {
-          if (selected.has(opt)) selected.delete(opt);
-          else selected.add(opt);
-        } else {
-          selected.clear();
-          selected.add(opt);
-          list.hidden = true;
-        }
-        input.value = multiple ? "" : SOURCE_LABEL[opt] ? niceSource(opt) : opt;
-        renderChips();
-        renderList();
-        notify();
+      btn.textContent = labelFor(opt);
+      // pointerdown+preventDefault: commit before input blur kills the tap on iOS.
+      btn.addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        pickOption(opt);
       });
       list.append(btn);
     }
@@ -315,12 +350,23 @@ function createCombo(
   input.addEventListener(
     "input",
     debounce(() => {
+      // Native clear (×) on type=search empties the field — clear selection too.
+      if (!input.value.trim()) {
+        if (!multiple) selected.clear();
+      } else if (!multiple && selected.size) {
+        // Typing a new query means user is changing the make — drop old pick
+        // unless it still exactly matches.
+        const cur = labelFor([...selected][0]).toLowerCase();
+        if (input.value.trim().toLowerCase() !== cur) selected.clear();
+      }
       list.hidden = false;
+      renderChips();
       renderList();
+      syncFilledClass();
       notify();
     }, 80)
   );
-  document.addEventListener("click", (e) => {
+  document.addEventListener("pointerdown", (e) => {
     if (!root.contains(e.target)) list.hidden = true;
   });
 
@@ -345,13 +391,16 @@ function createCombo(
       }
       renderChips();
       renderList();
+      syncFilledClass();
       notify();
     },
     reset() {
       selected.clear();
       input.value = "";
+      input.placeholder = placeholder;
       renderChips();
       renderList();
+      syncFilledClass();
       notify();
     },
   };
