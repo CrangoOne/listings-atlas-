@@ -1,7 +1,83 @@
-import { initExplore } from "./explore.js?v=20260929b";
+import { initExplore } from "./explore.js?v=20261002a";
 import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260828a";
-import { initSources } from "./sources.js?v=20260918a";
+import { initSources } from "./sources.js?v=20261002a";
 import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
+
+/** Primary panels — Insights is the default landing surface. */
+const PANEL_IDS = ["insights", "library", "crawls"];
+const HASH_ALIASES = {
+  top: "insights",
+  insights: "insights",
+  sources: "insights",
+  markets: "insights",
+  prices: "insights",
+  makes: "insights",
+  about: "insights",
+  data: "insights",
+  library: "library",
+  explore: "library",
+  crawls: "crawls",
+};
+
+function resolvePanelFromHash(hash) {
+  const raw = String(hash || "")
+    .replace(/^#/, "")
+    .split(/[/?&]/)[0]
+    .toLowerCase();
+  if (!raw) return "insights";
+  return HASH_ALIASES[raw] || (PANEL_IDS.includes(raw) ? raw : "insights");
+}
+
+function refreshPanelMedia(panel) {
+  if (!panel) return;
+  panel.querySelectorAll(".sources-carousel, .dashboard-carousel, .crawl-sources-carousel").forEach((carousel) => {
+    const track = carousel.querySelector(".carousel-track");
+    if (!track) return;
+    const activeTab = carousel.querySelector(".carousel-tab.is-active");
+    const idx = activeTab ? Number(activeTab.dataset.index) || 0 : 0;
+    // Force layout after display:none → block so flex 100% slides regain width.
+    void track.offsetWidth;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+  });
+  panel.querySelectorAll(".bar-fill[data-width]").forEach((fill) => {
+    fill.style.width = `${fill.dataset.width}%`;
+  });
+}
+
+function showPanel(panelId, { syncHash = true } = {}) {
+  const id = PANEL_IDS.includes(panelId) ? panelId : "insights";
+  document.querySelectorAll(".panel[data-panel]").forEach((el) => {
+    el.classList.toggle("is-active", el.dataset.panel === id);
+  });
+  document.querySelectorAll(".panel-nav a[data-panel]").forEach((a) => {
+    const active = a.dataset.panel === id;
+    a.classList.toggle("is-active", active);
+    if (active) a.setAttribute("aria-current", "page");
+    else a.removeAttribute("aria-current");
+  });
+  if (syncHash) {
+    const next = `#${id}`;
+    if (location.hash !== next) {
+      history.replaceState(null, "", next);
+    }
+  }
+  requestAnimationFrame(() => {
+    refreshPanelMedia(document.querySelector(`.panel[data-panel="${id}"]`));
+  });
+}
+
+function initPanelNav() {
+  document.querySelectorAll(".panel-nav a[data-panel]").forEach((a) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      showPanel(a.dataset.panel);
+    });
+  });
+  window.addEventListener("hashchange", () => {
+    showPanel(resolvePanelFromHash(location.hash), { syncHash: false });
+  });
+  showPanel(resolvePanelFromHash(location.hash));
+}
 
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
@@ -385,9 +461,13 @@ async function main() {
   );
 
   const meta = document.getElementById("generated-meta");
-  const generatedLabel = formatWhen(data.generated_at);
-  meta.textContent = `Summary generated ${generatedLabel} (${TZ_HINT}) from ${data.db_file} · ${fmt.format(data.total)} listings`;
+  if (meta) {
+    const generatedLabel = formatWhen(data.generated_at);
+    meta.textContent = `${fmt.format(data.total)} listings · ${generatedLabel} (${TZ_HINT})`;
+    meta.title = `from ${data.db_file}`;
+  }
 
+  initPanelNav();
   initExplore(data);
   initSources();
   initCrawls();
@@ -416,6 +496,7 @@ function wireBoardRefresh() {
 
 main().catch((err) => {
   const meta = document.getElementById("generated-meta");
-  meta.textContent = `Could not load dashboard data: ${err.message}`;
+  if (meta) meta.textContent = `Could not load dashboard data: ${err.message}`;
+  initPanelNav();
   console.error(err);
 });
