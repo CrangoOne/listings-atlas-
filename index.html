@@ -14,57 +14,76 @@
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Figtree:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/dashboard.css?v=20260929b" />
+    <link rel="stylesheet" href="assets/dashboard.css?v=20261002c" />
   </head>
   <body>
     <div class="atmosphere" aria-hidden="true"></div>
 
     <header class="site-nav">
-      <a class="brand-mark" href="#top">Listings Atlas</a>
-      <nav>
-        <a href="#sources">Sources</a>
-        <a href="#explore">Explore</a>
-        <a href="#crawls">Crawls</a>
-        <a href="#markets">Markets</a>
-        <a href="#prices">Prices</a>
-        <a href="#makes">Makes</a>
-        <a href="#about">Data</a>
+      <a class="brand-mark" href="#insights">Listings Atlas</a>
+      <nav class="panel-nav" aria-label="Primary">
+        <a href="#insights" data-panel="insights">Insights</a>
+        <a href="#library" data-panel="library">Library</a>
+        <a href="#crawls" data-panel="crawls">Crawls</a>
       </nav>
     </header>
 
     <main id="top">
-      <section id="sources" class="section sources">
-        <div class="section-head sources-head">
-          <div class="section-head-copy">
-            <h2>Sources</h2>
-            <div class="sources-head-logos" id="sources-head-logos" aria-label="Marketplace sources"></div>
-          </div>
+      <!-- Default panel -->
+      <section id="insights" class="panel section insights is-active" data-panel="insights">
+        <div class="section-head panel-head">
+          <h2>Insights</h2>
           <button type="button" class="btn ghost board-refresh" id="sources-refresh" data-board="sources">
             Refresh
           </button>
         </div>
-        <div class="kpi-row" id="sources-kpis"></div>
-        <p class="sources-meta" id="sources-meta" hidden></p>
-        <div id="sources-board" class="sources-board"></div>
-      </section>
 
-      <section id="explore" class="section explore">
-        <div class="section-head">
-          <h2>Explore individual listings</h2>
-          <p>
-            Query the private Fly-hosted library (rows only — no public DB in
-            listings-atlas-), or load a local <code>.db</code> for offline use.
-            Enter a 17-character VIN to decode make/model/year and show comps.
-          </p>
+        <div class="insights-kpis">
+          <div class="kpi-row" id="sources-kpis"></div>
+          <div class="sources-head-logos" id="sources-head-logos" aria-label="Marketplace sources"></div>
+        </div>
+        <p class="sources-meta" id="sources-meta" hidden></p>
+
+        <div class="insights-grid">
+          <div class="insights-block" id="markets">
+            <h3 class="insights-block-title">Sources</h3>
+            <div id="markets-board"></div>
+          </div>
+          <div class="insights-block" id="prices">
+            <h3 class="insights-block-title">Prices</h3>
+            <div id="prices-board"></div>
+          </div>
+          <div class="insights-block" id="makes">
+            <h3 class="insights-block-title">Makes</h3>
+            <div id="makes-board"></div>
+          </div>
+          <div class="insights-block twin-block">
+            <div class="chart-block">
+              <div class="chart-label">Fuel type</div>
+              <div id="fuel-bars" class="bar-chart"></div>
+            </div>
+            <div class="chart-block">
+              <div class="chart-label">Transmission</div>
+              <div id="trans-bars" class="bar-chart"></div>
+            </div>
+          </div>
         </div>
 
-        <div id="db-gate" class="db-gate">
-          <p class="db-gate-copy">
-            Demo path: connect to the Fly query API with your
-            <code>ATLAS_QUERY_KEY</code>. The ~800&nbsp;MB
-            <code>car_library.db</code> stays private; only filter results are
-            returned. Optional: load a local copy for offline browsing.
-          </p>
+        <div class="insights-quality" id="sources">
+          <div class="section-head panel-head panel-head--sub">
+            <h3>Source quality</h3>
+          </div>
+          <div id="sources-board" class="sources-board"></div>
+        </div>
+      </section>
+
+      <section id="library" class="panel section explore" data-panel="library">
+        <div class="section-head panel-head">
+          <h2>Library</h2>
+        </div>
+
+        <div id="db-gate" class="db-gate db-gate--compact">
+          <p class="db-gate-hint">Connect to query listings, or load a local <code>.db</code>.</p>
           <div class="db-api-fields">
             <label class="db-api-field">
               Query API URL
@@ -89,7 +108,7 @@
           </div>
           <div class="db-actions">
             <button type="button" class="btn primary" id="db-api-connect">
-              Connect to Fly query API
+              Connect
             </button>
             <label class="btn ghost file-btn">
               Load local .db
@@ -233,7 +252,7 @@
 
           <div id="vin-decode-panel" class="vin-decode-panel" hidden>
             <div class="vin-decode-head">
-              <h3>VIN decode (EU + NHTSA) → similar comps</h3>
+              <h3>VIN decode → comps</h3>
               <p id="vin-decode-summary" class="vin-decode-summary"></p>
             </div>
             <div id="vin-decode-stats" class="vin-decode-stats"></div>
@@ -272,18 +291,9 @@
         </div>
       </section>
 
-      <section id="crawls" class="section crawls">
-        <div class="section-head">
-          <div class="section-head-copy">
-            <h2>Crawls <span class="crawl-ui-build" title="Asset build id">UI 20260828a</span></h2>
-            <p>
-              One-tap <strong>Launch all sources</strong> runs a stale-first wave across
-              Willhaben, AutoScout, Kleinanzeigen, and coches.net. After workers finish,
-              <strong>Update listings</strong> merges CSVs into the car library and
-              refreshes Explore/Sources. Tap <strong>Refresh</strong> to monitor workers.
-              Times are shown in <strong>Wien (CET/CEST)</strong>.
-            </p>
-          </div>
+      <section id="crawls" class="panel section crawls" data-panel="crawls">
+        <div class="section-head panel-head">
+          <h2>Crawls</h2>
           <button type="button" class="btn ghost board-refresh" id="crawls-refresh" data-board="crawls">
             Refresh
           </button>
@@ -291,14 +301,7 @@
 
         <div class="crawl-launch-panel">
           <details class="crawl-automation-settings" id="crawl-automation-settings">
-            <summary>Automation credentials (once per browser)</summary>
-            <p class="crawl-hint">
-              Launch queues <code>data/pending_wave.json</code> on
-              <code>listings-atlas-</code>; an Action forwards it to Cursor.
-              <strong>Update listings</strong> queues
-              <code>data/pending_consolidate.json</code> (needs
-              <code>forward-consolidate.yml</code> on listings-atlas-).
-            </p>
+            <summary>Automation credentials</summary>
             <label class="crawl-launch-field crawl-launch-field--wide">GitHub PAT (listings-atlas-)
               <input id="crawl-github-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_… Contents write" />
             </label>
@@ -334,7 +337,6 @@
             <button type="button" class="btn ghost" id="crawl-consolidate">
               Update listings
             </button>
-            <span class="crawl-consolidate-hint">Integrate worker CSVs → car library → Atlas KPIs</span>
           </div>
           <p class="crawl-wave-status" id="crawl-wave-status" hidden></p>
 
@@ -366,7 +368,7 @@
           </table>
         </div>
         <p class="crawl-empty" id="crawl-empty" hidden>
-          No crawls recorded yet. Launch a wave above, then Refresh to watch progress.
+          No crawls recorded yet. Launch a wave above, then Refresh.
         </p>
       </section>
 
@@ -379,69 +381,13 @@
           <div id="row-dialog-body" class="row-dialog-body"></div>
         </form>
       </dialog>
-
-      <section id="markets" class="section">
-        <div class="section-head">
-          <h2>Where the inventory sits</h2>
-        </div>
-        <div id="markets-board"></div>
-      </section>
-
-      <section id="prices" class="section">
-        <div class="section-head">
-          <h2>Price landscape</h2>
-        </div>
-        <div id="prices-board"></div>
-      </section>
-
-      <section id="makes" class="section">
-        <div class="section-head">
-          <h2>Makes that dominate</h2>
-        </div>
-        <div id="makes-board"></div>
-      </section>
-
-      <section class="section twin">
-        <div class="chart-block">
-          <div class="chart-label">Fuel type</div>
-          <div id="fuel-bars" class="bar-chart"></div>
-        </div>
-        <div class="chart-block">
-          <div class="chart-label">Transmission</div>
-          <div id="trans-bars" class="bar-chart"></div>
-        </div>
-      </section>
-
-      <section id="about" class="section about">
-        <div class="section-head">
-          <h2>How interactivity works on GitHub</h2>
-          <p>
-            Overview charts use a tiny <code>summary.json</code>. Row-level
-            explore uses <code>sql.js</code> against the consolidated
-            <code>.db</code> in your browser.
-          </p>
-        </div>
-        <div class="about-copy">
-          <p>
-            <strong>GitHub Pages</strong> can host this HTML. Enable Pages from
-            the <code>docs/</code> folder.
-          </p>
-          <p>
-            <strong>Full DB from GitHub:</strong> possible via Git LFS, but
-            ~690&nbsp;MB. Local file load is the reliable path; remote load is
-            available as a fallback and is cached in IndexedDB after the first
-            success.
-          </p>
-          <p class="meta" id="generated-meta">Loading summary…</p>
-        </div>
-      </section>
     </main>
 
     <footer class="site-foot">
       <span>Listings Atlas</span>
-      <span>Willhaben · AutoScout24 · Kleinanzeigen</span>
+      <span id="generated-meta">Loading summary…</span>
     </footer>
 
-    <script src="assets/dashboard.js?v=20260918a" type="module"></script>
+    <script src="assets/dashboard.js?v=20261002c" type="module"></script>
   </body>
 </html>
