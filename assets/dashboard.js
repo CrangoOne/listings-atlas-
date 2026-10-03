@@ -1,6 +1,6 @@
 import { initExplore } from "./explore.js?v=20261002a";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20260828a";
-import { initSources } from "./sources.js?v=20261002a";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20261003a";
+import { initSources } from "./sources.js?v=20261003a";
 import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
 
 /** Primary panels — Insights is the default landing surface. */
@@ -30,16 +30,7 @@ function resolvePanelFromHash(hash) {
 
 function refreshPanelMedia(panel) {
   if (!panel) return;
-  panel.querySelectorAll(".sources-carousel, .dashboard-carousel, .crawl-sources-carousel").forEach((carousel) => {
-    const track = carousel.querySelector(".carousel-track");
-    if (!track) return;
-    const activeTab = carousel.querySelector(".carousel-tab.is-active");
-    const idx = activeTab ? Number(activeTab.dataset.index) || 0 : 0;
-    // Force layout after display:none → block so flex 100% slides regain width.
-    void track.offsetWidth;
-    track.style.transform = `translateX(-${idx * 100}%)`;
-  });
-  panel.querySelectorAll(".bar-fill[data-width]").forEach((fill) => {
+  panel.querySelectorAll(".carousel-slide.is-active .bar-fill[data-width]").forEach((fill) => {
     fill.style.width = `${fill.dataset.width}%`;
   });
 }
@@ -246,7 +237,15 @@ function initCarousel(root, carouselSelector) {
   function goTo(index) {
     if (!slideCount) return;
     current = ((index % slideCount) + slideCount) % slideCount;
-    track.style.transform = `translateX(-${current * 100}%)`;
+    // Show/hide slides so viewport height matches the active slide only
+    // (transform carousels sized to the tallest slide and left empty gaps on mobile).
+    [...track.children].forEach((slide, idx) => {
+      const active = idx === current;
+      slide.classList.toggle("is-active", active);
+      slide.hidden = !active;
+      slide.setAttribute("aria-hidden", active ? "false" : "true");
+    });
+    track.style.transform = "";
 
     tabs.forEach((tab, idx) => {
       const active = idx === current;
