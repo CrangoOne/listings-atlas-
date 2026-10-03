@@ -1498,16 +1498,22 @@ body {
 }
 
 .carousel-track {
-  display: flex;
-  transition: transform 0.35s ease;
-  will-change: transform;
+  display: block;
 }
 
 .carousel-slide {
-  flex: 0 0 100%;
+  display: none;
   width: 100%;
-  min-width: 100%;
+  min-width: 0;
   box-sizing: border-box;
+}
+
+.carousel-slide.is-active {
+  display: block;
+}
+
+.carousel-slide[hidden] {
+  display: none !important;
 }
 
 .carousel-dots {
