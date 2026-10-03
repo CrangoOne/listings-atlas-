@@ -170,6 +170,8 @@ const PRICES_SLIDES = [
 const MAKES_SLIDES = [
   { id: "top-makes", label: "Top makes" },
   { id: "by-market", label: "By market" },
+  { id: "fuel", label: "Fuel" },
+  { id: "transmission", label: "Transmission" },
 ];
 
 function renderCarouselShell(slides, { className, ariaLabel, idPrefix }) {
@@ -423,7 +425,7 @@ function renderMakesBoard(data) {
 
   board.innerHTML = renderCarouselShell(MAKES_SLIDES, {
     className: "makes-carousel",
-    ariaLabel: "Make views",
+    ariaLabel: "Make and drivetrain views",
     idPrefix: "makes",
   });
 
@@ -432,12 +434,28 @@ function renderMakesBoard(data) {
     <div id="make-bars" class="bar-chart"></div>
   </div>`;
   board.querySelector('[data-slide-id="by-market"]').innerHTML = `<div class="market-grid" id="market-makes"></div>`;
+  board.querySelector('[data-slide-id="fuel"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Fuel type</div>
+    <div id="fuel-bars" class="bar-chart"></div>
+  </div>`;
+  board.querySelector('[data-slide-id="transmission"]').innerHTML = `<div class="chart-block">
+    <div class="chart-label">Transmission</div>
+    <div id="trans-bars" class="bar-chart"></div>
+  </div>`;
 
   renderBars(
     board.querySelector("#make-bars"),
     data.top_makes.slice(0, 20).map((d) => ({ label: d.make, count: d.count }))
   );
   renderMarketMakes(data, board.querySelector("#market-makes"));
+  renderBars(
+    board.querySelector("#fuel-bars"),
+    data.by_fuel.map((d) => ({ label: d.label, count: d.count }))
+  );
+  renderBars(
+    board.querySelector("#trans-bars"),
+    data.by_transmission.map((d) => ({ label: d.label, count: d.count }))
+  );
   initCarousel(board, ".makes-carousel");
 }
 
@@ -448,16 +466,6 @@ async function main() {
   renderMarketsBoard(data);
   renderPricesBoard(data);
   renderMakesBoard(data);
-
-  renderBars(
-    document.getElementById("fuel-bars"),
-    data.by_fuel.map((d) => ({ label: d.label, count: d.count }))
-  );
-
-  renderBars(
-    document.getElementById("trans-bars"),
-    data.by_transmission.map((d) => ({ label: d.label, count: d.count }))
-  );
 
   const meta = document.getElementById("generated-meta");
   if (meta) {
