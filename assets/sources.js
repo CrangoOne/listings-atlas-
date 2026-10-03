@@ -1,5 +1,5 @@
 /** Bumped whenever sources-fetch logic changes. */
-const ASSET_BUILD = "20261002a";
+const ASSET_BUILD = "20261003a";
 
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
@@ -273,7 +273,7 @@ function renderSourcesCarousel(order, sources) {
       </div>
     </div>
     <div class="carousel-viewport">
-      <div class="carousel-track" style="transform: translateX(0%)">${slides}</div>
+      <div class="carousel-track">${slides}</div>
     </div>
     <div class="carousel-dots" role="group" aria-label="Source slides">${dots}</div>
   </div>`;
@@ -351,7 +351,13 @@ function initSourcesCarousel(root) {
   function goTo(index) {
     if (!slideCount) return;
     current = ((index % slideCount) + slideCount) % slideCount;
-    track.style.transform = `translateX(-${current * 100}%)`;
+    [...track.children].forEach((slide, idx) => {
+      const active = idx === current;
+      slide.classList.toggle("is-active", active);
+      slide.hidden = !active;
+      slide.setAttribute("aria-hidden", active ? "false" : "true");
+    });
+    track.style.transform = "";
 
     tabs.forEach((tab, idx) => {
       const active = idx === current;
