@@ -20,7 +20,7 @@ import {
 import { formatWhen, formatWhenHtml, TZ_HINT } from "./time_display.js?v=20260827a";
 
 /** Bumped whenever status-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20260828a";
+const ASSET_BUILD = "20261003a";
 
 const STATUS_ORDER = ["running", "unspawned", "queued", "failed", "finished", "cancelled"];
 const DEFAULT_FRESH_HOURS = 168;
@@ -332,7 +332,13 @@ function initCrawlCarousel(root) {
   function goTo(index) {
     if (!slideCount) return;
     current = ((index % slideCount) + slideCount) % slideCount;
-    track.style.transform = `translateX(-${current * 100}%)`;
+    [...track.children].forEach((slide, idx) => {
+      const active = idx === current;
+      slide.classList.toggle("is-active", active);
+      slide.hidden = !active;
+      slide.setAttribute("aria-hidden", active ? "false" : "true");
+    });
+    track.style.transform = "";
     tabs.forEach((tab, idx) => {
       const active = idx === current;
       tab.classList.toggle("is-active", active);
