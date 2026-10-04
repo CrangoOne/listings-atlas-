@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T20:10:43Z",
+  "updated_at": "2026-10-04T20:11:00Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
@@ -85,7 +85,8 @@
       "agent_url": "https://cursor.com/agents/bc-e7e35e91-eba6-5bb9-95cb-510879117983",
       "rows_added": 35788,
       "rows_total": 126433,
-      "finished_at": "2026-10-04T20:10:35Z"
+      "finished_at": "2026-10-04T20:10:35Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/226"
     },
     {
       "worker_id": "ka_shard-w2",
