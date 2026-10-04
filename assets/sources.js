@@ -1,5 +1,5 @@
 /** Bumped whenever sources-fetch logic changes. */
-const ASSET_BUILD = "20261003a";
+const ASSET_BUILD = "20261004a";
 
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
@@ -27,14 +27,14 @@ const QUALITY_PAGE_SIZE = 6;
  * generated_at across candidates (mirrors crawl board fetch logic).
  */
 const LIVE_SOURCES_URLS = [
-  "data/sources_summary.json",
   "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/sources_summary.json",
+  "data/sources_summary.json",
 ];
 
 /** Live crawl status — merged into last_crawl on every refresh. */
 const LIVE_STATUS_URLS = [
-  "data/crawl_status.json",
   "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_status.json",
+  "data/crawl_status.json",
 ];
 
 const fmt = new Intl.NumberFormat("en-US");
