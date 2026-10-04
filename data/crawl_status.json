@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:48:58Z",
+  "updated_at": "2026-10-04T16:49:00Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -354,11 +354,12 @@
         "mini"
       ],
       "started_at": "2026-10-04T16:33:11Z",
-      "notes": "Finished: +12236 rows (VW 7986, Renault 1733, Citroen 1117, Porsche 577, Land Rover 426, MINI 321, Lexus 76). 39/39 facets exhausted in 664s (~1106/min, 1071 pages). Started with 138612 known IDs; ended 150848. No HTTP 429. CSV-only.",
+      "notes": "Finished: +12236 rows (VW 7986, Renault 1733, Citroen 1117, Porsche 577, Land Rover 426, MINI 321, Lexus 76). 39/39 facets exhausted in 664s (~1106/min, 1071 pages). Started with 138612 known IDs; ended 150848. No HTTP 429. CSV-only. PR #217.",
       "agent_url": "https://cursor.com/agents/bc-18f01253-558a-5af9-964d-70382d9bfd45",
       "rows_added": 12236,
       "rows_total": 12236,
-      "finished_at": "2026-10-04T16:48:20Z"
+      "finished_at": "2026-10-04T16:48:20Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/217"
     },
     {
       "worker_id": "coches_shard-w4",
