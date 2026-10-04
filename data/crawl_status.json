@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-04T16:34:47Z",
+  "updated_at": "2026-10-04T16:35:04Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w2",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w2-1a84",
+      "makes": [
+        "audi",
+        "seat",
+        "mini",
+        "honda",
+        "volkswagen",
+        "volvo",
+        "land_rover"
+      ],
+      "started_at": "2026-10-04T16:34:54Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-5ac40322-1e79-5233-8346-2f75c1565fc1"
+    },
     {
       "worker_id": "willhaben_shard-w4",
       "job_id": "willhaben_shard",
@@ -216,26 +236,6 @@
       "started_at": "2026-10-04T16:33:46Z",
       "notes": "Running crawl",
       "agent_url": "https://cursor.com/agents/bc-63de677d-5688-5a9c-b33e-6c324170d6c6"
-    },
-    {
-      "worker_id": "ka_shard-w2",
-      "job_id": "ka_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w2-1a84",
-      "makes": [
-        "audi",
-        "seat",
-        "mini",
-        "honda",
-        "volkswagen",
-        "volvo",
-        "land_rover"
-      ],
-      "started_at": "2026-10-04T16:33:44Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-5ac40322-1e79-5233-8346-2f75c1565fc1"
     },
     {
       "worker_id": "autoscout_shard-w3",
