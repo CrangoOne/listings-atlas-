@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:51:30Z",
+  "updated_at": "2026-10-04T16:59:58Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -289,7 +289,7 @@
       "worker_id": "willhaben_shard-w1",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w1-1a84",
       "makes": [
@@ -303,8 +303,11 @@
         "lexus"
       ],
       "started_at": "2026-10-04T16:33:35Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-fac02d5e-ea69-5bb8-a6fa-3124ef1b7bc2"
+      "notes": "Finished: +44597 rows (13/14 facets exhausted; leftover VW brand SERP 0-novelty stopped after price shards). VW 25528 / Ford 7903 / Renault 4717 / Kia 3118 / Cupra 1670 / Alfa Romeo 1091 / Tesla 349 / Lexus 220. ~25min, ~2200 pages, no HTTP 429.",
+      "agent_url": "https://cursor.com/agents/bc-fac02d5e-ea69-5bb8-a6fa-3124ef1b7bc2",
+      "rows_added": 44597,
+      "rows_total": 44597,
+      "finished_at": "2026-10-04T16:59:45Z"
     },
     {
       "worker_id": "autoscout_shard-w1",
