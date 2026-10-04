@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T18:44:21Z",
+  "wave_id": "wave-tst-20260828-2f0w",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -202,7 +202,7 @@
       "worker_id": "ka_shard-w1",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "failed",
+      "status": "running",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w1-1a84",
       "makes": [
@@ -214,10 +214,9 @@
         "peugeot",
         "jeep"
       ],
-      "started_at": "2026-10-04T16:34:06Z",
-      "notes": "Activity task timed out; agent ERROR after mark-running only. Respawning.",
-      "agent_url": "https://cursor.com/agents/bc-fb8ee925-9992-5186-a6cc-bb379409b6cd",
-      "finished_at": "2026-10-04T18:44:08Z"
+      "started_at": "2026-10-04T18:45:14Z",
+      "notes": "Running crawl (respawn after timeout)",
+      "agent_url": "https://cursor.com/agents/bc-ee9fad84-7c07-55e0-b238-5cd28d7d6b72"
     },
     {
       "worker_id": "autoscout_shard-w4",
@@ -2831,5 +2830,5 @@
       "notes": "Finished: +33030 rows (mercedes_benz/toyota/fiat/mini/suzuki/land_rover)"
     }
   ],
-  "wave_id": "wave-tst-20260828-2f0w"
+  "updated_at": "2026-10-04T18:46:14Z"
 }
