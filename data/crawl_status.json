@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:49:00Z",
+  "updated_at": "2026-10-04T16:49:50Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -150,7 +150,7 @@
       "worker_id": "willhaben_shard-w2",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w2-1a84",
       "makes": [
@@ -164,8 +164,11 @@
         "chrysler"
       ],
       "started_at": "2026-10-04T16:34:11Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-f60a3bc3-878c-5738-ba2b-5b480b904d06"
+      "notes": "Finished: +28611 rows (Audi 16041, Mazda 3980, Toyota 3037, Suzuki 2020, Dacia 1600, MG 1347, smart 351, Chrysler 235). 10/11 facets exhausted; leftover Audi brand SERP stopped after price shards (0 novelty).",
+      "agent_url": "https://cursor.com/agents/bc-f60a3bc3-878c-5738-ba2b-5b480b904d06",
+      "rows_added": 28611,
+      "rows_total": 28611,
+      "finished_at": "2026-10-04T16:49:02Z"
     },
     {
       "worker_id": "ka_shard-w4",
