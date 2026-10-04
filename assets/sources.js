@@ -1,7 +1,5 @@
-import { bindCarouselSwipe } from "./carousel_swipe.js?v=20261004a";
-
 /** Bumped whenever sources-fetch logic changes. */
-const ASSET_BUILD = "20261004a";
+const ASSET_BUILD = "20261003a";
 
 const SOURCE_ORDER = ["willhaben", "autoscout", "kleinanzeigen", "coches"];
 
@@ -334,18 +332,6 @@ function initQualityPagers(root) {
       const current = Number(qualityRoot.dataset.currentPage) || 0;
       setQualityPage(qualityRoot, current + 1);
     });
-
-    const bars = qualityRoot.querySelector(".source-quality-bars");
-    bindCarouselSwipe(bars, {
-      onPrev: () => {
-        const current = Number(qualityRoot.dataset.currentPage) || 0;
-        setQualityPage(qualityRoot, current - 1);
-      },
-      onNext: () => {
-        const current = Number(qualityRoot.dataset.currentPage) || 0;
-        setQualityPage(qualityRoot, current + 1);
-      },
-    });
   });
 }
 
@@ -391,14 +377,6 @@ function initSourcesCarousel(root) {
   dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
   prevBtn?.addEventListener("click", () => goTo(current - 1));
   nextBtn?.addEventListener("click", () => goTo(current + 1));
-
-  const viewport = carousel.querySelector(".carousel-viewport");
-  bindCarouselSwipe(viewport, {
-    onPrev: () => goTo(current - 1),
-    onNext: () => goTo(current + 1),
-    // Nested quality pager owns horizontal swipes inside its bars.
-    ignoreSelector: ".source-quality",
-  });
 
   carousel.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
