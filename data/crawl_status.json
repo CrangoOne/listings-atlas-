@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-04T16:33:51Z",
+  "updated_at": "2026-10-04T16:34:01Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w4",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w4-1a84",
+      "makes": [
+        "skoda",
+        "seat",
+        "kia",
+        "suzuki",
+        "mg",
+        "audi",
+        "alfa-romeo"
+      ],
+      "started_at": "2026-10-04T16:33:56Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-667bc477-7ed4-5858-8b12-479dbbd1dde1"
+    },
     {
       "worker_id": "coches_shard-w5",
       "job_id": "coches_shard",
@@ -353,25 +373,6 @@
         "smart",
         "hyundai",
         "byd"
-      ],
-      "started_at": "2026-10-04T16:30:48Z",
-      "notes": "Waiting for cloud spawn"
-    },
-    {
-      "worker_id": "autoscout_shard-w4",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "queued",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w4-1a84",
-      "makes": [
-        "skoda",
-        "seat",
-        "kia",
-        "suzuki",
-        "mg",
-        "audi",
-        "alfa-romeo"
       ],
       "started_at": "2026-10-04T16:30:48Z",
       "notes": "Waiting for cloud spawn"
