@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:42:37Z",
+  "updated_at": "2026-10-04T16:42:47Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -260,7 +260,8 @@
       "notes": "Finished: +6922 rows (Mercedes-Benz 3819, Toyota 1200, Dacia 843, Nissan 595, Honda 191, Tesla 148, Jaguar 126; 142634 unique known), 28/28 facets exhausted in 352s (~1178.8 listings/min, 568 pages). Ad ID/Title/Price/Year/Mileage/Power/Fuel/Location/URL 100%; Model 97.2%; VIN 0%. Artifact autoscout_shard_mercedes_benz_toyota_tesla_nissan_honda_jaguar_dacia.csv",
       "agent_url": "https://cursor.com/agents/bc-e78b7dd6-7353-5768-a138-3cb8cd9e4f30",
       "rows_added": 6922,
-      "finished_at": "2026-10-04T16:42:24Z"
+      "finished_at": "2026-10-04T16:42:24Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/213"
     },
     {
       "worker_id": "willhaben_shard-w1",
