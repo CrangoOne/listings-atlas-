@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:33:48Z",
+  "updated_at": "2026-10-04T16:33:51Z",
   "runs": [
     {
       "worker_id": "coches_shard-w5",
@@ -17,6 +17,26 @@
       "started_at": "2026-10-04T16:33:46Z",
       "notes": "Running crawl",
       "agent_url": "https://cursor.com/agents/bc-63de677d-5688-5a9c-b33e-6c324170d6c6"
+    },
+    {
+      "worker_id": "autoscout_shard-w3",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w3-1a84",
+      "makes": [
+        "mercedes-benz",
+        "toyota",
+        "tesla",
+        "nissan",
+        "honda",
+        "jaguar",
+        "dacia"
+      ],
+      "started_at": "2026-10-04T16:33:40Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-e78b7dd6-7353-5768-a138-3cb8cd9e4f30"
     },
     {
       "worker_id": "willhaben_shard-w1",
@@ -352,25 +372,6 @@
         "mg",
         "audi",
         "alfa-romeo"
-      ],
-      "started_at": "2026-10-04T16:30:48Z",
-      "notes": "Waiting for cloud spawn"
-    },
-    {
-      "worker_id": "autoscout_shard-w3",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "queued",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w3-1a84",
-      "makes": [
-        "mercedes-benz",
-        "toyota",
-        "tesla",
-        "nissan",
-        "honda",
-        "jaguar",
-        "dacia"
       ],
       "started_at": "2026-10-04T16:30:48Z",
       "notes": "Waiting for cloud spawn"
