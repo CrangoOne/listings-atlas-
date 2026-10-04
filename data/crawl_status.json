@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:39:09Z",
+  "updated_at": "2026-10-04T16:39:12Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -304,7 +304,7 @@
       "worker_id": "coches_shard-w3",
       "job_id": "coches_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w3-1a84",
       "makes": [
@@ -314,8 +314,10 @@
         "2011"
       ],
       "started_at": "2026-10-04T16:33:13Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-372e3040-927e-5704-a2fa-e6b99dd93cdb"
+      "notes": "Finished: +27790 rows",
+      "agent_url": "https://cursor.com/agents/bc-372e3040-927e-5704-a2fa-e6b99dd93cdb",
+      "rows_added": 27790,
+      "finished_at": "2026-10-04T16:39:00Z"
     },
     {
       "worker_id": "autoscout_shard-w2",
