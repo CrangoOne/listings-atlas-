@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:43:51Z",
+  "updated_at": "2026-10-04T16:44:10Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -140,7 +140,8 @@
       "notes": "Finished: +7426 rows (50/50 facets, 630 pages, 395s, ~1127/min)",
       "agent_url": "https://cursor.com/agents/bc-253455f5-124b-5e55-8723-fe63feb30a5c",
       "rows_added": 7426,
-      "finished_at": "2026-10-04T16:43:43Z"
+      "finished_at": "2026-10-04T16:43:43Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/214"
     },
     {
       "worker_id": "willhaben_shard-w2",
