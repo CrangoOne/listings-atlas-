@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:44:10Z",
+  "updated_at": "2026-10-04T16:46:35Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -291,7 +291,7 @@
       "worker_id": "autoscout_shard-w1",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w1-1a84",
       "makes": [
@@ -304,8 +304,10 @@
         "peugeot"
       ],
       "started_at": "2026-10-04T16:33:27Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-7406ae89-8ce7-5a63-91d8-2353bfb3eb99"
+      "notes": "Finished: +11188 rows (73/73 facets, 1053 pages, 657s)",
+      "agent_url": "https://cursor.com/agents/bc-7406ae89-8ce7-5a63-91d8-2353bfb3eb99",
+      "rows_added": 11188,
+      "finished_at": "2026-10-04T16:46:27Z"
     },
     {
       "worker_id": "coches_shard-w3",
