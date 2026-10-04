@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-04T16:33:35Z",
+  "updated_at": "2026-10-04T16:33:37Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w1",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w1-1a84",
+      "makes": [
+        "bmw",
+        "opel",
+        "volvo",
+        "fiat",
+        "jeep",
+        "subaru",
+        "peugeot"
+      ],
+      "started_at": "2026-10-04T16:33:27Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-7406ae89-8ce7-5a63-91d8-2353bfb3eb99"
+    },
     {
       "worker_id": "coches_shard-w3",
       "job_id": "coches_shard",
@@ -127,26 +147,6 @@
       "started_at": "2026-10-04T16:32:33Z",
       "notes": "Spawned cloud worker",
       "agent_url": "https://cursor.com/agents/bc-63de677d-5688-5a9c-b33e-6c324170d6c6"
-    },
-    {
-      "worker_id": "autoscout_shard-w1",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w1-1a84",
-      "makes": [
-        "bmw",
-        "opel",
-        "volvo",
-        "fiat",
-        "jeep",
-        "subaru",
-        "peugeot"
-      ],
-      "started_at": "2026-10-04T16:32:33Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-7406ae89-8ce7-5a63-91d8-2353bfb3eb99"
     },
     {
       "worker_id": "willhaben_shard-w5",
