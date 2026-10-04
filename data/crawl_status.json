@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-04T16:33:02Z",
+  "updated_at": "2026-10-04T16:33:17Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w2",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w2-1a84",
+      "makes": [
+        "volkswagen",
+        "renault",
+        "porsche",
+        "citroen",
+        "land-rover",
+        "lexus",
+        "mini"
+      ],
+      "started_at": "2026-10-04T16:33:11Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-18f01253-558a-5af9-964d-70382d9bfd45"
+    },
     {
       "worker_id": "willhaben_shard-w1",
       "job_id": "willhaben_shard",
@@ -38,26 +58,6 @@
       "started_at": "2026-10-04T16:32:33Z",
       "notes": "Spawned cloud worker",
       "agent_url": "https://cursor.com/agents/bc-63de677d-5688-5a9c-b33e-6c324170d6c6"
-    },
-    {
-      "worker_id": "autoscout_shard-w2",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w2-1a84",
-      "makes": [
-        "volkswagen",
-        "renault",
-        "porsche",
-        "citroen",
-        "land-rover",
-        "lexus",
-        "mini"
-      ],
-      "started_at": "2026-10-04T16:32:33Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-18f01253-558a-5af9-964d-70382d9bfd45"
     },
     {
       "worker_id": "autoscout_shard-w1",
