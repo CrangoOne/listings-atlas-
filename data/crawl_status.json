@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-04T16:34:33Z",
+  "updated_at": "2026-10-04T16:34:47Z",
   "runs": [
+    {
+      "worker_id": "willhaben_shard-w4",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w4-1a84",
+      "makes": [
+        "seat",
+        "mini",
+        "dodge",
+        "skoda",
+        "fiat",
+        "jeep",
+        "subaru"
+      ],
+      "started_at": "2026-10-04T16:34:41Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-ff26d623-d547-5794-81c7-e1988a22b836"
+    },
     {
       "worker_id": "willhaben_shard-w3",
       "job_id": "willhaben_shard",
@@ -196,26 +216,6 @@
       "started_at": "2026-10-04T16:33:46Z",
       "notes": "Running crawl",
       "agent_url": "https://cursor.com/agents/bc-63de677d-5688-5a9c-b33e-6c324170d6c6"
-    },
-    {
-      "worker_id": "willhaben_shard-w4",
-      "job_id": "willhaben_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
-      "source": "willhaben",
-      "branch": "cursor/daq-willhaben-shard-w4-1a84",
-      "makes": [
-        "seat",
-        "mini",
-        "dodge",
-        "skoda",
-        "fiat",
-        "jeep",
-        "subaru"
-      ],
-      "started_at": "2026-10-04T16:33:44Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-ff26d623-d547-5794-81c7-e1988a22b836"
     },
     {
       "worker_id": "ka_shard-w2",
