@@ -1,6 +1,25 @@
 {
-  "updated_at": "2026-10-04T16:35:04Z",
+  "updated_at": "2026-10-04T16:35:05Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w5",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w5-1a84",
+      "makes": [
+        "skoda",
+        "citroen",
+        "suzuki",
+        "chevrolet",
+        "hyundai",
+        "tesla"
+      ],
+      "started_at": "2026-10-04T16:34:56Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-e7e35e91-eba6-5bb9-95cb-510879117983"
+    },
     {
       "worker_id": "ka_shard-w2",
       "job_id": "ka_shard",
@@ -121,25 +140,6 @@
       "started_at": "2026-10-04T16:34:11Z",
       "notes": "Running crawl",
       "agent_url": "https://cursor.com/agents/bc-f60a3bc3-878c-5738-ba2b-5b480b904d06"
-    },
-    {
-      "worker_id": "ka_shard-w5",
-      "job_id": "ka_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w5-1a84",
-      "makes": [
-        "skoda",
-        "citroen",
-        "suzuki",
-        "chevrolet",
-        "hyundai",
-        "tesla"
-      ],
-      "started_at": "2026-10-04T16:34:11Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-e7e35e91-eba6-5bb9-95cb-510879117983"
     },
     {
       "worker_id": "ka_shard-w4",
