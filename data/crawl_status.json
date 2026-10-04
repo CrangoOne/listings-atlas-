@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T17:00:46Z",
+  "updated_at": "2026-10-04T18:44:10Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -202,7 +202,7 @@
       "worker_id": "ka_shard-w1",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "failed",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w1-1a84",
       "makes": [
@@ -215,8 +215,9 @@
         "jeep"
       ],
       "started_at": "2026-10-04T16:34:06Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-fb8ee925-9992-5186-a6cc-bb379409b6cd"
+      "notes": "Activity task timed out; agent ERROR after mark-running only. Respawning.",
+      "agent_url": "https://cursor.com/agents/bc-fb8ee925-9992-5186-a6cc-bb379409b6cd",
+      "finished_at": "2026-10-04T18:44:08Z"
     },
     {
       "worker_id": "autoscout_shard-w4",
