@@ -26,6 +26,31 @@ const SOURCE_LABEL = {
   coches: "coches.net",
 };
 
+/** Cross-marketplace facet spellings (keep in sync with daq/query_api.py). */
+const TRANSMISSION_GROUPS = [
+  ["Manuell", "Schaltgetriebe", "Manual"],
+  ["Automatik", "Automático", "Automatic"],
+];
+const FUEL_GROUPS = [
+  ["Diesel", "Diésel"],
+  ["Benzin", "Gasolina", "Petrol"],
+  ["Elektro", "Eléctrico", "Electric"],
+  ["Hybrid", "Híbrido"],
+];
+
+function synonymValues(value, groups) {
+  const needle = String(value || "").trim().toLowerCase();
+  if (!needle) return [value];
+  for (const group of groups) {
+    if (group.some((g) => g.toLowerCase() === needle)) {
+      const out = [...group];
+      if (!out.includes(value)) out.push(value);
+      return out;
+    }
+  }
+  return [value];
+}
+
 const fmt = new Intl.NumberFormat("en-US");
 const euro = new Intl.NumberFormat("en-US", {
   style: "currency",
@@ -763,14 +788,20 @@ export function initExplore(summary) {
 
     const fuels = combos.fuel_type.getValues();
     if (fuels.length) {
-      clauses.push(`lower(fuel_type) = lower(?)`);
-      params.push(fuels[0]);
+      const fuelVals = synonymValues(fuels[0], FUEL_GROUPS);
+      clauses.push(
+        `lower(fuel_type) IN (${fuelVals.map(() => "lower(?)").join(",")})`
+      );
+      params.push(...fuelVals);
     }
 
     const transmissions = combos.transmission.getValues();
     if (transmissions.length) {
-      clauses.push(`lower(transmission) = lower(?)`);
-      params.push(transmissions[0]);
+      const txVals = synonymValues(transmissions[0], TRANSMISSION_GROUPS);
+      clauses.push(
+        `lower(transmission) IN (${txVals.map(() => "lower(?)").join(",")})`
+      );
+      params.push(...txVals);
     }
 
     const bodies = combos.body_type.getValues();
