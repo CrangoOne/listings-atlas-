@@ -20,7 +20,7 @@ import {
 import { formatWhen, formatWhenHtml, TZ_HINT } from "./time_display.js?v=20260827a";
 
 /** Bumped whenever status-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20261003a";
+const ASSET_BUILD = "20261004a";
 
 const STATUS_ORDER = ["running", "unspawned", "queued", "failed", "finished", "cancelled"];
 const DEFAULT_FRESH_HOURS = 168;
@@ -541,13 +541,14 @@ function renderLaunchBoard(runs, makesCatalog) {
   refreshLaunchSummary(runs, makesCatalog);
 }
 
+/** Raw first — Pages builds often fail during concurrent crawl publishes. */
 const LIVE_STATUS_URLS = [
-  "data/crawl_status.json",
   "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_status.json",
+  "data/crawl_status.json",
 ];
 const LIVE_JOBS_URLS = [
-  "data/crawl_jobs.json",
   "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/crawl_jobs.json",
+  "data/crawl_jobs.json",
 ];
 
 function withCacheBust(url) {
