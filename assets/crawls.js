@@ -18,10 +18,9 @@ import {
   lastSourceCrawl,
 } from "./crawl_stale.js?v=20260827a";
 import { formatWhen, formatWhenHtml, TZ_HINT } from "./time_display.js?v=20260827a";
-import { bindCarouselSwipe } from "./carousel_swipe.js?v=20261004a";
 
 /** Bumped whenever status-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20261004a";
+const ASSET_BUILD = "20261003a";
 
 const STATUS_ORDER = ["running", "unspawned", "queued", "failed", "finished", "cancelled"];
 const DEFAULT_FRESH_HOURS = 168;
@@ -355,23 +354,6 @@ function initCrawlCarousel(root) {
   dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
   prevBtn?.addEventListener("click", () => goTo(current - 1));
   nextBtn?.addEventListener("click", () => goTo(current + 1));
-
-  const viewport = carousel.querySelector(".carousel-viewport");
-  bindCarouselSwipe(viewport, {
-    onPrev: () => goTo(current - 1),
-    onNext: () => goTo(current + 1),
-  });
-
-  carousel.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      goTo(current - 1);
-    } else if (e.key === "ArrowRight") {
-      e.preventDefault();
-      goTo(current + 1);
-    }
-  });
-
   goTo(0);
 }
 
