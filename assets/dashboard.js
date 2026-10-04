@@ -1,7 +1,8 @@
 import { initExplore } from "./explore.js?v=20261002a";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20261003a";
-import { initSources } from "./sources.js?v=20261003a";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20261004a";
+import { initSources } from "./sources.js?v=20261004a";
 import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
+import { bindCarouselSwipe } from "./carousel_swipe.js?v=20261004a";
 
 /** Primary panels — Insights is the default landing surface. */
 const PANEL_IDS = ["insights", "library", "crawls"];
@@ -265,6 +266,12 @@ function initCarousel(root, carouselSelector) {
   dots.forEach((dot) => dot.addEventListener("click", () => goTo(Number(dot.dataset.index))));
   prevBtn?.addEventListener("click", () => goTo(current - 1));
   nextBtn?.addEventListener("click", () => goTo(current + 1));
+
+  const viewport = carousel.querySelector(".carousel-viewport");
+  bindCarouselSwipe(viewport, {
+    onPrev: () => goTo(current - 1),
+    onNext: () => goTo(current + 1),
+  });
 
   carousel.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
