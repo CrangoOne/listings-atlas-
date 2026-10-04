@@ -35,7 +35,43 @@ const FUEL_GROUPS = [
   ["Diesel", "Diésel"],
   ["Benzin", "Gasolina", "Petrol"],
   ["Elektro", "Eléctrico", "Electric"],
-  ["Hybrid", "Híbrido"],
+  [
+    "Hybrid",
+    "Híbrido",
+    "Hybrid Elektro/Benzin",
+    "Elektro/Benzin",
+    "Hybrid Elektro/Diesel",
+    "Elektro/Diesel",
+  ],
+  ["Autogas (LPG)", "Gas licuado (GLP)"],
+  ["Erdgas (CNG)", "Gas natural (CNG)"],
+];
+const BODY_GROUPS = [
+  ["Limousine", "Berlina"],
+  ["SUV", "SUV/Geländewagen", "SUV / Geländewagen"],
+  [
+    "Kombi",
+    "Kombi / Family Van",
+    "Familiar",
+    "Variant",
+    "Combi",
+    "Avant",
+    "Touring",
+    "T-Modell",
+  ],
+  ["Kleinwagen", "Klein-/ Kompaktwagen"],
+  ["Cabrio", "Cabrio / Roadster", "Cabriolet", "Roadster"],
+  ["Coupé", "Coupe", "Sportwagen / Coupé"],
+  ["Van/Bus", "Monovolumen", "Kleinbus", "Furgoneta"],
+];
+const MAKE_GROUPS = [
+  ["Volkswagen", "VOLKSWAGEN", "VW"],
+  ["Mercedes-Benz", "MERCEDES-BENZ"],
+  ["Citroën", "Citroen", "CITROEN"],
+  ["Land Rover", "LAND-ROVER"],
+  ["SEAT", "Seat"],
+  ["CUPRA", "Cupra"],
+  ["Smart", "SMART", "smart"],
 ];
 
 function synonymValues(value, groups) {
@@ -49,6 +85,20 @@ function synonymValues(value, groups) {
     }
   }
   return [value];
+}
+
+function makeMatchValues(value) {
+  const expanded = synonymValues(value, MAKE_GROUPS);
+  const out = [];
+  for (const v of expanded) {
+    const titled = String(v)
+      .toLowerCase()
+      .replace(/(^|[\s-])\S/g, (m) => m.toUpperCase());
+    for (const c of [v, v.toUpperCase(), titled]) {
+      if (c && !out.includes(c)) out.push(c);
+    }
+  }
+  return out;
 }
 
 const fmt = new Intl.NumberFormat("en-US");
@@ -782,8 +832,9 @@ export function initExplore(summary) {
 
     const makes = combos.make.getValues();
     if (makes.length) {
-      clauses.push(`lower(make) = lower(?)`);
-      params.push(makes[0]);
+      const makeVals = makeMatchValues(makes[0]);
+      clauses.push(`make IN (${makeVals.map(() => "?").join(",")})`);
+      params.push(...makeVals);
     }
 
     const fuels = combos.fuel_type.getValues();
@@ -806,8 +857,11 @@ export function initExplore(summary) {
 
     const bodies = combos.body_type.getValues();
     if (bodies.length) {
-      clauses.push(`lower(body_type) = lower(?)`);
-      params.push(bodies[0]);
+      const bodyVals = synonymValues(bodies[0], BODY_GROUPS);
+      clauses.push(
+        `lower(body_type) IN (${bodyVals.map(() => "lower(?)").join(",")})`
+      );
+      params.push(...bodyVals);
     }
 
     const model = form.model.value.trim();
