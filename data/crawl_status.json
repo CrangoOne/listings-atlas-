@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:42:47Z",
+  "updated_at": "2026-10-04T16:43:51Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -124,7 +124,7 @@
       "worker_id": "autoscout_shard-w5",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w5-1a84",
       "makes": [
@@ -137,8 +137,10 @@
         "byd"
       ],
       "started_at": "2026-10-04T16:34:22Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-253455f5-124b-5e55-8723-fe63feb30a5c"
+      "notes": "Finished: +7426 rows (50/50 facets, 630 pages, 395s, ~1127/min)",
+      "agent_url": "https://cursor.com/agents/bc-253455f5-124b-5e55-8723-fe63feb30a5c",
+      "rows_added": 7426,
+      "finished_at": "2026-10-04T16:43:43Z"
     },
     {
       "worker_id": "willhaben_shard-w2",
