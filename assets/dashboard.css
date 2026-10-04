@@ -1495,8 +1495,6 @@ body {
   overflow: hidden;
   border-top: 1px solid var(--line);
   padding-top: 0.35rem;
-  /* Prefer vertical page scroll; horizontal swipes change slides in JS. */
-  touch-action: pan-y;
 }
 
 .carousel-track {
@@ -1653,7 +1651,6 @@ body {
 
 .source-quality-bars {
   min-height: 12rem;
-  touch-action: pan-y;
 }
 
 .source-empty {
