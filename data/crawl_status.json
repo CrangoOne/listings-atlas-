@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:50:56Z",
+  "updated_at": "2026-10-04T16:51:01Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -110,7 +110,7 @@
       "worker_id": "willhaben_shard-w3",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w3-1a84",
       "makes": [
@@ -123,8 +123,11 @@
         "honda"
       ],
       "started_at": "2026-10-04T16:34:29Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-0144e310-829e-57a0-abbd-f4f483ac8e6f"
+      "notes": "Finished: +27654 rows (9/10 facets exhausted; stopped mercedes brand SERP after price shards + empty-streak brands; Mercedes-Benz 12012 / Peugeot 5362 / Hyundai 4575 / Citroën 3173 / Mitsubishi 1203 / Honda 908 / Chevrolet 421)",
+      "agent_url": "https://cursor.com/agents/bc-0144e310-829e-57a0-abbd-f4f483ac8e6f",
+      "rows_added": 27654,
+      "rows_total": 27654,
+      "finished_at": "2026-10-04T16:50:49Z"
     },
     {
       "worker_id": "autoscout_shard-w5",
