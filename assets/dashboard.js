@@ -1,6 +1,6 @@
 import { initExplore } from "./explore.js?v=20261002a";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20261003a";
-import { initSources } from "./sources.js?v=20261003a";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20261004a";
+import { initSources } from "./sources.js?v=20261004a";
 import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
 
 /** Primary panels — Insights is the default landing surface. */
@@ -77,10 +77,13 @@ const euro = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-/** Prefer freshest pack KPI JSON (Pages can lag behind raw GitHub). */
+/**
+ * Prefer raw GitHub first: worker publishes update git immediately, while
+ * GitHub Pages often rate-limits / fails builds during crawl-status storms.
+ */
 const LIVE_SUMMARY_URLS = [
-  "data/summary.json",
   "https://raw.githubusercontent.com/CrangoOne/listings-atlas-/main/data/summary.json",
+  "data/summary.json",
 ];
 
 function withCacheBust(url) {
@@ -459,7 +462,20 @@ function renderMakesBoard(data) {
   initCarousel(board, ".makes-carousel");
 }
 
+function bootShell() {
+  initPanelNav();
+  // Crawls / Sources load their own JSON — must not wait on summary.json.
+  // During publish storms Pages builds fail; summary can 5xx while crawl_status
+  // is still fine on raw.githubusercontent.com.
+  initSources();
+  initCrawls();
+  startCrawlsAutoRefresh(30000);
+  wireBoardRefresh();
+}
+
 async function main() {
+  bootShell();
+
   const pack = await fetchSummaryPreferLive();
   const data = pack.data;
 
@@ -474,12 +490,7 @@ async function main() {
     meta.title = `from ${data.db_file}`;
   }
 
-  initPanelNav();
   initExplore(data);
-  initSources();
-  initCrawls();
-  startCrawlsAutoRefresh(30000);
-  wireBoardRefresh();
 }
 
 function wireBoardRefresh() {
@@ -504,6 +515,7 @@ function wireBoardRefresh() {
 main().catch((err) => {
   const meta = document.getElementById("generated-meta");
   if (meta) meta.textContent = `Could not load dashboard data: ${err.message}`;
+  // Shell may already be up from bootShell(); keep nav usable if main failed early.
   initPanelNav();
   console.error(err);
 });
