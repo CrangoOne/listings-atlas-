@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:51:04Z",
+  "updated_at": "2026-10-04T16:51:30Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -128,7 +128,8 @@
       "agent_url": "https://cursor.com/agents/bc-0144e310-829e-57a0-abbd-f4f483ac8e6f",
       "rows_added": 27654,
       "rows_total": 27654,
-      "finished_at": "2026-10-04T16:50:49Z"
+      "finished_at": "2026-10-04T16:50:49Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/221"
     },
     {
       "worker_id": "autoscout_shard-w5",
