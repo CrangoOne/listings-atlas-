@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-04T16:48:35Z",
+  "updated_at": "2026-10-04T16:48:40Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
@@ -210,7 +210,7 @@
       "worker_id": "autoscout_shard-w4",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w4-1a84",
       "makes": [
@@ -223,8 +223,11 @@
         "alfa-romeo"
       ],
       "started_at": "2026-10-04T16:33:56Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-667bc477-7ed4-5858-8b12-479dbbd1dde1"
+      "notes": "Finished: +12980 rows (Audi 4845, Skoda 3481, SEAT 2162, Kia 1081, Suzuki 644, MG 492, Alfa Romeo 275). 79/79 facets exhausted in 725s (~1074/min)",
+      "agent_url": "https://cursor.com/agents/bc-667bc477-7ed4-5858-8b12-479dbbd1dde1",
+      "rows_added": 12980,
+      "rows_total": 12980,
+      "finished_at": "2026-10-04T16:48:28Z"
     },
     {
       "worker_id": "coches_shard-w5",
