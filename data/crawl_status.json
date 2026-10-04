@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-04T16:34:01Z",
+  "updated_at": "2026-10-04T16:34:13Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w1",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w1-1a84",
+      "makes": [
+        "bmw",
+        "toyota",
+        "nissan",
+        "mitsubishi",
+        "byd",
+        "peugeot",
+        "jeep"
+      ],
+      "started_at": "2026-10-04T16:34:06Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-fb8ee925-9992-5186-a6cc-bb379409b6cd"
+    },
     {
       "worker_id": "autoscout_shard-w4",
       "job_id": "autoscout_shard",
@@ -335,25 +355,6 @@
         "volkswagen",
         "volvo",
         "land_rover"
-      ],
-      "started_at": "2026-10-04T16:30:48Z",
-      "notes": "Waiting for cloud spawn"
-    },
-    {
-      "worker_id": "ka_shard-w1",
-      "job_id": "ka_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "queued",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w1-1a84",
-      "makes": [
-        "bmw",
-        "toyota",
-        "nissan",
-        "mitsubishi",
-        "byd",
-        "peugeot",
-        "jeep"
       ],
       "started_at": "2026-10-04T16:30:48Z",
       "notes": "Waiting for cloud spawn"
