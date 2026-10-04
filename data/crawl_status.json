@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-04T16:35:11Z",
+  "updated_at": "2026-10-04T16:35:24Z",
   "runs": [
+    {
+      "worker_id": "willhaben_shard-w5",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w5-1a84",
+      "makes": [
+        "nissan",
+        "porsche",
+        "bmw",
+        "opel",
+        "volvo",
+        "land-rover",
+        "jaguar"
+      ],
+      "started_at": "2026-10-04T16:35:20Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-5e4b1cc5-b902-5b31-8a5e-9db54b0d526a"
+    },
     {
       "worker_id": "ka_shard-w3",
       "job_id": "ka_shard",
@@ -119,26 +139,6 @@
       "started_at": "2026-10-04T16:34:22Z",
       "notes": "Running crawl",
       "agent_url": "https://cursor.com/agents/bc-253455f5-124b-5e55-8723-fe63feb30a5c"
-    },
-    {
-      "worker_id": "willhaben_shard-w5",
-      "job_id": "willhaben_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
-      "source": "willhaben",
-      "branch": "cursor/daq-willhaben-shard-w5-1a84",
-      "makes": [
-        "nissan",
-        "porsche",
-        "bmw",
-        "opel",
-        "volvo",
-        "land-rover",
-        "jaguar"
-      ],
-      "started_at": "2026-10-04T16:34:11Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-5e4b1cc5-b902-5b31-8a5e-9db54b0d526a"
     },
     {
       "worker_id": "willhaben_shard-w2",
