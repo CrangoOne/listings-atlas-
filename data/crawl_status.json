@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-04T16:50:13Z",
+  "updated_at": "2026-10-04T16:50:56Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w5",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w5-1a84",
       "makes": [
@@ -18,8 +18,11 @@
         "jaguar"
       ],
       "started_at": "2026-10-04T16:35:20Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-5e4b1cc5-b902-5b31-8a5e-9db54b0d526a"
+      "notes": "Finished: +32562 rows (bmw 17753, opel 6686, volvo 2183, porsche 1911, nissan 1663, land-rover 1648, jaguar 718; ~859s, 9/10 facets exhausted; stopped bmw SERP 0-novelty after price shards)",
+      "agent_url": "https://cursor.com/agents/bc-5e4b1cc5-b902-5b31-8a5e-9db54b0d526a",
+      "rows_added": 32562,
+      "rows_total": 32562,
+      "finished_at": "2026-10-04T16:50:45Z"
     },
     {
       "worker_id": "ka_shard-w3",
