@@ -1,6 +1,375 @@
 {
-  "updated_at": "2026-09-26T06:43:22Z",
+  "updated_at": "2026-10-04T16:31:55Z",
   "runs": [
+    {
+      "worker_id": "coches_shard-w3",
+      "job_id": "coches_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "coches",
+      "branch": "cursor/daq-coches-shard-w3-1a84",
+      "makes": [
+        "2010",
+        "2023",
+        "2016",
+        "2011"
+      ],
+      "started_at": "2026-10-04T16:31:44Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-372e3040-927e-5704-a2fa-e6b99dd93cdb"
+    },
+    {
+      "worker_id": "coches_shard-w2",
+      "job_id": "coches_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "coches",
+      "branch": "cursor/daq-coches-shard-w2-1a84",
+      "makes": [
+        "2021",
+        "2024",
+        "2017",
+        "2012"
+      ],
+      "started_at": "2026-10-04T16:31:44Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-e7864bcf-b6a5-53fc-a020-a232c96d7090"
+    },
+    {
+      "worker_id": "coches_shard-w1",
+      "job_id": "coches_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "coches",
+      "branch": "cursor/daq-coches-shard-w1-1a84",
+      "makes": [
+        "2022",
+        "2025",
+        "2018",
+        "2013",
+        "to-1989"
+      ],
+      "started_at": "2026-10-04T16:31:44Z",
+      "notes": "Spawned cloud worker",
+      "agent_url": "https://cursor.com/agents/bc-40989df1-91eb-55c9-b595-c59d23eff652"
+    },
+    {
+      "worker_id": "willhaben_shard-w5",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w5-1a84",
+      "makes": [
+        "nissan",
+        "porsche",
+        "bmw",
+        "opel",
+        "volvo",
+        "land-rover",
+        "jaguar"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "willhaben_shard-w4",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w4-1a84",
+      "makes": [
+        "seat",
+        "mini",
+        "dodge",
+        "skoda",
+        "fiat",
+        "jeep",
+        "subaru"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "willhaben_shard-w3",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w3-1a84",
+      "makes": [
+        "hyundai",
+        "mitsubishi",
+        "chevrolet",
+        "mercedes",
+        "peugeot",
+        "citroen",
+        "honda"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "willhaben_shard-w2",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w2-1a84",
+      "makes": [
+        "toyota",
+        "suzuki",
+        "smart",
+        "audi",
+        "mazda",
+        "dacia",
+        "mg",
+        "chrysler"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "willhaben_shard-w1",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w1-1a84",
+      "makes": [
+        "ford",
+        "cupra",
+        "alfa-romeo",
+        "vw",
+        "renault",
+        "kia",
+        "tesla",
+        "lexus"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "ka_shard-w5",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w5-1a84",
+      "makes": [
+        "skoda",
+        "citroen",
+        "suzuki",
+        "chevrolet",
+        "hyundai",
+        "tesla"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "ka_shard-w4",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w4-1a84",
+      "makes": [
+        "ford",
+        "fiat",
+        "cupra",
+        "smart",
+        "renault",
+        "dacia"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "ka_shard-w3",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w3-1a84",
+      "makes": [
+        "opel",
+        "mazda",
+        "kia",
+        "alfa_romeo",
+        "mercedes_benz",
+        "porsche",
+        "mg"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "ka_shard-w2",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w2-1a84",
+      "makes": [
+        "audi",
+        "seat",
+        "mini",
+        "honda",
+        "volkswagen",
+        "volvo",
+        "land_rover"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "ka_shard-w1",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w1-1a84",
+      "makes": [
+        "bmw",
+        "toyota",
+        "nissan",
+        "mitsubishi",
+        "byd",
+        "peugeot",
+        "jeep"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "coches_shard-w5",
+      "job_id": "coches_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "coches",
+      "branch": "cursor/daq-coches-shard-w5-1a84",
+      "makes": [
+        "2026",
+        "2019",
+        "2014",
+        "1990-1999"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "coches_shard-w4",
+      "job_id": "coches_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "coches",
+      "branch": "cursor/daq-coches-shard-w4-1a84",
+      "makes": [
+        "2005-2009",
+        "2020",
+        "2015",
+        "2000-2004"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "autoscout_shard-w5",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w5-1a84",
+      "makes": [
+        "ford",
+        "mazda",
+        "cupra",
+        "mitsubishi",
+        "smart",
+        "hyundai",
+        "byd"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "autoscout_shard-w4",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w4-1a84",
+      "makes": [
+        "skoda",
+        "seat",
+        "kia",
+        "suzuki",
+        "mg",
+        "audi",
+        "alfa-romeo"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "autoscout_shard-w3",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w3-1a84",
+      "makes": [
+        "mercedes-benz",
+        "toyota",
+        "tesla",
+        "nissan",
+        "honda",
+        "jaguar",
+        "dacia"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "autoscout_shard-w2",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w2-1a84",
+      "makes": [
+        "volkswagen",
+        "renault",
+        "porsche",
+        "citroen",
+        "land-rover",
+        "lexus",
+        "mini"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
+    {
+      "worker_id": "autoscout_shard-w1",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "queued",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w1-1a84",
+      "makes": [
+        "bmw",
+        "opel",
+        "volvo",
+        "fiat",
+        "jeep",
+        "subaru",
+        "peugeot"
+      ],
+      "started_at": "2026-10-04T16:30:48Z",
+      "notes": "Waiting for cloud spawn"
+    },
     {
       "worker_id": "willhaben_direct",
       "status": "finished",
