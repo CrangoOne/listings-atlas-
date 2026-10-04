@@ -1,6 +1,27 @@
 {
-  "updated_at": "2026-10-04T16:33:37Z",
+  "updated_at": "2026-10-04T16:33:46Z",
   "runs": [
+    {
+      "worker_id": "willhaben_shard-w1",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261004-b01f",
+      "status": "running",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w1-1a84",
+      "makes": [
+        "ford",
+        "cupra",
+        "alfa-romeo",
+        "vw",
+        "renault",
+        "kia",
+        "tesla",
+        "lexus"
+      ],
+      "started_at": "2026-10-04T16:33:35Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-fac02d5e-ea69-5bb8-a6fa-3124ef1b7bc2"
+    },
     {
       "worker_id": "autoscout_shard-w1",
       "job_id": "autoscout_shard",
@@ -109,27 +130,6 @@
       "started_at": "2026-10-04T16:33:09Z",
       "notes": "Running crawl",
       "agent_url": "https://cursor.com/agents/bc-40989df1-91eb-55c9-b595-c59d23eff652"
-    },
-    {
-      "worker_id": "willhaben_shard-w1",
-      "job_id": "willhaben_shard",
-      "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
-      "source": "willhaben",
-      "branch": "cursor/daq-willhaben-shard-w1-1a84",
-      "makes": [
-        "ford",
-        "cupra",
-        "alfa-romeo",
-        "vw",
-        "renault",
-        "kia",
-        "tesla",
-        "lexus"
-      ],
-      "started_at": "2026-10-04T16:32:33Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-fac02d5e-ea69-5bb8-a6fa-3124ef1b7bc2"
     },
     {
       "worker_id": "coches_shard-w5",
