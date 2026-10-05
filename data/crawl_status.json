@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-05T09:20:25Z",
+  "updated_at": "2026-10-05T17:13:49Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
@@ -98,7 +98,7 @@
       "worker_id": "ka_shard-w2",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w2-1a84",
       "makes": [
@@ -111,8 +111,11 @@
         "land_rover"
       ],
       "started_at": "2026-10-04T16:34:54Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-5ac40322-1e79-5233-8346-2f75c1565fc1"
+      "notes": "Finished: +173424 rows (audi +45849, seat +12230, mini +6748, honda +1893, volkswagen +100114, volvo +4324, land_rover +2266; 17987 pages, ~126/min)",
+      "agent_url": "https://cursor.com/agents/bc-5ac40322-1e79-5233-8346-2f75c1565fc1",
+      "rows_added": 173424,
+      "rows_total": 482808,
+      "finished_at": "2026-10-05T17:13:36Z"
     },
     {
       "worker_id": "willhaben_shard-w4",
