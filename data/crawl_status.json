@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-05T09:19:56Z",
+  "updated_at": "2026-10-05T09:20:25Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
@@ -68,7 +68,8 @@
       "notes": "Finished: +112388 unique (opel +39849, mazda +5916, kia +6194, alfa +1249, mercedes +56220, porsche +2524, mg +436)",
       "agent_url": "https://cursor.com/agents/bc-8d02f617-4f4b-5242-97c6-0f98c0838d6a",
       "rows_added": 112388,
-      "finished_at": "2026-10-05T09:19:47Z"
+      "finished_at": "2026-10-05T09:20:24Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/230"
     },
     {
       "worker_id": "ka_shard-w5",
