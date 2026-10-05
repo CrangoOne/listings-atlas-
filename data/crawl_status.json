@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-05T02:14:06Z",
+  "updated_at": "2026-10-05T03:04:40Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
@@ -210,7 +210,7 @@
       "worker_id": "ka_shard-w4",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w4-1a84",
       "makes": [
@@ -222,8 +222,10 @@
         "dacia"
       ],
       "started_at": "2026-10-04T16:34:11Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-7e0c3c44-7ef7-5c01-bc69-4a2149de1cd9"
+      "notes": "Finished: +67242 rows (ford 34158 / fiat 9658 / cupra 1218 / smart 4580 / renault 14436 / dacia 3192)",
+      "agent_url": "https://cursor.com/agents/bc-7e0c3c44-7ef7-5c01-bc69-4a2149de1cd9",
+      "rows_added": 67242,
+      "finished_at": "2026-10-05T03:04:35Z"
     },
     {
       "worker_id": "autoscout_shard-w4",
