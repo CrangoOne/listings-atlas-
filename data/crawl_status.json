@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-05T02:13:30Z",
+  "updated_at": "2026-10-05T02:14:06Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
@@ -21,7 +21,8 @@
       "notes": "Finished: +80417 rows (bmw +51368, toyota +5895, nissan +5983, mitsubishi +3162, byd +31, peugeot +12094, jeep +1884; 10586 pages, 26305s, ~183/min). TLS dips recovered; 0 HTTP 403.",
       "agent_url": "https://cursor.com/agents/bc-ee9fad84-7c07-55e0-b238-5cd28d7d6b72",
       "rows_added": 80417,
-      "finished_at": "2026-10-05T02:13:22Z"
+      "finished_at": "2026-10-05T02:13:22Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/228"
     },
     {
       "worker_id": "willhaben_shard-w5",
