@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-10-04T20:11:00Z",
+  "updated_at": "2026-10-05T02:13:30Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w1-1a84",
       "makes": [
@@ -18,8 +18,10 @@
         "jeep"
       ],
       "started_at": "2026-10-04T18:45:14Z",
-      "notes": "Running crawl (respawn after timeout)",
-      "agent_url": "https://cursor.com/agents/bc-ee9fad84-7c07-55e0-b238-5cd28d7d6b72"
+      "notes": "Finished: +80417 rows (bmw +51368, toyota +5895, nissan +5983, mitsubishi +3162, byd +31, peugeot +12094, jeep +1884; 10586 pages, 26305s, ~183/min). TLS dips recovered; 0 HTTP 403.",
+      "agent_url": "https://cursor.com/agents/bc-ee9fad84-7c07-55e0-b238-5cd28d7d6b72",
+      "rows_added": 80417,
+      "finished_at": "2026-10-05T02:13:22Z"
     },
     {
       "worker_id": "willhaben_shard-w5",
