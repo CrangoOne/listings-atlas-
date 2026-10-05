@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-05T03:05:30Z",
+  "updated_at": "2026-10-05T09:19:56Z",
   "runs": [
     {
       "worker_id": "ka_shard-w1",
@@ -52,7 +52,7 @@
       "worker_id": "ka_shard-w3",
       "job_id": "ka_shard",
       "wave_id": "wave-stale-first-20261004-b01f",
-      "status": "running",
+      "status": "finished",
       "source": "kleinanzeigen",
       "branch": "cursor/daq-ka-shard-w3-1a84",
       "makes": [
@@ -65,8 +65,10 @@
         "mg"
       ],
       "started_at": "2026-10-04T16:35:01Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-8d02f617-4f4b-5242-97c6-0f98c0838d6a"
+      "notes": "Finished: +112388 unique (opel +39849, mazda +5916, kia +6194, alfa +1249, mercedes +56220, porsche +2524, mg +436)",
+      "agent_url": "https://cursor.com/agents/bc-8d02f617-4f4b-5242-97c6-0f98c0838d6a",
+      "rows_added": 112388,
+      "finished_at": "2026-10-05T09:19:47Z"
     },
     {
       "worker_id": "ka_shard-w5",
