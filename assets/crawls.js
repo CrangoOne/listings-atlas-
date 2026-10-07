@@ -21,9 +21,8 @@ import { formatWhen, formatWhenHtml, TZ_HINT } from "./time_display.js?v=2026082
 import { bindCarouselSwipe } from "./carousel_swipe.js?v=20261004a";
 
 /** Bumped whenever status-fetch logic changes — shown in board meta. */
-const ASSET_BUILD = "20261004a";
+const ASSET_BUILD = "20261007a";
 
-const STATUS_ORDER = ["running", "unspawned", "queued", "failed", "finished", "cancelled"];
 const DEFAULT_FRESH_HOURS = 168;
 const DEFAULT_WORKERS = 5;
 
@@ -101,14 +100,21 @@ function renderCrawlKpis(runs, updatedAt) {
     .join("");
 }
 
+/** Newest activity first (finished_at, else started_at). */
+function runActivityMs(run) {
+  return (
+    Date.parse(run?.finished_at || "") ||
+    Date.parse(run?.started_at || "") ||
+    0
+  );
+}
+
 function sortRuns(runs) {
   return [...runs].sort((a, b) => {
-    const sa = STATUS_ORDER.indexOf(displayStatus(a));
-    const sb = STATUS_ORDER.indexOf(displayStatus(b));
-    if (sa !== sb) return (sa < 0 ? 99 : sa) - (sb < 0 ? 99 : sb);
-    const ta = Date.parse(a.started_at || a.finished_at || "") || 0;
-    const tb = Date.parse(b.started_at || b.finished_at || "") || 0;
-    return tb - ta;
+    const tb = runActivityMs(b);
+    const ta = runActivityMs(a);
+    if (tb !== ta) return tb - ta;
+    return String(b?.worker_id || "").localeCompare(String(a?.worker_id || ""));
   });
 }
 
