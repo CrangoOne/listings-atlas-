@@ -2,7 +2,7 @@
   "kind": "listings-atlas-consolidate",
   "wave_id": "wave-stale-first-20261004-b01f",
   "all_open": false,
-  "requested_at": "2026-10-04T18:25:51Z",
-  "prompt": "Consolidate Listings Atlas car data and publish KPIs to Pages.\nYou are the consolidate dispatcher. Follow daq/jobs/CONSOLIDATE_AUTOMATION.md.\nDo not ask for confirmation.\nWave filter: `wave-stale-first-20261004-b01f` (integrate worker PRs for this wave).\nRun integrate_wave_csvs.py → consolidate_cardata.py → one integration PR → publish_atlas_assets.",
-  "text": "Consolidate Listings Atlas car data and publish KPIs to Pages.\nYou are the consolidate dispatcher. Follow daq/jobs/CONSOLIDATE_AUTOMATION.md.\nDo not ask for confirmation.\nWave filter: `wave-stale-first-20261004-b01f` (integrate worker PRs for this wave).\nRun integrate_wave_csvs.py → consolidate_cardata.py → one integration PR → publish_atlas_assets."
+  "requested_at": "2026-10-07T20:24:18Z",
+  "prompt": "Consolidate Listings Atlas car data and publish KPIs to Pages.\nYou are the consolidate dispatcher. Follow daq/jobs/CONSOLIDATE_AUTOMATION.md.\nDo not ask for confirmation.\nWave filter: `wave-stale-first-20261004-b01f` (integrate worker PRs for this wave \u2014 include Kleinanzeigen w1\u2013w5).\nRun integrate_wave_csvs.py \u2192 consolidate_cardata.py \u2192 one integration PR \u2192 publish_atlas_assets.",
+  "text": "Consolidate Listings Atlas car data and publish KPIs to Pages.\nYou are the consolidate dispatcher. Follow daq/jobs/CONSOLIDATE_AUTOMATION.md.\nDo not ask for confirmation.\nWave filter: `wave-stale-first-20261004-b01f` (integrate worker PRs for this wave \u2014 include Kleinanzeigen w1\u2013w5).\nRun integrate_wave_csvs.py \u2192 consolidate_cardata.py \u2192 one integration PR \u2192 publish_atlas_assets."
 }
