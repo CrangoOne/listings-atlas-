@@ -1,5 +1,5 @@
 import { initExplore } from "./explore.js?v=20261002a";
-import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20261004a";
+import { initCrawls, startCrawlsAutoRefresh } from "./crawls.js?v=20261007a";
 import { initSources } from "./sources.js?v=20261004a";
 import { formatWhen, TZ_HINT } from "./time_display.js?v=20260827c";
 import { bindCarouselSwipe } from "./carousel_swipe.js?v=20261004a";
