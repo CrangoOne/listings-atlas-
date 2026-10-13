@@ -1,222 +1,222 @@
 {
-  "generated_at": "2026-10-07T20:30:42Z",
+  "generated_at": "2026-08-31T12:07:48Z",
   "db_file": "daq/merged/car_library.db",
-  "total": 2446357,
+  "total": 1688489,
   "by_source": [
     {
       "source": "kleinanzeigen",
-      "count": 1347482
+      "count": 878368
     },
     {
       "source": "coches",
-      "count": 498449
+      "count": 349209
     },
     {
       "source": "willhaben",
-      "count": 382140
+      "count": 287017
     },
     {
       "source": "autoscout",
-      "count": 218286
+      "count": 173895
     }
   ],
   "price_stats": {
-    "avg_price": 14899,
+    "avg_price": 15472,
     "min_price": 500,
     "max_price": 200000
   },
   "price_buckets": [
     {
       "bucket": "<€5k",
-      "count": 706139
+      "count": 475527
     },
     {
       "bucket": "€5–10k",
-      "count": 473977
+      "count": 317582
     },
     {
       "bucket": "€10–20k",
-      "count": 682678
+      "count": 467359
     },
     {
       "bucket": "€20–40k",
-      "count": 450318
+      "count": 325397
     },
     {
       "bucket": "€40–80k",
-      "count": 111508
+      "count": 85571
     },
     {
       "bucket": "€80k+",
-      "count": 18688
+      "count": 14641
     }
   ],
   "price_by_source": [
     {
       "source": "autoscout",
-      "avg_price": 28786
+      "avg_price": 29195
     },
     {
       "source": "coches",
-      "avg_price": 19123
+      "avg_price": 19245
     },
     {
       "source": "kleinanzeigen",
-      "avg_price": 9890
+      "avg_price": 9892
     },
     {
       "source": "willhaben",
-      "avg_price": 18810
+      "avg_price": 19348
     }
   ],
   "by_year": [
     {
       "year": 1990,
-      "count": 6011
+      "count": 4096
     },
     {
       "year": 1991,
-      "count": 7188
+      "count": 4879
     },
     {
       "year": 1992,
-      "count": 6636
+      "count": 4494
     },
     {
       "year": 1993,
-      "count": 5742
+      "count": 3930
     },
     {
       "year": 1994,
-      "count": 6132
+      "count": 4210
     },
     {
       "year": 1995,
-      "count": 8169
+      "count": 5537
     },
     {
       "year": 1996,
-      "count": 8770
+      "count": 5932
     },
     {
       "year": 1997,
-      "count": 10262
+      "count": 7022
     },
     {
       "year": 1998,
-      "count": 14611
+      "count": 9946
     },
     {
       "year": 1999,
-      "count": 19356
+      "count": 13239
     },
     {
       "year": 2000,
-      "count": 22309
+      "count": 15189
     },
     {
       "year": 2001,
-      "count": 28319
+      "count": 19498
     },
     {
       "year": 2002,
-      "count": 35468
+      "count": 24329
     },
     {
       "year": 2003,
-      "count": 46125
+      "count": 31417
     },
     {
       "year": 2004,
-      "count": 55954
+      "count": 38030
     },
     {
       "year": 2005,
-      "count": 60351
+      "count": 41044
     },
     {
       "year": 2006,
-      "count": 73170
+      "count": 49426
     },
     {
       "year": 2007,
-      "count": 86045
+      "count": 57914
     },
     {
       "year": 2008,
-      "count": 87055
+      "count": 58843
     },
     {
       "year": 2009,
-      "count": 101269
+      "count": 68208
     },
     {
       "year": 2010,
-      "count": 88655
+      "count": 59749
     },
     {
       "year": 2011,
-      "count": 96301
+      "count": 64530
     },
     {
       "year": 2012,
-      "count": 93033
+      "count": 62622
     },
     {
       "year": 2013,
-      "count": 87177
+      "count": 58833
     },
     {
       "year": 2014,
-      "count": 92480
+      "count": 62577
     },
     {
       "year": 2015,
-      "count": 101062
+      "count": 68238
     },
     {
       "year": 2016,
-      "count": 109300
+      "count": 74246
     },
     {
       "year": 2017,
-      "count": 110571
+      "count": 75210
     },
     {
       "year": 2018,
-      "count": 110128
+      "count": 75281
     },
     {
       "year": 2019,
-      "count": 115813
+      "count": 79138
     },
     {
       "year": 2020,
-      "count": 91323
+      "count": 63080
     },
     {
       "year": 2021,
-      "count": 101602
+      "count": 71846
     },
     {
       "year": 2022,
-      "count": 112792
+      "count": 79223
     },
     {
       "year": 2023,
-      "count": 95103
+      "count": 66142
     },
     {
       "year": 2024,
-      "count": 68688
+      "count": 48560
     },
     {
       "year": 2025,
-      "count": 92801
+      "count": 71345
     },
     {
       "year": 2026,
-      "count": 108183
+      "count": 78678
     },
     {
       "year": 2027,
@@ -226,457 +226,461 @@
   "top_makes": [
     {
       "make": "Volkswagen",
-      "count": 299365
+      "count": 192300
     },
     {
       "make": "BMW",
-      "count": 258396
+      "count": 180069
     },
     {
       "make": "Mercedes-Benz",
-      "count": 210736
+      "count": 143481
     },
     {
       "make": "Audi",
-      "count": 175192
+      "count": 114458
     },
     {
       "make": "Opel",
-      "count": 146990
+      "count": 101423
     },
     {
       "make": "Ford",
-      "count": 136474
+      "count": 95314
     },
     {
       "make": "Skoda",
-      "count": 78400
+      "count": 55763
     },
     {
       "make": "VW",
-      "count": 65472
-    },
-    {
-      "make": "Renault",
-      "count": 59320
+      "count": 48774
     },
     {
       "make": "Peugeot",
-      "count": 57223
+      "count": 40417
+    },
+    {
+      "make": "Renault",
+      "count": 40355
     },
     {
       "make": "Seat",
-      "count": 48841
-    },
-    {
-      "make": "VOLKSWAGEN",
-      "count": 45340
+      "count": 32725
     },
     {
       "make": "Hyundai",
-      "count": 44493
+      "count": 31594
+    },
+    {
+      "make": "VOLKSWAGEN",
+      "count": 31511
     },
     {
       "make": "MERCEDES-BENZ",
-      "count": 44422
+      "count": 31154
     },
     {
       "make": "Fiat",
-      "count": 38967
+      "count": 26447
     },
     {
       "make": "AUDI",
-      "count": 33837
+      "count": 23575
     },
     {
       "make": "MINI",
-      "count": 33647
+      "count": 23559
     },
     {
       "make": "PEUGEOT",
-      "count": 33245
+      "count": 23365
     },
     {
       "make": "SEAT",
-      "count": 32384
+      "count": 22819
     },
     {
       "make": "Mazda",
-      "count": 30855
+      "count": 21746
     },
     {
       "make": "Toyota",
-      "count": 29608
+      "count": 20973
     },
     {
       "make": "RENAULT",
-      "count": 28571
+      "count": 20016
     },
     {
       "make": "Citroen",
-      "count": 27812
+      "count": 19441
     },
     {
       "make": "CITROEN",
-      "count": 26000
+      "count": 18145
     },
     {
       "make": "FORD",
-      "count": 25623
-    },
-    {
-      "make": "Nissan",
-      "count": 23504
+      "count": 18007
     },
     {
       "make": "Kia",
-      "count": 23345
+      "count": 16202
+    },
+    {
+      "make": "Nissan",
+      "count": 16109
     },
     {
       "make": "KIA",
-      "count": 21882
+      "count": 15823
     },
     {
       "make": "Volvo",
-      "count": 20435
+      "count": 14228
     },
     {
       "make": "OPEL",
-      "count": 19755
+      "count": 13894
     }
   ],
   "makes_by_source": {
     "autoscout": [
       {
         "make": "Volkswagen",
-        "count": 34779
+        "count": 27828
       },
       {
         "make": "BMW",
-        "count": 21641
+        "count": 17182
       },
       {
         "make": "Audi",
-        "count": 19364
+        "count": 15510
       },
       {
         "make": "Mercedes-Benz",
-        "count": 17091
+        "count": 13719
       },
       {
         "make": "Skoda",
-        "count": 14396
+        "count": 11267
       },
       {
         "make": "Ford",
-        "count": 13173
+        "count": 10775
       },
       {
         "make": "Opel",
-        "count": 8077
-      },
-      {
-        "make": "SEAT",
-        "count": 7560
-      },
-      {
-        "make": "Peugeot",
-        "count": 7488
+        "count": 6362
       },
       {
         "make": "Hyundai",
-        "count": 7436
+        "count": 5899
+      },
+      {
+        "make": "Peugeot",
+        "count": 5878
+      },
+      {
+        "make": "SEAT",
+        "count": 5594
       },
       {
         "make": "Renault",
-        "count": 6451
+        "count": 4842
       },
       {
         "make": "Fiat",
-        "count": 5716
+        "count": 4674
       },
       {
         "make": "Citroen",
-        "count": 4949
-      },
-      {
-        "make": "Toyota",
-        "count": 4749
+        "count": 3943
       },
       {
         "make": "Kia",
-        "count": 4630
+        "count": 3679
+      },
+      {
+        "make": "Toyota",
+        "count": 3643
       }
     ],
     "coches": [
       {
         "make": "VOLKSWAGEN",
-        "count": 45340
+        "count": 31511
       },
       {
         "make": "MERCEDES-BENZ",
-        "count": 44422
+        "count": 31154
       },
       {
         "make": "BMW",
-        "count": 36116
+        "count": 25455
       },
       {
         "make": "AUDI",
-        "count": 33837
+        "count": 23575
       },
       {
         "make": "PEUGEOT",
-        "count": 33245
+        "count": 23365
       },
       {
         "make": "RENAULT",
-        "count": 28571
+        "count": 20016
       },
       {
         "make": "CITROEN",
-        "count": 26000
+        "count": 18145
       },
       {
         "make": "FORD",
-        "count": 25623
+        "count": 18007
       },
       {
         "make": "SEAT",
-        "count": 24824
+        "count": 17225
       },
       {
         "make": "OPEL",
-        "count": 19755
+        "count": 13894
       },
       {
         "make": "TOYOTA",
-        "count": 18952
+        "count": 13098
       },
       {
         "make": "HYUNDAI",
-        "count": 15249
-      },
-      {
-        "make": "NISSAN",
-        "count": 15224
+        "count": 10594
       },
       {
         "make": "KIA",
-        "count": 15176
+        "count": 10586
+      },
+      {
+        "make": "NISSAN",
+        "count": 10560
       },
       {
         "make": "FIAT",
-        "count": 11851
+        "count": 8220
       }
     ],
     "kleinanzeigen": [
       {
         "make": "Volkswagen",
-        "count": 264585
+        "count": 164471
       },
       {
         "make": "Mercedes-Benz",
-        "count": 164316
+        "count": 108111
       },
       {
         "make": "BMW",
-        "count": 155465
+        "count": 104115
       },
       {
         "make": "Opel",
-        "count": 122421
-      },
-      {
-        "make": "Audi",
-        "count": 113541
+        "count": 82587
       },
       {
         "make": "Ford",
-        "count": 103974
+        "count": 69834
+      },
+      {
+        "make": "Audi",
+        "count": 67708
       },
       {
         "make": "Skoda",
-        "count": 43291
+        "count": 29159
       },
       {
         "make": "Renault",
-        "count": 41186
+        "count": 26755
       },
       {
         "make": "Peugeot",
-        "count": 37081
+        "count": 24991
       },
       {
         "make": "Seat",
-        "count": 33941
+        "count": 21711
       },
       {
         "make": "Hyundai",
-        "count": 27971
+        "count": 18809
       },
       {
         "make": "Fiat",
-        "count": 25413
+        "count": 15762
       },
       {
         "make": "Citroen",
-        "count": 22863
+        "count": 15498
       },
       {
         "make": "MINI",
-        "count": 21019
+        "count": 14272
       },
       {
         "make": "Kia",
-        "count": 18715
+        "count": 12523
       }
     ],
     "willhaben": [
       {
         "make": "VW",
-        "count": 65472
+        "count": 48774
       },
       {
         "make": "BMW",
-        "count": 45174
+        "count": 33317
       },
       {
         "make": "Audi",
-        "count": 42287
+        "count": 31240
       },
       {
         "make": "Mercedes-Benz",
-        "count": 29326
+        "count": 21648
       },
       {
         "make": "Skoda",
-        "count": 20713
+        "count": 15337
       },
       {
         "make": "Ford",
-        "count": 19322
+        "count": 14701
       },
       {
         "make": "Opel",
-        "count": 16492
+        "count": 12474
       },
       {
         "make": "Seat",
-        "count": 14900
+        "count": 11014
       },
       {
         "make": "Peugeot",
-        "count": 12653
+        "count": 9547
       },
       {
         "make": "Renault",
-        "count": 11680
-      },
-      {
-        "make": "Mazda",
-        "count": 9087
+        "count": 8755
       },
       {
         "make": "Hyundai",
-        "count": 9086
+        "count": 6886
+      },
+      {
+        "make": "Mazda",
+        "count": 6850
       },
       {
         "make": "Fiat",
-        "count": 7837
+        "count": 6010
       },
       {
         "make": "Citroën",
-        "count": 7523
+        "count": 5634
       },
       {
         "make": "KIA",
-        "count": 6706
+        "count": 5237
       }
     ]
   },
   "by_fuel": [
     {
-      "label": "N/A",
-      "count": 711125
-    },
-    {
       "label": "Benzin",
-      "count": 617787
+      "count": 567970
     },
     {
       "label": "Diesel",
-      "count": 508539
+      "count": 439791
+    },
+    {
+      "label": "N/A",
+      "count": 239201
     },
     {
       "label": "Diésel",
-      "count": 222442
+      "count": 155818
     },
     {
       "label": "Gasolina",
-      "count": 165091
+      "count": 115335
     },
     {
       "label": "Híbrido",
-      "count": 61103
+      "count": 42618
     },
     {
       "label": "Elektro",
-      "count": 41528
+      "count": 34611
     },
     {
       "label": "Hybrid Elektro/Benzin",
-      "count": 32293
+      "count": 25400
     },
     {
       "label": "Elektro/Benzin",
-      "count": 26926
+      "count": 21100
     },
     {
       "label": "Híbrido enchufable",
-      "count": 24394
-    },
-    {
-      "label": "Eléctrico",
-      "count": 11640
+      "count": 17065
     },
     {
       "label": "Hybrid",
       "count": 10009
+    },
+    {
+      "label": "Eléctrico",
+      "count": 8357
     }
   ],
   "by_transmission": [
     {
-      "label": "N/A",
-      "count": 714341
-    },
-    {
       "label": "Automatik",
-      "count": 573299
+      "count": 499013
     },
     {
       "label": "Manuell",
-      "count": 392371
+      "count": 392359
     },
     {
-      "label": "Automático",
-      "count": 276521
+      "label": "N/A",
+      "count": 243370
     },
     {
       "label": "Schaltgetriebe",
-      "count": 272777
+      "count": 207944
+    },
+    {
+      "label": "Automático",
+      "count": 193138
     },
     {
       "label": "Manual",
-      "count": 214498
+      "count": 150546
     },
     {
       "label": "Halbautomatik",
-      "count": 1626
+      "count": 1350
     },
     {
       "label": "- Getriebe",
-      "count": 916
+      "count": 760
+    },
+    {
+      "label": "schaltet absolut richtig und ruckfrei;",
+      "count": 1
     },
     {
       "label": "Technisch sehr viel investiert",
@@ -688,10 +692,6 @@
     },
     {
       "label": "Lackierung: Bianco Avus",
-      "count": 1
-    },
-    {
-      "label": "Kontaktlose Zündung - Wasserpumpe Edelbrock - Ansaugspinne Edelbrock - Vergaser Edelbrock - Thermostat NEU - Lichtmaschine mit 90 AMP - Zusätzlicher elektrischer Kühlerlüfter über Thermostat - Benzinpumpe NEU - Hydrostößel NEU - Ventildeckeldichtungen NEU - Ölwannendichtung NEU - Neue Batterie 2025.",
       "count": 1
     }
   ],
@@ -711,11 +711,11 @@
       "Ford",
       "Skoda",
       "VW",
-      "Renault",
       "Peugeot",
+      "Renault",
       "Seat",
-      "VOLKSWAGEN",
       "Hyundai",
+      "VOLKSWAGEN",
       "MERCEDES-BENZ",
       "Fiat",
       "AUDI",
@@ -728,16 +728,16 @@
       "Citroen",
       "CITROEN",
       "FORD",
-      "Nissan",
       "Kia",
+      "Nissan",
       "KIA",
       "Volvo",
       "OPEL"
     ],
     "fuel_type": [
-      "N/A",
       "Benzin",
       "Diesel",
+      "N/A",
       "Diésel",
       "Gasolina",
       "Híbrido",
@@ -745,22 +745,22 @@
       "Hybrid Elektro/Benzin",
       "Elektro/Benzin",
       "Híbrido enchufable",
-      "Eléctrico",
-      "Hybrid"
+      "Hybrid",
+      "Eléctrico"
     ],
     "transmission": [
-      "N/A",
       "Automatik",
       "Manuell",
-      "Automático",
+      "N/A",
       "Schaltgetriebe",
+      "Automático",
       "Manual",
       "Halbautomatik",
       "- Getriebe",
+      "schaltet absolut richtig und ruckfrei;",
       "Technisch sehr viel investiert",
       "Luftfederung mit adaptiver Dämpfung",
-      "Lackierung: Bianco Avus",
-      "Kontaktlose Zündung - Wasserpumpe Edelbrock - Ansaugspinne Edelbrock - Vergaser Edelbrock - Thermostat NEU - Lichtmaschine mit 90 AMP - Zusätzlicher elektrischer Kühlerlüfter über Thermostat - Benzinpumpe NEU - Hydrostößel NEU - Ventildeckeldichtungen NEU - Ölwannendichtung NEU - Neue Batterie 2025."
+      "Lackierung: Bianco Avus"
     ]
   },
   "ranges": {
@@ -770,21 +770,21 @@
     ],
     "year_int": [
       1900,
-      2029
+      2028
     ],
     "mileage_km": [
       0,
-      491772373093
+      2027150000
     ]
   },
   "new_vs_used": [
     {
       "label": "No",
-      "count": 2392396
+      "count": 1646275
     },
     {
       "label": "Yes",
-      "count": 53961
+      "count": 42214
     }
   ]
 }
