@@ -471,6 +471,14 @@ export function modelTokens(model) {
     .map((t) => t.replace(/\./g, ""))
     .filter((t) => t.length >= 2 && !stop.has(t));
   if (filtered.length) return filtered;
+  // "5 Series" → compact "5SERIES" never appears in DE ads ("5er", "520d").
+  // Family needles (MODEL_FAMILY_ALIASES) carry matching instead.
+  const key = String(model || "")
+    .trim()
+    .toUpperCase();
+  const family =
+    MODEL_FAMILY_ALIASES[key] || MODEL_FAMILY_ALIASES[compactAlnum(key)];
+  if (family && family.length) return [];
   const compact = compactAlnum(text);
   return compact && compact !== "COMMERCIAL" ? [compact] : [];
 }
@@ -837,11 +845,20 @@ export function buildDecodedCompWhere(decoded, { yearTol = 1, preferFuel = true 
   }
   clauses.push(`(${makeParts.join(" OR ")})`);
 
-  // Prefer AND of primary tokens; if none, OR family needles; if still none, make+year.
+  // Prefer AND of primary tokens; OR family needles when tokens empty or both
+  // present (Explore sends both — Series models need needles for DE ads).
   const tokens = modelTokens(decoded.model);
   const needles = modelMatchNeedles(decoded.model);
   const hay = `upper(COALESCE(model,'') || ' ' || COALESCE(title,''))`;
-  if (tokens.length) {
+  if (tokens.length && needles.length) {
+    const tokenParts = tokens.map(() => `${hay} LIKE ?`);
+    for (const t of tokens) params.push(`%${t}%`);
+    const needleParts = needles.map(() => `${hay} LIKE ?`);
+    for (const n of needles) params.push(`%${n}%`);
+    clauses.push(
+      `((${tokenParts.join(" AND ")}) OR (${needleParts.join(" OR ")}))`
+    );
+  } else if (tokens.length) {
     for (const t of tokens) {
       clauses.push(`${hay} LIKE ?`);
       params.push(`%${t}%`);
