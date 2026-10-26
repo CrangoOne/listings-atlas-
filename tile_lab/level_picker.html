@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Tile Lab level picker</title>
-    <script type="module" crossorigin src="./assets/index-keep-floor.js"></script>
+    <script type="module" crossorigin src="./assets/index-object-slots.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-qKOAs9om.css">
   </head>
   <body>
@@ -31,7 +31,7 @@
         <section>
           <h2>Show layer</h2>
           <div id="viewLayerRow" class="row" role="group" aria-label="Show layer"></div>
-          <p class="legend">The picture stays the whole room. The grid and the selected cell show this layer. On carpet, a tap on the rug picture selects that rug.</p>
+          <p class="legend">The picture stays the whole room. The grid and the selected cell show this layer. On Rugs, a tap on the rug picture selects that rug. The bar is an Object. On top is for a glass on the bar.</p>
         </section>
 
         <section id="layerPanel">
@@ -72,7 +72,7 @@
             <label>Facing <select id="facingSel"></select></label>
             <button id="placeBtn" class="primary" type="button">Place at selected cell</button>
           </div>
-          <p class="legend">Layer is the stack on one cell, from floor up through carpet, wall, counter, and prop. The picture stays with the piece. Rugs paint under chairs and tables.</p>
+          <p class="legend">The stack on one cell is Floor, Rugs, Objects, then On top. Walls stay locked beside Objects. The bar is an Object and keeps its own picture. On top is where a glass on the bar will sit: it paints after that bar, and a closer chair still paints in front. Rugs paint under chairs and tables.</p>
           <p id="pieceNote" class="legend"></p>
           <div id="palette"></div>
           <div id="lockRow" class="row"></div>
