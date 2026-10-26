@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Tile Lab level picker</title>
-    <script type="module" crossorigin src="./assets/index-floor-stays.js"></script>
+    <script type="module" crossorigin src="./assets/index-place-floor.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-qKOAs9om.css">
     <style>
       #cells button.floorc { background: #8a6a4a !important; }
@@ -75,7 +75,7 @@
             <label>Facing <select id="facingSel"></select></label>
             <button id="placeBtn" class="primary" type="button">Place at selected cell</button>
           </div>
-          <p class="legend">The stack on one cell is Floor, Rugs, Objects, then On top. Walls stay locked beside Objects. The bar is an Object and keeps its own picture. On top is where a glass on the bar will sit: it paints after that bar, and a closer chair still paints in front. Rugs paint under chairs and tables.</p>
+          <p class="legend">The stack on one cell is Floor, Rugs, Objects, then On top. Floor is in this list: tap it, then tap a cell, to paint a missing floor tile. Erase of the floor stays locked. Walls stay locked beside Objects. The bar is an Object and keeps its own picture. On top is where a glass on the bar will sit: it paints after that bar, and a closer chair still paints in front. Rugs paint under chairs and tables.</p>
           <p id="pieceNote" class="legend"></p>
           <div id="palette"></div>
           <div id="lockRow" class="row"></div>
