@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:12:16Z",
+  "updated_at": "2026-10-29T19:12:54Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -248,13 +248,13 @@
     },
     {
       "worker_id": "autoscout_shard-w2",
-      "status": "running",
+      "status": "finished",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w2-1a84",
       "agent_url": "https://cursor.com/agents/bc-17a14878-5d2e-5667-9779-0ae603a84a60",
-      "notes": "Running crawl",
+      "notes": "Finished: +17174 rows (VW 10500, Peugeot 2549, Toyota 1531, Kia 1392, Land Rover 593, Mitsubishi 416, Jaguar 193). 60/60 facets exhausted in 811s (~1270/min, 1207 pages). Started with 139191 known IDs; ended 156365. No HTTP 429. CSV-only.",
       "makes": [
         "toyota",
         "jaguar",
@@ -264,7 +264,10 @@
         "land-rover",
         "kia"
       ],
-      "started_at": "2026-10-29T18:56:28Z"
+      "started_at": "2026-10-29T18:56:28Z",
+      "rows_added": 17174,
+      "rows_total": 17174,
+      "finished_at": "2026-10-29T19:12:22Z"
     },
     {
       "worker_id": "autoscout_shard-w1",
