@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:20:59Z",
+  "updated_at": "2026-10-29T19:26:03Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -346,13 +346,13 @@
     },
     {
       "worker_id": "willhaben_shard-w1",
-      "status": "running",
+      "status": "finished",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w1-1a84",
       "agent_url": "https://cursor.com/agents/bc-adcef8b7-f373-5993-b610-a90458957b00",
-      "notes": "Running crawl",
+      "notes": "Finished: +43208 rows (16/17 facets exhausted; leftover BMW brand SERP 0-novelty stopped after price shards + HTTP 429 loop at p514). BMW 18277 / Skoda 9087 / Ford 7807 / Citroen 3344 / Land Rover 1682 / Dacia 1550 / Alfa Romeo 1098 / Subaru 363. ~28min. Completeness Ad ID/Title/Price/Mileage/Fuel/Location 100%; Year 94.9%; Power 99.8%.",
       "makes": [
         "skoda",
         "subaru",
@@ -363,7 +363,11 @@
         "ford",
         "alfa-romeo"
       ],
-      "started_at": "2026-10-29T18:56:10Z"
+      "started_at": "2026-10-29T18:56:10Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/222",
+      "rows_added": 43208,
+      "rows_total": 43208,
+      "finished_at": "2026-10-29T19:25:34Z"
     },
     {
       "worker_id": "willhaben_shard-w3",
