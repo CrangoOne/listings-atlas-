@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T18:56:40Z",
+  "updated_at": "2026-10-29T18:56:43Z",
   "runs": [
     {
       "worker_id": "autoscout_shard-w2",
@@ -38,6 +38,26 @@
         "hyundai",
         "chevrolet",
         "cupra"
+      ],
+      "started_at": "2026-10-29T18:56:27Z"
+    },
+    {
+      "worker_id": "autoscout_shard-w4",
+      "status": "running",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w4-1a84",
+      "agent_url": "https://cursor.com/agents/bc-35cd0260-74f9-5de6-ba8c-589ff5567e49",
+      "notes": "Running crawl",
+      "makes": [
+        "dacia",
+        "hyundai",
+        "byd",
+        "fiat",
+        "porsche",
+        "audi",
+        "alfa-romeo"
       ],
       "started_at": "2026-10-29T18:56:27Z"
     },
