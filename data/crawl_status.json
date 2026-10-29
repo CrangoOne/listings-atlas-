@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-05T17:14:17Z",
+  "updated_at": "2026-10-29T18:56:15Z",
   "runs": [
+    {
+      "worker_id": "willhaben_shard-w5",
+      "status": "running",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w5-1a84",
+      "agent_url": "https://cursor.com/agents/bc-acdf4f49-92cc-5ef6-9e6f-d7b9fe7a0b29",
+      "notes": "Running crawl",
+      "makes": [
+        "jeep",
+        "mazda",
+        "chrysler",
+        "porsche",
+        "peugeot",
+        "vw",
+        "tesla"
+      ],
+      "started_at": "2026-10-29T18:56:00Z"
+    },
     {
       "worker_id": "ka_shard-w1",
       "job_id": "ka_shard",
