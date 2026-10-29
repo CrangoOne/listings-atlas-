@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T18:56:55Z",
+  "updated_at": "2026-10-29T18:56:58Z",
   "runs": [
     {
       "worker_id": "autoscout_shard-w3",
@@ -144,6 +144,27 @@
         "volkswagen",
         "land-rover",
         "kia"
+      ],
+      "started_at": "2026-10-29T18:56:28Z"
+    },
+    {
+      "worker_id": "autoscout_shard-w1",
+      "status": "running",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w1-1a84",
+      "agent_url": "https://cursor.com/agents/bc-7977ed33-a33d-5bec-891f-deec6745cf61",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/215",
+      "notes": "Running crawl",
+      "makes": [
+        "mercedes-benz",
+        "honda",
+        "cupra",
+        "opel",
+        "subaru",
+        "citroen",
+        "seat"
       ],
       "started_at": "2026-10-29T18:56:28Z"
     },
@@ -367,26 +388,6 @@
         "lexus"
       ],
       "started_at": "2026-10-29T18:55:57Z"
-    },
-    {
-      "worker_id": "autoscout_shard-w1",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-stale-first-20261029-pb3f",
-      "status": "running",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w1-1a84",
-      "makes": [
-        "mercedes-benz",
-        "honda",
-        "cupra",
-        "opel",
-        "subaru",
-        "citroen",
-        "seat"
-      ],
-      "started_at": "2026-10-29T18:55:24Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-7977ed33-a33d-5bec-891f-deec6745cf61"
     },
     {
       "worker_id": "ka_shard-w1",
