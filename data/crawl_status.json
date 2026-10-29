@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-29T18:56:53Z",
+  "updated_at": "2026-10-29T18:56:55Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w3",
+      "status": "running",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w3-1a84",
+      "agent_url": "https://cursor.com/agents/bc-0d49dfb4-21e2-5a5c-b37f-5d32a6343806",
+      "notes": "Running crawl",
+      "makes": [
+        "tesla",
+        "ford",
+        "smart",
+        "volvo",
+        "renault",
+        "lexus",
+        "suzuki"
+      ],
+      "started_at": "2026-10-29T18:56:44Z"
+    },
     {
       "worker_id": "autoscout_shard-w5",
       "status": "running",
@@ -347,26 +367,6 @@
         "lexus"
       ],
       "started_at": "2026-10-29T18:55:57Z"
-    },
-    {
-      "worker_id": "autoscout_shard-w3",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-stale-first-20261029-pb3f",
-      "status": "running",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w3-1a84",
-      "makes": [
-        "tesla",
-        "ford",
-        "smart",
-        "volvo",
-        "renault",
-        "lexus",
-        "suzuki"
-      ],
-      "started_at": "2026-10-29T18:55:24Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-0d49dfb4-21e2-5a5c-b37f-5d32a6343806"
     },
     {
       "worker_id": "autoscout_shard-w1",
