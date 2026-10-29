@@ -1,6 +1,25 @@
 {
-  "updated_at": "2026-10-29T18:57:23Z",
+  "updated_at": "2026-10-29T18:57:36Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w4",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w4-1a84",
+      "makes": [
+        "tesla",
+        "peugeot",
+        "ford",
+        "smart",
+        "kia",
+        "seat"
+      ],
+      "started_at": "2026-10-29T18:57:17Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-15de6070-7340-5a32-ba43-a48621a5b666"
+    },
     {
       "worker_id": "ka_shard-w3",
       "job_id": "ka_shard",
@@ -308,25 +327,6 @@
       "started_at": "2026-10-29T18:55:59Z",
       "notes": "Spawned cloud worker",
       "agent_url": "https://cursor.com/agents/bc-e8f4ae87-e5f1-547b-8f3a-623a86932fd5"
-    },
-    {
-      "worker_id": "ka_shard-w4",
-      "job_id": "ka_shard",
-      "wave_id": "wave-stale-first-20261029-pb3f",
-      "status": "running",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w4-1a84",
-      "makes": [
-        "tesla",
-        "peugeot",
-        "ford",
-        "smart",
-        "kia",
-        "seat"
-      ],
-      "started_at": "2026-10-29T18:55:59Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-15de6070-7340-5a32-ba43-a48621a5b666"
     },
     {
       "worker_id": "ka_shard-w2",
