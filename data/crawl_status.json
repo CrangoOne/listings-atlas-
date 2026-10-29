@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:13:30Z",
+  "updated_at": "2026-10-29T19:16:03Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -208,13 +208,13 @@
     },
     {
       "worker_id": "autoscout_shard-w5",
-      "status": "running",
+      "status": "finished",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w5-1a84",
       "agent_url": "https://cursor.com/agents/bc-d4e4f02d-11d0-5a8d-b906-7a4194baf8a5",
-      "notes": "Running crawl",
+      "notes": "Finished: +16123 rows (58/58 facets, 1072 pages, 726s, ~1332/min)",
       "makes": [
         "nissan",
         "mazda",
@@ -224,7 +224,10 @@
         "skoda",
         "mg"
       ],
-      "started_at": "2026-10-29T18:56:37Z"
+      "started_at": "2026-10-29T18:56:37Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/214",
+      "rows_added": 16123,
+      "finished_at": "2026-10-29T19:15:51Z"
     },
     {
       "worker_id": "coches_shard-w3",
