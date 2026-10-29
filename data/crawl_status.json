@@ -1,6 +1,27 @@
 {
-  "updated_at": "2026-10-29T18:56:15Z",
+  "updated_at": "2026-10-29T18:56:17Z",
   "runs": [
+    {
+      "worker_id": "willhaben_shard-w1",
+      "status": "running",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w1-1a84",
+      "agent_url": "https://cursor.com/agents/bc-adcef8b7-f373-5993-b610-a90458957b00",
+      "notes": "Running crawl",
+      "makes": [
+        "skoda",
+        "subaru",
+        "dacia",
+        "bmw",
+        "land-rover",
+        "citroen",
+        "ford",
+        "alfa-romeo"
+      ],
+      "started_at": "2026-10-29T18:56:10Z"
+    },
     {
       "worker_id": "willhaben_shard-w5",
       "status": "running",
