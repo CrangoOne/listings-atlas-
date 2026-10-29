@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:04:21Z",
+  "updated_at": "2026-10-29T19:05:21Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -181,13 +181,13 @@
     },
     {
       "worker_id": "autoscout_shard-w3",
-      "status": "running",
+      "status": "finished",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w3-1a84",
       "agent_url": "https://cursor.com/agents/bc-0d49dfb4-21e2-5a5c-b37f-5d32a6343806",
-      "notes": "Running crawl",
+      "notes": "Finished: +8112 rows (Ford 3899, Renault 2035, Volvo 889, Suzuki 867, Tesla 206, Lexus 125, smart 91; 143269 unique known), 29/29 facets exhausted in 281s (~1731.5 listings/min, 459 pages). Ad ID/Make/Title/Price/Year/Mileage/Power/Fuel/Transmission/Location/URL 100%; Model 96.7%; Body Type 71.9%; VIN 0%. Artifact autoscout_shard_tesla_ford_smart_volvo_renault_lexus_suzuki.csv",
       "makes": [
         "tesla",
         "ford",
@@ -197,7 +197,11 @@
         "lexus",
         "suzuki"
       ],
-      "started_at": "2026-10-29T18:56:44Z"
+      "started_at": "2026-10-29T18:56:44Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/213",
+      "rows_added": 8112,
+      "rows_total": 8112,
+      "finished_at": "2026-10-29T19:04:45Z"
     },
     {
       "worker_id": "autoscout_shard-w5",
