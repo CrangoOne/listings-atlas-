@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:07:36Z",
+  "updated_at": "2026-10-29T19:12:16Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -313,13 +313,13 @@
     },
     {
       "worker_id": "autoscout_shard-w4",
-      "status": "running",
+      "status": "finished",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w4-1a84",
       "agent_url": "https://cursor.com/agents/bc-35cd0260-74f9-5de6-ba8c-589ff5567e49",
-      "notes": "Running crawl",
+      "notes": "Finished: +13189 rows (Audi 6444, Hyundai 2356, Fiat 1631, Dacia 915, Porsche 834, BYD 628, Alfa Romeo 381; 843 pages, 523s)",
       "makes": [
         "dacia",
         "hyundai",
@@ -329,7 +329,11 @@
         "audi",
         "alfa-romeo"
       ],
-      "started_at": "2026-10-29T18:56:27Z"
+      "started_at": "2026-10-29T18:56:27Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/218",
+      "rows_added": 13189,
+      "rows_total": 13189,
+      "finished_at": "2026-10-29T19:12:01Z"
     },
     {
       "worker_id": "willhaben_shard-w1",
