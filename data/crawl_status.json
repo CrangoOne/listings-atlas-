@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:06:42Z",
+  "updated_at": "2026-10-29T19:07:04Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -25,7 +25,7 @@
       "worker_id": "coches_shard-w1",
       "job_id": "coches_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
-      "status": "running",
+      "status": "finished",
       "source": "coches",
       "branch": "cursor/daq-coches-shard-w1-1a84",
       "makes": [
@@ -36,8 +36,11 @@
         "to-1989"
       ],
       "started_at": "2026-10-29T18:58:19Z",
-      "notes": "Running crawl",
-      "agent_url": "https://cursor.com/agents/bc-2a28bbca-c03d-53ce-afdd-a4cf08b972d0"
+      "notes": "Finished: +54825 rows (38/38 facets, 886 pages, 355s ~9266/min; 2023=15845 2019=12400 2005-2009=19012 2012=5489 to-1989=1086)",
+      "agent_url": "https://cursor.com/agents/bc-2a28bbca-c03d-53ce-afdd-a4cf08b972d0",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/212",
+      "rows_added": 54825,
+      "finished_at": "2026-10-29T19:06:31Z"
     },
     {
       "worker_id": "coches_shard-w4",
