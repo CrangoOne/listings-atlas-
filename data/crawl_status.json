@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:12:54Z",
+  "updated_at": "2026-10-29T19:13:27Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -271,14 +271,14 @@
     },
     {
       "worker_id": "autoscout_shard-w1",
-      "status": "running",
+      "status": "finished",
       "job_id": "autoscout_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "autoscout",
       "branch": "cursor/daq-autoscout-shard-w1-1a84",
       "agent_url": "https://cursor.com/agents/bc-7977ed33-a33d-5bec-891f-deec6745cf61",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/215",
-      "notes": "Running crawl",
+      "notes": "Finished: +14092 rows (Mercedes-Benz 5383, Opel 2918, SEAT 2688, Citroen 1744, CUPRA 1011, Honda 249, Subaru 99; 71/71 facets, 973 pages, 645s)",
       "makes": [
         "mercedes-benz",
         "honda",
@@ -288,7 +288,9 @@
         "citroen",
         "seat"
       ],
-      "started_at": "2026-10-29T18:56:28Z"
+      "started_at": "2026-10-29T18:56:28Z",
+      "rows_added": 14092,
+      "finished_at": "2026-10-29T19:13:00Z"
     },
     {
       "worker_id": "willhaben_shard-w4",
