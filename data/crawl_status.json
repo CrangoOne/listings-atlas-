@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-29T18:56:58Z",
+  "updated_at": "2026-10-29T18:57:23Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w3",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w3-1a84",
+      "makes": [
+        "citroen",
+        "toyota",
+        "byd",
+        "cupra",
+        "porsche",
+        "audi",
+        "land_rover"
+      ],
+      "started_at": "2026-10-29T18:57:07Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-4c66914b-dc34-558e-9ce3-1173a7ddc1d0"
+    },
     {
       "worker_id": "autoscout_shard-w3",
       "status": "running",
@@ -307,26 +327,6 @@
       "started_at": "2026-10-29T18:55:59Z",
       "notes": "Spawned cloud worker",
       "agent_url": "https://cursor.com/agents/bc-15de6070-7340-5a32-ba43-a48621a5b666"
-    },
-    {
-      "worker_id": "ka_shard-w3",
-      "job_id": "ka_shard",
-      "wave_id": "wave-stale-first-20261029-pb3f",
-      "status": "running",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w3-1a84",
-      "makes": [
-        "citroen",
-        "toyota",
-        "byd",
-        "cupra",
-        "porsche",
-        "audi",
-        "land_rover"
-      ],
-      "started_at": "2026-10-29T18:55:59Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-4c66914b-dc34-558e-9ce3-1173a7ddc1d0"
     },
     {
       "worker_id": "ka_shard-w2",
