@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-29T18:56:46Z",
+  "updated_at": "2026-10-29T18:56:53Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w5",
+      "status": "running",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w5-1a84",
+      "agent_url": "https://cursor.com/agents/bc-d4e4f02d-11d0-5a8d-b906-7a4194baf8a5",
+      "notes": "Running crawl",
+      "makes": [
+        "nissan",
+        "mazda",
+        "bmw",
+        "jeep",
+        "mini",
+        "skoda",
+        "mg"
+      ],
+      "started_at": "2026-10-29T18:56:37Z"
+    },
     {
       "worker_id": "coches_shard-w5",
       "job_id": "coches_shard",
@@ -327,26 +347,6 @@
         "lexus"
       ],
       "started_at": "2026-10-29T18:55:57Z"
-    },
-    {
-      "worker_id": "autoscout_shard-w5",
-      "job_id": "autoscout_shard",
-      "wave_id": "wave-stale-first-20261029-pb3f",
-      "status": "running",
-      "source": "autoscout",
-      "branch": "cursor/daq-autoscout-shard-w5-1a84",
-      "makes": [
-        "nissan",
-        "mazda",
-        "bmw",
-        "jeep",
-        "mini",
-        "skoda",
-        "mg"
-      ],
-      "started_at": "2026-10-29T18:55:25Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-d4e4f02d-11d0-5a8d-b906-7a4194baf8a5"
     },
     {
       "worker_id": "autoscout_shard-w3",
