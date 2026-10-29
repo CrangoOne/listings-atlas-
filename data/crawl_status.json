@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:07:04Z",
+  "updated_at": "2026-10-29T19:07:36Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -289,13 +289,13 @@
     },
     {
       "worker_id": "willhaben_shard-w4",
-      "status": "running",
+      "status": "finished",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w4-1a84",
       "agent_url": "https://cursor.com/agents/bc-8e3c751e-02f9-5abc-ac4a-bea245145f56",
-      "notes": "Running crawl",
+      "notes": "Finished: +13228 rows (hyundai 4764, toyota 3020, cupra 1677, nissan 1641, mini 1326, chevrolet 463, smart 337); all 7 brand SERPs exhausted",
       "makes": [
         "mini",
         "toyota",
@@ -305,7 +305,11 @@
         "chevrolet",
         "cupra"
       ],
-      "started_at": "2026-10-29T18:56:27Z"
+      "started_at": "2026-10-29T18:56:27Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/216",
+      "rows_added": 13228,
+      "rows_total": 13228,
+      "finished_at": "2026-10-29T19:07:06Z"
     },
     {
       "worker_id": "autoscout_shard-w4",
