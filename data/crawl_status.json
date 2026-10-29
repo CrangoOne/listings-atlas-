@@ -1,6 +1,24 @@
 {
-  "updated_at": "2026-10-29T18:58:28Z",
+  "updated_at": "2026-10-29T18:58:33Z",
   "runs": [
+    {
+      "worker_id": "coches_shard-w1",
+      "job_id": "coches_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "status": "running",
+      "source": "coches",
+      "branch": "cursor/daq-coches-shard-w1-1a84",
+      "makes": [
+        "2023",
+        "2019",
+        "2005-2009",
+        "2012",
+        "to-1989"
+      ],
+      "started_at": "2026-10-29T18:58:19Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-2a28bbca-c03d-53ce-afdd-a4cf08b972d0"
+    },
     {
       "worker_id": "coches_shard-w4",
       "job_id": "coches_shard",
@@ -187,24 +205,6 @@
       "started_at": "2026-10-29T18:56:35Z",
       "notes": "Spawned cloud worker",
       "agent_url": "https://cursor.com/agents/bc-4dd8af9f-4a82-5297-b4e1-977ae0892e3d"
-    },
-    {
-      "worker_id": "coches_shard-w1",
-      "job_id": "coches_shard",
-      "wave_id": "wave-stale-first-20261029-pb3f",
-      "status": "running",
-      "source": "coches",
-      "branch": "cursor/daq-coches-shard-w1-1a84",
-      "makes": [
-        "2023",
-        "2019",
-        "2005-2009",
-        "2012",
-        "to-1989"
-      ],
-      "started_at": "2026-10-29T18:56:35Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-2a28bbca-c03d-53ce-afdd-a4cf08b972d0"
     },
     {
       "worker_id": "autoscout_shard-w2",
