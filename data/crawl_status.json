@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-29T18:56:34Z",
+  "updated_at": "2026-10-29T18:56:37Z",
   "runs": [
+    {
+      "worker_id": "autoscout_shard-w2",
+      "status": "running",
+      "job_id": "autoscout_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "autoscout",
+      "branch": "cursor/daq-autoscout-shard-w2-1a84",
+      "agent_url": "https://cursor.com/agents/bc-17a14878-5d2e-5667-9779-0ae603a84a60",
+      "notes": "Running crawl",
+      "makes": [
+        "toyota",
+        "jaguar",
+        "mitsubishi",
+        "peugeot",
+        "volkswagen",
+        "land-rover",
+        "kia"
+      ],
+      "started_at": "2026-10-29T18:56:28Z"
+    },
     {
       "worker_id": "willhaben_shard-w1",
       "status": "running",
