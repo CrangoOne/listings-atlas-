@@ -1,6 +1,26 @@
 {
-  "updated_at": "2026-10-29T18:58:33Z",
+  "updated_at": "2026-10-29T18:58:34Z",
   "runs": [
+    {
+      "worker_id": "ka_shard-w2",
+      "job_id": "ka_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "status": "running",
+      "source": "kleinanzeigen",
+      "branch": "cursor/daq-ka-shard-w2-1a84",
+      "makes": [
+        "hyundai",
+        "bmw",
+        "jeep",
+        "dacia",
+        "mazda",
+        "volkswagen",
+        "honda"
+      ],
+      "started_at": "2026-10-29T18:58:24Z",
+      "notes": "Running crawl",
+      "agent_url": "https://cursor.com/agents/bc-cf402dbf-aa4a-5351-ab25-5631fa747c6e"
+    },
     {
       "worker_id": "coches_shard-w1",
       "job_id": "coches_shard",
@@ -348,26 +368,6 @@
         "tesla"
       ],
       "started_at": "2026-10-29T18:56:00Z"
-    },
-    {
-      "worker_id": "ka_shard-w2",
-      "job_id": "ka_shard",
-      "wave_id": "wave-stale-first-20261029-pb3f",
-      "status": "running",
-      "source": "kleinanzeigen",
-      "branch": "cursor/daq-ka-shard-w2-1a84",
-      "makes": [
-        "hyundai",
-        "bmw",
-        "jeep",
-        "dacia",
-        "mazda",
-        "volkswagen",
-        "honda"
-      ],
-      "started_at": "2026-10-29T18:55:59Z",
-      "notes": "Spawned cloud worker",
-      "agent_url": "https://cursor.com/agents/bc-cf402dbf-aa4a-5351-ab25-5631fa747c6e"
     },
     {
       "worker_id": "willhaben_shard-w2",
