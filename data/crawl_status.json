@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T18:56:17Z",
+  "updated_at": "2026-10-29T18:56:22Z",
   "runs": [
     {
       "worker_id": "willhaben_shard-w1",
@@ -41,6 +41,27 @@
         "tesla"
       ],
       "started_at": "2026-10-29T18:56:00Z"
+    },
+    {
+      "worker_id": "willhaben_shard-w2",
+      "status": "running",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w2-1a84",
+      "agent_url": "https://cursor.com/agents/bc-77df9c54-8d39-5dac-b7b5-64939443730b",
+      "notes": "Running crawl",
+      "makes": [
+        "seat",
+        "dodge",
+        "suzuki",
+        "opel",
+        "jaguar",
+        "mitsubishi",
+        "renault",
+        "lexus"
+      ],
+      "started_at": "2026-10-29T18:55:57Z"
     },
     {
       "worker_id": "ka_shard-w1",
