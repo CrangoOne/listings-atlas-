@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T18:56:37Z",
+  "updated_at": "2026-10-29T18:56:40Z",
   "runs": [
     {
       "worker_id": "autoscout_shard-w2",
@@ -20,6 +20,26 @@
         "kia"
       ],
       "started_at": "2026-10-29T18:56:28Z"
+    },
+    {
+      "worker_id": "willhaben_shard-w4",
+      "status": "running",
+      "job_id": "willhaben_shard",
+      "wave_id": "wave-stale-first-20261029-pb3f",
+      "source": "willhaben",
+      "branch": "cursor/daq-willhaben-shard-w4-1a84",
+      "agent_url": "https://cursor.com/agents/bc-8e3c751e-02f9-5abc-ac4a-bea245145f56",
+      "notes": "Running crawl",
+      "makes": [
+        "mini",
+        "toyota",
+        "smart",
+        "nissan",
+        "hyundai",
+        "chevrolet",
+        "cupra"
+      ],
+      "started_at": "2026-10-29T18:56:27Z"
     },
     {
       "worker_id": "willhaben_shard-w1",
