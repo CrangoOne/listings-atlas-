@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:26:03Z",
+  "updated_at": "2026-10-29T19:29:26Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -371,14 +371,14 @@
     },
     {
       "worker_id": "willhaben_shard-w3",
-      "status": "running",
+      "status": "finished",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w3-1a84",
       "agent_url": "https://cursor.com/agents/bc-59926dff-064c-59c2-a927-3c25c45843eb",
       "pr_url": "https://github.com/CrangoOne/Cursor/pull/221",
-      "notes": "Running crawl",
+      "notes": "Finished: +38558 rows (audi 16190, mercedes 11852, kia 3119, fiat 3027, volvo 2236, mg 1271, honda 863). Price shards + empty-streak brands exhausted.",
       "makes": [
         "fiat",
         "audi",
@@ -388,7 +388,10 @@
         "honda",
         "kia"
       ],
-      "started_at": "2026-10-29T18:56:09Z"
+      "started_at": "2026-10-29T18:56:09Z",
+      "rows_added": 38558,
+      "rows_total": 38558,
+      "finished_at": "2026-10-29T19:28:56Z"
     },
     {
       "worker_id": "willhaben_shard-w5",
