@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T19:16:03Z",
+  "updated_at": "2026-10-29T19:20:59Z",
   "runs": [
     {
       "worker_id": "ka_shard-w2",
@@ -388,13 +388,13 @@
     },
     {
       "worker_id": "willhaben_shard-w5",
-      "status": "running",
+      "status": "finished",
       "job_id": "willhaben_shard",
       "wave_id": "wave-stale-first-20261029-pb3f",
       "source": "willhaben",
       "branch": "cursor/daq-willhaben-shard-w5-1a84",
       "agent_url": "https://cursor.com/agents/bc-acdf4f49-92cc-5ef6-9e6f-d7b9fe7a0b29",
-      "notes": "Running crawl",
+      "notes": "Finished: +39017 rows (vw 25358, peugeot 5530, mazda 4072, porsche 1932, jeep 1563, tesla 345, chrysler 217; price shards + brands exhausted; stopped vw SERP 0-novelty)",
       "makes": [
         "jeep",
         "mazda",
@@ -404,7 +404,11 @@
         "vw",
         "tesla"
       ],
-      "started_at": "2026-10-29T18:56:00Z"
+      "started_at": "2026-10-29T18:56:00Z",
+      "pr_url": "https://github.com/CrangoOne/Cursor/pull/220",
+      "rows_added": 39017,
+      "rows_total": 39017,
+      "finished_at": "2026-10-29T19:20:20Z"
     },
     {
       "worker_id": "willhaben_shard-w2",
