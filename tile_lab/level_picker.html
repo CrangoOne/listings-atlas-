@@ -17,6 +17,8 @@
       }
       #viewport.panning { cursor: grabbing; }
       #viewport.pan-mode { cursor: move; }
+      #viewport.multi-mode { cursor: crosshair; touch-action: none; }
+      #viewport.moving-sel { cursor: grabbing; }
       .cam { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
       .cam button { min-width: 44px; padding: 6px 10px; }
       #zoomLabel {
@@ -25,6 +27,7 @@
         color: var(--dim);
         font-variant-numeric: tabular-nums;
       }
+      #cells button.multi { outline: 3px solid #7fd1ff; z-index: 1; }
     </style>
   </head>
   <body>
@@ -41,6 +44,7 @@
         <span id="zoomLabel">Fit</span>
         <button id="zoomInBtn" type="button" title="Zoom in">+</button>
         <button id="panBtn" type="button" title="Drag the view to pan">Pan</button>
+        <button id="multiBtn" type="button" title="Marquee-select and drag-move objects">Multi</button>
       </div>
     </header>
 
@@ -50,7 +54,7 @@
           <p id="loading" class="overlay">Loading atlases…</p>
           <canvas id="iso" hidden></canvas>
         </div>
-        <p class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · pinch zooms on touch.</p>
+        <p class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi: drag a box to select, then drag the selection to move (any layers).</p>
       </section>
 
       <div class="tools">
@@ -85,6 +89,10 @@
         <section>
           <h2 id="cellTitle">Selected cell</h2>
           <div id="cellObjs" class="row"></div>
+          <div id="multiBanner" class="row" hidden>
+            <span id="multiText"></span>
+            <button id="multiClear" type="button">Clear selection</button>
+          </div>
           <div id="moveBanner" class="row" hidden>
             <span id="moveText"></span>
             <button id="moveCancel" type="button">Cancel move</button>
