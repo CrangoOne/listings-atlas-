@@ -27,6 +27,17 @@
         color: var(--dim);
         font-variant-numeric: tabular-nums;
       }
+      #camStatus {
+        width: 100%;
+        margin: 0;
+        padding: 6px 10px 8px;
+        background: var(--panel, #2a211c);
+        border-bottom: 1px solid var(--line, #4a3a30);
+        color: var(--dim, #b39d86);
+        font-size: 13px;
+      }
+      #camStatus.active { color: var(--accent, #e8a64c); font-weight: 600; }
+      #multiBtn.on { background: var(--accent, #e8a64c); color: #2a1a08; border-color: var(--accent, #e8a64c); outline: none; }
       #cells button.multi { outline: 3px solid #7fd1ff; z-index: 1; }
     </style>
   </head>
@@ -44,9 +55,10 @@
         <span id="zoomLabel">Fit</span>
         <button id="zoomInBtn" type="button" title="Zoom in">+</button>
         <button id="panBtn" type="button" title="Drag the view to pan">Pan</button>
-        <button id="multiBtn" type="button" title="Marquee-select and drag-move objects">Multi</button>
+        <button id="multiBtn" type="button" title="Marquee-select and drag-move objects" aria-pressed="false">Multi</button>
       </div>
     </header>
+    <p id="camStatus" role="status">Camera: wheel zooms, drag pans. Tap Multi to select many objects.</p>
 
     <main>
       <section class="preview">
@@ -54,7 +66,7 @@
           <p id="loading" class="overlay">Loading atlases…</p>
           <canvas id="iso" hidden></canvas>
         </div>
-        <p class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi: drag a box to select, then drag the selection to move (any layers).</p>
+        <p id="viewLegend" class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi: drag a box to select, then drag the selection to move (any layers).</p>
       </section>
 
       <div class="tools">
