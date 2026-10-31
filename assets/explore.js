@@ -657,16 +657,33 @@ export function initExplore(summary) {
     if (open) form.vin?.focus();
   }
 
+  const API_FETCH_TIMEOUT_MS = 45000;
+
   async function apiFetch(pathWithQuery) {
     if (!apiClient) throw new Error("Not connected to query API");
     const url = `${apiClient.base}${pathWithQuery}`;
-    const res = await fetch(url, {
-      headers: {
-        Accept: "application/json",
-        "X-Atlas-Key": apiClient.key,
-      },
-      cache: "no-store",
-    });
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), API_FETCH_TIMEOUT_MS);
+    let res;
+    try {
+      res = await fetch(url, {
+        headers: {
+          Accept: "application/json",
+          "X-Atlas-Key": apiClient.key,
+        },
+        cache: "no-store",
+        signal: ctrl.signal,
+      });
+    } catch (err) {
+      if (err?.name === "AbortError") {
+        throw new Error(
+          "Fly query timed out. Pick a make (or source / price / year) with model searches — unscoped scans are blocked."
+        );
+      }
+      throw err;
+    } finally {
+      clearTimeout(timer);
+    }
     if (!res.ok) {
       let detail = "";
       try {
@@ -677,6 +694,43 @@ export function initExplore(summary) {
       throw new Error(detail || `HTTP ${res.status}`);
     }
     return res.json();
+  }
+
+  function hasSelectiveFilter(params) {
+    if (
+      params.get("make") ||
+      params.getAll("source").length ||
+      params.get("fuel_type") ||
+      params.get("transmission") ||
+      params.get("body_type")
+    ) {
+      return true;
+    }
+    const vin = (params.get("vin") || "").replace(/[^A-Za-z0-9]/g, "");
+    if (vin.length >= 4) return true;
+    for (const key of [
+      "price_min",
+      "price_max",
+      "year_min",
+      "year_max",
+      "km_min",
+      "km_max",
+      "ps_min",
+      "ps_max",
+    ]) {
+      if ((params.get(key) || "").trim() !== "") return true;
+    }
+    return false;
+  }
+
+  function assertScopedFilter(params) {
+    const model = (params.get("model") || "").trim();
+    const q = (params.get("q") || "").trim();
+    if ((model || q) && !hasSelectiveFilter(params)) {
+      throw new Error(
+        "Add a make (or source / price / year / fuel) before searching by model or free text."
+      );
+    }
   }
 
   function collectFilterParams() {
@@ -1208,9 +1262,11 @@ export function initExplore(summary) {
 
     if (apiClient) {
       const p = collectFilterParams();
+      assertScopedFilter(p);
       p.set("mode", "filter");
       p.set("page", String(page));
       p.set("page_size", String(PAGE_SIZE));
+      resultMeta.textContent = "Fetching from Fly…";
       const body = await apiFetch(`/v1/listings?${p}`);
       lastCount = body.total || 0;
       const rows = body.rows || [];
