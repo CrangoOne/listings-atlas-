@@ -555,9 +555,25 @@ function refreshZoomLabel() {
     const n = s("panBtn");
     n && n.classList.toggle("on", !!l.panMode);
     const o = s("multiBtn");
-    o && o.classList.toggle("on", !!l.multiMode);
+    if (o) {
+        o.classList.toggle("on", !!l.multiMode);
+        o.setAttribute("aria-pressed", l.multiMode ? "true" : "false");
+        o.textContent = l.multiMode ? "Multi on" : "Multi";
+    }
     const r = s("viewport");
-    r && (r.classList.toggle("pan-mode", !!l.panMode), r.classList.toggle("multi-mode", !!l.multiMode && !l.panMode), r.classList.toggle("moving-sel", !!(l.dragMove && l.selection.length)))
+    r && (r.classList.toggle("pan-mode", !!l.panMode), r.classList.toggle("multi-mode", !!l.multiMode && !l.panMode), r.classList.toggle("moving-sel", !!(l.dragMove && l.selection.length)));
+    const status = document.getElementById("camStatus");
+    if (status) {
+        status.classList.toggle("active", !!(l.multiMode || l.panMode || l.selection.length));
+        if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — drag them on the picture to move." : "Multi on: drag a box on the picture to select, or tap cells. Then drag the selection to move.";
+        else if (l.panMode) status.textContent = "Pan on: drag the picture to move the camera.";
+        else if (l.selection.length) status.textContent = l.selection.length + " selected — turn Multi on or drag a selected object to move.";
+        else status.textContent = "Camera: wheel zooms, drag pans. Tap Multi to select many objects.";
+    }
+    const legend = document.getElementById("viewLegend");
+    if (legend) {
+        legend.textContent = l.multiMode ? "Multi mode: drag a box to select (any layer), tap to add/remove, drag the selection to move. Pan button pans instead." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
+    }
 }
 
 function placementKey(e) {
@@ -600,11 +616,11 @@ function setSelection(items, announce) {
         const key = placementKey(item);
         seen.has(key) || (seen.add(key), l.selection.push(item))
     }
-    refreshMultiBanner(), !1 !== announce && y(l.selection.length ? "Selected " + l.selection.length + " object" + (1 === l.selection.length ? "" : "s") + " — drag to move." : "Selection cleared.")
+    refreshMultiBanner(), refreshZoomLabel(), !1 !== announce && y(l.selection.length ? "Selected " + l.selection.length + " object" + (1 === l.selection.length ? "" : "s") + " — drag to move." : "Selection cleared.")
 }
 
 function clearSelection() {
-    l.selection = [], l.marquee = null, l.dragMove = null, refreshMultiBanner(), z(), V()
+    l.selection = [], l.marquee = null, l.dragMove = null, refreshMultiBanner(), refreshZoomLabel(), z(), V()
 }
 
 function toggleSelectionAt(e, t) {
@@ -1290,7 +1306,12 @@ if (s("levelSel").addEventListener("change", e => {
     }), s("zoomInBtn").addEventListener("click", () => zoomBy(ZOOM_STEP)), s("zoomOutBtn").addEventListener("click", () => zoomBy(1 / ZOOM_STEP)), s("zoomFitBtn").addEventListener("click", () => setZoom("fit")), s("panBtn").addEventListener("click", () => {
         l.panMode = !l.panMode, l.panMode && (l.multiMode = !1), refreshZoomLabel(), y(l.panMode ? "Pan mode: drag the picture to move the camera." : "Pan off: drag still pans after a short slide; tap selects.")
     }), s("multiBtn").addEventListener("click", () => {
-        l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: drag a box to select objects on any layer, tap to add/remove, drag the selection to move." : "Multi off.")
+        l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: drag a box on the picture to select, then drag the selection to move." : "Multi off.");
+        const status = document.getElementById("camStatus");
+        status && status.scrollIntoView({
+            block: "nearest",
+            behavior: "smooth"
+        })
     }), s("multiClear").addEventListener("click", () => {
         clearSelection(), y("Selection cleared.")
     }), s("mSelect").addEventListener("click", () => {
