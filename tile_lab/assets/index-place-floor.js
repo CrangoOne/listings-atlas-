@@ -449,6 +449,10 @@ const g = _e,
         grid: !0,
         zoom: "fit",
         panMode: !1,
+        multiMode: !1,
+        selection: [],
+        marquee: null,
+        dragMove: null,
         move: null,
         view: "all"
     },
@@ -550,8 +554,120 @@ function refreshZoomLabel() {
     t && t.classList.toggle("on", "fit" === l.zoom);
     const n = s("panBtn");
     n && n.classList.toggle("on", !!l.panMode);
+    const o = s("multiBtn");
+    o && o.classList.toggle("on", !!l.multiMode);
     const r = s("viewport");
-    r && r.classList.toggle("pan-mode", !!l.panMode)
+    r && (r.classList.toggle("pan-mode", !!l.panMode), r.classList.toggle("multi-mode", !!l.multiMode && !l.panMode), r.classList.toggle("moving-sel", !!(l.dragMove && l.selection.length)))
+}
+
+function placementKey(e) {
+    return e.id + "|" + e.x + "|" + e.y + "|" + e.layer
+}
+
+function toSelItem(e) {
+    const t = k.objects.find(t => t.id === e.id);
+    return {
+        id: e.id,
+        x: e.x,
+        y: e.y,
+        piece: e.piece,
+        layer: e.layer,
+        facing: t && t.facing || ""
+    }
+}
+
+function movableAt(e, t) {
+    return shownAt(e, t).filter(e => {
+        if ("floor" === e.piece || "floor" === e.layer) return !1;
+        const t = k.objects.find(t => t.id === e.id);
+        return t && !M(k, g, t)
+    }).map(toSelItem)
+}
+
+function isSelected(e) {
+    const t = placementKey(e);
+    return l.selection.some(e => placementKey(e) === t)
+}
+
+function cellInSelection(e, t) {
+    return l.selection.some(l => l.x === e && l.y === t)
+}
+
+function setSelection(items, announce) {
+    const seen = new Set;
+    l.selection = [];
+    for (const item of items) {
+        const key = placementKey(item);
+        seen.has(key) || (seen.add(key), l.selection.push(item))
+    }
+    refreshMultiBanner(), !1 !== announce && y(l.selection.length ? "Selected " + l.selection.length + " object" + (1 === l.selection.length ? "" : "s") + " — drag to move." : "Selection cleared.")
+}
+
+function clearSelection() {
+    l.selection = [], l.marquee = null, l.dragMove = null, refreshMultiBanner(), z(), V()
+}
+
+function toggleSelectionAt(e, t) {
+    const n = movableAt(e, t);
+    if (!n.length) return void y("Nothing unlocked to multi-select here.", "bad");
+    const r = new Set(n.map(placementKey));
+    let o;
+    o = n.every(isSelected) ? l.selection.filter(e => !r.has(placementKey(e))) : l.selection.concat(n.filter(e => !isSelected(e))), setSelection(o), l.sel = [e, t], P()
+}
+
+function collectInWorldRect(x0, y0, x1, y1) {
+    const minX = Math.min(x0, x1),
+        maxX = Math.max(x0, x1),
+        minY = Math.min(y0, y1),
+        maxY = Math.max(y0, y1),
+        b = I(),
+        found = [];
+    for (let cy = b.min; cy <= b.max; cy++)
+        for (let cx = b.min; cx <= b.max; cx++) {
+            const [wx, wy] = N(cx, cy);
+            if (wx < minX || wx > maxX || wy < minY || wy > maxY) continue;
+            for (const p of movableAt(cx, cy)) found.push(p)
+        }
+    return found
+}
+
+function selectInWorldRect(e, t, n, r, o) {
+    const a = collectInWorldRect(e, t, n, r);
+    setSelection(o ? l.selection.concat(a) : a), P()
+}
+
+function refreshMultiBanner() {
+    const e = s("multiBanner");
+    if (!e) return;
+    if (!l.selection.length) return void(e.hidden = !0);
+    e.hidden = !1;
+    const t = [...new Set(l.selection.map(e => layerLabel(e.layer)))].join(", ");
+    s("multiText").textContent = l.selection.length + " selected (" + t + "). Drag on the picture to move them together."
+}
+
+function commitSelectionMove(e, t) {
+    if (!e && !t || !l.selection.length) return !1;
+    const n = I();
+    for (const r of l.selection) {
+        const o = r.x + e,
+            a = r.y + t;
+        if (o < n.min || o > n.max || a < n.min || a > n.max) return y("Move would leave the level bounds.", "bad"), !1
+    }
+    const r = l.selection.map(e => ({
+            verb: "erase",
+            x: e.x,
+            y: e.y,
+            layer: e.layer
+        })),
+        o = l.selection.map(n => Z(n.piece, n.x + e, n.y + t, {
+            facing: n.facing,
+            id: n.id,
+            layer: n.layer
+        }));
+    return !!L(r.concat(o)) && (l.selection = l.selection.map(n => Object.assign({}, n, {
+        x: n.x + e,
+        y: n.y + t
+    })), l.sel && (l.sel = [l.sel[0] + e, l.sel[1] + t]), l.move = null, s("moveBanner").hidden = !0, x("Moved " + l.selection.length + " object" + (1 === l.selection.length ? "" : "s") + " by [" + e + "," + t + "]"), refreshMultiBanner(), !0)
 }
 
 function fe(anchor) {
@@ -633,13 +749,37 @@ function z() {
                 h.fillStyle = "rgba(0,0,0,.55)", h.fillRect(e - o / 2 - 4, n - 20, o + 8, 20), h.fillStyle = "#fff", h.fillText(r, e, n - 5)
             }
     }
-    if (l.sel) {
+    const dx = l.dragMove && l.dragMove.dx || 0,
+        dy = l.dragMove && l.dragMove.dy || 0;
+    if (l.selection.length) {
+        h.lineWidth = 4, h.strokeStyle = "#7fd1ff";
+        for (const e of l.selection) {
+            const [t, n] = N(e.x, e.y);
+            H(t, n), h.stroke()
+        }
+        if (dx || dy) {
+            h.strokeStyle = "#e8a64c", h.setLineDash([10, 8]);
+            for (const e of l.selection) {
+                const [t, n] = N(e.x + dx, e.y + dy);
+                H(t, n), h.stroke()
+            }
+            h.setLineDash([])
+        }
+    } else if (l.sel) {
         const [e, t] = N(l.sel[0], l.sel[1]);
         H(e, t), h.lineWidth = 5, h.strokeStyle = "#e8a64c", h.stroke()
     }
     if (l.move) {
         const [e, t] = N(l.move.x, l.move.y);
         H(e, t), h.lineWidth = 5, h.strokeStyle = "#7fd1ff", h.setLineDash([12, 8]), h.stroke(), h.setLineDash([])
+    }
+    if (l.marquee) {
+        const e = l.marquee,
+            t = Math.min(e.x0, e.x1),
+            n = Math.min(e.y0, e.y1),
+            r = Math.abs(e.x1 - e.x0),
+            o = Math.abs(e.y1 - e.y0);
+        h.fillStyle = "rgba(127,209,255,.15)", h.strokeStyle = "#7fd1ff", h.lineWidth = 2, h.setLineDash([6, 4]), h.fillRect(t, n, r, o), h.strokeRect(t, n, r, o), h.setLineDash([])
     }
     h.restore()
 }
@@ -677,7 +817,7 @@ function q() {
         n.className = "axis", n.textContent = String(l), t.appendChild(n);
         for (let n = e.min; n <= e.max; n++) {
             const e = document.createElement("button");
-            e.type = "button", e.dataset.x = String(n), e.dataset.y = String(l), e.addEventListener("click", () => ge(n, l)), t.appendChild(e)
+            e.type = "button", e.dataset.x = String(n), e.dataset.y = String(l), e.addEventListener("click", ev => ge(n, l, ev)), t.appendChild(e)
         }
     }
 }
@@ -692,7 +832,7 @@ function V() {
             c = ne(k, g).filter(e => e.x === t && e.y === n),
             i = c.some(e => "floor" === e.layer),
             s = c.some(e => "wall" === e.layer);
-        e.className = (i || "floor" === l.view && r.length ? "floorc" : "") + (o && s || "wall" === l.view && r.length ? " wall" : "") + (r.length || i ? "" : " void"), l.sel && l.sel[0] === t && l.sel[1] === n && (e.className += " sel"), l.move && l.move.x === t && l.move.y === n && (e.className += " src"), e.textContent = o ? a ? shortPiece(a.piece) : i ? "floor" : "" : r.length && r.every(e => "carpet" === e.layer) ? r.length > 1 ? r.length + " rugs" : "rug" : r.length ? [...new Set(r.map(e => shortPiece(e.piece)))].join(" ") : i ? "floor" : "", e.style.color = a ? Be[a.paint || a.layer] : i ? "#e6d2b8" : "", e.title = r.length ? r.map(e => e.id).join(", ") : i ? "floor" : t + "," + n
+        e.className = (i || "floor" === l.view && r.length ? "floorc" : "") + (o && s || "wall" === l.view && r.length ? " wall" : "") + (r.length || i ? "" : " void"), cellInSelection(t, n) ? e.className += " multi" : l.sel && l.sel[0] === t && l.sel[1] === n && (e.className += " sel"), l.move && l.move.x === t && l.move.y === n && (e.className += " src"), e.textContent = o ? a ? shortPiece(a.piece) : i ? "floor" : "" : r.length && r.every(e => "carpet" === e.layer) ? r.length > 1 ? r.length + " rugs" : "rug" : r.length ? [...new Set(r.map(e => shortPiece(e.piece)))].join(" ") : i ? "floor" : "", e.style.color = a ? Be[a.paint || a.layer] : i ? "#e6d2b8" : "", e.title = r.length ? r.map(e => e.id).join(", ") : i ? "floor" : t + "," + n
     }
 }
 
@@ -785,14 +925,8 @@ function ze() {
 }
 
 function Re(e, t) {
-    l.move = {
-        x: e.x,
-        y: e.y,
-        piece: e.piece,
-        layer: e.layer,
-        id: e.id,
-        facing: t
-    }, s("moveBanner").hidden = !1, s("moveText").textContent = "Moving " + e.id + " from [" + e.x + ", " + e.y + "]: tap the target cell.", l.mode = "select", T(), z(), V()
+    const n = toSelItem(e);
+    t && (n.facing = t), l.selection = [n], l.move = null, s("moveBanner").hidden = !0, l.mode = "select", l.multiMode = !0, T(), refreshZoomLabel(), refreshMultiBanner(), z(), V(), y("Selected " + n.id + ". Drag it on the picture, or Multi-marquee more objects.")
 }
 
 function He() {
@@ -913,7 +1047,7 @@ function viewButtons() {
 
 function P() {
     const e = se();
-    e && y(e, "bad"), z(), viewButtons(), V(), Ie(), Fe(), he(), G(), ze()
+    e && y(e, "bad"), z(), viewButtons(), V(), Ie(), Fe(), he(), G(), ze(), refreshMultiBanner(), refreshZoomLabel()
 }
 
 function x(e) {
@@ -940,7 +1074,7 @@ function me(e, t) {
     })]) && x("Placed " + l.piece + " on " + layerLabel(l.layer) + " at [" + e + ", " + t + "]")
 }
 
-function ge(e, t) {
+function ge(e, t, n) {
     if (l.move) {
         const n = l.move,
             r = Z(n.piece, e, t, {
@@ -955,6 +1089,9 @@ function ge(e, t) {
             layer: n.layer
         }, r]) && (l.move = null, s("moveBanner").hidden = !0, l.sel = [e, t], x("Moved " + n.id + " to [" + e + ", " + t + "]")))
     }
+    const r = !!(n && (n.shiftKey || n.metaKey || n.ctrlKey || l.multiMode));
+    if ("select" === l.mode && r) return void toggleSelectionAt(e, t);
+    "select" === l.mode && l.selection.length && !r && clearSelection();
     if (l.sel = [e, t], "place" === l.mode) return me(e, t), void s("layerPanel").scrollIntoView({
         block: "nearest",
         behavior: "smooth"
@@ -967,16 +1104,16 @@ function ge(e, t) {
         };
         return l.view && "all" !== l.view && (n.layer = l.view), void(L([n]) && x("Erased " + (n.layer ? layerLabel(n.layer) : "unlocked objects") + " at [" + e + ", " + t + "]" + ("floor" === n.layer ? "." : ". The floor stays.")))
     }
-    const n = shownAt(e, t).filter(e => "floor" !== e.piece),
-        r = [...new Set(n.map(e => e.id))];
-    P(), y(r.length ? "Selected " + r.join(", ") + "." : "Selected [" + e + ", " + t + "]."), s("cellTitle").scrollIntoView({
+    const o = shownAt(e, t).filter(e => "floor" !== e.piece),
+        a = [...new Set(o.map(e => e.id))];
+    P(), y(a.length ? "Selected " + a.join(", ") + "." : "Selected [" + e + ", " + t + "]."), s("cellTitle").scrollIntoView({
         block: "nearest",
         behavior: "smooth"
     })
 }
 
 function Je(e) {
-    l.levelName = e, l.groups = ae(e), l.sel = null, l.move = null, s("moveBanner").hidden = !0, s("levelSel").value = e, K(), q(), P()
+    l.levelName = e, l.groups = ae(e), l.sel = null, l.move = null, clearSelection(), s("moveBanner").hidden = !0, s("levelSel").value = e, K(), q(), P()
 }
 async function ye(e, t) {
     try {
@@ -992,55 +1129,115 @@ async function ye(e, t) {
         spacePan = !1,
         pinch = null;
     const wantsPan = e => l.panMode || spacePan || e.altKey || 1 === e.button || 4 === e.buttons;
-    const selectAtClient = (e, t) => {
+    const wantsMulti = e => "select" === l.mode && (l.multiMode || e && (e.shiftKey || e.metaKey || e.ctrlKey));
+    const cellAtClient = (e, t) => {
         const n = clientToWorld(e, t);
-        if (!n) return;
+        if (!n) return null;
         const [r, o] = worldToCell(n.x, n.y),
             a = I();
-        r < a.min || r > a.max || o < a.min || o > a.max || ge(r, o)
+        return r < a.min || r > a.max || o < a.min || o > a.max ? null : [r, o]
+    };
+    const selectAtClient = (e, t, n) => {
+        const r = cellAtClient(e, t);
+        r && ge(r[0], r[1], n)
+    };
+    const cellDeltaFromPointer = (e, t) => {
+        const n = clientToWorld(e.x, e.y),
+            r = clientToWorld(t.x, t.y);
+        if (!n || !r) return [0, 0];
+        const [o, a] = worldToCell(n.x, n.y),
+            [c, i] = worldToCell(r.x, r.y);
+        return [c - o, i - a]
     };
     const onPointerDown = e => {
         if ("touch" === e.pointerType && pinch) return;
         if (0 !== e.button && 1 !== e.button) return;
-        const t = "touch" === e.pointerType;
-        drag = {
+        const t = "touch" === e.pointerType,
+            n = clientToWorld(e.clientX, e.clientY),
+            r = cellAtClient(e.clientX, e.clientY),
+            o = wantsPan(e);
+        let a = "pan";
+        o || "select" !== l.mode ? a = o ? "pan" : t ? "tap" : "pan" : r && cellInSelection(r[0], r[1]) && l.selection.length ? a = "moveSel" : wantsMulti(e) ? a = "marquee" : a = t ? "tap" : "pan", drag = {
             pointerId: e.pointerId,
             x: e.clientX,
             y: e.clientY,
             sl: viewport.scrollLeft,
             st: viewport.scrollTop,
             moved: !1,
-            pan: t ? !1 : wantsPan(e),
-            touch: t
+            pan: "pan" === a && !t,
+            touch: t,
+            kind: a,
+            world0: n,
+            additive: !!(e.shiftKey || e.metaKey || e.ctrlKey)
         };
-        if (!t) {
+        if ("marquee" === a || "moveSel" === a || drag.pan) {
             try {
                 viewport.setPointerCapture(e.pointerId)
-            } catch (n) {}
-            drag.pan && (viewport.classList.add("panning"), e.preventDefault())
+            } catch (c) {}
+            e.preventDefault()
         }
+        drag.pan && viewport.classList.add("panning"), "moveSel" === a && (l.dragMove = {
+            dx: 0,
+            dy: 0
+        }, refreshZoomLabel(), z()), "marquee" === a && n && (l.marquee = {
+            x0: n.x,
+            y0: n.y,
+            x1: n.x,
+            y1: n.y
+        }, z())
     };
     const onPointerMove = e => {
         if (!drag || e.pointerId !== drag.pointerId) return;
         const t = e.clientX - drag.x,
             n = e.clientY - drag.y;
-        !drag.moved && Math.hypot(t, n) >= PAN_SLOP && (drag.moved = !0);
-        if (drag.touch) return;
-        drag.moved && !drag.pan && (drag.pan = !0, drag.x = e.clientX, drag.y = e.clientY, drag.sl = viewport.scrollLeft, drag.st = viewport.scrollTop, viewport.classList.add("panning"));
-        drag.pan && drag.moved && (viewport.scrollLeft = drag.sl - (e.clientX - drag.x), viewport.scrollTop = drag.st - (e.clientY - drag.y), e.preventDefault())
+        if (!drag.moved && Math.hypot(t, n) >= PAN_SLOP && (drag.moved = !0), "marquee" === drag.kind) {
+            const t = clientToWorld(e.clientX, e.clientY);
+            return t && l.marquee && (l.marquee.x1 = t.x, l.marquee.y1 = t.y, z()), void e.preventDefault()
+        }
+        if ("moveSel" === drag.kind) {
+            const [t, n] = cellDeltaFromPointer({
+                x: drag.x,
+                y: drag.y
+            }, {
+                x: e.clientX,
+                y: e.clientY
+            });
+            return (!l.dragMove || l.dragMove.dx !== t || l.dragMove.dy !== n) && (l.dragMove = {
+                dx: t,
+                dy: n
+            }, z(), V()), void e.preventDefault()
+        }
+        if (drag.touch && "pan" !== drag.kind) return;
+        drag.moved && !drag.pan && "pan" === drag.kind && (drag.pan = !0, drag.x = e.clientX, drag.y = e.clientY, drag.sl = viewport.scrollLeft, drag.st = viewport.scrollTop, viewport.classList.add("panning")), drag.moved && !drag.pan && "tap" === drag.kind && (drag.kind = "pan", drag.pan = !0, drag.x = e.clientX, drag.y = e.clientY, drag.sl = viewport.scrollLeft, drag.st = viewport.scrollTop, viewport.classList.add("panning")), drag.pan && drag.moved && (viewport.scrollLeft = drag.sl - (e.clientX - drag.x), viewport.scrollTop = drag.st - (e.clientY - drag.y), e.preventDefault())
     };
     const onPointerUp = e => {
         if (!drag || e.pointerId !== drag.pointerId) return;
-        const t = !drag.moved && !drag.pan,
-            n = drag.touch;
-        viewport.classList.remove("panning");
-        if (!n) try {
-            viewport.releasePointerCapture(e.pointerId)
-        } catch (r) {}
-        drag = null, t && (0 === e.button || "touch" === e.pointerType) && selectAtClient(e.clientX, e.clientY)
+        const t = drag.kind,
+            n = !drag.moved,
+            r = drag.additive || l.multiMode;
+        if (viewport.classList.remove("panning"), (() => {
+                try {
+                    viewport.releasePointerCapture(e.pointerId)
+                } catch (n) {}
+            })(), "marquee" === t) {
+            const t = l.marquee;
+            return l.marquee = null, drag.moved && t ? selectInWorldRect(t.x0, t.y0, t.x1, t.y1, drag.additive) : n ? selectAtClient(e.clientX, e.clientY, {
+                shiftKey: r
+            }) : z(), void(drag = null)
+        }
+        if ("moveSel" === t) {
+            const t = l.dragMove || {
+                dx: 0,
+                dy: 0
+            };
+            return l.dragMove = null, refreshZoomLabel(), drag.moved && (t.dx || t.dy) ? commitSelectionMove(t.dx, t.dy) : n ? selectAtClient(e.clientX, e.clientY, {
+                shiftKey: r
+            }) : (z(), V()), void(drag = null)
+        }
+        drag = null, n && (0 === e.button || "touch" === e.pointerType) && selectAtClient(e.clientX, e.clientY, e)
     };
     viewport.addEventListener("pointerdown", onPointerDown), viewport.addEventListener("pointermove", onPointerMove), viewport.addEventListener("pointerup", onPointerUp), viewport.addEventListener("pointercancel", onPointerUp), viewport.addEventListener("lostpointercapture", () => {
-        drag = null, viewport.classList.remove("panning")
+        drag = null, viewport.classList.remove("panning"), (l.marquee || l.dragMove) && (l.marquee = null, l.dragMove = null, refreshZoomLabel(), z())
     }), viewport.addEventListener("wheel", e => {
         e.preventDefault();
         const t = Math.min(2, Math.max(.5, Math.exp(-e.deltaY * .0018)));
@@ -1081,7 +1278,7 @@ async function ye(e, t) {
         pinch = null
     }), window.addEventListener("keydown", e => {
         const t = (e.target || {}).tagName || "";
-        "Space" === e.code && !e.repeat && !/^(INPUT|TEXTAREA|SELECT)$/.test(t) && (spacePan = !0, viewport.classList.add("pan-mode"), e.preventDefault()), ("+" === e.key || "=" === e.key) && !/^(INPUT|TEXTAREA)$/.test(t) && zoomBy(ZOOM_STEP), "-" === e.key && !/^(INPUT|TEXTAREA)$/.test(t) && zoomBy(1 / ZOOM_STEP), "0" === e.key && !/^(INPUT|TEXTAREA)$/.test(t) && setZoom("fit")
+        "Space" === e.code && !e.repeat && !/^(INPUT|TEXTAREA|SELECT)$/.test(t) && (spacePan = !0, viewport.classList.add("pan-mode"), e.preventDefault()), ("+" === e.key || "=" === e.key) && !/^(INPUT|TEXTAREA)$/.test(t) && zoomBy(ZOOM_STEP), "-" === e.key && !/^(INPUT|TEXTAREA)$/.test(t) && zoomBy(1 / ZOOM_STEP), "0" === e.key && !/^(INPUT|TEXTAREA)$/.test(t) && setZoom("fit"), "Escape" === e.key && !/^(INPUT|TEXTAREA)$/.test(t) && (l.selection.length || l.marquee || l.dragMove ? (clearSelection(), y("Selection cleared."), e.preventDefault()) : l.move && He())
     }), window.addEventListener("keyup", e => {
         "Space" === e.code && (spacePan = !1, l.panMode || viewport.classList.remove("pan-mode"))
     })
@@ -1091,13 +1288,17 @@ if (s("levelSel").addEventListener("change", e => {
     }), s("gridBtn").addEventListener("click", () => {
         l.grid = !l.grid, s("gridBtn").classList.toggle("on", l.grid), z()
     }), s("zoomInBtn").addEventListener("click", () => zoomBy(ZOOM_STEP)), s("zoomOutBtn").addEventListener("click", () => zoomBy(1 / ZOOM_STEP)), s("zoomFitBtn").addEventListener("click", () => setZoom("fit")), s("panBtn").addEventListener("click", () => {
-        l.panMode = !l.panMode, refreshZoomLabel(), y(l.panMode ? "Pan mode: drag the picture to move the camera." : "Pan off: drag still pans after a short slide; tap selects.")
+        l.panMode = !l.panMode, l.panMode && (l.multiMode = !1), refreshZoomLabel(), y(l.panMode ? "Pan mode: drag the picture to move the camera." : "Pan off: drag still pans after a short slide; tap selects.")
+    }), s("multiBtn").addEventListener("click", () => {
+        l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: drag a box to select objects on any layer, tap to add/remove, drag the selection to move." : "Multi off.")
+    }), s("multiClear").addEventListener("click", () => {
+        clearSelection(), y("Selection cleared.")
     }), s("mSelect").addEventListener("click", () => {
         l.mode = "select", T()
     }), s("mPlace").addEventListener("click", () => {
-        l.mode = "place", T(), y(l.piece ? "Tap a cell to place " + l.piece : "Pick a piece below, then tap a cell.")
+        l.mode = "place", clearSelection(), T(), y(l.piece ? "Tap a cell to place " + l.piece : "Pick a piece below, then tap a cell.")
     }), s("mErase").addEventListener("click", () => {
-        l.mode = "erase", T(), y("floor" === l.view ? "Tap a cell to erase a floor tile. The floor layer has to be unlocked." : l.view && "all" !== l.view ? "Tap a cell to erase the " + layerLabel(l.view) + " layer. The floor stays." : "Tap a cell to erase its unlocked objects. The floor stays locked.")
+        l.mode = "erase", clearSelection(), T(), y("floor" === l.view ? "Tap a cell to erase a floor tile. The floor layer has to be unlocked." : l.view && "all" !== l.view ? "Tap a cell to erase the " + layerLabel(l.view) + " layer. The floor stays." : "Tap a cell to erase its unlocked objects. The floor stays locked.")
     }), s("placeBtn").addEventListener("click", () => {
         l.sel ? me(l.sel[0], l.sel[1]) : y("Select a cell first.", "bad")
     }), s("facingSel").addEventListener("change", e => {
@@ -1150,7 +1351,18 @@ for (const e of Object.keys(E.levels)) s("levelSel").append(new Option(e, e));
 l.groups = ae(l.levelName), s("levelSel").value = l.levelName, Ue().then(() => {
     s("loading").hidden = !0, w.hidden = !1, K(), q(), pe(), G(), ue(), T();
     const e = se();
-    P(), y(e || "Tap a cell, or pick a piece and use Tap to place.", e ? "bad" : void 0)
+    P(), y(e || "Tap a cell, or pick a piece and use Tap to place.", e ? "bad" : void 0), window.__pickerReady = !0
 }).catch(e => {
     s("loading").textContent = "Could not load the " + (e instanceof Error ? e.message : "atlas") + " atlas."
 });
+window.__picker = {
+    state: l,
+    get view() {
+        return v
+    },
+    commitSelectionMove: commitSelectionMove,
+    clientToWorld: clientToWorld,
+    worldToCell: worldToCell,
+    m2l: N,
+    opToLine: ce
+};
