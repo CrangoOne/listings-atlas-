@@ -8,6 +8,23 @@
     <link rel="stylesheet" crossorigin href="./assets/index-qKOAs9om.css">
     <style>
       #cells button.floorc { background: #8a6a4a !important; }
+      #viewport {
+        max-height: 70vh;
+        min-height: 240px;
+        touch-action: pan-x pan-y;
+        overscroll-behavior: contain;
+        cursor: grab;
+      }
+      #viewport.panning { cursor: grabbing; }
+      #viewport.pan-mode { cursor: move; }
+      .cam { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+      .cam button { min-width: 44px; padding: 6px 10px; }
+      #zoomLabel {
+        min-width: 3.5rem;
+        text-align: center;
+        color: var(--dim);
+        font-variant-numeric: tabular-nums;
+      }
     </style>
   </head>
   <body>
@@ -18,7 +35,13 @@
       </div>
       <select id="levelSel" aria-label="Level"></select>
       <button id="gridBtn" class="on" type="button">Grid</button>
-      <button id="zoomBtn" type="button">Fit</button>
+      <div class="cam" role="group" aria-label="Camera">
+        <button id="zoomOutBtn" type="button" title="Zoom out">−</button>
+        <button id="zoomFitBtn" type="button" title="Fit level in view">Fit</button>
+        <span id="zoomLabel">Fit</span>
+        <button id="zoomInBtn" type="button" title="Zoom in">+</button>
+        <button id="panBtn" type="button" title="Drag the view to pan">Pan</button>
+      </div>
     </header>
 
     <main>
@@ -27,7 +50,7 @@
           <p id="loading" class="overlay">Loading atlases…</p>
           <canvas id="iso" hidden></canvas>
         </div>
-        <p class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left.</p>
+        <p class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · pinch zooms on touch.</p>
       </section>
 
       <div class="tools">
