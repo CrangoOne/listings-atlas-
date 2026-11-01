@@ -453,6 +453,7 @@ const g = _e,
         selection: [],
         marquee: null,
         dragMove: null,
+        groupMovePick: !1,
         move: null,
         view: "all"
     },
@@ -564,15 +565,16 @@ function refreshZoomLabel() {
     r && (r.classList.toggle("pan-mode", !!l.panMode), r.classList.toggle("multi-mode", !!l.multiMode && !l.panMode), r.classList.toggle("moving-sel", !!(l.dragMove && l.selection.length)));
     const status = document.getElementById("camStatus");
     if (status) {
-        status.classList.toggle("active", !!(l.multiMode || l.panMode || l.selection.length));
-        if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — drag them on the picture to move." : "Multi on: drag a box on the picture to select, or tap cells. Then drag the selection to move.";
+        status.classList.toggle("active", !!(l.multiMode || l.panMode || l.selection.length || l.groupMovePick));
+        if (l.groupMovePick && l.selection.length) status.textContent = "Tap the destination cell to move " + l.selection.length + " selected object(s).";
+        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — drag them, or tap Move… then tap the destination." : "Multi on: drag a box to select (rugs count from any covered cell). Then drag or use Move…";
         else if (l.panMode) status.textContent = "Pan on: drag the picture to move the camera.";
-        else if (l.selection.length) status.textContent = l.selection.length + " selected — turn Multi on or drag a selected object to move.";
+        else if (l.selection.length) status.textContent = l.selection.length + " selected — drag them on the picture, or tap Move…";
         else status.textContent = "Camera: wheel zooms, drag pans. Tap Multi to select many objects.";
     }
     const legend = document.getElementById("viewLegend");
     if (legend) {
-        legend.textContent = l.multiMode ? "Multi mode: drag a box to select (any layer), tap to add/remove, drag the selection to move. Pan button pans instead." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
+        legend.textContent = l.multiMode ? "Multi mode: drag a box to select (rugs from any covered cell), tap to add/remove, drag or Move… to relocate. Pan button pans instead." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
     }
 }
 
@@ -592,12 +594,25 @@ function toSelItem(e) {
     }
 }
 
+function canMovePlacement(e) {
+    if ("floor" === e.piece || "floor" === e.layer) return !1;
+    const t = k.objects.find(t => t.id === e.id);
+    return !!(t && !M(k, g, t))
+}
+
 function movableAt(e, t) {
-    return shownAt(e, t).filter(e => {
-        if ("floor" === e.piece || "floor" === e.layer) return !1;
-        const t = k.objects.find(t => t.id === e.id);
-        return t && !M(k, g, t)
-    }).map(toSelItem)
+    const n = [],
+        r = new Set,
+        o = e => {
+            if (!canMovePlacement(e)) return;
+            const t = toSelItem(e),
+                o = placementKey(t);
+            r.has(o) || (r.add(o), n.push(t))
+        };
+    for (const n of shownAt(e, t)) o(n);
+    if (!l.view || "all" === l.view || "carpet" === l.view)
+        for (const n of ne(k, g)) "carpet" === n.layer && carpetCovers(n.x, n.y, e, t) && o(n);
+    return n
 }
 
 function isSelected(e) {
@@ -606,7 +621,17 @@ function isSelected(e) {
 }
 
 function cellInSelection(e, t) {
-    return l.selection.some(l => l.x === e && l.y === t)
+    return l.selection.some(l => l.x === e && l.y === t || "carpet" === l.layer && carpetCovers(l.x, l.y, e, t))
+}
+
+function selectionPivot() {
+    return l.sel && cellInSelection(l.sel[0], l.sel[1]) ? {
+        x: l.sel[0],
+        y: l.sel[1]
+    } : l.selection.length ? {
+        x: l.selection[0].x,
+        y: l.selection[0].y
+    } : null
 }
 
 function setSelection(items, announce) {
@@ -620,7 +645,7 @@ function setSelection(items, announce) {
 }
 
 function clearSelection() {
-    l.selection = [], l.marquee = null, l.dragMove = null, refreshMultiBanner(), refreshZoomLabel(), z(), V()
+    l.selection = [], l.marquee = null, l.dragMove = null, l.groupMovePick = !1, refreshMultiBanner(), refreshZoomLabel(), z(), V()
 }
 
 function toggleSelectionAt(e, t) {
@@ -655,10 +680,12 @@ function selectInWorldRect(e, t, n, r, o) {
 function refreshMultiBanner() {
     const e = s("multiBanner");
     if (!e) return;
-    if (!l.selection.length) return void(e.hidden = !0);
+    if (!l.selection.length) return l.groupMovePick = !1, void(e.hidden = !0);
     e.hidden = !1;
     const t = [...new Set(l.selection.map(e => layerLabel(e.layer)))].join(", ");
-    s("multiText").textContent = l.selection.length + " selected (" + t + "). Drag on the picture to move them together."
+    s("multiText").textContent = l.groupMovePick ? l.selection.length + " selected — tap the destination cell on the picture or grid." : l.selection.length + " selected (" + t + "). Drag them, or tap Move… then tap the destination.";
+    const n = s("multiMoveBtn");
+    n && n.classList.toggle("on", !!l.groupMovePick)
 }
 
 function commitSelectionMove(e, t) {
@@ -767,21 +794,22 @@ function z() {
     }
     const dx = l.dragMove && l.dragMove.dx || 0,
         dy = l.dragMove && l.dragMove.dy || 0;
-    if (l.selection.length) {
-        h.lineWidth = 4, h.strokeStyle = "#7fd1ff";
-        for (const e of l.selection) {
-            const [t, n] = N(e.x, e.y);
-            H(t, n), h.stroke()
-        }
-        if (dx || dy) {
-            h.strokeStyle = "#e8a64c", h.setLineDash([10, 8]);
-            for (const e of l.selection) {
-                const [t, n] = N(e.x + dx, e.y + dy);
-                H(t, n), h.stroke()
-            }
-            h.setLineDash([])
-        }
-    } else if (l.sel) {
+    const strokeSelection = (atDx, atDy, style, dashed) => {
+        h.lineWidth = 4, h.strokeStyle = style, dashed && h.setLineDash([10, 8]);
+        for (const e of l.selection)
+            if ("carpet" === e.layer)
+                for (let t = -1; t <= 1; t++)
+                    for (let n = -1; n <= 1; n++) {
+                        const [r, o] = N(e.x + n + atDx, e.y + t + atDy);
+                        H(r, o), h.stroke()
+                    } else {
+                        const [t, n] = N(e.x + atDx, e.y + atDy);
+                        H(t, n), h.stroke()
+                    }
+        dashed && h.setLineDash([])
+    };
+    if (l.selection.length) strokeSelection(0, 0, "#7fd1ff", !1), (dx || dy) && strokeSelection(dx, dy, "#e8a64c", !0);
+    else if (l.sel) {
         const [e, t] = N(l.sel[0], l.sel[1]);
         H(e, t), h.lineWidth = 5, h.strokeStyle = "#e8a64c", h.stroke()
     }
@@ -1105,6 +1133,10 @@ function ge(e, t, n) {
             layer: n.layer
         }, r]) && (l.move = null, s("moveBanner").hidden = !0, l.sel = [e, t], x("Moved " + n.id + " to [" + e + ", " + t + "]")))
     }
+    if (l.groupMovePick && l.selection.length) {
+        const n = selectionPivot();
+        return l.groupMovePick = !1, refreshMultiBanner(), n ? (l.sel = [e, t], void commitSelectionMove(e - n.x, t - n.y)) : void 0
+    }
     const r = !!(n && (n.shiftKey || n.metaKey || n.ctrlKey || l.multiMode));
     if ("select" === l.mode && r) return void toggleSelectionAt(e, t);
     "select" === l.mode && l.selection.length && !r && clearSelection();
@@ -1171,9 +1203,15 @@ async function ye(e, t) {
         const t = "touch" === e.pointerType,
             n = clientToWorld(e.clientX, e.clientY),
             r = cellAtClient(e.clientX, e.clientY),
-            o = wantsPan(e);
+            o = wantsPan(e),
+            additive = !!(e.shiftKey || e.metaKey || e.ctrlKey);
         let a = "pan";
-        o || "select" !== l.mode ? a = o ? "pan" : t ? "tap" : "pan" : r && cellInSelection(r[0], r[1]) && l.selection.length ? a = "moveSel" : wantsMulti(e) ? a = "marquee" : a = t ? "tap" : "pan", drag = {
+        if (!o && "select" === l.mode) {
+            if (l.selection.length && ((r && cellInSelection(r[0], r[1])) || (l.multiMode && !additive))) a = "moveSel";
+            else if (wantsMulti(e)) a = "marquee";
+            else a = t ? "tap" : "pan";
+        } else a = o ? "pan" : t ? "tap" : "pan";
+        drag = {
             pointerId: e.pointerId,
             x: e.clientX,
             y: e.clientY,
@@ -1184,7 +1222,7 @@ async function ye(e, t) {
             touch: t,
             kind: a,
             world0: n,
-            additive: !!(e.shiftKey || e.metaKey || e.ctrlKey)
+            additive
         };
         if ("marquee" === a || "moveSel" === a || drag.pan) {
             try {
@@ -1314,6 +1352,8 @@ if (s("levelSel").addEventListener("change", e => {
         })
     }), s("multiClear").addEventListener("click", () => {
         clearSelection(), y("Selection cleared.")
+    }), s("multiMoveBtn").addEventListener("click", () => {
+        l.selection.length && (l.groupMovePick = !0, l.multiMode = !0, l.panMode = !1, l.mode = "select", T(), refreshZoomLabel(), refreshMultiBanner(), y("Tap the destination cell. The selection moves so the highlighted cell lands there."))
     }), s("mSelect").addEventListener("click", () => {
         l.mode = "select", T()
     }), s("mPlace").addEventListener("click", () => {
