@@ -1118,10 +1118,18 @@ function Z(e, t, l, n) {
 
 function me(e, t) {
     if (!l.piece) return void y("Pick a piece first.", "bad");
-    L([Z(l.piece, e, t, {
+    const n = {
         facing: l.facing,
         layer: l.layer
-    })]) && x("Placed " + l.piece + " on " + layerLabel(l.layer) + " at [" + e + ", " + t + "]")
+    };
+    // Tap-to-place always creates a new object. Without a fresh id, put merges
+    // into an existing same-piece/same-facing object (e.g. a new chair becomes
+    // another cell of chair_left_w). Floor still joins the floor fill/object.
+    if ("floor" !== l.piece) {
+        const r = U(D(), g, X());
+        n.id = Ne(r.level || D(), l.piece)
+    }
+    L([Z(l.piece, e, t, n)]) && x("Placed " + l.piece + " on " + layerLabel(l.layer) + " at [" + e + ", " + t + "]")
 }
 
 function ge(e, t, n) {
