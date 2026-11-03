@@ -695,9 +695,21 @@ function refreshMultiBanner() {
     if (!l.selection.length) return l.groupMovePick = !1, void(e.hidden = !0);
     e.hidden = !1;
     const t = [...new Set(l.selection.map(e => layerLabel(e.layer)))].join(", ");
-    s("multiText").textContent = l.groupMovePick ? l.selection.length + " selected — tap the destination cell on the picture or grid." : l.selection.length + " selected (" + t + "). Drag them, or tap Move… then tap the destination.";
+    s("multiText").textContent = l.groupMovePick ? l.selection.length + " selected — tap the destination cell on the picture or grid." : l.selection.length + " selected (" + t + "). Move…, Erase, or Clear selection.";
     const n = s("multiMoveBtn");
     n && n.classList.toggle("on", !!l.groupMovePick)
+}
+
+function eraseSelection() {
+    if (!l.selection.length) return !1;
+    const e = l.selection.length,
+        t = l.selection.map(e => ({
+            verb: "erase",
+            x: e.x,
+            y: e.y,
+            layer: e.layer
+        }));
+    return !!L(t) && (clearSelection(), x("Erased " + e + " selected object" + (1 === e ? "" : "s")), !0)
 }
 
 function commitSelectionMove(e, t) {
@@ -1381,6 +1393,8 @@ if (s("levelSel").addEventListener("change", e => {
         })
     }), s("multiClear").addEventListener("click", () => {
         clearSelection(), y("Selection cleared.")
+    }), s("multiEraseBtn").addEventListener("click", () => {
+        eraseSelection()
     }), s("multiMoveBtn").addEventListener("click", () => {
         l.selection.length && (l.groupMovePick = !0, l.multiMode = !0, l.panMode = !1, l.mode = "select", T(), refreshZoomLabel(), refreshMultiBanner(), y("Tap the destination cell. The selection moves so the highlighted cell lands there."))
     }), s("mSelect").addEventListener("click", () => {
@@ -1388,6 +1402,7 @@ if (s("levelSel").addEventListener("change", e => {
     }), s("mPlace").addEventListener("click", () => {
         l.mode = "place", clearSelection(), T(), y(l.piece ? "Tap a cell to place " + l.piece : "Pick a piece below, then tap a cell.")
     }), s("mErase").addEventListener("click", () => {
+        if (l.selection.length) return eraseSelection(), l.mode = "select", void T();
         l.mode = "erase", clearSelection(), T(), y("floor" === l.view ? "Tap a cell to erase a floor tile. The floor layer has to be unlocked." : l.view && "all" !== l.view ? "Tap a cell to erase the " + layerLabel(l.view) + " layer. The floor stays." : "Tap a cell to erase its unlocked objects. The floor stays locked.")
     }), s("placeBtn").addEventListener("click", () => {
         l.sel ? me(l.sel[0], l.sel[1]) : y("Select a cell first.", "bad")
