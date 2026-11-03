@@ -567,14 +567,14 @@ function refreshZoomLabel() {
     if (status) {
         status.classList.toggle("active", !!(l.multiMode || l.panMode || l.selection.length || l.groupMovePick));
         if (l.groupMovePick && l.selection.length) status.textContent = "Tap the destination cell to move " + l.selection.length + " selected object(s).";
-        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — drag them, or tap Move… then tap the destination." : "Multi on: drag a box to select (rugs count from any covered cell). Then drag or use Move…";
+        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — tap more objects one by one, or Move…" : "Multi on: tap objects one by one to build a selection (or drag a box). Then drag or use Move…";
         else if (l.panMode) status.textContent = "Pan on: drag the picture to move the camera.";
         else if (l.selection.length) status.textContent = l.selection.length + " selected — drag them on the picture, or tap Move…";
         else status.textContent = "Camera: wheel zooms, drag pans. Tap Multi to select many objects.";
     }
     const legend = document.getElementById("viewLegend");
     if (legend) {
-        legend.textContent = l.multiMode ? "Multi mode: drag a box to select (rugs from any covered cell), tap to add/remove, drag or Move… to relocate. Pan button pans instead." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
+        legend.textContent = l.multiMode ? "Multi mode: tap once per object to grow the selection (topmost first). Drag a box to grab many. Then drag or Move…." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
     }
 }
 
@@ -648,12 +648,24 @@ function clearSelection() {
     l.selection = [], l.marquee = null, l.dragMove = null, l.groupMovePick = !1, refreshMultiBanner(), refreshZoomLabel(), z(), V()
 }
 
+function selectionCandidatesAt(e, t) {
+    const n = g.layers;
+    return movableAt(e, t).slice().sort((e, t) => n.indexOf(t.layer) - n.indexOf(e.layer))
+}
+
 function toggleSelectionAt(e, t) {
-    const n = movableAt(e, t);
+    const n = selectionCandidatesAt(e, t);
     if (!n.length) return void y("Nothing unlocked to multi-select here.", "bad");
-    const r = new Set(n.map(placementKey));
-    let o;
-    o = n.every(isSelected) ? l.selection.filter(e => !r.has(placementKey(e))) : l.selection.concat(n.filter(e => !isSelected(e))), setSelection(o), l.sel = [e, t], P()
+    const r = n.filter(e => !isSelected(e));
+    let o, a;
+    if (r.length) {
+        const e = r[0];
+        o = l.selection.concat([e]), a = "Added " + e.id + (n.length > 1 ? " (" + (n.length - r.length + 1) + "/" + n.length + " on this cell)" : "") + "."
+    } else {
+        const e = placementKey(n[0]);
+        o = l.selection.filter(t => placementKey(t) !== e), a = "Removed " + n[0].id + " from selection."
+    }
+    setSelection(o, !1), y(a || (o.length ? "Selected " + o.length + "." : "Selection cleared.")), l.sel = [e, t], P()
 }
 
 function collectInWorldRect(x0, y0, x1, y1) {
@@ -1361,7 +1373,7 @@ if (s("levelSel").addEventListener("change", e => {
     }), s("zoomInBtn").addEventListener("click", () => zoomBy(ZOOM_STEP)), s("zoomOutBtn").addEventListener("click", () => zoomBy(1 / ZOOM_STEP)), s("zoomFitBtn").addEventListener("click", () => setZoom("fit")), s("panBtn").addEventListener("click", () => {
         l.panMode = !l.panMode, l.panMode && (l.multiMode = !1), refreshZoomLabel(), y(l.panMode ? "Pan mode: drag the picture to move the camera." : "Pan off: drag still pans after a short slide; tap selects.")
     }), s("multiBtn").addEventListener("click", () => {
-        l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: drag a box on the picture to select, then drag the selection to move." : "Multi off.");
+        l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: tap objects one by one (topmost first), or drag a box. Then drag or Move…." : "Multi off.");
         const status = document.getElementById("camStatus");
         status && status.scrollIntoView({
             block: "nearest",
