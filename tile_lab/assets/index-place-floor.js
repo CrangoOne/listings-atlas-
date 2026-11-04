@@ -1384,13 +1384,11 @@ if (s("levelSel").addEventListener("change", e => {
         l.grid = !l.grid, s("gridBtn").classList.toggle("on", l.grid), z()
     }), s("zoomInBtn").addEventListener("click", () => zoomBy(ZOOM_STEP)), s("zoomOutBtn").addEventListener("click", () => zoomBy(1 / ZOOM_STEP)), s("zoomFitBtn").addEventListener("click", () => setZoom("fit")), s("panBtn").addEventListener("click", () => {
         l.panMode = !l.panMode, l.panMode && (l.multiMode = !1), refreshZoomLabel(), y(l.panMode ? "Pan mode: drag the picture to move the camera." : "Pan off: drag still pans after a short slide; tap selects.")
-    }), s("multiBtn").addEventListener("click", () => {
+    }), s("multiBtn").addEventListener("click", e => {
         l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: tap objects one by one (topmost first), or drag a box. Then drag or Move…." : "Multi off.");
-        const status = document.getElementById("camStatus");
-        status && status.scrollIntoView({
-            block: "nearest",
-            behavior: "smooth"
-        })
+        // Drop button focus so the next grid/picture tap selects instead of
+        // re-hitting Multi (phone browsers keep :focus on the toggled control).
+        e.currentTarget && e.currentTarget.blur && e.currentTarget.blur()
     }), s("multiClear").addEventListener("click", () => {
         clearSelection(), y("Selection cleared.")
     }), s("multiEraseBtn").addEventListener("click", () => {
