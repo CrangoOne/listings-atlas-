@@ -559,23 +559,21 @@ function refreshZoomLabel() {
     if (o) {
         o.classList.toggle("on", !!l.multiMode);
         o.setAttribute("aria-pressed", l.multiMode ? "true" : "false");
-        o.textContent = l.multiMode ? "Multi on" : "Multi";
+        // Keep the label "Multi" — swapping to "Multi on" reflows the header and shifts the picture.
+        o.title = l.multiMode ? "Multi on: tap cells/objects to select, or drag a box" : "Marquee-select and drag-move objects";
     }
     const r = s("viewport");
     r && (r.classList.toggle("pan-mode", !!l.panMode), r.classList.toggle("multi-mode", !!l.multiMode && !l.panMode), r.classList.toggle("moving-sel", !!(l.dragMove && l.selection.length)));
     const status = document.getElementById("camStatus");
     if (status) {
         status.classList.toggle("active", !!(l.multiMode || l.panMode || l.selection.length || l.groupMovePick));
-        if (l.groupMovePick && l.selection.length) status.textContent = "Tap the destination cell to move " + l.selection.length + " selected object(s).";
-        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — add cells/objects, Place on cells, or Move…" : "Multi on: tap empty cells or objects one by one (or drag a box). Then Place / Move…";
+        if (l.groupMovePick && l.selection.length) status.textContent = "Tap destination for " + l.selection.length + " selected.";
+        else if (l.multiMode) status.textContent = l.selection.length ? "Multi: " + l.selection.length + " selected — Place / Move… / Erase." : "Multi: tap cells or objects (or drag a box).";
         else if (l.panMode) status.textContent = "Pan on: drag the picture to move the camera.";
-        else if (l.selection.length) status.textContent = l.selection.length + " selected — drag them on the picture, or tap Move…";
+        else if (l.selection.length) status.textContent = l.selection.length + " selected — Place / Move… / Erase.";
         else status.textContent = "Camera: wheel zooms, drag pans. Tap Multi to select many objects.";
     }
-    const legend = document.getElementById("viewLegend");
-    if (legend) {
-        legend.textContent = l.multiMode ? "Multi mode: tap once per object to grow the selection (topmost first). Drag a box to grab many. Then drag or Move…." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
-    }
+    // Do not rewrite #viewLegend here — long Multi copy reflows and shifts the viewport.
 }
 
 function placementKey(e) {
@@ -1500,11 +1498,19 @@ if (s("levelSel").addEventListener("change", e => {
         l.grid = !l.grid, s("gridBtn").classList.toggle("on", l.grid), z()
     }), s("zoomInBtn").addEventListener("click", () => zoomBy(ZOOM_STEP)), s("zoomOutBtn").addEventListener("click", () => zoomBy(1 / ZOOM_STEP)), s("zoomFitBtn").addEventListener("click", () => setZoom("fit")), s("panBtn").addEventListener("click", () => {
         l.panMode = !l.panMode, l.panMode && (l.multiMode = !1), refreshZoomLabel(), y(l.panMode ? "Pan mode: drag the picture to move the camera." : "Pan off: drag still pans after a short slide; tap selects.")
+    }), s("multiBtn").addEventListener("pointerdown", e => {
+        // Avoid focus — mobile browsers scroll to keep the focused Multi button in view.
+        e.preventDefault()
     }), s("multiBtn").addEventListener("click", e => {
+        const vp = s("viewport"),
+            sl = vp ? vp.scrollLeft : 0,
+            st = vp ? vp.scrollTop : 0,
+            wx = window.scrollX || 0,
+            wy = window.scrollY || 0;
         l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: tap objects one by one (topmost first), or drag a box. Then drag or Move…." : "Multi off.");
-        // Drop button focus so the next grid/picture tap selects instead of
-        // re-hitting Multi (phone browsers keep :focus on the toggled control).
-        e.currentTarget && e.currentTarget.blur && e.currentTarget.blur()
+        e.currentTarget && e.currentTarget.blur && e.currentTarget.blur();
+        vp && (vp.scrollLeft = sl, vp.scrollTop = st);
+        window.scrollTo(wx, wy)
     }), s("multiClear").addEventListener("click", () => {
         clearSelection(), y("Selection cleared.")
     }), s("multiEraseBtn").addEventListener("click", () => {
