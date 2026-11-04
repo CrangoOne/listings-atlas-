@@ -32,7 +32,7 @@ const we = 1,
         object: "Objects",
         item: "On top"
     },
-    xe={"floor":{"layer":"floor","atlas":"periodic","period":4,"note":"Honey-oak wood floor. Seamless: atlas cell = (x mod 4, y mod 4). Place it to fill a missing cell. Erase stays locked."},"floor_stone":{"layer":"floor","tileset":"floor_stone","atlas":"periodic","period":4,"note":"Warm flagstone floor. Same seamless period as wood. Place it to fill a missing cell. Erase stays locked."},"carpet_round":{"layer":"carpet","atlas":[0,0]},"carpet_rect":{"layer":"carpet","atlas":[1,0]},"wall":{"layer":"wall","facings":{"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Honey-oak timber wall. Facing = which room side the wall stands on. Atlas columns ne/nw/se/sw; front-left (ne) unused while south stays open."},"wall_window":{"layer":"wall","facings":{"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]}},"wall_stone":{"layer":"wall","tileset":"wall_stone","facings":{"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Coursed stone wall, same facings and slab thickness as timber."},"wall_stone_window":{"layer":"wall","tileset":"wall_stone","facings":{"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Stone wall with a small barred window."},"counter_straight":{"layer":"object","tileset":"counter","atlas":[0,0],"art_facing":"front-right"},"counter_end_l":{"layer":"object","tileset":"counter","atlas":[1,0],"art_facing":"front-right"},"counter_end_r":{"layer":"object","tileset":"counter","atlas":[2,0],"art_facing":"front-right"},"counter_corner":{"layer":"object","tileset":"counter","atlas":[3,0],"art_facing":"front-right","note":"Baked L-bar unit. Its flat ends are part of the art, so alignment against the walls is an art task."},"bar_run_x":{"layer":"object","tileset":"counter","atlas":[4,0],"note":"Modular dark bar, runs along x (toward front-right). Arms end exactly on the cell boundary, so a run ending in a wall cell touches the wall."},"bar_run_y":{"layer":"object","tileset":"counter","atlas":[5,0],"note":"Modular dark bar, runs along y (toward front-left)."},"bar_end_x":{"layer":"object","tileset":"counter","atlas":[6,0],"note":"Open arm toward +x so it meets the elbow. The cap is the far end, toward -x (back-left wall)."},"bar_end_y":{"layer":"object","tileset":"counter","atlas":[7,0],"note":"Open arm toward +y so it meets the elbow. The cap is the far end, toward -y (back-right wall)."},"bar_elbow":{"layer":"object","tileset":"counter","atlas":[8,0],"note":"Elbow with arms toward -x and -y; encloses the back corner."},"table_round":{"layer":"object","tileset":"prop","atlas":[0,0]},"table_rect":{"layer":"object","tileset":"prop","atlas":[1,0]},"chair":{"layer":"object","tileset":"prop","facings":{"front-right":[2,0],"front-left":[3,0],"back-left":[4,0],"back-right":[5,0]},"note":"Yaw = way a seated person looks. front-right sits on the -x side of a table, front-left on -y, back-left on +x, back-right on +y."},"tankard":{"layer":"item","tileset":"prop","atlas":[6,0],"note":"Wooden mug for the On top slot. Place it on a bar or table cell."},"glass":{"layer":"item","tileset":"prop","atlas":[7,0],"note":"Stemmed ale glass for the On top slot. Place it on a bar or table cell."}},_e= {
+    xe={"floor":{"layer":"floor","atlas":"periodic","period":4,"note":"Seamless floor: atlas cell = (x mod 4, y mod 4). Place it to fill a missing cell. Erase stays locked."},"carpet_round":{"layer":"carpet","atlas":[0,0]},"carpet_rect":{"layer":"carpet","atlas":[1,0]},"wall":{"layer":"wall","facings":{"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Facing = which room side the wall stands on. Atlas columns ne/nw/se/sw; front-left (ne) unused while south stays open."},"wall_window":{"layer":"wall","facings":{"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]}},"counter_straight":{"layer":"object","tileset":"counter","atlas":[0,0],"art_facing":"front-right"},"counter_end_l":{"layer":"object","tileset":"counter","atlas":[1,0],"art_facing":"front-right"},"counter_end_r":{"layer":"object","tileset":"counter","atlas":[2,0],"art_facing":"front-right"},"counter_corner":{"layer":"object","tileset":"counter","atlas":[3,0],"art_facing":"front-right","note":"Baked L-bar unit. Its flat ends are part of the art, so alignment against the walls is an art task."},"bar_run_x":{"layer":"object","tileset":"counter","atlas":[4,0],"note":"Modular dark bar, runs along x (toward front-right). Arms end exactly on the cell boundary, so a run ending in a wall cell touches the wall."},"bar_run_y":{"layer":"object","tileset":"counter","atlas":[5,0],"note":"Modular dark bar, runs along y (toward front-left)."},"bar_end_x":{"layer":"object","tileset":"counter","atlas":[6,0],"note":"Open arm toward +x so it meets the elbow. The cap is the far end, toward -x (back-left wall)."},"bar_end_y":{"layer":"object","tileset":"counter","atlas":[7,0],"note":"Open arm toward +y so it meets the elbow. The cap is the far end, toward -y (back-right wall)."},"bar_elbow":{"layer":"object","tileset":"counter","atlas":[8,0],"note":"Elbow with arms toward -x and -y; encloses the back corner."},"table_round":{"layer":"object","tileset":"prop","atlas":[0,0]},"table_rect":{"layer":"object","tileset":"prop","atlas":[1,0]},"chair":{"layer":"object","tileset":"prop","facings":{"front-right":[2,0],"front-left":[3,0],"back-left":[4,0],"back-right":[5,0]},"note":"Yaw = way a seated person looks. front-right sits on the -x side of a table, front-left on -y, back-left on +x, back-right on +y."},"tankard":{"layer":"item","tileset":"prop","atlas":[6,0],"note":"Wooden mug for the On top slot. Place it on a bar or table cell."},"glass":{"layer":"item","tileset":"prop","atlas":[7,0],"note":"Stemmed ale glass for the On top slot. Place it on a bar or table cell."}},_e= {
         schema: 1,
         note: ve,
         layers: ke,
@@ -52,13 +52,6 @@ const we = 1,
             dx: -128,
             dy: -64
         },
-        floor_stone: {
-            src: S("floor_stone"),
-            cw: 256,
-            ch: 128,
-            dx: -128,
-            dy: -64
-        },
         carpet: {
             src: S("carpet"),
             cw: 768,
@@ -68,13 +61,6 @@ const we = 1,
         },
         wall: {
             src: S("wall"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_stone: {
-            src: S("wall_stone"),
             cw: 256,
             ch: 328,
             dx: -128,
@@ -581,14 +567,14 @@ function refreshZoomLabel() {
     if (status) {
         status.classList.toggle("active", !!(l.multiMode || l.panMode || l.selection.length || l.groupMovePick));
         if (l.groupMovePick && l.selection.length) status.textContent = "Tap the destination cell to move " + l.selection.length + " selected object(s).";
-        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — drag them, or tap Move… then tap the destination." : "Multi on: drag a box to select (rugs count from any covered cell). Then drag or use Move…";
+        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — add cells/objects, Place on cells, or Move…" : "Multi on: tap empty cells or objects one by one (or drag a box). Then Place / Move…";
         else if (l.panMode) status.textContent = "Pan on: drag the picture to move the camera.";
         else if (l.selection.length) status.textContent = l.selection.length + " selected — drag them on the picture, or tap Move…";
         else status.textContent = "Camera: wheel zooms, drag pans. Tap Multi to select many objects.";
     }
     const legend = document.getElementById("viewLegend");
     if (legend) {
-        legend.textContent = l.multiMode ? "Multi mode: drag a box to select (rugs from any covered cell), tap to add/remove, drag or Move… to relocate. Pan button pans instead." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
+        legend.textContent = l.multiMode ? "Multi mode: tap once per object to grow the selection (topmost first). Drag a box to grab many. Then drag or Move…." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
     }
 }
 
@@ -609,7 +595,6 @@ function toSelItem(e) {
 }
 
 function canMovePlacement(e) {
-    if ("floor" === e.piece || "floor" === e.layer) return !1;
     const t = k.objects.find(t => t.id === e.id);
     return !!(t && !M(k, g, t))
 }
@@ -624,9 +609,45 @@ function movableAt(e, t) {
             r.has(o) || (r.add(o), n.push(t))
         };
     for (const n of shownAt(e, t)) o(n);
-    if (!l.view || "all" === l.view || "carpet" === l.view)
+    // Rug fringe only in Rugs view — on All it stole Multi taps from floor cells.
+    if ("carpet" === l.view)
         for (const n of ne(k, g)) "carpet" === n.layer && carpetCovers(n.x, n.y, e, t) && o(n);
     return n
+}
+
+function floorCellItem(e, t) {
+    const n = shownAt(e, t).find(e => "floor" === e.layer || "floor" === e.piece);
+    if (!n) return emptyCellItem(e, t);
+    const r = k.objects.find(e => e.id === n.id);
+    return r && M(k, g, r) ? emptyCellItem(e, t) : toSelItem(n)
+}
+
+function emptyCellItem(e, t) {
+    return {
+        empty: !0,
+        id: "cell:" + e + "," + t,
+        x: e,
+        y: t,
+        piece: "",
+        layer: "",
+        facing: ""
+    }
+}
+
+function isEmptySel(e) {
+    return !!(e && e.empty)
+}
+
+function objectSelection() {
+    return l.selection.filter(e => !isEmptySel(e))
+}
+
+function emptySelection() {
+    return l.selection.filter(isEmptySel)
+}
+
+function hasEmptySelection() {
+    return l.selection.some(isEmptySel)
 }
 
 function isSelected(e) {
@@ -635,13 +656,17 @@ function isSelected(e) {
 }
 
 function cellInSelection(e, t) {
-    return l.selection.some(l => l.x === e && l.y === t || "carpet" === l.layer && carpetCovers(l.x, l.y, e, t))
+    return l.selection.some(l => l.x === e && l.y === t || !isEmptySel(l) && "carpet" === l.layer && carpetCovers(l.x, l.y, e, t))
 }
 
 function selectionPivot() {
+    const e = objectSelection();
     return l.sel && cellInSelection(l.sel[0], l.sel[1]) ? {
         x: l.sel[0],
         y: l.sel[1]
+    } : e.length ? {
+        x: e[0].x,
+        y: e[0].y
     } : l.selection.length ? {
         x: l.selection[0].x,
         y: l.selection[0].y
@@ -655,19 +680,49 @@ function setSelection(items, announce) {
         const key = placementKey(item);
         seen.has(key) || (seen.add(key), l.selection.push(item))
     }
-    refreshMultiBanner(), refreshZoomLabel(), !1 !== announce && y(l.selection.length ? "Selected " + l.selection.length + " object" + (1 === l.selection.length ? "" : "s") + " — drag to move." : "Selection cleared.")
+    refreshMultiBanner(), refreshZoomLabel();
+    if (!1 !== announce) {
+        const nObj = objectSelection().length,
+            nEmpty = emptySelection().length;
+        l.selection.length ? nEmpty && !nObj ? y("Selected " + nEmpty + " empty cell" + (1 === nEmpty ? "" : "s") + " — pick a piece and Place on cells.") : nEmpty ? y("Selected " + nObj + " object" + (1 === nObj ? "" : "s") + " + " + nEmpty + " empty cell" + (1 === nEmpty ? "" : "s") + ".") : y("Selected " + nObj + " object" + (1 === nObj ? "" : "s") + " — drag to move.") : y("Selection cleared.")
+    }
 }
 
 function clearSelection() {
     l.selection = [], l.marquee = null, l.dragMove = null, l.groupMovePick = !1, refreshMultiBanner(), refreshZoomLabel(), z(), V()
 }
 
+function selectionCandidatesAt(e, t) {
+    const n = g.layers;
+    return movableAt(e, t).slice().sort((e, t) => n.indexOf(t.layer) - n.indexOf(e.layer))
+}
+
 function toggleSelectionAt(e, t) {
-    const n = movableAt(e, t);
-    if (!n.length) return void y("Nothing unlocked to multi-select here.", "bad");
-    const r = new Set(n.map(placementKey));
-    let o;
-    o = n.every(isSelected) ? l.selection.filter(e => !r.has(placementKey(e))) : l.selection.concat(n.filter(e => !isSelected(e))), setSelection(o), l.sel = [e, t], P()
+    if ("floor" === l.view) {
+        const n = floorCellItem(e, t),
+            r = placementKey(n);
+        let o, a;
+        isSelected(n) ? (o = l.selection.filter(e => placementKey(e) !== r), a = "Removed floor cell [" + e + ", " + t + "].") : (o = l.selection.concat([n]), a = "Added floor cell [" + e + ", " + t + "]."), setSelection(o, !1), y(a), l.sel = [e, t], P();
+        return
+    }
+    const n = selectionCandidatesAt(e, t);
+    if (!n.length) {
+        const n = emptyCellItem(e, t),
+            r = placementKey(n);
+        let o, a;
+        isSelected(n) ? (o = l.selection.filter(e => placementKey(e) !== r), a = "Removed empty cell [" + e + ", " + t + "].") : (o = l.selection.concat([n]), a = "Added empty cell [" + e + ", " + t + "]."), setSelection(o, !1), y(a), l.sel = [e, t], P();
+        return
+    }
+    const r = n.filter(e => !isSelected(e));
+    let o, a;
+    if (r.length) {
+        const e = r[0];
+        o = l.selection.concat([e]), a = "Added " + e.id + (n.length > 1 ? " (" + (n.length - r.length + 1) + "/" + n.length + " on this cell)" : "") + "."
+    } else {
+        const e = placementKey(n[0]);
+        o = l.selection.filter(t => placementKey(t) !== e), a = "Removed " + n[0].id + " from selection."
+    }
+    setSelection(o, !1), y(a || (o.length ? "Selected " + o.length + "." : "Selection cleared.")), l.sel = [e, t], P()
 }
 
 function collectInWorldRect(x0, y0, x1, y1) {
@@ -681,7 +736,14 @@ function collectInWorldRect(x0, y0, x1, y1) {
         for (let cx = b.min; cx <= b.max; cx++) {
             const [wx, wy] = N(cx, cy);
             if (wx < minX || wx > maxX || wy < minY || wy > maxY) continue;
-            for (const p of movableAt(cx, cy)) found.push(p)
+            if ("floor" === l.view) {
+                found.push(floorCellItem(cx, cy));
+                continue
+            }
+            const mov = movableAt(cx, cy);
+            if (mov.length)
+                for (const p of mov) found.push(p);
+            else found.push(emptyCellItem(cx, cy))
         }
     return found
 }
@@ -696,35 +758,99 @@ function refreshMultiBanner() {
     if (!e) return;
     if (!l.selection.length) return l.groupMovePick = !1, void(e.hidden = !0);
     e.hidden = !1;
-    const t = [...new Set(l.selection.map(e => layerLabel(e.layer)))].join(", ");
-    s("multiText").textContent = l.groupMovePick ? l.selection.length + " selected — tap the destination cell on the picture or grid." : l.selection.length + " selected (" + t + "). Drag them, or tap Move… then tap the destination.";
+    const nObj = objectSelection().length,
+        nEmpty = emptySelection().length,
+        t = [...new Set(objectSelection().map(e => layerLabel(e.layer)))].join(", ");
+    let summary;
+    summary = nEmpty && !nObj ? nEmpty + " empty cell" + (1 === nEmpty ? "" : "s") : nEmpty ? nObj + " object" + (1 === nObj ? "" : "s") + " + " + nEmpty + " empty" : l.selection.length + " selected (" + t + ")", s("multiText").textContent = l.groupMovePick ? summary + " — tap the destination cell on the picture or grid." : summary + ". Place on cells, Move…, Erase, or Clear.";
     const n = s("multiMoveBtn");
-    n && n.classList.toggle("on", !!l.groupMovePick)
+    n && n.classList.toggle("on", !!l.groupMovePick);
+    const placeBtn = s("multiPlaceBtn");
+    placeBtn && (placeBtn.hidden = 0 === nEmpty);
+    const eraseBtn = s("multiEraseBtn");
+    eraseBtn && (eraseBtn.hidden = 0 === nObj)
+}
+
+function eraseSelection() {
+    const e = objectSelection();
+    if (!e.length) return hasEmptySelection() ? (y("Empty cells have nothing to erase — Clear selection, or Place on them.", "bad"), !1) : !1;
+    const t = e.length,
+        n = e.map(e => ({
+            verb: "erase",
+            x: e.x,
+            y: e.y,
+            layer: e.layer
+        }));
+    return !!L(n) && (clearSelection(), x("Erased " + t + " selected object" + (1 === t ? "" : "s")), !0)
+}
+
+function placeOnEmptySelection() {
+    if (!l.piece) return y("Pick a piece first.", "bad"), !1;
+    const e = [],
+        t = new Set;
+    for (const n of emptySelection()) {
+        const r = n.x + "," + n.y;
+        t.has(r) || (t.add(r), e.push([n.x, n.y]))
+    }
+    if (!e.length) return y("No empty cells selected.", "bad"), !1;
+    const n = Ce(k),
+        r = [];
+    for (const [t, o] of e) {
+        const e = {
+            facing: l.facing,
+            layer: l.layer
+        };
+        if ("floor" !== l.piece) {
+            e.id = Ne(n, l.piece);
+            try {
+                Me(n, g, l.piece, t, o, l.facing || void 0, e.id, l.layer)
+            } catch (e) {
+                return y(String(e.message || e), "bad"), !1
+            }
+        }
+        r.push(Z(l.piece, t, o, e))
+    }
+    return !!L(r) && (clearSelection(), x("Placed " + l.piece + " on " + e.length + " cell" + (1 === e.length ? "" : "s")), !0)
 }
 
 function commitSelectionMove(e, t) {
-    if (!e && !t || !l.selection.length) return !1;
-    const n = I();
-    for (const r of l.selection) {
-        const o = r.x + e,
-            a = r.y + t;
-        if (o < n.min || o > n.max || a < n.min || a > n.max) return y("Move would leave the level bounds.", "bad"), !1
+    if (!e && !t) return !1;
+    const n = objectSelection(),
+        r = emptySelection();
+    if (!n.length) {
+        if (!r.length) return !1;
+        return l.selection = l.selection.map(n => {
+            const r = Object.assign({}, n, {
+                x: n.x + e,
+                y: n.y + t
+            });
+            return isEmptySel(n) && (r.id = "cell:" + r.x + "," + r.y), r
+        }), l.sel && (l.sel = [l.sel[0] + e, l.sel[1] + t]), y("Moved " + r.length + " empty cell" + (1 === r.length ? "" : "s") + " by [" + e + "," + t + "]."), refreshMultiBanner(), P(), !0
     }
-    const r = l.selection.map(e => ({
+    const o = I();
+    for (const r of n) {
+        const a = r.x + e,
+            c = r.y + t;
+        if (a < o.min || a > o.max || c < o.min || c > o.max) return y("Move would leave the level bounds.", "bad"), !1
+    }
+    const a = n.map(e => ({
             verb: "erase",
             x: e.x,
             y: e.y,
             layer: e.layer
         })),
-        o = l.selection.map(n => Z(n.piece, n.x + e, n.y + t, {
+        c = n.map(n => Z(n.piece, n.x + e, n.y + t, {
             facing: n.facing,
             id: n.id,
             layer: n.layer
         }));
-    return !!L(r.concat(o)) && (l.selection = l.selection.map(n => Object.assign({}, n, {
-        x: n.x + e,
-        y: n.y + t
-    })), l.sel && (l.sel = [l.sel[0] + e, l.sel[1] + t]), l.move = null, s("moveBanner").hidden = !0, x("Moved " + l.selection.length + " object" + (1 === l.selection.length ? "" : "s") + " by [" + e + "," + t + "]"), refreshMultiBanner(), !0)
+    return !!L(a.concat(c)) && (l.selection = l.selection.map(n => {
+        const r = Object.assign({}, n, {
+            x: n.x + e,
+            y: n.y + t
+        });
+        return isEmptySel(n) && (r.id = "cell:" + r.x + "," + r.y), r
+    }), l.sel && (l.sel = [l.sel[0] + e, l.sel[1] + t]), l.move = null, s("moveBanner").hidden = !0, x("Moved " + n.length + " object" + (1 === n.length ? "" : "s") + " by [" + e + "," + t + "]"), refreshMultiBanner(), !0)
 }
 
 function fe(anchor) {
@@ -775,25 +901,10 @@ function worldToCell(e, t) {
     return [Math.round((e / 126 + t / 63) / 2), Math.round((t / 63 - e / 126) / 2)]
 }
 
-function phaseAtlas(e, t, l, n) {
-    // Paired timber/stone sheets are 16 phase columns. Level coords stay
-    // (facing, detail). Same formula as stone_wall_atlas_coord.
+function je(e, t, l, n) {
     const r = F[e],
-        o = Y[e],
-        a = "wall" === e || "wall_stone" === e;
-    if (!r || !o || !a || o.width < r.cw * 16) return t;
-    const c = 4,
-        i = (l % c + c) % c,
-        s = (n % c + c) % c;
-    return [i + s * c, t[0] * 2 + t[1]]
-}
-
-function je(e, t, l, n, r, o) {
-    const a = F[e],
-        c = Y[e];
-    if (!a || !c) return;
-    const i = phaseAtlas(e, t, r, o);
-    h.drawImage(c, i[0] * a.cw, i[1] * a.ch, a.cw, a.ch, Math.round(l + a.dx), Math.round(n + a.dy), a.cw, a.ch)
+        o = Y[e];
+    !r || !o || h.drawImage(o, t[0] * r.cw, t[1] * r.ch, r.cw, r.ch, Math.round(l + r.dx), Math.round(n + r.dy), r.cw, r.ch)
 }
 
 function H(e, t) {
@@ -807,7 +918,7 @@ function z() {
     t.sort((t, l) => ("floor" === t.paint ? 0 : "carpet" === t.paint ? 1 : 2) - ("floor" === l.paint ? 0 : "carpet" === l.paint ? 1 : 2) || t.x + t.y - (l.x + l.y) || t.x - l.x || e.indexOf(t.paint) - e.indexOf(l.paint));
     for (const e of t) {
         const [t, l] = N(e.x, e.y);
-        je(e.artLayer, e.atlas, t, l, e.x, e.y)
+        je(e.artLayer, e.atlas, t, l)
     }
     if (l.grid) {
         const e = I();
@@ -1014,17 +1125,15 @@ function He() {
 
 function We(e, t) {
     const l = e.getContext("2d"),
-        n = t.tileset || t.layer,
-        r = Y[n],
-        o = F[n];
-    if (!l || !r || !o) return;
-    const a = te(t, t.facings ? Object.keys(t.facings)[0] : void 0, 0, 0);
-    if (!a) return;
-    const c = phaseAtlas(n, a, 0, 0),
-        i = Math.min(64 / o.cw, 64 / o.ch),
-        s = o.cw * i,
-        u = o.ch * i;
-    l.imageSmoothingEnabled = !1, l.clearRect(0, 0, 64, 64), l.drawImage(r, c[0] * o.cw, c[1] * o.ch, o.cw, o.ch, (64 - s) / 2, 64 - u, s, u)
+        n = Y[t.tileset || t.layer],
+        r = F[t.tileset || t.layer];
+    if (!l || !n || !r) return;
+    const o = te(t, t.facings ? Object.keys(t.facings)[0] : void 0, 0, 0);
+    if (!o) return;
+    const a = Math.min(64 / r.cw, 64 / r.ch),
+        c = r.cw * a,
+        i = r.ch * a;
+    l.imageSmoothingEnabled = !1, l.clearRect(0, 0, 64, 64), l.drawImage(n, o[0] * r.cw, o[1] * r.ch, r.cw, r.ch, (64 - c) / 2, 64 - i, c, i)
 }
 
 function ue() {
@@ -1391,25 +1500,29 @@ if (s("levelSel").addEventListener("change", e => {
         l.grid = !l.grid, s("gridBtn").classList.toggle("on", l.grid), z()
     }), s("zoomInBtn").addEventListener("click", () => zoomBy(ZOOM_STEP)), s("zoomOutBtn").addEventListener("click", () => zoomBy(1 / ZOOM_STEP)), s("zoomFitBtn").addEventListener("click", () => setZoom("fit")), s("panBtn").addEventListener("click", () => {
         l.panMode = !l.panMode, l.panMode && (l.multiMode = !1), refreshZoomLabel(), y(l.panMode ? "Pan mode: drag the picture to move the camera." : "Pan off: drag still pans after a short slide; tap selects.")
-    }), s("multiBtn").addEventListener("click", () => {
-        l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: drag a box on the picture to select, then drag the selection to move." : "Multi off.");
-        const status = document.getElementById("camStatus");
-        status && status.scrollIntoView({
-            block: "nearest",
-            behavior: "smooth"
-        })
+    }), s("multiBtn").addEventListener("click", e => {
+        l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: tap objects one by one (topmost first), or drag a box. Then drag or Move…." : "Multi off.");
+        // Drop button focus so the next grid/picture tap selects instead of
+        // re-hitting Multi (phone browsers keep :focus on the toggled control).
+        e.currentTarget && e.currentTarget.blur && e.currentTarget.blur()
     }), s("multiClear").addEventListener("click", () => {
         clearSelection(), y("Selection cleared.")
+    }), s("multiEraseBtn").addEventListener("click", () => {
+        eraseSelection()
+    }), s("multiPlaceBtn").addEventListener("click", () => {
+        placeOnEmptySelection()
     }), s("multiMoveBtn").addEventListener("click", () => {
         l.selection.length && (l.groupMovePick = !0, l.multiMode = !0, l.panMode = !1, l.mode = "select", T(), refreshZoomLabel(), refreshMultiBanner(), y("Tap the destination cell. The selection moves so the highlighted cell lands there."))
     }), s("mSelect").addEventListener("click", () => {
         l.mode = "select", T()
     }), s("mPlace").addEventListener("click", () => {
-        l.mode = "place", clearSelection(), T(), y(l.piece ? "Tap a cell to place " + l.piece : "Pick a piece below, then tap a cell.")
+        if (hasEmptySelection() && l.piece) return void placeOnEmptySelection();
+        l.mode = "place", hasEmptySelection() ? (l.selection = emptySelection(), refreshMultiBanner(), refreshZoomLabel()) : clearSelection(), T(), y(l.piece ? hasEmptySelection() ? "Tap Place on cells, or tap another empty cell." : "Tap a cell to place " + l.piece : "Pick a piece below, then tap a cell.")
     }), s("mErase").addEventListener("click", () => {
+        if (objectSelection().length) return eraseSelection(), l.mode = "select", void T();
         l.mode = "erase", clearSelection(), T(), y("floor" === l.view ? "Tap a cell to erase a floor tile. The floor layer has to be unlocked." : l.view && "all" !== l.view ? "Tap a cell to erase the " + layerLabel(l.view) + " layer. The floor stays." : "Tap a cell to erase its unlocked objects. The floor stays locked.")
     }), s("placeBtn").addEventListener("click", () => {
-        l.sel ? me(l.sel[0], l.sel[1]) : y("Select a cell first.", "bad")
+        hasEmptySelection() ? placeOnEmptySelection() : l.sel ? me(l.sel[0], l.sel[1]) : y("Select a cell first.", "bad")
     }), s("facingSel").addEventListener("change", e => {
         l.facing = e.target.value
     }), s("layerSel").addEventListener("change", e => {
