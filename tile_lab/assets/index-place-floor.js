@@ -567,7 +567,7 @@ function refreshZoomLabel() {
     if (status) {
         status.classList.toggle("active", !!(l.multiMode || l.panMode || l.selection.length || l.groupMovePick));
         if (l.groupMovePick && l.selection.length) status.textContent = "Tap the destination cell to move " + l.selection.length + " selected object(s).";
-        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — tap more objects one by one, or Move…" : "Multi on: tap objects one by one to build a selection (or drag a box). Then drag or use Move…";
+        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — add cells/objects, Place on cells, or Move…" : "Multi on: tap empty cells or objects one by one (or drag a box). Then Place / Move…";
         else if (l.panMode) status.textContent = "Pan on: drag the picture to move the camera.";
         else if (l.selection.length) status.textContent = l.selection.length + " selected — drag them on the picture, or tap Move…";
         else status.textContent = "Camera: wheel zooms, drag pans. Tap Multi to select many objects.";
@@ -615,19 +615,51 @@ function movableAt(e, t) {
     return n
 }
 
+function emptyCellItem(e, t) {
+    return {
+        empty: !0,
+        id: "cell:" + e + "," + t,
+        x: e,
+        y: t,
+        piece: "",
+        layer: "",
+        facing: ""
+    }
+}
+
+function isEmptySel(e) {
+    return !!(e && e.empty)
+}
+
+function objectSelection() {
+    return l.selection.filter(e => !isEmptySel(e))
+}
+
+function emptySelection() {
+    return l.selection.filter(isEmptySel)
+}
+
+function hasEmptySelection() {
+    return l.selection.some(isEmptySel)
+}
+
 function isSelected(e) {
     const t = placementKey(e);
     return l.selection.some(e => placementKey(e) === t)
 }
 
 function cellInSelection(e, t) {
-    return l.selection.some(l => l.x === e && l.y === t || "carpet" === l.layer && carpetCovers(l.x, l.y, e, t))
+    return l.selection.some(l => l.x === e && l.y === t || !isEmptySel(l) && "carpet" === l.layer && carpetCovers(l.x, l.y, e, t))
 }
 
 function selectionPivot() {
+    const e = objectSelection();
     return l.sel && cellInSelection(l.sel[0], l.sel[1]) ? {
         x: l.sel[0],
         y: l.sel[1]
+    } : e.length ? {
+        x: e[0].x,
+        y: e[0].y
     } : l.selection.length ? {
         x: l.selection[0].x,
         y: l.selection[0].y
@@ -641,7 +673,12 @@ function setSelection(items, announce) {
         const key = placementKey(item);
         seen.has(key) || (seen.add(key), l.selection.push(item))
     }
-    refreshMultiBanner(), refreshZoomLabel(), !1 !== announce && y(l.selection.length ? "Selected " + l.selection.length + " object" + (1 === l.selection.length ? "" : "s") + " — drag to move." : "Selection cleared.")
+    refreshMultiBanner(), refreshZoomLabel();
+    if (!1 !== announce) {
+        const nObj = objectSelection().length,
+            nEmpty = emptySelection().length;
+        l.selection.length ? nEmpty && !nObj ? y("Selected " + nEmpty + " empty cell" + (1 === nEmpty ? "" : "s") + " — pick a piece and Place on cells.") : nEmpty ? y("Selected " + nObj + " object" + (1 === nObj ? "" : "s") + " + " + nEmpty + " empty cell" + (1 === nEmpty ? "" : "s") + ".") : y("Selected " + nObj + " object" + (1 === nObj ? "" : "s") + " — drag to move.") : y("Selection cleared.")
+    }
 }
 
 function clearSelection() {
@@ -655,7 +692,13 @@ function selectionCandidatesAt(e, t) {
 
 function toggleSelectionAt(e, t) {
     const n = selectionCandidatesAt(e, t);
-    if (!n.length) return void y("Nothing unlocked to multi-select here.", "bad");
+    if (!n.length) {
+        const n = emptyCellItem(e, t),
+            r = placementKey(n);
+        let o, a;
+        isSelected(n) ? (o = l.selection.filter(e => placementKey(e) !== r), a = "Removed empty cell [" + e + ", " + t + "].") : (o = l.selection.concat([n]), a = "Added empty cell [" + e + ", " + t + "]."), setSelection(o, !1), y(a), l.sel = [e, t], P();
+        return
+    }
     const r = n.filter(e => !isSelected(e));
     let o, a;
     if (r.length) {
@@ -679,7 +722,10 @@ function collectInWorldRect(x0, y0, x1, y1) {
         for (let cx = b.min; cx <= b.max; cx++) {
             const [wx, wy] = N(cx, cy);
             if (wx < minX || wx > maxX || wy < minY || wy > maxY) continue;
-            for (const p of movableAt(cx, cy)) found.push(p)
+            const mov = movableAt(cx, cy);
+            if (mov.length)
+                for (const p of mov) found.push(p);
+            else found.push(emptyCellItem(cx, cy))
         }
     return found
 }
@@ -694,47 +740,99 @@ function refreshMultiBanner() {
     if (!e) return;
     if (!l.selection.length) return l.groupMovePick = !1, void(e.hidden = !0);
     e.hidden = !1;
-    const t = [...new Set(l.selection.map(e => layerLabel(e.layer)))].join(", ");
-    s("multiText").textContent = l.groupMovePick ? l.selection.length + " selected — tap the destination cell on the picture or grid." : l.selection.length + " selected (" + t + "). Move…, Erase, or Clear selection.";
+    const nObj = objectSelection().length,
+        nEmpty = emptySelection().length,
+        t = [...new Set(objectSelection().map(e => layerLabel(e.layer)))].join(", ");
+    let summary;
+    summary = nEmpty && !nObj ? nEmpty + " empty cell" + (1 === nEmpty ? "" : "s") : nEmpty ? nObj + " object" + (1 === nObj ? "" : "s") + " + " + nEmpty + " empty" : l.selection.length + " selected (" + t + ")", s("multiText").textContent = l.groupMovePick ? summary + " — tap the destination cell on the picture or grid." : summary + ". Place on cells, Move…, Erase, or Clear.";
     const n = s("multiMoveBtn");
-    n && n.classList.toggle("on", !!l.groupMovePick)
+    n && n.classList.toggle("on", !!l.groupMovePick);
+    const placeBtn = s("multiPlaceBtn");
+    placeBtn && (placeBtn.hidden = 0 === nEmpty);
+    const eraseBtn = s("multiEraseBtn");
+    eraseBtn && (eraseBtn.hidden = 0 === nObj)
 }
 
 function eraseSelection() {
-    if (!l.selection.length) return !1;
-    const e = l.selection.length,
-        t = l.selection.map(e => ({
+    const e = objectSelection();
+    if (!e.length) return hasEmptySelection() ? (y("Empty cells have nothing to erase — Clear selection, or Place on them.", "bad"), !1) : !1;
+    const t = e.length,
+        n = e.map(e => ({
             verb: "erase",
             x: e.x,
             y: e.y,
             layer: e.layer
         }));
-    return !!L(t) && (clearSelection(), x("Erased " + e + " selected object" + (1 === e ? "" : "s")), !0)
+    return !!L(n) && (clearSelection(), x("Erased " + t + " selected object" + (1 === t ? "" : "s")), !0)
+}
+
+function placeOnEmptySelection() {
+    if (!l.piece) return y("Pick a piece first.", "bad"), !1;
+    const e = [],
+        t = new Set;
+    for (const n of emptySelection()) {
+        const r = n.x + "," + n.y;
+        t.has(r) || (t.add(r), e.push([n.x, n.y]))
+    }
+    if (!e.length) return y("No empty cells selected.", "bad"), !1;
+    const n = Ce(k),
+        r = [];
+    for (const [t, o] of e) {
+        const e = {
+            facing: l.facing,
+            layer: l.layer
+        };
+        if ("floor" !== l.piece) {
+            e.id = Ne(n, l.piece);
+            try {
+                Me(n, g, l.piece, t, o, l.facing || void 0, e.id, l.layer)
+            } catch (e) {
+                return y(String(e.message || e), "bad"), !1
+            }
+        }
+        r.push(Z(l.piece, t, o, e))
+    }
+    return !!L(r) && (clearSelection(), x("Placed " + l.piece + " on " + e.length + " cell" + (1 === e.length ? "" : "s")), !0)
 }
 
 function commitSelectionMove(e, t) {
-    if (!e && !t || !l.selection.length) return !1;
-    const n = I();
-    for (const r of l.selection) {
-        const o = r.x + e,
-            a = r.y + t;
-        if (o < n.min || o > n.max || a < n.min || a > n.max) return y("Move would leave the level bounds.", "bad"), !1
+    if (!e && !t) return !1;
+    const n = objectSelection(),
+        r = emptySelection();
+    if (!n.length) {
+        if (!r.length) return !1;
+        return l.selection = l.selection.map(n => {
+            const r = Object.assign({}, n, {
+                x: n.x + e,
+                y: n.y + t
+            });
+            return isEmptySel(n) && (r.id = "cell:" + r.x + "," + r.y), r
+        }), l.sel && (l.sel = [l.sel[0] + e, l.sel[1] + t]), y("Moved " + r.length + " empty cell" + (1 === r.length ? "" : "s") + " by [" + e + "," + t + "]."), refreshMultiBanner(), P(), !0
     }
-    const r = l.selection.map(e => ({
+    const o = I();
+    for (const r of n) {
+        const a = r.x + e,
+            c = r.y + t;
+        if (a < o.min || a > o.max || c < o.min || c > o.max) return y("Move would leave the level bounds.", "bad"), !1
+    }
+    const a = n.map(e => ({
             verb: "erase",
             x: e.x,
             y: e.y,
             layer: e.layer
         })),
-        o = l.selection.map(n => Z(n.piece, n.x + e, n.y + t, {
+        c = n.map(n => Z(n.piece, n.x + e, n.y + t, {
             facing: n.facing,
             id: n.id,
             layer: n.layer
         }));
-    return !!L(r.concat(o)) && (l.selection = l.selection.map(n => Object.assign({}, n, {
-        x: n.x + e,
-        y: n.y + t
-    })), l.sel && (l.sel = [l.sel[0] + e, l.sel[1] + t]), l.move = null, s("moveBanner").hidden = !0, x("Moved " + l.selection.length + " object" + (1 === l.selection.length ? "" : "s") + " by [" + e + "," + t + "]"), refreshMultiBanner(), !0)
+    return !!L(a.concat(c)) && (l.selection = l.selection.map(n => {
+        const r = Object.assign({}, n, {
+            x: n.x + e,
+            y: n.y + t
+        });
+        return isEmptySel(n) && (r.id = "cell:" + r.x + "," + r.y), r
+    }), l.sel && (l.sel = [l.sel[0] + e, l.sel[1] + t]), l.move = null, s("moveBanner").hidden = !0, x("Moved " + n.length + " object" + (1 === n.length ? "" : "s") + " by [" + e + "," + t + "]"), refreshMultiBanner(), !0)
 }
 
 function fe(anchor) {
@@ -1393,17 +1491,20 @@ if (s("levelSel").addEventListener("change", e => {
         clearSelection(), y("Selection cleared.")
     }), s("multiEraseBtn").addEventListener("click", () => {
         eraseSelection()
+    }), s("multiPlaceBtn").addEventListener("click", () => {
+        placeOnEmptySelection()
     }), s("multiMoveBtn").addEventListener("click", () => {
         l.selection.length && (l.groupMovePick = !0, l.multiMode = !0, l.panMode = !1, l.mode = "select", T(), refreshZoomLabel(), refreshMultiBanner(), y("Tap the destination cell. The selection moves so the highlighted cell lands there."))
     }), s("mSelect").addEventListener("click", () => {
         l.mode = "select", T()
     }), s("mPlace").addEventListener("click", () => {
-        l.mode = "place", clearSelection(), T(), y(l.piece ? "Tap a cell to place " + l.piece : "Pick a piece below, then tap a cell.")
+        if (hasEmptySelection() && l.piece) return void placeOnEmptySelection();
+        l.mode = "place", hasEmptySelection() ? (l.selection = emptySelection(), refreshMultiBanner(), refreshZoomLabel()) : clearSelection(), T(), y(l.piece ? hasEmptySelection() ? "Tap Place on cells, or tap another empty cell." : "Tap a cell to place " + l.piece : "Pick a piece below, then tap a cell.")
     }), s("mErase").addEventListener("click", () => {
-        if (l.selection.length) return eraseSelection(), l.mode = "select", void T();
+        if (objectSelection().length) return eraseSelection(), l.mode = "select", void T();
         l.mode = "erase", clearSelection(), T(), y("floor" === l.view ? "Tap a cell to erase a floor tile. The floor layer has to be unlocked." : l.view && "all" !== l.view ? "Tap a cell to erase the " + layerLabel(l.view) + " layer. The floor stays." : "Tap a cell to erase its unlocked objects. The floor stays locked.")
     }), s("placeBtn").addEventListener("click", () => {
-        l.sel ? me(l.sel[0], l.sel[1]) : y("Select a cell first.", "bad")
+        hasEmptySelection() ? placeOnEmptySelection() : l.sel ? me(l.sel[0], l.sel[1]) : y("Select a cell first.", "bad")
     }), s("facingSel").addEventListener("change", e => {
         l.facing = e.target.value
     }), s("layerSel").addEventListener("change", e => {
