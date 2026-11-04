@@ -32,7 +32,7 @@ const we = 1,
         object: "Objects",
         item: "On top"
     },
-    xe={"floor":{"layer":"floor","atlas":"periodic","period":4,"note":"Seamless floor: atlas cell = (x mod 4, y mod 4). Place it to fill a missing cell. Erase stays locked."},"carpet_round":{"layer":"carpet","atlas":[0,0]},"carpet_rect":{"layer":"carpet","atlas":[1,0]},"wall":{"layer":"wall","facings":{"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Facing = which room side the wall stands on. Atlas columns ne/nw/se/sw; front-left (ne) unused while south stays open."},"wall_window":{"layer":"wall","facings":{"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]}},"counter_straight":{"layer":"object","tileset":"counter","atlas":[0,0],"art_facing":"front-right"},"counter_end_l":{"layer":"object","tileset":"counter","atlas":[1,0],"art_facing":"front-right"},"counter_end_r":{"layer":"object","tileset":"counter","atlas":[2,0],"art_facing":"front-right"},"counter_corner":{"layer":"object","tileset":"counter","atlas":[3,0],"art_facing":"front-right","note":"Baked L-bar unit. Its flat ends are part of the art, so alignment against the walls is an art task."},"bar_run_x":{"layer":"object","tileset":"counter","atlas":[4,0],"note":"Modular dark bar, runs along x (toward front-right). Arms end exactly on the cell boundary, so a run ending in a wall cell touches the wall."},"bar_run_y":{"layer":"object","tileset":"counter","atlas":[5,0],"note":"Modular dark bar, runs along y (toward front-left)."},"bar_end_x":{"layer":"object","tileset":"counter","atlas":[6,0],"note":"Open arm toward +x so it meets the elbow. The cap is the far end, toward -x (back-left wall)."},"bar_end_y":{"layer":"object","tileset":"counter","atlas":[7,0],"note":"Open arm toward +y so it meets the elbow. The cap is the far end, toward -y (back-right wall)."},"bar_elbow":{"layer":"object","tileset":"counter","atlas":[8,0],"note":"Elbow with arms toward -x and -y; encloses the back corner."},"table_round":{"layer":"object","tileset":"prop","atlas":[0,0]},"table_rect":{"layer":"object","tileset":"prop","atlas":[1,0]},"chair":{"layer":"object","tileset":"prop","facings":{"front-right":[2,0],"front-left":[3,0],"back-left":[4,0],"back-right":[5,0]},"note":"Yaw = way a seated person looks. front-right sits on the -x side of a table, front-left on -y, back-left on +x, back-right on +y."},"tankard":{"layer":"item","tileset":"prop","atlas":[6,0],"note":"Wooden mug for the On top slot. Place it on a bar or table cell."},"glass":{"layer":"item","tileset":"prop","atlas":[7,0],"note":"Stemmed ale glass for the On top slot. Place it on a bar or table cell."}},_e= {
+    xe={"floor":{"layer":"floor","atlas":"periodic","period":4,"note":"Honey-oak wood floor. Seamless: atlas cell = (x mod 4, y mod 4). Place it to fill a missing cell. Erase stays locked."},"floor_stone":{"layer":"floor","tileset":"floor_stone","atlas":"periodic","period":4,"note":"Warm flagstone floor. Same seamless period as wood. Place it to fill a missing cell. Erase stays locked."},"carpet_round":{"layer":"carpet","atlas":[0,0]},"carpet_rect":{"layer":"carpet","atlas":[1,0]},"wall":{"layer":"wall","facings":{"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Honey-oak timber wall. Facing = which room side the wall stands on. Atlas columns ne/nw/se/sw; front-left (ne) unused while south stays open."},"wall_window":{"layer":"wall","facings":{"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]}},"wall_stone":{"layer":"wall","tileset":"wall_stone","facings":{"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Coursed stone wall, same facings and slab thickness as timber."},"wall_stone_window":{"layer":"wall","tileset":"wall_stone","facings":{"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Stone wall with a small barred window."},"counter_straight":{"layer":"object","tileset":"counter","atlas":[0,0],"art_facing":"front-right"},"counter_end_l":{"layer":"object","tileset":"counter","atlas":[1,0],"art_facing":"front-right"},"counter_end_r":{"layer":"object","tileset":"counter","atlas":[2,0],"art_facing":"front-right"},"counter_corner":{"layer":"object","tileset":"counter","atlas":[3,0],"art_facing":"front-right","note":"Baked L-bar unit. Its flat ends are part of the art, so alignment against the walls is an art task."},"bar_run_x":{"layer":"object","tileset":"counter","atlas":[4,0],"note":"Modular dark bar, runs along x (toward front-right). Arms end exactly on the cell boundary, so a run ending in a wall cell touches the wall."},"bar_run_y":{"layer":"object","tileset":"counter","atlas":[5,0],"note":"Modular dark bar, runs along y (toward front-left)."},"bar_end_x":{"layer":"object","tileset":"counter","atlas":[6,0],"note":"Open arm toward +x so it meets the elbow. The cap is the far end, toward -x (back-left wall)."},"bar_end_y":{"layer":"object","tileset":"counter","atlas":[7,0],"note":"Open arm toward +y so it meets the elbow. The cap is the far end, toward -y (back-right wall)."},"bar_elbow":{"layer":"object","tileset":"counter","atlas":[8,0],"note":"Elbow with arms toward -x and -y; encloses the back corner."},"table_round":{"layer":"object","tileset":"prop","atlas":[0,0]},"table_rect":{"layer":"object","tileset":"prop","atlas":[1,0]},"chair":{"layer":"object","tileset":"prop","facings":{"front-right":[2,0],"front-left":[3,0],"back-left":[4,0],"back-right":[5,0]},"note":"Yaw = way a seated person looks. front-right sits on the -x side of a table, front-left on -y, back-left on +x, back-right on +y."},"tankard":{"layer":"item","tileset":"prop","atlas":[6,0],"note":"Wooden mug for the On top slot. Place it on a bar or table cell."},"glass":{"layer":"item","tileset":"prop","atlas":[7,0],"note":"Stemmed ale glass for the On top slot. Place it on a bar or table cell."}},_e= {
         schema: 1,
         note: ve,
         layers: ke,
@@ -52,6 +52,13 @@ const we = 1,
             dx: -128,
             dy: -64
         },
+        floor_stone: {
+            src: S("floor_stone"),
+            cw: 256,
+            ch: 128,
+            dx: -128,
+            dy: -64
+        },
         carpet: {
             src: S("carpet"),
             cw: 768,
@@ -61,6 +68,13 @@ const we = 1,
         },
         wall: {
             src: S("wall"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_stone: {
+            src: S("wall_stone"),
             cw: 256,
             ch: 328,
             dx: -128,
@@ -559,21 +573,23 @@ function refreshZoomLabel() {
     if (o) {
         o.classList.toggle("on", !!l.multiMode);
         o.setAttribute("aria-pressed", l.multiMode ? "true" : "false");
-        // Keep the label "Multi" — swapping to "Multi on" reflows the header and shifts the picture.
-        o.title = l.multiMode ? "Multi on: tap cells/objects to select, or drag a box" : "Marquee-select and drag-move objects";
+        o.textContent = l.multiMode ? "Multi on" : "Multi";
     }
     const r = s("viewport");
     r && (r.classList.toggle("pan-mode", !!l.panMode), r.classList.toggle("multi-mode", !!l.multiMode && !l.panMode), r.classList.toggle("moving-sel", !!(l.dragMove && l.selection.length)));
     const status = document.getElementById("camStatus");
     if (status) {
         status.classList.toggle("active", !!(l.multiMode || l.panMode || l.selection.length || l.groupMovePick));
-        if (l.groupMovePick && l.selection.length) status.textContent = "Tap destination for " + l.selection.length + " selected.";
-        else if (l.multiMode) status.textContent = l.selection.length ? "Multi: " + l.selection.length + " selected — Place / Move… / Erase." : "Multi: tap cells or objects (or drag a box).";
+        if (l.groupMovePick && l.selection.length) status.textContent = "Tap the destination cell to move " + l.selection.length + " selected object(s).";
+        else if (l.multiMode) status.textContent = l.selection.length ? "Multi on: " + l.selection.length + " selected — add cells/objects, Place on cells, or Move…" : "Multi on: tap empty cells or objects one by one (or drag a box). Then Place / Move…";
         else if (l.panMode) status.textContent = "Pan on: drag the picture to move the camera.";
-        else if (l.selection.length) status.textContent = l.selection.length + " selected — Place / Move… / Erase.";
+        else if (l.selection.length) status.textContent = l.selection.length + " selected — drag them on the picture, or tap Move…";
         else status.textContent = "Camera: wheel zooms, drag pans. Tap Multi to select many objects.";
     }
-    // Do not rewrite #viewLegend here — long Multi copy reflows and shifts the viewport.
+    const legend = document.getElementById("viewLegend");
+    if (legend) {
+        legend.textContent = l.multiMode ? "Multi mode: tap once per object to grow the selection (topmost first). Drag a box to grab many. Then drag or Move…." : "Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi selects many objects.";
+    }
 }
 
 function placementKey(e) {
@@ -899,10 +915,25 @@ function worldToCell(e, t) {
     return [Math.round((e / 126 + t / 63) / 2), Math.round((t / 63 - e / 126) / 2)]
 }
 
-function je(e, t, l, n) {
+function phaseAtlas(e, t, l, n) {
+    // Paired timber/stone sheets are 16 phase columns. Level coords stay
+    // (facing, detail). Same formula as stone_wall_atlas_coord.
     const r = F[e],
-        o = Y[e];
-    !r || !o || h.drawImage(o, t[0] * r.cw, t[1] * r.ch, r.cw, r.ch, Math.round(l + r.dx), Math.round(n + r.dy), r.cw, r.ch)
+        o = Y[e],
+        a = "wall" === e || "wall_stone" === e;
+    if (!r || !o || !a || o.width < r.cw * 16) return t;
+    const c = 4,
+        i = (l % c + c) % c,
+        s = (n % c + c) % c;
+    return [i + s * c, t[0] * 2 + t[1]]
+}
+
+function je(e, t, l, n, r, o) {
+    const a = F[e],
+        c = Y[e];
+    if (!a || !c) return;
+    const i = phaseAtlas(e, t, r, o);
+    h.drawImage(c, i[0] * a.cw, i[1] * a.ch, a.cw, a.ch, Math.round(l + a.dx), Math.round(n + a.dy), a.cw, a.ch)
 }
 
 function H(e, t) {
@@ -916,7 +947,7 @@ function z() {
     t.sort((t, l) => ("floor" === t.paint ? 0 : "carpet" === t.paint ? 1 : 2) - ("floor" === l.paint ? 0 : "carpet" === l.paint ? 1 : 2) || t.x + t.y - (l.x + l.y) || t.x - l.x || e.indexOf(t.paint) - e.indexOf(l.paint));
     for (const e of t) {
         const [t, l] = N(e.x, e.y);
-        je(e.artLayer, e.atlas, t, l)
+        je(e.artLayer, e.atlas, t, l, e.x, e.y)
     }
     if (l.grid) {
         const e = I();
@@ -1123,15 +1154,17 @@ function He() {
 
 function We(e, t) {
     const l = e.getContext("2d"),
-        n = Y[t.tileset || t.layer],
-        r = F[t.tileset || t.layer];
-    if (!l || !n || !r) return;
-    const o = te(t, t.facings ? Object.keys(t.facings)[0] : void 0, 0, 0);
-    if (!o) return;
-    const a = Math.min(64 / r.cw, 64 / r.ch),
-        c = r.cw * a,
-        i = r.ch * a;
-    l.imageSmoothingEnabled = !1, l.clearRect(0, 0, 64, 64), l.drawImage(n, o[0] * r.cw, o[1] * r.ch, r.cw, r.ch, (64 - c) / 2, 64 - i, c, i)
+        n = t.tileset || t.layer,
+        r = Y[n],
+        o = F[n];
+    if (!l || !r || !o) return;
+    const a = te(t, t.facings ? Object.keys(t.facings)[0] : void 0, 0, 0);
+    if (!a) return;
+    const c = phaseAtlas(n, a, 0, 0),
+        i = Math.min(64 / o.cw, 64 / o.ch),
+        s = o.cw * i,
+        u = o.ch * i;
+    l.imageSmoothingEnabled = !1, l.clearRect(0, 0, 64, 64), l.drawImage(r, c[0] * o.cw, c[1] * o.ch, o.cw, o.ch, (64 - s) / 2, 64 - u, s, u)
 }
 
 function ue() {
@@ -1498,19 +1531,11 @@ if (s("levelSel").addEventListener("change", e => {
         l.grid = !l.grid, s("gridBtn").classList.toggle("on", l.grid), z()
     }), s("zoomInBtn").addEventListener("click", () => zoomBy(ZOOM_STEP)), s("zoomOutBtn").addEventListener("click", () => zoomBy(1 / ZOOM_STEP)), s("zoomFitBtn").addEventListener("click", () => setZoom("fit")), s("panBtn").addEventListener("click", () => {
         l.panMode = !l.panMode, l.panMode && (l.multiMode = !1), refreshZoomLabel(), y(l.panMode ? "Pan mode: drag the picture to move the camera." : "Pan off: drag still pans after a short slide; tap selects.")
-    }), s("multiBtn").addEventListener("pointerdown", e => {
-        // Avoid focus — mobile browsers scroll to keep the focused Multi button in view.
-        e.preventDefault()
     }), s("multiBtn").addEventListener("click", e => {
-        const vp = s("viewport"),
-            sl = vp ? vp.scrollLeft : 0,
-            st = vp ? vp.scrollTop : 0,
-            wx = window.scrollX || 0,
-            wy = window.scrollY || 0;
         l.multiMode = !l.multiMode, l.multiMode && (l.panMode = !1, l.mode = "select", T()), refreshZoomLabel(), y(l.multiMode ? "Multi on: tap objects one by one (topmost first), or drag a box. Then drag or Move…." : "Multi off.");
-        e.currentTarget && e.currentTarget.blur && e.currentTarget.blur();
-        vp && (vp.scrollLeft = sl, vp.scrollTop = st);
-        window.scrollTo(wx, wy)
+        // Drop button focus so the next grid/picture tap selects instead of
+        // re-hitting Multi (phone browsers keep :focus on the toggled control).
+        e.currentTarget && e.currentTarget.blur && e.currentTarget.blur()
     }), s("multiClear").addEventListener("click", () => {
         clearSelection(), y("Selection cleared.")
     }), s("multiEraseBtn").addEventListener("click", () => {
