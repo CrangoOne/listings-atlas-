@@ -1015,22 +1015,52 @@ function shortPiece(e) {
     return e.replace(/^(bar_|counter_|table_|carpet_|wall_)/, "").slice(0, 7)
 }
 
+const CELL_TW = 64,
+    CELL_TH = 32;
+
+function cellIso(e, t) {
+    return [(e - t) * (CELL_TW / 2), (e + t) * (CELL_TH / 2)]
+}
+
 function q() {
     const e = I(),
         t = s("cells");
-    t.innerHTML = "", t.style.gridTemplateColumns = "26px repeat(" + (e.max - e.min + 1) + ", 1fr)", t.appendChild(document.createElement("div"));
-    for (let l = e.min; l <= e.max; l++) {
-        const e = document.createElement("div");
-        e.className = "axis", e.textContent = String(l), t.appendChild(e)
-    }
-    for (let l = e.min; l <= e.max; l++) {
-        const n = document.createElement("div");
-        n.className = "axis", n.textContent = String(l), t.appendChild(n);
-        for (let n = e.min; n <= e.max; n++) {
-            const e = document.createElement("button");
-            e.type = "button", e.dataset.x = String(n), e.dataset.y = String(l), e.addEventListener("click", ev => ge(n, l, ev)), t.appendChild(e)
+    t.innerHTML = "", t.style.gridTemplateColumns = "";
+    const n = 22;
+    let r = Infinity,
+        o = -Infinity,
+        a = Infinity,
+        c = -Infinity;
+    for (let t = e.min; t <= e.max; t++)
+        for (let l = e.min; l <= e.max; l++) {
+            const [e, i] = cellIso(l, t);
+            e < r && (r = e), e > o && (o = e), i < a && (a = i), i > c && (c = i)
         }
+    const i = n + CELL_TW / 2 - r,
+        d = n + CELL_TH / 2 - a;
+    t.style.width = o - r + CELL_TW + 2 * n + "px", t.style.height = c - a + CELL_TH + 2 * n + "px", t.style.setProperty("--cell-w", CELL_TW + "px"), t.style.setProperty("--cell-h", CELL_TH + "px");
+    for (let n = e.min; n <= e.max; n++)
+        for (let r = e.min; r <= e.max; r++) {
+            const [e, o] = cellIso(r, n),
+                a = document.createElement("button");
+            a.type = "button", a.dataset.x = String(r), a.dataset.y = String(n), a.style.left = i + e - CELL_TW / 2 + "px", a.style.top = d + o - CELL_TH / 2 + "px", a.addEventListener("click", e => ge(r, n, e)), t.appendChild(a)
+        }
+    for (let n = e.min; n <= e.max; n++) {
+        const [r, o] = cellIso(n, e.min),
+            a = document.createElement("div");
+        a.className = "axis", a.textContent = String(n), a.style.left = i + r + CELL_TW * .22 + "px", a.style.top = d + o - CELL_TH * .55 + "px", t.appendChild(a)
     }
+    for (let n = e.min + 1; n <= e.max; n++) {
+        const [r, o] = cellIso(e.min, n),
+            a = document.createElement("div");
+        a.className = "axis", a.textContent = String(n), a.style.left = i + r - CELL_TW * .22 + "px", a.style.top = d + o - CELL_TH * .55 + "px", t.appendChild(a)
+    }
+    const [u, m] = cellIso(e.max, e.min),
+        p = document.createElement("div");
+    p.className = "axis-caption", p.textContent = "x →", p.style.left = i + u + CELL_TW * .55 + "px", p.style.top = d + m + 2 + "px", t.appendChild(p);
+    const [f, h] = cellIso(e.min, e.max),
+        b = document.createElement("div");
+    b.className = "axis-caption", b.textContent = "← y", b.style.left = i + f - CELL_TW * .7 + "px", b.style.top = d + h + 2 + "px", t.appendChild(b)
 }
 
 function V() {
