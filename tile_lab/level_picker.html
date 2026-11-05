@@ -7,7 +7,74 @@
     <script type="module" crossorigin src="./assets/index-place-floor.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-qKOAs9om.css">
     <style>
+      #cellsWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 4px 0 8px; }
+      #cells {
+        position: relative;
+        display: block;
+        margin: 0 auto;
+        gap: 0;
+        grid-template-columns: none !important;
+        max-width: none;
+        --cell-w: 64px;
+        --cell-h: 32px;
+      }
+      #cells button {
+        position: absolute;
+        width: var(--cell-w);
+        height: var(--cell-h);
+        min-height: 0;
+        margin: 0;
+        padding: 0 6px;
+        font-size: 10px;
+        line-height: 1.05;
+        border: 0;
+        border-radius: 0;
+        background: #3a2d25;
+        clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        overflow: hidden;
+        z-index: 1;
+      }
+      #cells .axis {
+        position: absolute;
+        font-size: 11px;
+        color: var(--dim, #b39d86);
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        line-height: 1;
+        display: block;
+      }
+      #cells .axis-caption {
+        position: absolute;
+        font-size: 10px;
+        color: var(--dim, #b39d86);
+        pointer-events: none;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        z-index: 0;
+        white-space: nowrap;
+      }
       #cells button.floorc { background: #8a6a4a !important; }
+      #cells button.sel {
+        outline: none;
+        filter: drop-shadow(0 0 1px var(--accent, #e8a64c)) drop-shadow(0 0 2px var(--accent, #e8a64c));
+        z-index: 3;
+      }
+      #cells button.multi {
+        outline: none;
+        filter: drop-shadow(0 0 1px #7fd1ff) drop-shadow(0 0 2px #7fd1ff);
+        z-index: 2;
+      }
+      #cells button.src {
+        outline: none;
+        filter: drop-shadow(0 0 1px #7fd1ff);
+        z-index: 2;
+        opacity: 0.9;
+      }
       #viewport {
         max-height: 70vh;
         min-height: 240px;
@@ -41,7 +108,6 @@
       #camStatus.active { color: var(--accent, #e8a64c); font-weight: 600; }
       #multiBtn.on { background: var(--accent, #e8a64c); color: #2a1a08; border-color: var(--accent, #e8a64c); outline: none; }
       #viewLegend { min-height: 2.8em; }
-      #cells button.multi { outline: 3px solid #7fd1ff; z-index: 1; }
     </style>
   </head>
   <body>
@@ -96,9 +162,9 @@
         </section>
 
         <section>
-          <h2>Cells <span class="legend">top-down, tap to select</span></h2>
-          <div id="cells"></div>
-          <p class="legend">Columns x →, rows y ↓. Blue is the wall ring, brown is floor.</p>
+          <h2>Cells <span class="legend">isometric, tap to select</span></h2>
+          <div id="cellsWrap"><div id="cells"></div></div>
+          <p class="legend">Same diamond as the picture: +x front-right, +y front-left. Blue is the wall ring, brown is floor.</p>
         </section>
 
         <section>
