@@ -46,7 +46,11 @@
   }
 
   function saveOps(storage, levelName, groups) {
-    storage.setItem(opsKey(levelName), JSON.stringify(groups || []));
+    try {
+      storage.setItem(opsKey(levelName), JSON.stringify(groups || []));
+    } catch (err) {
+      // Private mode / quota must not abort the picker boot.
+    }
   }
 
   function loadBase(storage, levelName) {
@@ -61,22 +65,30 @@
   }
 
   function saveBase(storage, levelName, level) {
-    if (!level) {
-      storage.removeItem(baseKey(levelName));
-      return;
+    try {
+      if (!level) {
+        storage.removeItem(baseKey(levelName));
+        return;
+      }
+      var pinned = clone(level);
+      pinned.name = levelName;
+      storage.setItem(baseKey(levelName), JSON.stringify(pinned));
+    } catch (err) {
+      // Private mode / quota must not abort the picker boot.
     }
-    var pinned = clone(level);
-    pinned.name = levelName;
-    storage.setItem(baseKey(levelName), JSON.stringify(pinned));
   }
 
   function clearBase(storage, levelName) {
-    storage.removeItem(baseKey(levelName));
+    try {
+      storage.removeItem(baseKey(levelName));
+    } catch (err) {}
   }
 
   function clearScene(storage, levelName) {
-    storage.removeItem(opsKey(levelName));
-    storage.removeItem(baseKey(levelName));
+    try {
+      storage.removeItem(opsKey(levelName));
+      storage.removeItem(baseKey(levelName));
+    } catch (err) {}
   }
 
   /** Prefer the pinned base; otherwise the published catalog level. */
