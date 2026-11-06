@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Tile Lab level picker</title>
+    <script src="./assets/scene_persist.js"></script>
     <script type="module" crossorigin src="./assets/index-place-floor.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-qKOAs9om.css">
     <style>
@@ -202,6 +203,8 @@
           <div class="row">
             <button id="undoBtn" type="button">Undo</button>
             <button id="clearBtn" type="button">Clear all</button>
+            <button id="keepSceneBtn" type="button">Keep this scene</button>
+            <button id="resetCatalogBtn" type="button">Reset to catalog</button>
           </div>
           <textarea id="script" readonly aria-label="Edit script"></textarea>
           <div class="row">
@@ -210,7 +213,7 @@
             <button id="shareBtn" type="button" hidden>Share</button>
           </div>
           <p class="legend">
-            The script is the placement message: put, erase, lock, unlock. Paste it into chat, or apply it below to preview it on this level. Applying a script replaces the edits stored for that level.
+            Edits stick on this phone. The first change also pins a private base so a later catalog publish (after a PR merge) does not wipe your layout. <strong>Keep this scene</strong> folds the picture into that base; <strong>Reset to catalog</strong> drops the pin and reloads the published level. The script is the placement message for chat: put, erase, lock, unlock. Copy level JSON when you want the agent to land the scene in git.
           </p>
         </section>
 
