@@ -473,7 +473,9 @@ const g = _e,
             }
         },
         saveOps: (store, name, groups) => {
-            store.setItem("tilelab.ops.v1:" + name, JSON.stringify(groups || []))
+            try {
+                store.setItem("tilelab.ops.v1:" + name, JSON.stringify(groups || []))
+            } catch {}
         },
         resolveBase: (store, name, levels) => {
             try {
@@ -486,25 +488,46 @@ const g = _e,
             }
         },
         pinCatalogIfNeeded: (store, name, catalogLevel) => {
-            if (!catalogLevel || store.getItem("tilelab.base.v1:" + name)) return !1;
-            const pinned = JSON.parse(JSON.stringify(catalogLevel));
-            pinned.name = name;
-            store.setItem("tilelab.base.v1:" + name, JSON.stringify(pinned));
-            return !0
+            if (!catalogLevel) return !1;
+            try {
+                if (store.getItem("tilelab.base.v1:" + name)) return !1;
+                const pinned = JSON.parse(JSON.stringify(catalogLevel));
+                pinned.name = name;
+                store.setItem("tilelab.base.v1:" + name, JSON.stringify(pinned));
+                return !0
+            } catch {
+                return !1
+            }
         },
         bakeScene: (store, name, resolved) => {
             const pinned = JSON.parse(JSON.stringify(resolved));
             pinned.name = name;
-            store.setItem("tilelab.base.v1:" + name, JSON.stringify(pinned));
-            store.setItem("tilelab.ops.v1:" + name, "[]");
+            try {
+                store.setItem("tilelab.base.v1:" + name, JSON.stringify(pinned));
+                store.setItem("tilelab.ops.v1:" + name, "[]")
+            } catch {}
             return pinned
         },
         resetToCatalog: (store, name) => {
-            store.removeItem("tilelab.ops.v1:" + name);
-            store.removeItem("tilelab.base.v1:" + name)
+            try {
+                store.removeItem("tilelab.ops.v1:" + name);
+                store.removeItem("tilelab.base.v1:" + name)
+            } catch {}
         },
-        hasPinnedBase: (store, name) => !!store.getItem("tilelab.base.v1:" + name),
-        levelLabel: (name, store) => store.getItem("tilelab.base.v1:" + name) ? name + " (saved)" : name
+        hasPinnedBase: (store, name) => {
+            try {
+                return !!store.getItem("tilelab.base.v1:" + name)
+            } catch {
+                return !1
+            }
+        },
+        levelLabel: (name, store) => {
+            try {
+                return store.getItem("tilelab.base.v1:" + name) ? name + " (saved)" : name
+            } catch {
+                return name
+            }
+        }
     },
     l = {
         levelName: E.default,
@@ -534,9 +557,22 @@ let k = E.levels[l.levelName];
 const X = () => l.groups.flat(),
     // Prefer a phone-pinned base so catalog republishes (after merges) do not
     // reset the scene under outstanding edits.
-    D = () => SP.resolveBase(localStorage, l.levelName, E.levels),
     catalogBase = e => E.levels[e],
-    I = () => D().bounds,
+    D = () => {
+        const e = SP.resolveBase(localStorage, l.levelName, E.levels) || catalogBase(l.levelName),
+            t = catalogBase(l.levelName);
+        // Pinned bases from older sessions must still expose bounds or the
+        // isometric Cells panel never lays out (and overflow clips it away).
+        return e && e.bounds || !t ? e : Object.assign({}, e, {
+            bounds: t.bounds,
+            orientation: e.orientation || t.orientation
+        })
+    },
+    I = () => {
+        const e = D();
+        if (!e || !e.bounds) throw new Error("level bounds missing for " + l.levelName);
+        return e.bounds
+    },
     N = (e, t) => [126 * (e - t), 63 * (e + t)];
 
 function y(e, t) {
@@ -1711,8 +1747,24 @@ s("applyBtn").addEventListener("click", () => {
     const t = e.target?.tagName;
     "TEXTAREA" === t || "INPUT" === t || l.groups.length && (e.preventDefault(), l.groups.pop(), O(), x("Undid last edit"))
 });
-refreshLevelOptions(), l.groups = ae(l.levelName), l.groups.length && SP.pinCatalogIfNeeded(localStorage, l.levelName, catalogBase(l.levelName)), refreshLevelOptions(), s("levelSel").value = l.levelName, Ue().then(() => {
-    s("loading").hidden = !0, w.hidden = !1, K(), q(), pe(), G(), ue(), T();
+try {
+    refreshLevelOptions(), l.groups = ae(l.levelName), l.groups.length && SP.pinCatalogIfNeeded(localStorage, l.levelName, catalogBase(l.levelName)), refreshLevelOptions(), s("levelSel").value = l.levelName
+} catch (e) {
+    console.warn("scene persist boot", e), l.groups = []
+}
+Ue().then(() => {
+    s("loading").hidden = !0, w.hidden = !1;
+    try {
+        K()
+    } catch (e) {
+        console.warn("iso view", e)
+    }
+    try {
+        q()
+    } catch (e) {
+        console.warn("cells panel", e)
+    }
+    pe(), G(), ue(), T();
     const e = se();
     P(), y(e || (SP.hasPinnedBase(localStorage, l.levelName) ? "Restored your saved scene for " + l.levelName + ". Catalog merges stay out of the way until you Reset to catalog." : "Tap a cell, or pick a piece and use Tap to place."), e ? "bad" : void 0), window.__pickerReady = !0
 }).catch(e => {
