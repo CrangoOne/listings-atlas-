@@ -4,26 +4,38 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Tile Lab level picker</title>
-    <script src="./assets/scene_persist.js"></script>
-    <script type="module" crossorigin src="./assets/index-place-floor.js"></script>
+    <script src="./assets/scene_persist.js?v=persist2"></script>
+    <script type="module" crossorigin src="./assets/index-place-floor.js?v=persist2"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-qKOAs9om.css">
     <style>
-      #cellsWrap { overflow-x: auto; -webkit-overflow-scrolling: touch; padding: 4px 0 8px; }
+      /* overflow-x:auto makes overflow-y compute to auto too, which clips the
+         absolutely-positioned iso diamonds if #cells has no height yet. Keep
+         a min size so the diamond cannot collapse to an empty strip. */
+      #cellsWrap {
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
+        padding: 4px 0 8px;
+        min-height: 280px;
+      }
       #cells {
         position: relative;
-        display: block;
+        display: block !important;
         margin: 0 auto;
         gap: 0;
         grid-template-columns: none !important;
-        max-width: none;
+        grid-template-rows: none !important;
+        max-width: none !important;
+        min-width: 492px;
+        min-height: 268px;
         --cell-w: 64px;
         --cell-h: 32px;
       }
       #cells button {
-        position: absolute;
+        position: absolute !important;
         width: var(--cell-w);
         height: var(--cell-h);
-        min-height: 0;
+        min-height: 0 !important;
         margin: 0;
         padding: 0 6px;
         font-size: 10px;
