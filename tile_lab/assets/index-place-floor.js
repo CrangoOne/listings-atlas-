@@ -101,6 +101,20 @@ const we = 1,
             dx: -128,
             dy: -265
         },
+        wall_corners: {
+            src: S("wall_corners"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_stone_corners: {
+            src: S("wall_stone_corners"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
         counter: {
             src: S("counter"),
             cw: 256,
@@ -1054,13 +1068,16 @@ function worldToCell(e, t) {
     return [Math.round((e / 126 + t / 63) / 2), Math.round((t / 63 - e / 126) / 2)]
 }
 
-// Corner L pieces use catalog atlas columns 4+ (se_sw / sw_nw / ne_se).
-// Shipped tavern timber/stone sheets only pack straight facings 0-3; paired
-// 16-wide sheets remap those into rows 0-7. Columns 4+ are empty either way.
-const CORNER_ARMS = {
-    4: [2, 3],
-    5: [3, 1],
-    6: [0, 2]
+// Corner L pieces use catalog atlas columns 4/5/6 (se_sw / sw_nw / ne_se).
+// Thumbs use dedicated wall_corners / wall_stone_corners strips (one L each).
+const CORNER_STRIP_COL = {
+    4: 0,
+    5: 1,
+    6: 2
+};
+const CORNER_STRIP = {
+    wall: "wall_corners",
+    wall_stone: "wall_stone_corners"
 };
 
 function atlasInBounds(e, t, l) {
@@ -1076,8 +1093,7 @@ function phaseAtlas(e, t, l, n) {
     const r = F[e],
         o = Y[e],
         a = "wall" === e || "wall_stone" === e || "wall_pa" === e;
-    // Corner catalog cols (>= 4) are not on paired sheets — leave unchanged so
-    // thumbs can detect OOB and composite the two arm facings.
+    // Corner catalog cols (>= 4) are not on paired sheets.
     if (!r || !o || !a || !t || t[0] >= 4 || o.width < r.cw * 16) return t;
     const c = 4,
         i = (l % c + c) % c,
@@ -1340,30 +1356,34 @@ function He() {
 }
 
 function We(e, t) {
-    const l = e.getContext("2d"),
-        n = t.tileset || t.layer,
-        r = Y[n],
-        o = F[n];
-    if (!l || !r || !o) return;
+    const l = e.getContext("2d");
+    if (!l) return;
     l.imageSmoothingEnabled = !1, l.clearRect(0, 0, 64, 64);
-    const a = te(t, t.facings ? Object.keys(t.facings)[0] : void 0, 0, 0);
+    const n = t.tileset || t.layer,
+        a = te(t, t.facings ? Object.keys(t.facings)[0] : void 0, 0, 0);
     if (!a) return;
-    const c = phaseAtlas(n, a, 0, 0),
-        i = Math.min(64 / o.cw, 64 / o.ch),
+    // One coherent L cell from the corner strip — never stack two facings.
+    const stripKey = CORNER_STRIP[n],
+        stripCol = CORNER_STRIP_COL[a[0]];
+    if (null != stripKey && null != stripCol && Y[stripKey] && F[stripKey]) {
+        const r = Y[stripKey],
+            o = F[stripKey];
+        if (atlasInBounds(o, r, [stripCol, 0])) {
+            const i = Math.min(64 / o.cw, 64 / o.ch),
+                s = o.cw * i,
+                u = o.ch * i;
+            return void l.drawImage(r, stripCol * o.cw, 0, o.cw, o.ch, (64 - s) / 2, 64 - u, s, u)
+        }
+    }
+    const r = Y[n],
+        o = F[n];
+    if (!r || !o) return;
+    const c = phaseAtlas(n, a, 0, 0);
+    if (!atlasInBounds(o, r, c)) return;
+    const i = Math.min(64 / o.cw, 64 / o.ch),
         s = o.cw * i,
-        u = o.ch * i,
-        d = (64 - s) / 2,
-        p = 64 - u,
-        blit = (e, t) => {
-            if (!atlasInBounds(o, r, e)) return;
-            l.drawImage(r, e[0] * o.cw, e[1] * o.ch, o.cw, o.ch, d + (t || 0), p, s, u)
-        };
-    // Corner catalog cols are not real corner art on shipped sheets (on a
-    // 16-wide paired atlas col 4 is just another floor phase). Always build
-    // the thumb from the two straight arms.
-    const m = CORNER_ARMS[a[0]];
-    if (m) return void(l.globalAlpha = .92, blit(phaseAtlas(n, [m[0], 0], 0, 0), -6), blit(phaseAtlas(n, [m[1], 0], 0, 0), 6), l.globalAlpha = 1);
-    atlasInBounds(o, r, c) && blit(c, 0)
+        u = o.ch * i;
+    l.drawImage(r, c[0] * o.cw, c[1] * o.ch, o.cw, o.ch, (64 - s) / 2, 64 - u, s, u)
 }
 
 function pieceLabel(e) {
