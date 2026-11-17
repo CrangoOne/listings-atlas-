@@ -39,7 +39,7 @@ const we = 1,
         layer_labels: layerLabels,
         pieces: xe
     },
-    Ee={"earthen":{"schema":1,"name":"earthen","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"wall_front_left","piece":"wall","facing":"front-left","cells":[[-2,3],[0,3],[2,3]]},{"id":"window_front_left","piece":"wall_window","facing":"front-left","cells":[[-1,3],[1,3]]}]},"earthen_stone":{"schema":1,"name":"earthen_stone","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_earthen_stone","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_stone_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_stone_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall_stone","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_stone_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"wall_front_left","piece":"wall_stone","facing":"front-left","cells":[[-2,3],[0,3],[2,3]]},{"id":"window_front_left","piece":"wall_stone_window","facing":"front-left","cells":[[-1,3],[1,3]]}]},"tavern":{"schema":1,"name":"tavern","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"carpet_left","piece":"carpet_round","cell":[-1,1]},{"id":"carpet_right","piece":"carpet_rect","cell":[1,1]},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"bar","piece":"counter_corner","cell":[-2,-2]},{"id":"glass_bar","piece":"glass","cell":[-2,-2]},{"id":"table_left","piece":"table_round","cell":[-1,1]},{"id":"tankard_table","piece":"tankard","cell":[-1,1]},{"id":"chair_left_n","piece":"chair","facing":"front-left","cell":[-1,0]},{"id":"chair_left_w","piece":"chair","facing":"front-right","cell":[-2,1]},{"id":"chair_left_s","piece":"chair","facing":"back-right","cell":[-1,2]},{"id":"table_right","piece":"table_rect","cell":[1,1]},{"id":"chair_right_n","piece":"chair","facing":"front-left","cell":[1,0]},{"id":"chair_right_e","piece":"chair","facing":"back-left","cell":[2,1]},{"id":"chair_right_s","piece":"chair","facing":"back-right","cell":[1,2]}]},"tavern_modular_bar":{"schema":1,"name":"tavern_modular_bar","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"carpet_left","piece":"carpet_round","cell":[-1,1]},{"id":"carpet_right","piece":"carpet_rect","cell":[1,1]},{"id":"bar_long","piece":"bar_run_x","cells":[[-2,-1],[-1,-1]]},{"id":"bar_elbow","piece":"bar_elbow","cell":[0,-1]},{"id":"bar_short","piece":"bar_run_y","cell":[0,-2]},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"table_left","piece":"table_round","cell":[-1,1]},{"id":"chair_left_n","piece":"chair","facing":"front-left","cell":[-1,0]},{"id":"chair_left_w","piece":"chair","facing":"front-right","cell":[-2,1]},{"id":"chair_left_s","piece":"chair","facing":"back-right","cell":[-1,2]},{"id":"table_right","piece":"table_rect","cell":[1,1]},{"id":"chair_right_n","piece":"chair","facing":"front-left","cell":[1,0]},{"id":"chair_right_e","piece":"chair","facing":"back-left","cell":[2,1]},{"id":"chair_right_s","piece":"chair","facing":"back-right","cell":[1,2]}]},"tavern_proposal_a":{"schema":1,"name":"tavern_proposal_a","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east), atlas nw \u2014 tip cell (3,-3) stays empty so runs meet at the floor corner"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_proposal_a","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_proposal_a","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_proposal_a","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_proposal_a","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"table_center","piece":"table_round","cell":[0,0]},{"id":"chair_n","piece":"chair","facing":"front-left","cell":[0,-1]},{"id":"chair_s","piece":"chair","facing":"back-right","cell":[0,1]},{"id":"chair_w","piece":"chair","facing":"front-right","cell":[-1,0]},{"id":"chair_e","piece":"chair","facing":"back-left","cell":[1,0]}]},"tavern_stone_ashlar":{"schema":1,"name":"tavern_stone_ashlar","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_comfy1":{"schema":1,"name":"tavern_stone_comfy1","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_floor_only":{"schema":1,"name":"tavern_stone_floor_only","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-2,-2],"to":[2,2]}}]},"tavern_stone_plaster":{"schema":1,"name":"tavern_stone_plaster","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_wood_pa":{"schema":1,"name":"tavern_stone_wood_pa","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_proposal_a","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_proposal_a","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]}},Le= {
+    Ee={"earthen":{"schema":1,"name":"earthen","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"wall_front_left","piece":"wall","facing":"front-left","cells":[[-2,3],[0,3],[2,3]]},{"id":"window_front_left","piece":"wall_window","facing":"front-left","cells":[[-1,3],[1,3]]}]},"earthen_stone":{"schema":1,"name":"earthen_stone","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_earthen_stone","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_stone","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_stone","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern":{"schema":1,"name":"tavern","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"carpet_left","piece":"carpet_round","cell":[-1,1]},{"id":"carpet_right","piece":"carpet_rect","cell":[1,1]},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"bar","piece":"counter_corner","cell":[-2,-2]},{"id":"glass_bar","piece":"glass","cell":[-2,-2]},{"id":"table_left","piece":"table_round","cell":[-1,1]},{"id":"tankard_table","piece":"tankard","cell":[-1,1]},{"id":"chair_left_n","piece":"chair","facing":"front-left","cell":[-1,0]},{"id":"chair_left_w","piece":"chair","facing":"front-right","cell":[-2,1]},{"id":"chair_left_s","piece":"chair","facing":"back-right","cell":[-1,2]},{"id":"table_right","piece":"table_rect","cell":[1,1]},{"id":"chair_right_n","piece":"chair","facing":"front-left","cell":[1,0]},{"id":"chair_right_e","piece":"chair","facing":"back-left","cell":[2,1]},{"id":"chair_right_s","piece":"chair","facing":"back-right","cell":[1,2]}]},"tavern_modular_bar":{"schema":1,"name":"tavern_modular_bar","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"carpet_left","piece":"carpet_round","cell":[-1,1]},{"id":"carpet_right","piece":"carpet_rect","cell":[1,1]},{"id":"bar_long","piece":"bar_run_x","cells":[[-2,-1],[-1,-1]]},{"id":"bar_elbow","piece":"bar_elbow","cell":[0,-1]},{"id":"bar_short","piece":"bar_run_y","cell":[0,-2]},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"table_left","piece":"table_round","cell":[-1,1]},{"id":"chair_left_n","piece":"chair","facing":"front-left","cell":[-1,0]},{"id":"chair_left_w","piece":"chair","facing":"front-right","cell":[-2,1]},{"id":"chair_left_s","piece":"chair","facing":"back-right","cell":[-1,2]},{"id":"table_right","piece":"table_rect","cell":[1,1]},{"id":"chair_right_n","piece":"chair","facing":"front-left","cell":[1,0]},{"id":"chair_right_e","piece":"chair","facing":"back-left","cell":[2,1]},{"id":"chair_right_s","piece":"chair","facing":"back-right","cell":[1,2]}]},"tavern_proposal_a":{"schema":1,"name":"tavern_proposal_a","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east), atlas nw \u2014 tip cell (3,-3) stays empty so runs meet at the floor corner"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_proposal_a","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_proposal_a","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_proposal_a","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_proposal_a","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"table_center","piece":"table_round","cell":[0,0]},{"id":"chair_n","piece":"chair","facing":"front-left","cell":[0,-1]},{"id":"chair_s","piece":"chair","facing":"back-right","cell":[0,1]},{"id":"chair_w","piece":"chair","facing":"front-right","cell":[-1,0]},{"id":"chair_e","piece":"chair","facing":"back-left","cell":[1,0]}]},"tavern_stone_ashlar":{"schema":1,"name":"tavern_stone_ashlar","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_comfy1":{"schema":1,"name":"tavern_stone_comfy1","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_floor_only":{"schema":1,"name":"tavern_stone_floor_only","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-2,-2],"to":[2,2]}}]},"tavern_stone_plaster":{"schema":1,"name":"tavern_stone_plaster","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_wood_pa":{"schema":1,"name":"tavern_stone_wood_pa","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_proposal_a","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_proposal_a","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]}},Le= {
         default: "tavern",
         levels: Ee
     },
@@ -560,8 +560,31 @@ const g = _e,
         dragMove: null,
         groupMovePick: !1,
         move: null,
-        view: "all"
+        view: "all",
+        pieceFolder: "all",
+        pieceSet: "all",
+        pieceSub: "all"
     },
+    MATERIAL_SETS = [{
+        id: "wood",
+        label: "Wood"
+    }, {
+        id: "stone",
+        label: "Stone"
+    }, {
+        id: "proposal_a",
+        label: "Proposal A"
+    }],
+    OBJECT_SUBS = [{
+        id: "bar",
+        label: "Bar"
+    }, {
+        id: "counter",
+        label: "Counter"
+    }, {
+        id: "furniture",
+        label: "Furniture"
+    }],
     ZOOM_MIN = 0.15,
     ZOOM_MAX = 4,
     ZOOM_STEP = 1.25,
@@ -1313,21 +1336,107 @@ function We(e, t) {
     l.imageSmoothingEnabled = !1, l.clearRect(0, 0, 64, 64), l.drawImage(r, c[0] * o.cw, c[1] * o.ch, o.cw, o.ch, (64 - s) / 2, 64 - u, s, u)
 }
 
+function pieceLabel(e) {
+    return String(e || "").replace(/_/g, " ")
+}
+
+function materialSetOf(e, t) {
+    const n = e || "";
+    return n.indexOf("proposal_a") >= 0 || t && ("floor_pa" === t.tileset || "wall_pa" === t.tileset) ? "proposal_a" : n.indexOf("stone") >= 0 || t && ("floor_stone" === t.tileset || "wall_stone" === t.tileset) ? "stone" : t && ("floor" === t.layer || "wall" === t.layer) ? "wood" : ""
+}
+
+function objectSubOf(e, t) {
+    return t && "object" === t.layer ? 0 === e.indexOf("bar_") ? "bar" : 0 === e.indexOf("counter_") ? "counter" : "furniture" : ""
+}
+
+function fillChipRow(e, t, n, r) {
+    e.innerHTML = "";
+    for (const o of t) {
+        const a = document.createElement("button");
+        a.type = "button", a.textContent = o.label, n === o.id && (a.className = "on"), a.addEventListener("click", () => r(o.id)), e.append(a)
+    }
+}
+
+function refreshPieceFilters() {
+    const e = s("pieceFolderRow");
+    if (!e) return;
+    fillChipRow(e, [{
+        id: "all",
+        label: "All"
+    }, ...g.layers.map(e => ({
+        id: e,
+        label: layerLabel(e)
+    }))], l.pieceFolder, e => {
+        l.pieceFolder = e, "floor" !== e && "wall" !== e && (l.pieceSet = "all"), "object" !== e && (l.pieceSub = "all"), refreshPieceFilters(), ue(), y("all" === e ? "Showing every piece." : "Folder: " + layerLabel(e))
+    });
+    const t = "all" === l.pieceFolder || "floor" === l.pieceFolder || "wall" === l.pieceFolder,
+        n = s("pieceSetRow");
+    n && (n.hidden = !t, t ? fillChipRow(n, [{
+        id: "all",
+        label: "All sets"
+    }, ...MATERIAL_SETS], l.pieceSet, e => {
+        l.pieceSet = e, refreshPieceFilters(), ue(), y("all" === e ? "All material sets." : "Set: " + (MATERIAL_SETS.find(t => t.id === e) || {}).label)
+    }) : l.pieceSet = "all");
+    const r = "all" === l.pieceFolder || "object" === l.pieceFolder,
+        o = s("pieceSubRow");
+    o && (o.hidden = !r, r ? fillChipRow(o, [{
+        id: "all",
+        label: "All objects"
+    }, ...OBJECT_SUBS], l.pieceSub, e => {
+        l.pieceSub = e, refreshPieceFilters(), ue(), y("all" === e ? "All objects." : "Group: " + (OBJECT_SUBS.find(t => t.id === e) || {}).label)
+    }) : l.pieceSub = "all")
+}
+
+function piecePassesFilters(e, t) {
+    return !("all" !== l.pieceFolder && t.layer !== l.pieceFolder || "all" !== l.pieceSet && materialSetOf(e, t) !== l.pieceSet || "all" !== l.pieceSub && objectSubOf(e, t) !== l.pieceSub)
+}
+
 function ue() {
     const e = s("palette");
     e.innerHTML = "";
-    for (const [t, n] of Object.entries(g.pieces)) {
-        const r = document.createElement("button");
-        r.type = "button", l.piece === t && (r.className = "on");
-        const o = document.createElement("canvas");
-        o.width = 64, o.height = 64, We(o, n);
-        const a = document.createElement("span");
-        a.textContent = t, r.append(o, a), r.addEventListener("click", () => {
-            l.piece = t, l.layer = n.layer, pe(), G(), ue(), W();
-            const e = R(l.layer),
-                r = "floor" === n.layer;
-            y(r ? "Piece: floor. Tap a cell to paint the floor. Erase stays locked." : "Piece: " + t + " on " + layerLabel(l.layer) + (e ? " (layer locked)" : ""), r ? void 0 : e ? "bad" : void 0)
-        }), e.append(r)
+    const t = Object.entries(g.pieces).filter(([e, t]) => piecePassesFilters(e, t)),
+        n = [],
+        r = new Map;
+
+    function o(e, t) {
+        return "all" === l.pieceFolder ? t.layer : ("floor" === l.pieceFolder || "wall" === l.pieceFolder) && "all" === l.pieceSet ? materialSetOf(e, t) || "other" : "object" === l.pieceFolder && "all" === l.pieceSub ? objectSubOf(e, t) || "other" : ""
+    }
+
+    function a(e) {
+        if (!e) return "";
+        if (g.layers.includes(e)) return layerLabel(e);
+        const t = MATERIAL_SETS.find(t => t.id === e);
+        if (t) return t.label;
+        const n = OBJECT_SUBS.find(t => t.id === e);
+        return n ? n.label : e
+    }
+    for (const [e, l] of t) {
+        const t = o(e, l);
+        r.has(t) || (r.set(t, []), n.push(t)), r.get(t).push([e, l])
+    }
+    if (!t.length) {
+        const t = document.createElement("p");
+        t.className = "legend", t.style.gridColumn = "1 / -1", t.textContent = "No pieces in this folder.", e.append(t)
+    }
+    for (const t of n) {
+        const n = a(t);
+        if (n) {
+            const t = document.createElement("div");
+            t.className = "palette-section", t.textContent = n, e.append(t)
+        }
+        for (const [n, o] of r.get(t)) {
+            const t = document.createElement("button");
+            t.type = "button", l.piece === n && (t.className = "on");
+            const a = document.createElement("canvas");
+            a.width = 64, a.height = 64, We(a, o);
+            const c = document.createElement("span");
+            c.textContent = pieceLabel(n), t.title = n, t.append(a, c), t.addEventListener("click", () => {
+                l.piece = n, l.layer = o.layer, pe(), G(), ue(), W();
+                const e = R(l.layer),
+                    t = "floor" === o.layer;
+                y(t ? "Piece: floor. Tap a cell to paint the floor. Erase stays locked." : "Piece: " + pieceLabel(n) + " on " + layerLabel(l.layer) + (e ? " (layer locked)" : ""), t ? void 0 : e ? "bad" : void 0)
+            }), e.append(t)
+        }
     }
     he(), W()
 }
@@ -1335,7 +1444,8 @@ function ue() {
 function W() {
     const e = s("pieceNote"),
         t = l.piece ? g.pieces[l.piece] : void 0;
-    if (!t) return void(e.textContent = "Pick a piece. Floor can be painted back. Walls start locked.");
+    if (!e) return;
+    if (!t) return void(e.textContent = "Pick a piece. Folders keep walls and floors in matching sets; Objects split Bar / Counter / Furniture.");
     const n = [t.note, t.art_facing ? "Drawn facing " + t.art_facing + "." : ""].filter(Boolean);
     l.layer && l.layer !== t.layer && n.push("Placing on the " + layerLabel(l.layer) + " layer."), e.textContent = n.join(" ") || "Places on the " + layerLabel(t.layer) + " layer."
 }
@@ -1407,14 +1517,14 @@ function viewButtons() {
         n.type = "button";
         const r = "all" !== t && R(t);
         n.textContent = r ? layerLabel(t) + " locked" : layerLabel(t), l.view === t && (n.className = "on"), n.addEventListener("click", () => {
-            l.view = t, viewButtons(), V(), Ie(), ze(), y("all" === t ? "Showing every layer." : "Showing the " + layerLabel(t) + " layer.")
+            l.view = t, "all" !== t && (l.pieceFolder = t, "floor" !== t && "wall" !== t && (l.pieceSet = "all"), "object" !== t && (l.pieceSub = "all")), viewButtons(), refreshPieceFilters(), ue(), V(), Ie(), ze(), y("all" === t ? "Showing every layer." : "Showing the " + layerLabel(t) + " layer — palette filtered.")
         }), e.append(n)
     }
 }
 
 function P() {
     const e = se();
-    e && y(e, "bad"), z(), viewButtons(), V(), Ie(), Fe(), he(), G(), ze(), refreshMultiBanner(), refreshZoomLabel()
+    e && y(e, "bad"), z(), viewButtons(), refreshPieceFilters(), ue(), V(), Ie(), Fe(), he(), G(), ze(), refreshMultiBanner(), refreshZoomLabel()
 }
 
 function x(e) {
