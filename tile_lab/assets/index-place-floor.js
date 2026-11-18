@@ -32,14 +32,14 @@ const we = 1,
         object: "Objects",
         item: "On top"
     },
-    xe={"floor":{"layer":"floor","atlas":"periodic","period":4,"note":"Honey-oak wood floor. Seamless: atlas cell = (x mod 4, y mod 4). Place it to fill a missing cell. Erase stays locked."},"floor_stone":{"layer":"floor","tileset":"floor_stone","atlas":"periodic","period":4,"note":"Warm flagstone floor. Same seamless period as wood. Place it to fill a missing cell. Erase stays locked."},"floor_earthen_stone":{"layer":"floor","tileset":"floor_earthen_stone","atlas":"periodic","period":4,"note":"Tavern basement packed dirt floor (color-matched to chunky cellar walls). Same seamless period as other floors. Place it to fill a missing cell."},"floor_earthen_umber":{"layer":"floor","tileset":"floor_earthen_umber","atlas":"periodic","period":4,"note":"Common-room umber timber floorboards (keeper #1). Same seamless period as other floors. Place it to fill a missing cell."},"floor_earthen_ashlar":{"layer":"floor","tileset":"floor_earthen_ashlar","atlas":"periodic","period":4,"note":"Common-room pale ashlar floor (keeper #3). Same seamless period as other floors. Place it to fill a missing cell."},"floor_earthen_brick":{"layer":"floor","tileset":"floor_earthen_brick","atlas":"periodic","period":4,"note":"Common-room brick herringbone floor (keeper #5). Same seamless period as other floors. Place it to fill a missing cell."},"floor_earthen_pine":{"layer":"floor","tileset":"floor_earthen_pine","atlas":"periodic","period":4,"note":"Common-room wide pine floorboards (keeper #6). Same seamless period as other floors. Place it to fill a missing cell."},"floor_proposal_a":{"layer":"floor","tileset":"floor_pa","atlas":"periodic","period":4,"note":"Sprite AI honey-oak floorboards (flat lighting, no frame). Seamless. Place it to fill a missing cell. Erase stays locked."},"carpet_round":{"layer":"carpet","atlas":[0,0]},"carpet_rect":{"layer":"carpet","atlas":[1,0]},"wall":{"layer":"wall","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Honey-oak timber wall. Facing = which room side the wall stands on. Atlas columns ne/nw/se/sw map to front-left/front-right/back-left/back-right. Use front-left to close or divide along y = max (south)."},"wall_window":{"layer":"wall","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]}},"wall_stone":{"layer":"wall","tileset":"wall_stone","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Coursed stone wall, same facings and slab thickness as timber."},"wall_earthen_stone":{"layer":"wall","tileset":"wall_earthen_stone","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Tavern basement chunky cellar mud-brick wall (tip-safe face albedo). Same facings as timber."},"wall_earthen_umber":{"layer":"wall","tileset":"wall_earthen_umber","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Common-room umber timber wall with top beam (keeper #1). Same facings as timber."},"wall_earthen_ashlar":{"layer":"wall","tileset":"wall_earthen_ashlar","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Common-room pale ashlar wall, no timber top cap (keeper #3). Same facings as timber."},"wall_earthen_brick":{"layer":"wall","tileset":"wall_earthen_brick","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Common-room brick + half-timber wall, no timber top cap (keeper #5). Same facings as timber."},"wall_earthen_pine":{"layer":"wall","tileset":"wall_earthen_pine","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Common-room fieldstone wall, no timber top cap (keeper #6). Same facings as timber."},"wall_stone_window":{"layer":"wall","tileset":"wall_stone","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Stone wall with a small barred window."},"wall_corner_back":{"layer":"wall","atlas":[4,0],"note":"Outer-tip L se_sw (E-S-W foot, rises to N). Back tip [-3,-3] N."},"wall_corner_front":{"layer":"wall","atlas":[4,0],"note":"Same se_sw L as back: foot on outer S tip. Front tip [3,3]."},"wall_corner_left":{"layer":"wall","atlas":[5,0],"note":"Outer-tip L sw_nw (S-W-N foot). Left tip [-3,3] W."},"wall_corner_right":{"layer":"wall","atlas":[6,0],"note":"Outer-tip L ne_se (N-E-S foot). Right tip [3,-3] E."},"wall_stone_corner_back":{"layer":"wall","tileset":"wall_stone","atlas":[4,0],"note":"Stone se_sw L. Back tip [-3,-3]."},"wall_stone_corner_front":{"layer":"wall","tileset":"wall_stone","atlas":[4,0],"note":"Stone se_sw L. Front tip [3,3]."},"wall_stone_corner_left":{"layer":"wall","tileset":"wall_stone","atlas":[5,0],"note":"Stone sw_nw L. Left tip [-3,3]."},"wall_stone_corner_right":{"layer":"wall","tileset":"wall_stone","atlas":[6,0],"note":"Stone ne_se L. Right tip [3,-3]."},"wall_proposal_a":{"layer":"wall","tileset":"wall_pa","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Proposal A timber wall paired to the Sprite AI floor_pa albedo. Same facings as timber."},"wall_proposal_a_window":{"layer":"wall","tileset":"wall_pa","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Proposal A timber wall with a small barred window."},"counter_straight":{"layer":"object","tileset":"counter","atlas":[0,0],"art_facing":"front-right"},"counter_end_l":{"layer":"object","tileset":"counter","atlas":[1,0],"art_facing":"front-right"},"counter_end_r":{"layer":"object","tileset":"counter","atlas":[2,0],"art_facing":"front-right"},"counter_corner":{"layer":"object","tileset":"counter","atlas":[3,0],"art_facing":"front-right","note":"Baked L-bar unit. Its flat ends are part of the art, so alignment against the walls is an art task."},"bar_run_x":{"layer":"object","tileset":"counter","atlas":[4,0],"note":"Modular dark bar, runs along x (toward front-right). Arms end exactly on the cell boundary, so a run ending in a wall cell touches the wall."},"bar_run_y":{"layer":"object","tileset":"counter","atlas":[5,0],"note":"Modular dark bar, runs along y (toward front-left)."},"bar_end_x":{"layer":"object","tileset":"counter","atlas":[6,0],"note":"Open arm toward +x so it meets the elbow. The cap is the far end, toward -x (back-left wall)."},"bar_end_y":{"layer":"object","tileset":"counter","atlas":[7,0],"note":"Open arm toward +y so it meets the elbow. The cap is the far end, toward -y (back-right wall)."},"bar_elbow":{"layer":"object","tileset":"counter","atlas":[8,0],"note":"Elbow with arms toward -x and -y; encloses the back corner."},"table_round":{"layer":"object","tileset":"prop","atlas":[0,0]},"table_rect":{"layer":"object","tileset":"prop","atlas":[1,0]},"chair":{"layer":"object","tileset":"prop","facings":{"front-right":[2,0],"front-left":[3,0],"back-left":[4,0],"back-right":[5,0]},"note":"Yaw = way a seated person looks. front-right sits on the -x side of a table, front-left on -y, back-left on +x, back-right on +y."},"tankard":{"layer":"item","tileset":"prop","atlas":[6,0],"note":"Wooden mug for the On top slot. Place it on a bar or table cell."},"glass":{"layer":"item","tileset":"prop","atlas":[7,0],"note":"Stemmed ale glass for the On top slot. Place it on a bar or table cell."}},_e= {
+    xe={"floor":{"layer":"floor","atlas":"periodic","period":4,"note":"Honey-oak wood floor. Seamless: atlas cell = (x mod 4, y mod 4). Place it to fill a missing cell. Erase stays locked."},"floor_stone":{"layer":"floor","tileset":"floor_stone","atlas":"periodic","period":4,"note":"Warm flagstone floor. Same seamless period as wood. Place it to fill a missing cell. Erase stays locked."},"floor_wood_b":{"layer":"floor","tileset":"floor_wood_b","atlas":"periodic","period":4,"note":"Honey-oak wood floor variant B. Same seamless period as wood A. Place it to fill a missing cell."},"floor_earthen_stone":{"layer":"floor","tileset":"floor_earthen_stone","atlas":"periodic","period":4,"note":"Earthen biome rough flagstone (Comfy keeper B). Same seamless period as other floors. Place it to fill a missing cell."},"floor_earthen_wood":{"layer":"floor","tileset":"floor_earthen_wood","atlas":"periodic","period":4,"note":"Earthen biome timber floor. Same seamless period as other floors. Place it to fill a missing cell."},"floor_proposal_a":{"layer":"floor","tileset":"floor_pa","atlas":"periodic","period":4,"note":"Sprite AI honey-oak floorboards (flat lighting, no frame). Seamless. Place it to fill a missing cell. Erase stays locked."},"carpet_round":{"layer":"carpet","atlas":[0,0]},"carpet_rect":{"layer":"carpet","atlas":[1,0]},"wall":{"layer":"wall","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Honey-oak timber wall. Facing = which room side the wall stands on. Atlas columns ne/nw/se/sw map to front-left/front-right/back-left/back-right. Use front-left to close or divide along y = max (south)."},"wall_window":{"layer":"wall","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]}},"wall_door":{"layer":"wall","tileset":"wall_door","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Timber wall with a closed oak door. Straight facings only (no corner L)."},"wall_stone":{"layer":"wall","tileset":"wall_stone","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Basement mud-brick stone wall (unpaired). Same facings and slab thickness as timber."},"wall_stone_window":{"layer":"wall","tileset":"wall_stone","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Basement stone wall with a small barred window."},"wall_stone_comfy":{"layer":"wall","tileset":"wall_stone_comfy","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Comfy pair1 stone wall (floor-phase paired, 16 cols). Pair with floor_stone."},"wall_stone_comfy_window":{"layer":"wall","tileset":"wall_stone_comfy","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Comfy pair1 stone wall with a small barred window."},"wall_ashlar":{"layer":"wall","tileset":"wall_ashlar","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Fine cool ashlar courses (unpaired, no floor climb). Pair with floor_stone."},"wall_ashlar_window":{"layer":"wall","tileset":"wall_ashlar","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Fine ashlar wall with a small barred window."},"wall_paired":{"layer":"wall","tileset":"wall_paired","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Floor-phase paired timber wall (16 cols). Soft-skirt join to the wood floor."},"wall_paired_window":{"layer":"wall","tileset":"wall_paired","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Paired timber wall with a small barred window."},"wall_corner_back":{"layer":"wall","atlas":[4,0],"note":"Outer-tip L se_sw (E-S-W foot, rises to N). Back tip [-3,-3] N."},"wall_corner_front":{"layer":"wall","atlas":[4,0],"note":"Same se_sw L as back: foot on outer S tip. Front tip [3,3]."},"wall_corner_left":{"layer":"wall","atlas":[5,0],"note":"Outer-tip L sw_nw (S-W-N foot). Left tip [-3,3] W."},"wall_corner_right":{"layer":"wall","atlas":[6,0],"note":"Outer-tip L ne_se (N-E-S foot). Right tip [3,-3] E."},"wall_stone_corner_back":{"layer":"wall","tileset":"wall_stone","atlas":[4,0],"note":"Stone se_sw L. Back tip [-3,-3]."},"wall_stone_corner_front":{"layer":"wall","tileset":"wall_stone","atlas":[4,0],"note":"Stone se_sw L. Front tip [3,3]."},"wall_stone_corner_left":{"layer":"wall","tileset":"wall_stone","atlas":[5,0],"note":"Stone sw_nw L. Left tip [-3,3]."},"wall_stone_corner_right":{"layer":"wall","tileset":"wall_stone","atlas":[6,0],"note":"Stone ne_se L. Right tip [3,-3]."},"wall_proposal_a":{"layer":"wall","tileset":"wall_pa","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Proposal A timber wall paired to the Sprite AI floor_pa albedo. Same facings as timber."},"wall_proposal_a_window":{"layer":"wall","tileset":"wall_pa","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Proposal A timber wall with a small barred window."},"wall_earthen":{"layer":"wall","tileset":"wall_earthen","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Earthen soft-skirt timber wall. Same facings as tavern timber; atlas also packs corner L columns."},"wall_earthen_window":{"layer":"wall","tileset":"wall_earthen","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Earthen timber wall with a small barred window."},"wall_earthen_corner_back":{"layer":"wall","tileset":"wall_earthen","atlas":[4,0],"note":"Earthen se_sw L. Back tip [-3,-3]."},"wall_earthen_corner_front":{"layer":"wall","tileset":"wall_earthen","atlas":[4,0],"note":"Earthen se_sw L. Front tip [3,3]."},"wall_earthen_corner_left":{"layer":"wall","tileset":"wall_earthen","atlas":[5,0],"note":"Earthen sw_nw L. Left tip [-3,3]."},"wall_earthen_corner_right":{"layer":"wall","tileset":"wall_earthen","atlas":[6,0],"note":"Earthen ne_se L. Right tip [3,-3]."},"wall_earthen_stone":{"layer":"wall","tileset":"wall_earthen_stone","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Earthen soft-skirt stone wall. Same facings as tavern stone; atlas packs corner L columns."},"wall_earthen_stone_window":{"layer":"wall","tileset":"wall_earthen_stone","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Earthen stone wall with a small barred window."},"wall_earthen_stone_corner_back":{"layer":"wall","tileset":"wall_earthen_stone","atlas":[4,0],"note":"Earthen stone se_sw L. Back tip [-3,-3]."},"wall_earthen_stone_corner_front":{"layer":"wall","tileset":"wall_earthen_stone","atlas":[4,0],"note":"Earthen stone se_sw L. Front tip [3,3]."},"wall_earthen_stone_corner_left":{"layer":"wall","tileset":"wall_earthen_stone","atlas":[5,0],"note":"Earthen stone sw_nw L. Left tip [-3,3]."},"wall_earthen_stone_corner_right":{"layer":"wall","tileset":"wall_earthen_stone","atlas":[6,0],"note":"Earthen stone ne_se L. Right tip [3,-3]."},"wall_mud_brick_sun_dried_ochre":{"layer":"wall","tileset":"wall_mud_brick_sun_dried_ochre","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Sun-dried ochre mud brick. Plain facings only (no window/corner row). Pair with floor_earthen_stone."},"wall_mud_brick_handmade_irregular":{"layer":"wall","tileset":"wall_mud_brick_handmade_irregular","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Handmade irregular mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_weathered_wash":{"layer":"wall","tileset":"wall_mud_brick_weathered_wash","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Weathered wash mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_chunky_cellar":{"layer":"wall","tileset":"wall_mud_brick_chunky_cellar","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Chunky cellar mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_pale_dusty_clay":{"layer":"wall","tileset":"wall_mud_brick_pale_dusty_clay","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Pale dusty clay mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_reddish_mud":{"layer":"wall","tileset":"wall_mud_brick_reddish_mud","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Reddish mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_cool_gray_brown":{"layer":"wall","tileset":"wall_mud_brick_cool_gray_brown","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Cool gray-brown mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_flat_pixel_clay":{"layer":"wall","tileset":"wall_mud_brick_flat_pixel_clay","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Flat pixel clay mud brick. Plain facings only. Pair with floor_earthen_stone."},"counter_straight":{"layer":"object","tileset":"counter","atlas":[0,0],"art_facing":"front-right"},"counter_end_l":{"layer":"object","tileset":"counter","atlas":[1,0],"art_facing":"front-right"},"counter_end_r":{"layer":"object","tileset":"counter","atlas":[2,0],"art_facing":"front-right"},"counter_corner":{"layer":"object","tileset":"counter","atlas":[3,0],"art_facing":"front-right","note":"Baked L-bar unit. Its flat ends are part of the art, so alignment against the walls is an art task."},"bar_run_x":{"layer":"object","tileset":"counter","atlas":[4,0],"note":"Modular dark bar, runs along x (toward front-right). Arms end exactly on the cell boundary, so a run ending in a wall cell touches the wall."},"bar_run_y":{"layer":"object","tileset":"counter","atlas":[5,0],"note":"Modular dark bar, runs along y (toward front-left)."},"bar_end_x":{"layer":"object","tileset":"counter","atlas":[6,0],"note":"Open arm toward +x so it meets the elbow. The cap is the far end, toward -x (back-left wall)."},"bar_end_y":{"layer":"object","tileset":"counter","atlas":[7,0],"note":"Open arm toward +y so it meets the elbow. The cap is the far end, toward -y (back-right wall)."},"bar_elbow":{"layer":"object","tileset":"counter","atlas":[8,0],"note":"Elbow with arms toward -x and -y; encloses the back corner."},"table_round":{"layer":"object","tileset":"prop","atlas":[0,0]},"table_rect":{"layer":"object","tileset":"prop","atlas":[1,0]},"chair":{"layer":"object","tileset":"prop","facings":{"front-right":[2,0],"front-left":[3,0],"back-left":[4,0],"back-right":[5,0]},"note":"Yaw = way a seated person looks. front-right sits on the -x side of a table, front-left on -y, back-left on +x, back-right on +y."},"tankard":{"layer":"item","tileset":"prop","atlas":[6,0],"note":"Wooden mug for the On top slot. Place it on a bar or table cell."},"glass":{"layer":"item","tileset":"prop","atlas":[7,0],"note":"Stemmed ale glass for the On top slot. Place it on a bar or table cell."}},_e= {
         schema: 1,
         note: ve,
         layers: ke,
         layer_labels: layerLabels,
         pieces: xe
     },
-    Ee={"earthen":{"schema":1,"name":"earthen","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"wall_front_left","piece":"wall","facing":"front-left","cells":[[-2,3],[0,3],[2,3]]},{"id":"window_front_left","piece":"wall_window","facing":"front-left","cells":[[-1,3],[1,3]]}]},"earthen_stone":{"schema":1,"name":"earthen_stone","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_earthen_stone","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_earthen_stone","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_earthen_stone","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_earthen_stone","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_earthen_stone","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern":{"schema":1,"name":"tavern","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"carpet_left","piece":"carpet_round","cell":[-1,1]},{"id":"carpet_right","piece":"carpet_rect","cell":[1,1]},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"bar","piece":"counter_corner","cell":[-2,-2]},{"id":"glass_bar","piece":"glass","cell":[-2,-2]},{"id":"table_left","piece":"table_round","cell":[-1,1]},{"id":"tankard_table","piece":"tankard","cell":[-1,1]},{"id":"chair_left_n","piece":"chair","facing":"front-left","cell":[-1,0]},{"id":"chair_left_w","piece":"chair","facing":"front-right","cell":[-2,1]},{"id":"chair_left_s","piece":"chair","facing":"back-right","cell":[-1,2]},{"id":"table_right","piece":"table_rect","cell":[1,1]},{"id":"chair_right_n","piece":"chair","facing":"front-left","cell":[1,0]},{"id":"chair_right_e","piece":"chair","facing":"back-left","cell":[2,1]},{"id":"chair_right_s","piece":"chair","facing":"back-right","cell":[1,2]}]},"tavern_basement":{"schema":1,"name":"tavern_basement","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_earthen_stone","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_earthen_stone","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_earthen_stone","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_earthen_stone","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_earthen_stone","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern_common_ashlar":{"schema":1,"bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x front-right, +y front-left.","back_corner":"[-3, -3] top of screen.","back-left":"x = -3","back-right":"y = -3","front-left":"y = 3","front-right":"x = 3"},"locks":["layer:floor","layer:wall"],"name":"tavern_common_ashlar","objects":[{"id":"floor","piece":"floor_earthen_ashlar","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_earthen_ashlar","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_earthen_ashlar","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_earthen_ashlar","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_earthen_ashlar","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern_common_brick":{"schema":1,"bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x front-right, +y front-left.","back_corner":"[-3, -3] top of screen.","back-left":"x = -3","back-right":"y = -3","front-left":"y = 3","front-right":"x = 3"},"locks":["layer:floor","layer:wall"],"name":"tavern_common_brick","objects":[{"id":"floor","piece":"floor_earthen_brick","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_earthen_brick","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_earthen_brick","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_earthen_brick","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_earthen_brick","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern_common_pine":{"schema":1,"bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x front-right, +y front-left.","back_corner":"[-3, -3] top of screen.","back-left":"x = -3","back-right":"y = -3","front-left":"y = 3","front-right":"x = 3"},"locks":["layer:floor","layer:wall"],"name":"tavern_common_pine","objects":[{"id":"floor","piece":"floor_earthen_pine","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_earthen_pine","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_earthen_pine","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_earthen_pine","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_earthen_pine","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern_common_room":{"schema":1,"name":"tavern_common_room","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x front-right, +y front-left.","back_corner":"[-3, -3] top of screen.","back-left":"x = -3","back-right":"y = -3","front-left":"y = 3","front-right":"x = 3"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_earthen_umber","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_earthen_umber","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_earthen_umber","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_earthen_umber","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_earthen_umber","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern_common_umber":{"schema":1,"bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x front-right, +y front-left.","back_corner":"[-3, -3] top of screen.","back-left":"x = -3","back-right":"y = -3","front-left":"y = 3","front-right":"x = 3"},"locks":["layer:floor","layer:wall"],"name":"tavern_common_umber","objects":[{"id":"floor","piece":"floor_earthen_umber","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_earthen_umber","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_earthen_umber","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_earthen_umber","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_earthen_umber","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern_modular_bar":{"schema":1,"name":"tavern_modular_bar","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"carpet_left","piece":"carpet_round","cell":[-1,1]},{"id":"carpet_right","piece":"carpet_rect","cell":[1,1]},{"id":"bar_long","piece":"bar_run_x","cells":[[-2,-1],[-1,-1]]},{"id":"bar_elbow","piece":"bar_elbow","cell":[0,-1]},{"id":"bar_short","piece":"bar_run_y","cell":[0,-2]},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"table_left","piece":"table_round","cell":[-1,1]},{"id":"chair_left_n","piece":"chair","facing":"front-left","cell":[-1,0]},{"id":"chair_left_w","piece":"chair","facing":"front-right","cell":[-2,1]},{"id":"chair_left_s","piece":"chair","facing":"back-right","cell":[-1,2]},{"id":"table_right","piece":"table_rect","cell":[1,1]},{"id":"chair_right_n","piece":"chair","facing":"front-left","cell":[1,0]},{"id":"chair_right_e","piece":"chair","facing":"back-left","cell":[2,1]},{"id":"chair_right_s","piece":"chair","facing":"back-right","cell":[1,2]}]},"tavern_proposal_a":{"schema":1,"name":"tavern_proposal_a","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east), atlas nw \u2014 tip cell (3,-3) stays empty so runs meet at the floor corner"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_proposal_a","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_proposal_a","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_proposal_a","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_proposal_a","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"table_center","piece":"table_round","cell":[0,0]},{"id":"chair_n","piece":"chair","facing":"front-left","cell":[0,-1]},{"id":"chair_s","piece":"chair","facing":"back-right","cell":[0,1]},{"id":"chair_w","piece":"chair","facing":"front-right","cell":[-1,0]},{"id":"chair_e","piece":"chair","facing":"back-left","cell":[1,0]}]},"tavern_stone_ashlar":{"schema":1,"name":"tavern_stone_ashlar","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_comfy1":{"schema":1,"name":"tavern_stone_comfy1","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_floor_only":{"schema":1,"name":"tavern_stone_floor_only","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-2,-2],"to":[2,2]}}]},"tavern_stone_plaster":{"schema":1,"name":"tavern_stone_plaster","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_wood_pa":{"schema":1,"name":"tavern_stone_wood_pa","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_proposal_a","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_proposal_a","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]}},Le= {
+    Ee={"earthen":{"schema":1,"name":"earthen","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"wall_front_left","piece":"wall","facing":"front-left","cells":[[-2,3],[0,3],[2,3]]},{"id":"window_front_left","piece":"wall_window","facing":"front-left","cells":[[-1,3],[1,3]]}]},"earthen_stone":{"schema":1,"name":"earthen_stone","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"wall side on the grid line y = 3 (south) \u2014 closed rectangle","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_earthen_stone","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_stone","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"wall_front_left","piece":"wall_stone","facing":"front-left","cells":[[-2,3],[-1,3],[0,3],[1,3],[2,3]]}]},"tavern":{"schema":1,"name":"tavern","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"carpet_left","piece":"carpet_round","cell":[-1,1]},{"id":"carpet_right","piece":"carpet_rect","cell":[1,1]},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"bar","piece":"counter_corner","cell":[-2,-2]},{"id":"glass_bar","piece":"glass","cell":[-2,-2]},{"id":"table_left","piece":"table_round","cell":[-1,1]},{"id":"tankard_table","piece":"tankard","cell":[-1,1]},{"id":"chair_left_n","piece":"chair","facing":"front-left","cell":[-1,0]},{"id":"chair_left_w","piece":"chair","facing":"front-right","cell":[-2,1]},{"id":"chair_left_s","piece":"chair","facing":"back-right","cell":[-1,2]},{"id":"table_right","piece":"table_rect","cell":[1,1]},{"id":"chair_right_n","piece":"chair","facing":"front-left","cell":[1,0]},{"id":"chair_right_e","piece":"chair","facing":"back-left","cell":[2,1]},{"id":"chair_right_s","piece":"chair","facing":"back-right","cell":[1,2]}]},"tavern_modular_bar":{"schema":1,"name":"tavern_modular_bar","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"carpet_left","piece":"carpet_round","cell":[-1,1]},{"id":"carpet_right","piece":"carpet_rect","cell":[1,1]},{"id":"bar_long","piece":"bar_run_x","cells":[[-2,-1],[-1,-1]]},{"id":"bar_elbow","piece":"bar_elbow","cell":[0,-1]},{"id":"bar_short","piece":"bar_run_y","cell":[0,-2]},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-2,-3],[0,-3],[2,-3]]},{"id":"window_back_right","piece":"wall_window","facing":"back-right","cells":[[-1,-3],[1,-3]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-3,-2],[-3,1],[-3,2]]},{"id":"window_back_left","piece":"wall_window","facing":"back-left","cells":[[-3,-1],[-3,0]]},{"id":"wall_front_right","piece":"wall","facing":"front-right","cells":[[3,-2],[3,1],[3,2]]},{"id":"window_front_right","piece":"wall_window","facing":"front-right","cells":[[3,-1],[3,0]]},{"id":"table_left","piece":"table_round","cell":[-1,1]},{"id":"chair_left_n","piece":"chair","facing":"front-left","cell":[-1,0]},{"id":"chair_left_w","piece":"chair","facing":"front-right","cell":[-2,1]},{"id":"chair_left_s","piece":"chair","facing":"back-right","cell":[-1,2]},{"id":"table_right","piece":"table_rect","cell":[1,1]},{"id":"chair_right_n","piece":"chair","facing":"front-left","cell":[1,0]},{"id":"chair_right_e","piece":"chair","facing":"back-left","cell":[2,1]},{"id":"chair_right_s","piece":"chair","facing":"back-right","cell":[1,2]}]},"tavern_proposal_a":{"schema":1,"name":"tavern_proposal_a","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east), atlas nw \u2014 tip cell (3,-3) stays empty so runs meet at the floor corner"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_proposal_a","fill":{"from":[-2,-2],"to":[2,2]}},{"id":"wall_back_right","piece":"wall_proposal_a","facing":"back-right","cells":[[-2,-3],[-1,-3],[0,-3],[1,-3],[2,-3]]},{"id":"wall_back_left","piece":"wall_proposal_a","facing":"back-left","cells":[[-3,-2],[-3,-1],[-3,0],[-3,1],[-3,2]]},{"id":"wall_front_right","piece":"wall_proposal_a","facing":"front-right","cells":[[3,-2],[3,-1],[3,0],[3,1],[3,2]]},{"id":"table_center","piece":"table_round","cell":[0,0]},{"id":"chair_n","piece":"chair","facing":"front-left","cell":[0,-1]},{"id":"chair_s","piece":"chair","facing":"back-right","cell":[0,1]},{"id":"chair_w","piece":"chair","facing":"front-right","cell":[-1,0]},{"id":"chair_e","piece":"chair","facing":"back-left","cell":[1,0]}]},"tavern_stone_ashlar":{"schema":1,"name":"tavern_stone_ashlar","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_comfy1":{"schema":1,"name":"tavern_stone_comfy1","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_stone","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_stone","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_floor_only":{"schema":1,"name":"tavern_stone_floor_only","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-2,-2],"to":[2,2]}}]},"tavern_stone_plaster":{"schema":1,"name":"tavern_stone_plaster","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]},"tavern_stone_wood_pa":{"schema":1,"name":"tavern_stone_wood_pa","bounds":{"min":-3,"max":3},"orientation":{"cell":"[x, y] grid cell. +x runs toward the front-right of the screen, +y toward the front-left.","back_corner":"[-3, -3] is the top corner of the screen.","back-left":"wall side on the grid line x = -3 (left on screen, formerly called W)","back-right":"wall side on the grid line y = -3 (right on screen, formerly called N)","front-left":"open side on the grid line y = 3 (south; camera looks in)","front-right":"wall side on the grid line x = 3 (east)"},"locks":["layer:floor","layer:wall"],"objects":[{"id":"floor","piece":"floor_stone","fill":{"from":[-1,-1],"to":[1,1]}},{"id":"wall_back_right","piece":"wall_proposal_a","facing":"back-right","cells":[[-1,-2],[0,-2],[1,-2]]},{"id":"wall_back_left","piece":"wall_proposal_a","facing":"back-left","cells":[[-2,-1],[-2,0],[-2,1]]}]}},Le= {
         default: "tavern",
         levels: Ee
     },
@@ -66,29 +66,15 @@ const we = 1,
             dx: -128,
             dy: -64
         },
-        floor_earthen_umber: {
-            src: S("floor_earthen_umber"),
+        floor_earthen_wood: {
+            src: S("floor_earthen_wood"),
             cw: 256,
             ch: 128,
             dx: -128,
             dy: -64
         },
-        floor_earthen_ashlar: {
-            src: S("floor_earthen_ashlar"),
-            cw: 256,
-            ch: 128,
-            dx: -128,
-            dy: -64
-        },
-        floor_earthen_brick: {
-            src: S("floor_earthen_brick"),
-            cw: 256,
-            ch: 128,
-            dx: -128,
-            dy: -64
-        },
-        floor_earthen_pine: {
-            src: S("floor_earthen_pine"),
+        floor_wood_b: {
+            src: S("floor_wood_b"),
             cw: 256,
             ch: 128,
             dx: -128,
@@ -122,6 +108,41 @@ const we = 1,
             dx: -128,
             dy: -265
         },
+        wall_stone_comfy: {
+            src: S("wall_stone_comfy"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_ashlar: {
+            src: S("wall_ashlar"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_paired: {
+            src: S("wall_paired"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_door: {
+            src: S("wall_door"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_earthen: {
+            src: S("wall_earthen"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
         wall_earthen_stone: {
             src: S("wall_earthen_stone"),
             cw: 256,
@@ -129,29 +150,57 @@ const we = 1,
             dx: -128,
             dy: -265
         },
-        wall_earthen_umber: {
-            src: S("wall_earthen_umber"),
+        wall_mud_brick_sun_dried_ochre: {
+            src: S("wall_mud_brick_sun_dried_ochre"),
             cw: 256,
             ch: 328,
             dx: -128,
             dy: -265
         },
-        wall_earthen_ashlar: {
-            src: S("wall_earthen_ashlar"),
+        wall_mud_brick_handmade_irregular: {
+            src: S("wall_mud_brick_handmade_irregular"),
             cw: 256,
             ch: 328,
             dx: -128,
             dy: -265
         },
-        wall_earthen_brick: {
-            src: S("wall_earthen_brick"),
+        wall_mud_brick_weathered_wash: {
+            src: S("wall_mud_brick_weathered_wash"),
             cw: 256,
             ch: 328,
             dx: -128,
             dy: -265
         },
-        wall_earthen_pine: {
-            src: S("wall_earthen_pine"),
+        wall_mud_brick_chunky_cellar: {
+            src: S("wall_mud_brick_chunky_cellar"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_mud_brick_pale_dusty_clay: {
+            src: S("wall_mud_brick_pale_dusty_clay"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_mud_brick_reddish_mud: {
+            src: S("wall_mud_brick_reddish_mud"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_mud_brick_cool_gray_brown: {
+            src: S("wall_mud_brick_cool_gray_brown"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_mud_brick_flat_pixel_clay: {
+            src: S("wall_mud_brick_flat_pixel_clay"),
             cw: 256,
             ch: 328,
             dx: -128,
@@ -159,6 +208,20 @@ const we = 1,
         },
         wall_pa: {
             src: S("wall_pa"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_corners: {
+            src: S("wall_corners"),
+            cw: 256,
+            ch: 328,
+            dx: -128,
+            dy: -265
+        },
+        wall_stone_corners: {
+            src: S("wall_stone_corners"),
             cw: 256,
             ch: 328,
             dx: -128,
@@ -356,6 +419,7 @@ function Me(e, t, l, n, r, o, a, c) {
     };
     return f && (h.facing = f), s !== i.layer && (h.layer = s), h.cell = [n, r], e.objects.push(h), h.id
 }
+
 
 function nextFacing(piece, current) {
     const variants = piece && piece.facings ? Object.keys(piece.facings) : [];
@@ -640,8 +704,34 @@ const g = _e,
         dragMove: null,
         groupMovePick: !1,
         move: null,
-        view: "all"
+        view: "all",
+        pieceFolder: "all",
+        pieceSet: "all",
+        pieceSub: "all"
     },
+    MATERIAL_SETS = [{
+        id: "wood",
+        label: "Wood"
+    }, {
+        id: "stone",
+        label: "Stone"
+    }, {
+        id: "earthen",
+        label: "Earthen"
+    }, {
+        id: "proposal_a",
+        label: "Proposal A"
+    }],
+    OBJECT_SUBS = [{
+        id: "bar",
+        label: "Bar"
+    }, {
+        id: "counter",
+        label: "Counter"
+    }, {
+        id: "furniture",
+        label: "Furniture"
+    }],
     ZOOM_MIN = 0.15,
     ZOOM_MAX = 4,
     ZOOM_STEP = 1.25,
@@ -1111,13 +1201,33 @@ function worldToCell(e, t) {
     return [Math.round((e / 126 + t / 63) / 2), Math.round((t / 63 - e / 126) / 2)]
 }
 
+// Corner L pieces use catalog atlas columns 4/5/6 (se_sw / sw_nw / ne_se).
+// Thumbs use dedicated wall_corners / wall_stone_corners strips (one L each).
+const CORNER_STRIP_COL = {
+    4: 0,
+    5: 1,
+    6: 2
+};
+const CORNER_STRIP = {
+    wall: "wall_corners",
+    wall_stone: "wall_stone_corners"
+};
+
+function atlasInBounds(e, t, l) {
+    if (!e || !t || !l || l.length < 2) return !1;
+    const n = l[0] * e.cw,
+        r = l[1] * e.ch;
+    return n >= 0 && r >= 0 && n + e.cw <= t.width && r + e.ch <= t.height
+}
+
 function phaseAtlas(e, t, l, n) {
-    // Paired timber/stone sheets are 16 phase columns. Level coords stay
+    // Paired timber/stone/PA sheets are 16 phase columns. Level coords stay
     // (facing, detail). Same formula as stone_wall_atlas_coord.
     const r = F[e],
         o = Y[e],
-        a = e === "wall" || e === "wall_stone" || e === "wall_pa" || (typeof e === "string" && e.indexOf("wall_earthen_") === 0);
-    if (!r || !o || !a || o.width < r.cw * 16) return t;
+        a = "wall" === e || "wall_stone" === e || "wall_stone_comfy" === e || "wall_paired" === e || "wall_pa" === e;
+    // Corner catalog cols (>= 4) are not on paired sheets.
+    if (!r || !o || !a || !t || t[0] >= 4 || o.width < r.cw * 16) return t;
     const c = 4,
         i = (l % c + c) % c,
         s = (n % c + c) % c;
@@ -1315,7 +1425,7 @@ function Ie() {
                 rot.addEventListener("click", () => {
                     L([{ verb: "rotate", target: l.id }]) && (() => {
                         const now = k.objects.find(o => o.id === l.id);
-                        x("Rotated " + l.id + " → " + ((now && now.facing) || "?"))
+                        x("Rotated " + l.id + " -> " + ((now && now.facing) || "?"))
                     })()
                 }), a.append(rot)
             }
@@ -1391,35 +1501,138 @@ function He() {
 }
 
 function We(e, t) {
-    const l = e.getContext("2d"),
-        n = t.tileset || t.layer,
-        r = Y[n],
-        o = F[n];
-    if (!l || !r || !o) return;
-    const a = te(t, t.facings ? Object.keys(t.facings)[0] : void 0, 0, 0);
+    const l = e.getContext("2d");
+    if (!l) return;
+    l.imageSmoothingEnabled = !1, l.clearRect(0, 0, 64, 64);
+    const n = t.tileset || t.layer,
+        a = te(t, t.facings ? Object.keys(t.facings)[0] : void 0, 0, 0);
     if (!a) return;
-    const c = phaseAtlas(n, a, 0, 0),
-        i = Math.min(64 / o.cw, 64 / o.ch),
+    // One coherent L cell from the corner strip — never stack two facings.
+    const stripKey = CORNER_STRIP[n],
+        stripCol = CORNER_STRIP_COL[a[0]];
+    if (null != stripKey && null != stripCol && Y[stripKey] && F[stripKey]) {
+        const r = Y[stripKey],
+            o = F[stripKey];
+        if (atlasInBounds(o, r, [stripCol, 0])) {
+            const i = Math.min(64 / o.cw, 64 / o.ch),
+                s = o.cw * i,
+                u = o.ch * i;
+            return void l.drawImage(r, stripCol * o.cw, 0, o.cw, o.ch, (64 - s) / 2, 64 - u, s, u)
+        }
+    }
+    const r = Y[n],
+        o = F[n];
+    if (!r || !o) return;
+    const c = phaseAtlas(n, a, 0, 0);
+    if (!atlasInBounds(o, r, c)) return;
+    const i = Math.min(64 / o.cw, 64 / o.ch),
         s = o.cw * i,
         u = o.ch * i;
-    l.imageSmoothingEnabled = !1, l.clearRect(0, 0, 64, 64), l.drawImage(r, c[0] * o.cw, c[1] * o.ch, o.cw, o.ch, (64 - s) / 2, 64 - u, s, u)
+    l.drawImage(r, c[0] * o.cw, c[1] * o.ch, o.cw, o.ch, (64 - s) / 2, 64 - u, s, u)
+}
+
+function pieceLabel(e) {
+    return String(e || "").replace(/_/g, " ")
+}
+
+function materialSetOf(e, t) {
+    const n = e || "",
+        r = t && t.tileset || "";
+    return n.indexOf("proposal_a") >= 0 || "floor_pa" === r || "wall_pa" === r ? "proposal_a" : n.indexOf("earthen") >= 0 || n.indexOf("mud_brick") >= 0 || 0 === r.indexOf("floor_earthen") || 0 === r.indexOf("wall_earthen") || 0 === r.indexOf("wall_mud_brick") ? "earthen" : n.indexOf("stone") >= 0 || n.indexOf("ashlar") >= 0 || n.indexOf("comfy") >= 0 || "floor_stone" === r || "wall_stone" === r || "wall_stone_comfy" === r || "wall_ashlar" === r ? "stone" : t && ("floor" === t.layer || "wall" === t.layer) ? "wood" : ""
+}
+
+function objectSubOf(e, t) {
+    return t && "object" === t.layer ? 0 === e.indexOf("bar_") ? "bar" : 0 === e.indexOf("counter_") ? "counter" : "furniture" : ""
+}
+
+function fillChipRow(e, t, n, r) {
+    e.innerHTML = "";
+    for (const o of t) {
+        const a = document.createElement("button");
+        a.type = "button", a.textContent = o.label, n === o.id && (a.className = "on"), a.addEventListener("click", () => r(o.id)), e.append(a)
+    }
+}
+
+function refreshPieceFilters() {
+    const e = s("pieceFolderRow");
+    if (!e) return;
+    fillChipRow(e, [{
+        id: "all",
+        label: "All"
+    }, ...g.layers.map(e => ({
+        id: e,
+        label: layerLabel(e)
+    }))], l.pieceFolder, e => {
+        l.pieceFolder = e, "floor" !== e && "wall" !== e && (l.pieceSet = "all"), "object" !== e && (l.pieceSub = "all"), refreshPieceFilters(), ue(), y("all" === e ? "Showing every piece." : "Folder: " + layerLabel(e))
+    });
+    const t = "all" === l.pieceFolder || "floor" === l.pieceFolder || "wall" === l.pieceFolder,
+        n = s("pieceSetRow");
+    n && (n.hidden = !t, t ? fillChipRow(n, [{
+        id: "all",
+        label: "All sets"
+    }, ...MATERIAL_SETS], l.pieceSet, e => {
+        l.pieceSet = e, refreshPieceFilters(), ue(), y("all" === e ? "All material sets." : "Set: " + (MATERIAL_SETS.find(t => t.id === e) || {}).label)
+    }) : l.pieceSet = "all");
+    const r = "all" === l.pieceFolder || "object" === l.pieceFolder,
+        o = s("pieceSubRow");
+    o && (o.hidden = !r, r ? fillChipRow(o, [{
+        id: "all",
+        label: "All objects"
+    }, ...OBJECT_SUBS], l.pieceSub, e => {
+        l.pieceSub = e, refreshPieceFilters(), ue(), y("all" === e ? "All objects." : "Group: " + (OBJECT_SUBS.find(t => t.id === e) || {}).label)
+    }) : l.pieceSub = "all")
+}
+
+function piecePassesFilters(e, t) {
+    return !("all" !== l.pieceFolder && t.layer !== l.pieceFolder || "all" !== l.pieceSet && materialSetOf(e, t) !== l.pieceSet || "all" !== l.pieceSub && objectSubOf(e, t) !== l.pieceSub)
 }
 
 function ue() {
     const e = s("palette");
     e.innerHTML = "";
-    for (const [t, n] of Object.entries(g.pieces)) {
-        const r = document.createElement("button");
-        r.type = "button", l.piece === t && (r.className = "on");
-        const o = document.createElement("canvas");
-        o.width = 64, o.height = 64, We(o, n);
-        const a = document.createElement("span");
-        a.textContent = t, r.append(o, a), r.addEventListener("click", () => {
-            l.piece = t, l.layer = n.layer, pe(), G(), ue(), W();
-            const e = R(l.layer),
-                r = "floor" === n.layer;
-            y(r ? "Piece: floor. Tap a cell to paint the floor. Erase stays locked." : "Piece: " + t + " on " + layerLabel(l.layer) + (e ? " (layer locked)" : ""), r ? void 0 : e ? "bad" : void 0)
-        }), e.append(r)
+    const t = Object.entries(g.pieces).filter(([e, t]) => piecePassesFilters(e, t)),
+        n = [],
+        r = new Map;
+
+    function o(e, t) {
+        return "all" === l.pieceFolder ? t.layer : ("floor" === l.pieceFolder || "wall" === l.pieceFolder) && "all" === l.pieceSet ? materialSetOf(e, t) || "other" : "object" === l.pieceFolder && "all" === l.pieceSub ? objectSubOf(e, t) || "other" : ""
+    }
+
+    function a(e) {
+        if (!e) return "";
+        if (g.layers.includes(e)) return layerLabel(e);
+        const t = MATERIAL_SETS.find(t => t.id === e);
+        if (t) return t.label;
+        const n = OBJECT_SUBS.find(t => t.id === e);
+        return n ? n.label : e
+    }
+    for (const [e, l] of t) {
+        const t = o(e, l);
+        r.has(t) || (r.set(t, []), n.push(t)), r.get(t).push([e, l])
+    }
+    if (!t.length) {
+        const t = document.createElement("p");
+        t.className = "legend", t.style.gridColumn = "1 / -1", t.textContent = "No pieces in this folder.", e.append(t)
+    }
+    for (const t of n) {
+        const n = a(t);
+        if (n) {
+            const t = document.createElement("div");
+            t.className = "palette-section", t.textContent = n, e.append(t)
+        }
+        for (const [n, o] of r.get(t)) {
+            const t = document.createElement("button");
+            t.type = "button", l.piece === n && (t.className = "on");
+            const a = document.createElement("canvas");
+            a.width = 64, a.height = 64, We(a, o);
+            const c = document.createElement("span");
+            c.textContent = pieceLabel(n), t.title = n, t.append(a, c), t.addEventListener("click", () => {
+                l.piece = n, l.layer = o.layer, pe(), G(), ue(), W();
+                const e = R(l.layer),
+                    t = "floor" === o.layer;
+                y(t ? "Piece: floor. Tap a cell to paint the floor. Erase stays locked." : "Piece: " + pieceLabel(n) + " on " + layerLabel(l.layer) + (e ? " (layer locked)" : ""), t ? void 0 : e ? "bad" : void 0)
+            }), e.append(t)
+        }
     }
     he(), W()
 }
@@ -1427,7 +1640,8 @@ function ue() {
 function W() {
     const e = s("pieceNote"),
         t = l.piece ? g.pieces[l.piece] : void 0;
-    if (!t) return void(e.textContent = "Pick a piece. Floor can be painted back. Walls start locked.");
+    if (!e) return;
+    if (!t) return void(e.textContent = "Pick a piece. Folders keep walls and floors in matching sets; Objects split Bar / Counter / Furniture.");
     const n = [t.note, t.art_facing ? "Drawn facing " + t.art_facing + "." : ""].filter(Boolean);
     l.layer && l.layer !== t.layer && n.push("Placing on the " + layerLabel(l.layer) + " layer."), e.textContent = n.join(" ") || "Places on the " + layerLabel(t.layer) + " layer."
 }
@@ -1499,14 +1713,14 @@ function viewButtons() {
         n.type = "button";
         const r = "all" !== t && R(t);
         n.textContent = r ? layerLabel(t) + " locked" : layerLabel(t), l.view === t && (n.className = "on"), n.addEventListener("click", () => {
-            l.view = t, viewButtons(), V(), Ie(), ze(), y("all" === t ? "Showing every layer." : "Showing the " + layerLabel(t) + " layer.")
+            l.view = t, "all" !== t && (l.pieceFolder = t, "floor" !== t && "wall" !== t && (l.pieceSet = "all"), "object" !== t && (l.pieceSub = "all")), viewButtons(), refreshPieceFilters(), ue(), V(), Ie(), ze(), y("all" === t ? "Showing every layer." : "Showing the " + layerLabel(t) + " layer — palette filtered.")
         }), e.append(n)
     }
 }
 
 function P() {
     const e = se();
-    e && y(e, "bad"), z(), viewButtons(), V(), Ie(), Fe(), he(), G(), ze(), refreshMultiBanner(), refreshZoomLabel()
+    e && y(e, "bad"), z(), viewButtons(), refreshPieceFilters(), ue(), V(), Ie(), Fe(), he(), G(), ze(), refreshMultiBanner(), refreshZoomLabel()
 }
 
 function x(e) {
