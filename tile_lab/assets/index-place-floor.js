@@ -43,7 +43,12 @@ const we = 1,
         default: "tavern",
         levels: Ee
     },
-    S = e => `./atlases/${e}.png`,
+    // ?v= bumps do not always invalidate PNG caches; bump when keeper sets change.
+    // floorsLive1: material-set chips (basement/umber/ashlar/brick/pine) + atlas bust.
+    // barrelsLive1: prop atlas cols 8–11 (barrel / tap / foodkit / pair).
+    // Do not republish tip-fixed wall PNGs from a stale local ashlar (see #311).
+    AV = "barrelsLive1",
+    S = e => `./atlases/${e}.png?v=${AV}`,
     F = {
         floor: {
             src: S("floor"),
@@ -772,8 +777,20 @@ const g = _e,
         id: "stone",
         label: "Stone"
     }, {
-        id: "earthen",
-        label: "Earthen"
+        id: "basement",
+        label: "Basement"
+    }, {
+        id: "umber",
+        label: "Umber"
+    }, {
+        id: "ashlar",
+        label: "Ashlar"
+    }, {
+        id: "brick",
+        label: "Brick"
+    }, {
+        id: "pine",
+        label: "Pine"
     }, {
         id: "proposal_a",
         label: "Proposal A"
@@ -1610,7 +1627,18 @@ function pieceLabel(e) {
 function materialSetOf(e, t) {
     const n = e || "",
         r = t && t.tileset || "";
-    return n.indexOf("proposal_a") >= 0 || "floor_pa" === r || "wall_pa" === r ? "proposal_a" : n.indexOf("earthen") >= 0 || n.indexOf("mud_brick") >= 0 || 0 === r.indexOf("floor_earthen") || 0 === r.indexOf("wall_earthen") || 0 === r.indexOf("wall_mud_brick") ? "earthen" : n.indexOf("stone") >= 0 || n.indexOf("ashlar") >= 0 || n.indexOf("comfy") >= 0 || "floor_stone" === r || "wall_stone" === r || "wall_stone_comfy" === r || "wall_ashlar" === r ? "stone" : t && ("floor" === t.layer || "wall" === t.layer) ? "wood" : ""
+    // Proposal A first, then common-room keeper looks, then basement mud-brick
+    // keepers (#07 chunky shipping + plain variants), then stone/wood.
+    if (n.indexOf("proposal_a") >= 0 || "floor_pa" === r || "wall_pa" === r) return "proposal_a";
+    if (n.indexOf("umber") >= 0 || r.indexOf("umber") >= 0) return "umber";
+    if (n.indexOf("earthen_ashlar") >= 0 || "floor_earthen_ashlar" === r || "wall_earthen_ashlar" === r) return "ashlar";
+    if (n.indexOf("earthen_brick") >= 0 || "floor_earthen_brick" === r || "wall_earthen_brick" === r) return "brick";
+    if (n.indexOf("earthen_pine") >= 0 || "floor_earthen_pine" === r || "wall_earthen_pine" === r) return "pine";
+    if (n.indexOf("mud_brick") >= 0 || n.indexOf("earthen_stone") >= 0 || 0 === r.indexOf("wall_mud_brick") || "floor_earthen_stone" === r || "wall_earthen_stone" === r) return "basement";
+    // Pre-keeper earthen timber packs with the umber common-room set.
+    if (n.indexOf("earthen") >= 0 || 0 === r.indexOf("floor_earthen") || 0 === r.indexOf("wall_earthen")) return "umber";
+    if (n.indexOf("stone") >= 0 || n.indexOf("ashlar") >= 0 || n.indexOf("comfy") >= 0 || "floor_stone" === r || "wall_stone" === r || "wall_stone_comfy" === r || "wall_ashlar" === r) return "stone";
+    return t && ("floor" === t.layer || "wall" === t.layer) ? "wood" : ""
 }
 
 function objectSubOf(e, t) {
