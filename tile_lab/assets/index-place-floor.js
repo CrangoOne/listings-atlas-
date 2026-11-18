@@ -1216,27 +1216,11 @@ function phaseAtlas(e, t, l, n) {
     return [i + s * c, t[0] * 2 + t[1]]
 }
 
-function resolveCornerStrip(e, t) {
-    // Catalog corner cols 4/5/6 live on dedicated strips, not the straight sheet.
-    const stripKey = CORNER_STRIP[e],
-        stripCol = t && CORNER_STRIP_COL[t[0]];
-    return null != stripKey && null != stripCol ? {
-        layer: stripKey,
-        atlas: [stripCol, 0]
-    } : {
-        layer: e,
-        atlas: t
-    }
-}
-
 function je(e, t, l, n, r, o) {
-    const resolved = resolveCornerStrip(e, t);
-    e = resolved.layer, t = resolved.atlas;
     const a = F[e],
         c = Y[e];
     if (!a || !c) return;
     const i = phaseAtlas(e, t, r, o);
-    if (!atlasInBounds(a, c, i)) return;
     h.drawImage(c, i[0] * a.cw, i[1] * a.ch, a.cw, a.ch, Math.round(l + a.dx), Math.round(n + a.dy), a.cw, a.ch)
 }
 
