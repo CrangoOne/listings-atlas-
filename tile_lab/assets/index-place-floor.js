@@ -420,9 +420,27 @@ function Me(e, t, l, n, r, o, a, c) {
     return f && (h.facing = f), s !== i.layer && (h.layer = s), h.cell = [n, r], e.objects.push(h), h.id
 }
 
+
+function nextFacing(piece, current) {
+    const variants = piece && piece.facings ? Object.keys(piece.facings) : [];
+    if (variants.length < 2) throw new Error("this piece has no rotated variants; rotating it needs new art");
+    const i = variants.indexOf(current || "");
+    return i < 0 ? variants[0] : variants[(i + 1) % variants.length]
+}
+
+function rotateObject(level, catalog, id) {
+    const obj = level.objects.find(o => o.id === id);
+    if (!obj) throw new Error("unknown object " + id);
+    if (M(level, catalog, obj)) throw new Error(id + " is locked");
+    const piece = catalog.pieces[obj.piece];
+    if (!piece) throw new Error(id + ": unknown piece " + obj.piece);
+    return obj.facing = nextFacing(piece, obj.facing), obj.facing
+}
+
 function Oe(e, t, l) {
     if ("put" === l.verb) return Me(e, t, l.piece, l.x, l.y, l.facing, l.id, l.layer);
     if ("erase" === l.verb) return le(e, t, l.x, l.y, l.layer);
+    if ("rotate" === l.verb) return rotateObject(e, t, l.target);
     if ("unlock" === l.verb) {
         const t = e.locks || [],
             n = canonicalLock(l.target),
@@ -548,7 +566,7 @@ function Pe(e, t) {
             op: a
         }
     }
-    if ("lock" === n || "unlock" === n) {
+    if ("lock" === n || "unlock" === n || "rotate" === n) {
         const e = l.slice(1).join(" ");
         return e ? {
             op: {
@@ -1393,12 +1411,24 @@ function Ie() {
         i.className = "tag";
         const s = g.pieces[l.piece]?.layer,
             d = [];
-        if (l.piece !== l.id && d.push(l.piece), o && l.layer !== s && d.push(layerLabel(l.layer)), (l.x !== t || l.y !== n) && d.push("at [" + l.x + ", " + l.y + "]"), i.textContent = d.join(" · "), i.textContent || (i.hidden = !0), a.append(c, i), o) {
+        if (l.piece !== l.id && d.push(l.piece), o && l.layer !== s && d.push(layerLabel(l.layer)), r && r.facing && d.push(r.facing), (l.x !== t || l.y !== n) && d.push("at [" + l.x + ", " + l.y + "]"), i.textContent = d.join(" · "), i.textContent || (i.hidden = !0), a.append(c, i), o) {
             const e = document.createElement("span");
             e.className = "lock", e.textContent = "locked", a.append(e)
         } else {
             const e = document.createElement("button");
             e.type = "button", e.textContent = "Move", e.addEventListener("click", () => Re(l, r.facing || ""));
+            a.append(e);
+            const piece = g.pieces[l.piece];
+            if (piece && piece.facings && Object.keys(piece.facings).length >= 2) {
+                const rot = document.createElement("button");
+                rot.type = "button", rot.textContent = "Rotate", rot.title = "Cycle facing (authored yaws only)";
+                rot.addEventListener("click", () => {
+                    L([{ verb: "rotate", target: l.id }]) && (() => {
+                        const now = k.objects.find(o => o.id === l.id);
+                        x("Rotated " + l.id + " -> " + ((now && now.facing) || "?"))
+                    })()
+                }), a.append(rot)
+            }
             const t = document.createElement("button");
             t.type = "button", t.textContent = "Erase", t.addEventListener("click", () => {
                 L([{
@@ -1407,7 +1437,7 @@ function Ie() {
                     y: l.y,
                     layer: l.layer
                 }]) && x("Erased " + l.id + " at [" + l.x + ", " + l.y + "]")
-            }), a.append(e, t)
+            }), a.append(t)
         }
         e.append(a)
     }
