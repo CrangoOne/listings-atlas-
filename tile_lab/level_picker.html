@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Tile Lab level picker</title>
-    <script src="./assets/scene_persist.js?v=noGreyArrows1"></script>
-    <script type="module" crossorigin src="./assets/index-place-floor.js?v=noGreyArrows1"></script>
+    <script src="./assets/scene_persist.js?v=floorsLive1"></script>
+    <script type="module" crossorigin src="./assets/index-place-floor.js?v=floorsLive1"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-qKOAs9om.css">
     <style>
       /* overflow-x:auto makes overflow-y compute to auto too, which clips the
@@ -200,7 +200,7 @@
             <label>Facing <select id="facingSel"></select></label>
             <button id="placeBtn" class="primary" type="button">Place at selected cell</button>
           </div>
-          <p class="legend">Folders follow stack layers. Wood / Stone / Proposal A keep matching floor and wall tiles together. Objects split into Bar, Counter, and Furniture. The stack on one cell is Floor, Rugs, Objects, then On top.</p>
+          <p class="legend">Folders follow stack layers. Wood / Stone / Basement / Umber / Ashlar / Brick / Pine / Proposal A keep matching floor and wall tiles together (Basement = dirt + mud-brick keepers; Umber–Pine = common-room keepers). Objects split into Bar, Counter, and Furniture. The stack on one cell is Floor, Rugs, Objects, then On top.</p>
           <p id="pieceNote" class="legend"></p>
           <div id="palette"></div>
           <div id="lockRow" class="row"></div>
