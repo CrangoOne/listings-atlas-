@@ -32,7 +32,7 @@ const we = 1,
         object: "Objects",
         item: "On top"
     },
-    xe={"floor":{"layer":"floor","atlas":"periodic","period":4,"note":"Honey-oak wood floor. Seamless: atlas cell = (x mod 4, y mod 4). Place it to fill a missing cell. Erase stays locked."},"floor_stone":{"layer":"floor","tileset":"floor_stone","atlas":"periodic","period":4,"note":"Warm flagstone floor. Same seamless period as wood. Place it to fill a missing cell. Erase stays locked."},"floor_wood_b":{"layer":"floor","tileset":"floor_wood_b","atlas":"periodic","period":4,"note":"Honey-oak wood floor variant B. Same seamless period as wood A. Place it to fill a missing cell."},"floor_earthen_stone":{"layer":"floor","tileset":"floor_earthen_stone","atlas":"periodic","period":4,"note":"Earthen biome rough flagstone (Comfy keeper B). Same seamless period as other floors. Place it to fill a missing cell."},"floor_earthen_wood":{"layer":"floor","tileset":"floor_earthen_wood","atlas":"periodic","period":4,"note":"Earthen biome timber floor. Same seamless period as other floors. Place it to fill a missing cell."},"floor_proposal_a":{"layer":"floor","tileset":"floor_pa","atlas":"periodic","period":4,"note":"Sprite AI honey-oak floorboards (flat lighting, no frame). Seamless. Place it to fill a missing cell. Erase stays locked."},"carpet_round":{"layer":"carpet","atlas":[0,0]},"carpet_rect":{"layer":"carpet","atlas":[1,0]},"wall":{"layer":"wall","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Honey-oak timber wall. Facing = which room side the wall stands on. Atlas columns ne/nw/se/sw map to front-left/front-right/back-left/back-right. Use front-left to close or divide along y = max (south)."},"wall_window":{"layer":"wall","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]}},"wall_door":{"layer":"wall","tileset":"wall_door","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Timber wall with a closed oak door. Straight facings only (no corner L)."},"wall_stone":{"layer":"wall","tileset":"wall_stone","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Basement mud-brick stone wall (unpaired). Same facings and slab thickness as timber."},"wall_stone_window":{"layer":"wall","tileset":"wall_stone","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Basement stone wall with a small barred window."},"wall_stone_comfy":{"layer":"wall","tileset":"wall_stone_comfy","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Comfy pair1 stone wall (floor-phase paired, 16 cols). Pair with floor_stone."},"wall_stone_comfy_window":{"layer":"wall","tileset":"wall_stone_comfy","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Comfy pair1 stone wall with a small barred window."},"wall_ashlar":{"layer":"wall","tileset":"wall_ashlar","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Fine cool ashlar courses (unpaired, no floor climb). Pair with floor_stone."},"wall_ashlar_window":{"layer":"wall","tileset":"wall_ashlar","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Fine ashlar wall with a small barred window."},"wall_paired":{"layer":"wall","tileset":"wall_paired","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Floor-phase paired timber wall (16 cols). Soft-skirt join to the wood floor."},"wall_paired_window":{"layer":"wall","tileset":"wall_paired","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Paired timber wall with a small barred window."},"wall_corner_back":{"layer":"wall","atlas":[4,0],"note":"Outer-tip L se_sw (E-S-W foot, rises to N). Back tip [-3,-3] N."},"wall_corner_front":{"layer":"wall","atlas":[4,0],"note":"Same se_sw L as back: foot on outer S tip. Front tip [3,3]."},"wall_corner_left":{"layer":"wall","atlas":[5,0],"note":"Outer-tip L sw_nw (S-W-N foot). Left tip [-3,3] W."},"wall_corner_right":{"layer":"wall","atlas":[6,0],"note":"Outer-tip L ne_se (N-E-S foot). Right tip [3,-3] E."},"wall_stone_corner_back":{"layer":"wall","tileset":"wall_stone","atlas":[4,0],"note":"Stone se_sw L. Back tip [-3,-3]."},"wall_stone_corner_front":{"layer":"wall","tileset":"wall_stone","atlas":[4,0],"note":"Stone se_sw L. Front tip [3,3]."},"wall_stone_corner_left":{"layer":"wall","tileset":"wall_stone","atlas":[5,0],"note":"Stone sw_nw L. Left tip [-3,3]."},"wall_stone_corner_right":{"layer":"wall","tileset":"wall_stone","atlas":[6,0],"note":"Stone ne_se L. Right tip [3,-3]."},"wall_proposal_a":{"layer":"wall","tileset":"wall_pa","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Proposal A timber wall paired to the Sprite AI floor_pa albedo. Same facings as timber."},"wall_proposal_a_window":{"layer":"wall","tileset":"wall_pa","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Proposal A timber wall with a small barred window."},"wall_earthen":{"layer":"wall","tileset":"wall_earthen","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Earthen soft-skirt timber wall. Same facings as tavern timber; atlas also packs corner L columns."},"wall_earthen_window":{"layer":"wall","tileset":"wall_earthen","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Earthen timber wall with a small barred window."},"wall_earthen_corner_back":{"layer":"wall","tileset":"wall_earthen","atlas":[4,0],"note":"Earthen se_sw L. Back tip [-3,-3]."},"wall_earthen_corner_front":{"layer":"wall","tileset":"wall_earthen","atlas":[4,0],"note":"Earthen se_sw L. Front tip [3,3]."},"wall_earthen_corner_left":{"layer":"wall","tileset":"wall_earthen","atlas":[5,0],"note":"Earthen sw_nw L. Left tip [-3,3]."},"wall_earthen_corner_right":{"layer":"wall","tileset":"wall_earthen","atlas":[6,0],"note":"Earthen ne_se L. Right tip [3,-3]."},"wall_earthen_stone":{"layer":"wall","tileset":"wall_earthen_stone","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Earthen soft-skirt stone wall. Same facings as tavern stone; atlas packs corner L columns."},"wall_earthen_stone_window":{"layer":"wall","tileset":"wall_earthen_stone","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Earthen stone wall with a small barred window."},"wall_earthen_stone_corner_back":{"layer":"wall","tileset":"wall_earthen_stone","atlas":[4,0],"note":"Earthen stone se_sw L. Back tip [-3,-3]."},"wall_earthen_stone_corner_front":{"layer":"wall","tileset":"wall_earthen_stone","atlas":[4,0],"note":"Earthen stone se_sw L. Front tip [3,3]."},"wall_earthen_stone_corner_left":{"layer":"wall","tileset":"wall_earthen_stone","atlas":[5,0],"note":"Earthen stone sw_nw L. Left tip [-3,3]."},"wall_earthen_stone_corner_right":{"layer":"wall","tileset":"wall_earthen_stone","atlas":[6,0],"note":"Earthen stone ne_se L. Right tip [3,-3]."},"wall_mud_brick_sun_dried_ochre":{"layer":"wall","tileset":"wall_mud_brick_sun_dried_ochre","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Sun-dried ochre mud brick. Plain facings only (no window/corner row). Pair with floor_earthen_stone."},"wall_mud_brick_handmade_irregular":{"layer":"wall","tileset":"wall_mud_brick_handmade_irregular","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Handmade irregular mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_weathered_wash":{"layer":"wall","tileset":"wall_mud_brick_weathered_wash","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Weathered wash mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_chunky_cellar":{"layer":"wall","tileset":"wall_mud_brick_chunky_cellar","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Chunky cellar mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_pale_dusty_clay":{"layer":"wall","tileset":"wall_mud_brick_pale_dusty_clay","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Pale dusty clay mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_reddish_mud":{"layer":"wall","tileset":"wall_mud_brick_reddish_mud","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Reddish mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_cool_gray_brown":{"layer":"wall","tileset":"wall_mud_brick_cool_gray_brown","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Cool gray-brown mud brick. Plain facings only. Pair with floor_earthen_stone."},"wall_mud_brick_flat_pixel_clay":{"layer":"wall","tileset":"wall_mud_brick_flat_pixel_clay","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Flat pixel clay mud brick. Plain facings only. Pair with floor_earthen_stone."},"counter_straight":{"layer":"object","tileset":"counter","atlas":[0,0],"art_facing":"front-right"},"counter_end_l":{"layer":"object","tileset":"counter","atlas":[1,0],"art_facing":"front-right"},"counter_end_r":{"layer":"object","tileset":"counter","atlas":[2,0],"art_facing":"front-right"},"counter_corner":{"layer":"object","tileset":"counter","atlas":[3,0],"art_facing":"front-right","note":"Baked L-bar unit. Its flat ends are part of the art, so alignment against the walls is an art task."},"bar_run_x":{"layer":"object","tileset":"counter","atlas":[4,0],"note":"Modular dark bar, runs along x (toward front-right). Arms end exactly on the cell boundary, so a run ending in a wall cell touches the wall."},"bar_run_y":{"layer":"object","tileset":"counter","atlas":[5,0],"note":"Modular dark bar, runs along y (toward front-left)."},"bar_end_x":{"layer":"object","tileset":"counter","atlas":[6,0],"note":"Open arm toward +x so it meets the elbow. The cap is the far end, toward -x (back-left wall)."},"bar_end_y":{"layer":"object","tileset":"counter","atlas":[7,0],"note":"Open arm toward +y so it meets the elbow. The cap is the far end, toward -y (back-right wall)."},"bar_elbow":{"layer":"object","tileset":"counter","atlas":[8,0],"note":"Elbow with arms toward -x and -y; encloses the back corner."},"table_round":{"layer":"object","tileset":"prop","atlas":[0,0]},"table_rect":{"layer":"object","tileset":"prop","atlas":[1,0]},"chair":{"layer":"object","tileset":"prop","facings":{"front-right":[2,0],"front-left":[3,0],"back-left":[4,0],"back-right":[5,0]},"note":"Yaw = way a seated person looks. front-right sits on the -x side of a table, front-left on -y, back-left on +x, back-right on +y."},"tankard":{"layer":"item","tileset":"prop","atlas":[6,0],"note":"Wooden mug for the On top slot. Place it on a bar or table cell."},"glass":{"layer":"item","tileset":"prop","atlas":[7,0],"note":"Stemmed ale glass for the On top slot. Place it on a bar or table cell."}},_e= {
+    xe={"floor":{"layer":"floor","atlas":"periodic","period":4,"note":"Honey-oak wood floor. Seamless: atlas cell = (x mod 4, y mod 4). Place it to fill a missing cell. Erase stays locked."},"floor_stone":{"layer":"floor","tileset":"floor_stone","atlas":"periodic","period":4,"note":"Warm flagstone floor. Same seamless period as wood. Place it to fill a missing cell. Erase stays locked."},"floor_earthen_stone":{"layer":"floor","tileset":"floor_earthen_stone","atlas":"periodic","period":4,"note":"Earthen biome rough flagstone (Comfy keeper B). Same seamless period as other floors. Place it to fill a missing cell."},"floor_proposal_a":{"layer":"floor","tileset":"floor_pa","atlas":"periodic","period":4,"note":"Sprite AI honey-oak floorboards (flat lighting, no frame). Seamless. Place it to fill a missing cell. Erase stays locked."},"carpet_round":{"layer":"carpet","atlas":[0,0]},"carpet_rect":{"layer":"carpet","atlas":[1,0]},"wall":{"layer":"wall","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Honey-oak timber wall. Facing = which room side the wall stands on. Atlas columns ne/nw/se/sw map to front-left/front-right/back-left/back-right. Use front-left to close or divide along y = max (south)."},"wall_window":{"layer":"wall","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]}},"wall_stone":{"layer":"wall","tileset":"wall_stone","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Coursed stone wall, same facings and slab thickness as timber."},"wall_stone_window":{"layer":"wall","tileset":"wall_stone","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Stone wall with a small barred window."},"wall_corner_back":{"layer":"wall","atlas":[4,0],"note":"Outer-tip L se_sw (E-S-W foot, rises to N). Back tip [-3,-3] N."},"wall_corner_front":{"layer":"wall","atlas":[4,0],"note":"Same se_sw L as back: foot on outer S tip. Front tip [3,3]."},"wall_corner_left":{"layer":"wall","atlas":[5,0],"note":"Outer-tip L sw_nw (S-W-N foot). Left tip [-3,3] W."},"wall_corner_right":{"layer":"wall","atlas":[6,0],"note":"Outer-tip L ne_se (N-E-S foot). Right tip [3,-3] E."},"wall_stone_corner_back":{"layer":"wall","tileset":"wall_stone","atlas":[4,0],"note":"Stone se_sw L. Back tip [-3,-3]."},"wall_stone_corner_front":{"layer":"wall","tileset":"wall_stone","atlas":[4,0],"note":"Stone se_sw L. Front tip [3,3]."},"wall_stone_corner_left":{"layer":"wall","tileset":"wall_stone","atlas":[5,0],"note":"Stone sw_nw L. Left tip [-3,3]."},"wall_stone_corner_right":{"layer":"wall","tileset":"wall_stone","atlas":[6,0],"note":"Stone ne_se L. Right tip [3,-3]."},"wall_proposal_a":{"layer":"wall","tileset":"wall_pa","facings":{"front-left":[0,0],"front-right":[1,0],"back-left":[2,0],"back-right":[3,0]},"note":"Proposal A timber wall paired to the Sprite AI floor_pa albedo. Same facings as timber."},"wall_proposal_a_window":{"layer":"wall","tileset":"wall_pa","facings":{"front-left":[0,1],"front-right":[1,1],"back-left":[2,1],"back-right":[3,1]},"note":"Proposal A timber wall with a small barred window."},"counter_straight":{"layer":"object","tileset":"counter","atlas":[0,0],"art_facing":"front-right"},"counter_end_l":{"layer":"object","tileset":"counter","atlas":[1,0],"art_facing":"front-right"},"counter_end_r":{"layer":"object","tileset":"counter","atlas":[2,0],"art_facing":"front-right"},"counter_corner":{"layer":"object","tileset":"counter","atlas":[3,0],"art_facing":"front-right","note":"Baked L-bar unit. Its flat ends are part of the art, so alignment against the walls is an art task."},"bar_run_x":{"layer":"object","tileset":"counter","atlas":[4,0],"note":"Modular dark bar, runs along x (toward front-right). Arms end exactly on the cell boundary, so a run ending in a wall cell touches the wall."},"bar_run_y":{"layer":"object","tileset":"counter","atlas":[5,0],"note":"Modular dark bar, runs along y (toward front-left)."},"bar_end_x":{"layer":"object","tileset":"counter","atlas":[6,0],"note":"Open arm toward +x so it meets the elbow. The cap is the far end, toward -x (back-left wall)."},"bar_end_y":{"layer":"object","tileset":"counter","atlas":[7,0],"note":"Open arm toward +y so it meets the elbow. The cap is the far end, toward -y (back-right wall)."},"bar_elbow":{"layer":"object","tileset":"counter","atlas":[8,0],"note":"Elbow with arms toward -x and -y; encloses the back corner."},"table_round":{"layer":"object","tileset":"prop","atlas":[0,0]},"table_rect":{"layer":"object","tileset":"prop","atlas":[1,0]},"chair":{"layer":"object","tileset":"prop","facings":{"front-right":[2,0],"front-left":[3,0],"back-left":[4,0],"back-right":[5,0]},"note":"Yaw = way a seated person looks. front-right sits on the -x side of a table, front-left on -y, back-left on +x, back-right on +y."},"tankard":{"layer":"item","tileset":"prop","atlas":[6,0],"note":"Wooden mug for the On top slot. Place it on a bar or table cell."},"glass":{"layer":"item","tileset":"prop","atlas":[7,0],"note":"Stemmed ale glass for the On top slot. Place it on a bar or table cell."}},_e= {
         schema: 1,
         note: ve,
         layers: ke,
@@ -66,20 +66,6 @@ const we = 1,
             dx: -128,
             dy: -64
         },
-        floor_earthen_wood: {
-            src: S("floor_earthen_wood"),
-            cw: 256,
-            ch: 128,
-            dx: -128,
-            dy: -64
-        },
-        floor_wood_b: {
-            src: S("floor_wood_b"),
-            cw: 256,
-            ch: 128,
-            dx: -128,
-            dy: -64
-        },
         floor_pa: {
             src: S("floor_pa"),
             cw: 256,
@@ -103,104 +89,6 @@ const we = 1,
         },
         wall_stone: {
             src: S("wall_stone"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_stone_comfy: {
-            src: S("wall_stone_comfy"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_ashlar: {
-            src: S("wall_ashlar"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_paired: {
-            src: S("wall_paired"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_door: {
-            src: S("wall_door"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_earthen: {
-            src: S("wall_earthen"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_earthen_stone: {
-            src: S("wall_earthen_stone"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_mud_brick_sun_dried_ochre: {
-            src: S("wall_mud_brick_sun_dried_ochre"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_mud_brick_handmade_irregular: {
-            src: S("wall_mud_brick_handmade_irregular"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_mud_brick_weathered_wash: {
-            src: S("wall_mud_brick_weathered_wash"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_mud_brick_chunky_cellar: {
-            src: S("wall_mud_brick_chunky_cellar"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_mud_brick_pale_dusty_clay: {
-            src: S("wall_mud_brick_pale_dusty_clay"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_mud_brick_reddish_mud: {
-            src: S("wall_mud_brick_reddish_mud"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_mud_brick_cool_gray_brown: {
-            src: S("wall_mud_brick_cool_gray_brown"),
-            cw: 256,
-            ch: 328,
-            dx: -128,
-            dy: -265
-        },
-        wall_mud_brick_flat_pixel_clay: {
-            src: S("wall_mud_brick_flat_pixel_clay"),
             cw: 256,
             ch: 328,
             dx: -128,
@@ -420,27 +308,9 @@ function Me(e, t, l, n, r, o, a, c) {
     return f && (h.facing = f), s !== i.layer && (h.layer = s), h.cell = [n, r], e.objects.push(h), h.id
 }
 
-
-function nextFacing(piece, current) {
-    const variants = piece && piece.facings ? Object.keys(piece.facings) : [];
-    if (variants.length < 2) throw new Error("this piece has no rotated variants; rotating it needs new art");
-    const i = variants.indexOf(current || "");
-    return i < 0 ? variants[0] : variants[(i + 1) % variants.length]
-}
-
-function rotateObject(level, catalog, id) {
-    const obj = level.objects.find(o => o.id === id);
-    if (!obj) throw new Error("unknown object " + id);
-    if (M(level, catalog, obj)) throw new Error(id + " is locked");
-    const piece = catalog.pieces[obj.piece];
-    if (!piece) throw new Error(id + ": unknown piece " + obj.piece);
-    return obj.facing = nextFacing(piece, obj.facing), obj.facing
-}
-
 function Oe(e, t, l) {
     if ("put" === l.verb) return Me(e, t, l.piece, l.x, l.y, l.facing, l.id, l.layer);
     if ("erase" === l.verb) return le(e, t, l.x, l.y, l.layer);
-    if ("rotate" === l.verb) return rotateObject(e, t, l.target);
     if ("unlock" === l.verb) {
         const t = e.locks || [],
             n = canonicalLock(l.target),
@@ -566,7 +436,7 @@ function Pe(e, t) {
             op: a
         }
     }
-    if ("lock" === n || "unlock" === n || "rotate" === n) {
+    if ("lock" === n || "unlock" === n) {
         const e = l.slice(1).join(" ");
         return e ? {
             op: {
@@ -715,9 +585,6 @@ const g = _e,
     }, {
         id: "stone",
         label: "Stone"
-    }, {
-        id: "earthen",
-        label: "Earthen"
     }, {
         id: "proposal_a",
         label: "Proposal A"
@@ -1225,7 +1092,7 @@ function phaseAtlas(e, t, l, n) {
     // (facing, detail). Same formula as stone_wall_atlas_coord.
     const r = F[e],
         o = Y[e],
-        a = "wall" === e || "wall_stone" === e || "wall_stone_comfy" === e || "wall_paired" === e || "wall_pa" === e;
+        a = "wall" === e || "wall_stone" === e || "wall_pa" === e;
     // Corner catalog cols (>= 4) are not on paired sheets.
     if (!r || !o || !a || !t || t[0] >= 4 || o.width < r.cw * 16) return t;
     const c = 4,
@@ -1411,24 +1278,12 @@ function Ie() {
         i.className = "tag";
         const s = g.pieces[l.piece]?.layer,
             d = [];
-        if (l.piece !== l.id && d.push(l.piece), o && l.layer !== s && d.push(layerLabel(l.layer)), r && r.facing && d.push(r.facing), (l.x !== t || l.y !== n) && d.push("at [" + l.x + ", " + l.y + "]"), i.textContent = d.join(" · "), i.textContent || (i.hidden = !0), a.append(c, i), o) {
+        if (l.piece !== l.id && d.push(l.piece), o && l.layer !== s && d.push(layerLabel(l.layer)), (l.x !== t || l.y !== n) && d.push("at [" + l.x + ", " + l.y + "]"), i.textContent = d.join(" · "), i.textContent || (i.hidden = !0), a.append(c, i), o) {
             const e = document.createElement("span");
             e.className = "lock", e.textContent = "locked", a.append(e)
         } else {
             const e = document.createElement("button");
             e.type = "button", e.textContent = "Move", e.addEventListener("click", () => Re(l, r.facing || ""));
-            a.append(e);
-            const piece = g.pieces[l.piece];
-            if (piece && piece.facings && Object.keys(piece.facings).length >= 2) {
-                const rot = document.createElement("button");
-                rot.type = "button", rot.textContent = "Rotate", rot.title = "Cycle facing (authored yaws only)";
-                rot.addEventListener("click", () => {
-                    L([{ verb: "rotate", target: l.id }]) && (() => {
-                        const now = k.objects.find(o => o.id === l.id);
-                        x("Rotated " + l.id + " -> " + ((now && now.facing) || "?"))
-                    })()
-                }), a.append(rot)
-            }
             const t = document.createElement("button");
             t.type = "button", t.textContent = "Erase", t.addEventListener("click", () => {
                 L([{
@@ -1437,7 +1292,7 @@ function Ie() {
                     y: l.y,
                     layer: l.layer
                 }]) && x("Erased " + l.id + " at [" + l.x + ", " + l.y + "]")
-            }), a.append(t)
+            }), a.append(e, t)
         }
         e.append(a)
     }
@@ -1536,9 +1391,8 @@ function pieceLabel(e) {
 }
 
 function materialSetOf(e, t) {
-    const n = e || "",
-        r = t && t.tileset || "";
-    return n.indexOf("proposal_a") >= 0 || "floor_pa" === r || "wall_pa" === r ? "proposal_a" : n.indexOf("earthen") >= 0 || n.indexOf("mud_brick") >= 0 || 0 === r.indexOf("floor_earthen") || 0 === r.indexOf("wall_earthen") || 0 === r.indexOf("wall_mud_brick") ? "earthen" : n.indexOf("stone") >= 0 || n.indexOf("ashlar") >= 0 || n.indexOf("comfy") >= 0 || "floor_stone" === r || "wall_stone" === r || "wall_stone_comfy" === r || "wall_ashlar" === r ? "stone" : t && ("floor" === t.layer || "wall" === t.layer) ? "wood" : ""
+    const n = e || "";
+    return n.indexOf("proposal_a") >= 0 || t && ("floor_pa" === t.tileset || "wall_pa" === t.tileset) ? "proposal_a" : n.indexOf("stone") >= 0 || t && ("floor_stone" === t.tileset || "wall_stone" === t.tileset) ? "stone" : t && ("floor" === t.layer || "wall" === t.layer) ? "wood" : ""
 }
 
 function objectSubOf(e, t) {
