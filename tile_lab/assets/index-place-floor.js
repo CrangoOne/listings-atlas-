@@ -43,12 +43,10 @@ const we = 1,
         default: "tavern",
         levels: Ee
     },
-    // ?v= bumps do not always invalidate PNG caches; bump when keeper sets change.
-    // keeperSets1 (#313): basement/umber/ashlar/brick/pine material chips.
-    // barrelsLive1: also busts after prop atlas cols 8–11 (barrel variants).
-    // propWoodAB1: dining wood A (warm) + wood B (cool) prop atlases.
-    // Do not republish tip-fixed wall PNGs from a stale local ashlar (see #311).
-    AV = "propWoodAB1",
+    // Cache-bust atlases with the same token as the shell scripts. JS-only
+    // ?v= bumps do not invalidate PNG caches, so Klaus can keep seeing old walls.
+    // wallTipPropWood1: tip-strip visible fix + floors/barrels/chrome + prop wood A/B.
+    AV = "wallTipPropWood1",
     S = e => `./atlases/${e}.png?v=${AV}`,
     F = {
         floor: {
