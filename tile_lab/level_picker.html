@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Tile Lab level picker</title>
-    <script src="./assets/scene_persist.js?v=wallTipPropWood1"></script>
-    <script type="module" crossorigin src="./assets/index-place-floor.js?v=wallTipPropWood1"></script>
+    <script src="./assets/scene_persist.js?v=persist2"></script>
+    <script type="module" crossorigin src="./assets/index-place-floor.js?v=persist2"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-qKOAs9om.css">
     <style>
       /* overflow-x:auto makes overflow-y compute to auto too, which clips the
@@ -99,248 +99,48 @@
       #viewport.pan-mode { cursor: move; }
       #viewport.multi-mode { cursor: crosshair; touch-action: none; }
       #viewport.moving-sel { cursor: grabbing; }
-
-      /* --- P0: single toolbar row --- */
-      header {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        align-items: center;
-        row-gap: 0;
-      }
-      header .title { margin-right: auto; }
-      header .title p { display: none; }
-      .toolbar {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 8px;
-      }
-      .toolbar-group {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        padding-right: 8px;
-        border-right: 1px solid var(--line, #4a3a30);
-      }
-      .toolbar-group:last-child { border-right: 0; padding-right: 0; }
-      .cam { display: flex; gap: 4px; align-items: center; flex-wrap: nowrap; }
+      .cam { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
       .cam button { min-width: 44px; padding: 6px 10px; }
       #zoomLabel {
-        min-width: 3.2rem;
+        min-width: 3.5rem;
         text-align: center;
         color: var(--dim);
         font-variant-numeric: tabular-nums;
       }
-      #zoomLabel:empty { display: none; }
-      #helpBtn {
-        min-width: 44px;
-        font-weight: 700;
-      }
-      #helpBtn[aria-expanded="true"] {
-        background: var(--accent, #e8a64c);
-        color: #2a1a08;
-        border-color: var(--accent, #e8a64c);
-      }
-
-      /* Idle camera strip: hidden; only show when Multi/Pan/selection is active */
       #camStatus {
-        display: none;
-        flex: 1 0 100%;
         width: 100%;
         margin: 0;
         padding: 6px 10px 8px;
         background: var(--panel, #2a211c);
-        border-top: 1px solid var(--line, #4a3a30);
-        color: var(--dim, #b39d86);
-        font-size: 13px;
-        min-height: 0;
-        box-sizing: border-box;
-        order: 5;
-      }
-      #camStatus.active {
-        display: block !important;
-        color: var(--accent, #e8a64c);
-        font-weight: 600;
-      }
-      #multiBtn.on { background: var(--accent, #e8a64c); color: #2a1a08; border-color: var(--accent, #e8a64c); outline: none; }
-
-      #viewLegend {
-        min-height: 0;
-        margin: 6px 0 0;
-      }
-      .help-panel {
-        display: none;
-        margin: 0;
-        padding: 10px 12px 12px;
-        background: var(--panel, #2a211c);
         border-bottom: 1px solid var(--line, #4a3a30);
-        max-height: min(36vh, 280px);
-        overflow-y: auto;
-        overscroll-behavior: contain;
-      }
-      .help-panel.open { display: block; }
-      .help-panel h2 { margin-top: 10px; }
-      .help-panel h2:first-child { margin-top: 0; }
-      .help-panel p { margin: 0 0 8px; }
-      .help-copy { display: none !important; }
-
-      .palette-filters { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
-      .palette-filters .row { gap: 6px; }
-      .palette-section {
-        grid-column: 1 / -1;
-        margin: 4px 0 0;
-        padding: 6px 0 0;
-        border-top: 1px solid var(--line, #4a3a30);
-        font-size: 12px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        color: var(--dim, #b39d86);
-      }
-      .palette-section:first-child { border-top: 0; margin-top: 0; padding-top: 0; }
-      #pieceNote { min-height: 0; margin: 0 0 8px; }
-      #pieceNote:empty { display: none; }
-
-      /* --- P2: compact mode + layer, context panels, export dock --- */
-      .workspace-controls {
-        display: grid;
-        gap: 10px;
-      }
-      .control-block h2 { margin-bottom: 6px; }
-      .segmented {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-      }
-      #msg { min-height: 0; margin: 0; }
-      #msg:empty { display: none; }
-
-      #layerPanel[hidden],
-      #selectionPanel[hidden] { display: none !important; }
-
-      .tools {
-        display: flex;
-        flex-direction: column;
-        min-height: 0;
-      }
-      .tools-scroll { min-height: 0; }
-      .export-dock {
-        border-top: 1px solid var(--line, #4a3a30);
-        background: var(--panel, #2a211c);
-        padding: 10px 12px 12px;
-      }
-      .export-dock .export-actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-items: center;
-      }
-      .script-fold {
-        margin-top: 8px;
-        border: 1px solid var(--line, #4a3a30);
-        border-radius: 8px;
-        background: #241c18;
-        padding: 0 10px 10px;
-      }
-      .script-fold > summary {
-        cursor: pointer;
-        list-style: none;
-        padding: 10px 0;
         color: var(--dim, #b39d86);
         font-size: 13px;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        user-select: none;
+        min-height: 2.6em;
+        box-sizing: border-box;
       }
-      .script-fold > summary::-webkit-details-marker { display: none; }
-      .script-fold > summary::before {
-        content: "▸ ";
-        color: var(--accent, #e8a64c);
-      }
-      .script-fold[open] > summary::before { content: "▾ "; }
-      .script-fold textarea { margin-top: 8px; }
-      .script-fold ol#ops { margin: 0 0 8px; }
-
-      @media (min-width: 960px) {
-        /* Keep header wrapping so #camStatus can take a full second row. */
-        header { flex-wrap: wrap; }
-        .toolbar { flex-wrap: nowrap; }
-        main {
-          align-items: stretch;
-        }
-        .preview {
-          position: sticky;
-          top: 56px;
-          align-self: start;
-        }
-        #viewport {
-          max-height: calc(100vh - 140px);
-          min-height: 320px;
-        }
-        .tools {
-          max-height: calc(100vh - 56px);
-          position: sticky;
-          top: 56px;
-        }
-        .tools-scroll {
-          overflow-y: auto;
-          flex: 1 1 auto;
-          overscroll-behavior: contain;
-        }
-        .export-dock {
-          flex: 0 0 auto;
-          position: sticky;
-          bottom: 0;
-          z-index: 2;
-        }
-        .workspace-controls {
-          grid-template-columns: 1fr 1fr;
-          align-items: start;
-        }
-        .workspace-controls #msg {
-          grid-column: 1 / -1;
-        }
-      }
+      #camStatus.active { color: var(--accent, #e8a64c); font-weight: 600; }
+      #multiBtn.on { background: var(--accent, #e8a64c); color: #2a1a08; border-color: var(--accent, #e8a64c); outline: none; }
+      #viewLegend { min-height: 2.8em; }
     </style>
   </head>
   <body>
     <header>
       <div class="title">
         <h1>Tile Lab</h1>
+        <p>Place pieces on the isometric tavern, then copy the edit script.</p>
       </div>
-      <div class="toolbar">
-        <div class="toolbar-group" role="group" aria-label="Level">
-          <select id="levelSel" aria-label="Level"></select>
-          <button id="gridBtn" class="on" type="button">Grid</button>
-        </div>
-        <div class="toolbar-group cam" role="group" aria-label="Camera">
-          <button id="zoomOutBtn" type="button" title="Zoom out">−</button>
-          <button id="zoomFitBtn" type="button" title="Fit level in view">Fit</button>
-          <span id="zoomLabel" aria-live="polite"></span>
-          <button id="zoomInBtn" type="button" title="Zoom in">+</button>
-        </div>
-        <div class="toolbar-group" role="group" aria-label="Tools">
-          <button id="panBtn" type="button" title="Drag the view to pan">Pan</button>
-          <button id="multiBtn" type="button" title="Marquee-select and drag-move objects" aria-pressed="false">Multi</button>
-          <button id="helpBtn" type="button" title="Help" aria-expanded="false" aria-controls="helpPanel">?</button>
-        </div>
+      <select id="levelSel" aria-label="Level"></select>
+      <button id="gridBtn" class="on" type="button">Grid</button>
+      <div class="cam" role="group" aria-label="Camera">
+        <button id="zoomOutBtn" type="button" title="Zoom out">−</button>
+        <button id="zoomFitBtn" type="button" title="Fit level in view">Fit</button>
+        <span id="zoomLabel">Fit</span>
+        <button id="zoomInBtn" type="button" title="Zoom in">+</button>
+        <button id="panBtn" type="button" title="Drag the view to pan">Pan</button>
+        <button id="multiBtn" type="button" title="Marquee-select and drag-move objects" aria-pressed="false">Multi</button>
       </div>
-      <p id="camStatus" role="status"></p>
     </header>
-    <aside id="helpPanel" class="help-panel" hidden>
-      <h2>Camera</h2>
-      <p class="legend">Wheel zooms, drag pans. Tap Multi to select many objects; drag a box, then drag the selection to move (any layers).</p>
-      <h2>Axes</h2>
-      <p class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left.</p>
-      <h2>Layers</h2>
-      <p class="legend">The picture stays the whole room. The grid and the selected cell show the Show-layer filter. On Rugs, a tap on the rug picture selects that rug. The bar is an Object — removing it leaves the floor. On top is for a glass on the bar. Stack order: Floor, Rugs, Objects, On top.</p>
-      <h2>Pieces</h2>
-      <p class="legend">Folders follow stack layers. Wood / Stone / Proposal A keep matching floor and wall tiles together. Objects split into Bar, Counter, and Furniture.</p>
-      <h2>Edits</h2>
-      <p class="legend">Edits stick on this phone. The first change also pins a private base so a later catalog publish does not wipe your layout. Keep this scene folds the picture into that base; Reset to catalog drops the pin. Copy edits for chat (<code>put</code>/<code>erase</code>/<code>lock</code>/<code>unlock</code>); Copy level JSON when you want the agent to land the scene in git.</p>
-      <h2>Cells map</h2>
-      <p class="legend">Same diamond as the picture: +x front-right, +y front-left. Blue is the wall ring, brown is floor.</p>
-    </aside>
+    <p id="camStatus" role="status">Camera: wheel zooms, drag pans. Tap Multi to select many objects.</p>
 
     <main>
       <section class="preview">
@@ -348,110 +148,95 @@
           <p id="loading" class="overlay">Loading atlases…</p>
           <canvas id="iso" hidden></canvas>
         </div>
-        <p id="viewLegend" class="legend">+x front-right · +y front-left · wheel zoom · drag pan</p>
+        <p id="viewLegend" class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left. Wheel zooms · drag pans · Multi: drag a box to select, then drag the selection to move (any layers).</p>
       </section>
 
       <div class="tools">
-        <div class="tools-scroll">
-          <section class="workspace-controls">
-            <div class="control-block">
-              <h2>Mode</h2>
-              <div class="row segmented" role="group" aria-label="Mode">
-                <button id="mSelect" class="on" type="button">Select</button>
-                <button id="mPlace" type="button">Tap to place</button>
-                <button id="mErase" type="button">Tap to erase</button>
-              </div>
-            </div>
-            <div class="control-block">
-              <h2>Show layer</h2>
-              <div id="viewLayerRow" class="row segmented" role="group" aria-label="Show layer"></div>
-            </div>
-            <div id="msg" role="status"></div>
-          </section>
+        <section>
+          <h2>Show layer</h2>
+          <div id="viewLayerRow" class="row" role="group" aria-label="Show layer"></div>
+          <p class="legend">The picture stays the whole room. The grid and the selected cell show this layer. On Rugs, a tap on the rug picture selects that rug. The bar is an Object. Removing it leaves the floor. On top is for a glass on the bar.</p>
+        </section>
 
-          <section id="layerPanel" hidden>
-            <h2 id="layerPanelTitle">Change layer</h2>
-            <p id="layerPanelHelp" class="legend help-copy">Tap a chair, carpet, or other piece in the room. Its layer buttons show up here.</p>
-            <div id="layerPanelRows"></div>
-          </section>
+        <section id="layerPanel">
+          <h2 id="layerPanelTitle">Change layer</h2>
+          <p id="layerPanelHelp" class="legend">Tap a chair, carpet, or other piece in the room. Its layer buttons show up here.</p>
+          <div id="layerPanelRows"></div>
+        </section>
 
-          <section id="selectionPanel" hidden>
-            <h2 id="cellTitle">Selection</h2>
-            <div id="cellObjs" class="row"></div>
-            <div id="multiBanner" class="row" hidden>
-              <span id="multiText"></span>
-              <button id="multiPlaceBtn" type="button" class="primary">Place on cells</button>
-              <button id="multiMoveBtn" type="button" class="primary">Move…</button>
-              <button id="multiEraseBtn" type="button">Erase</button>
-              <button id="multiClear" type="button">Clear selection</button>
-            </div>
-            <div id="moveBanner" class="row" hidden>
-              <span id="moveText"></span>
-              <button id="moveCancel" type="button">Cancel move</button>
-            </div>
-          </section>
+        <section>
+          <h2>Mode</h2>
+          <div class="row">
+            <button id="mSelect" class="on" type="button">Select</button>
+            <button id="mPlace" type="button">Tap to place</button>
+            <button id="mErase" type="button">Tap to erase</button>
+          </div>
+          <div id="msg" role="status"></div>
+        </section>
 
-          <section>
-            <h2>Pieces</h2>
-            <div class="palette-filters">
-              <div id="pieceFolderRow" class="row" role="group" aria-label="Piece folder"></div>
-              <div id="pieceSetRow" class="row" role="group" aria-label="Material set" hidden></div>
-              <div id="pieceSubRow" class="row" role="group" aria-label="Object group" hidden></div>
-            </div>
-            <div class="row">
-              <label>Layer for a new piece <select id="layerSel" aria-label="Layer for a new piece"></select></label>
-              <label>Facing <select id="facingSel"></select></label>
-              <button id="placeBtn" class="primary" type="button">Place at selected cell</button>
-            </div>
-            <p class="legend help-copy">Folders follow stack layers. Wood / Stone / Proposal A keep matching floor and wall tiles together. Objects split into Bar, Counter, and Furniture. The stack on one cell is Floor, Rugs, Objects, then On top.</p>
-            <p id="pieceNote" class="legend"></p>
-            <div id="palette"></div>
-            <div id="lockRow" class="row"></div>
-          </section>
+        <section>
+          <h2>Cells <span class="legend">isometric, tap to select</span></h2>
+          <div id="cellsWrap"><div id="cells"></div></div>
+          <p class="legend">Same diamond as the picture: +x front-right, +y front-left. Blue is the wall ring, brown is floor.</p>
+        </section>
 
-          <section>
-            <h2 id="cellsHeading">Cells <span class="legend">isometric, tap to select</span></h2>
-            <div id="cellsWrap"><div id="cells"></div></div>
-            <p class="legend help-copy">Same diamond as the picture: +x front-right, +y front-left. Blue is the wall ring, brown is floor.</p>
-          </section>
-        </div>
+        <section>
+          <h2 id="cellTitle">Selected cell</h2>
+          <div id="cellObjs" class="row"></div>
+          <div id="multiBanner" class="row" hidden>
+            <span id="multiText"></span>
+            <button id="multiPlaceBtn" type="button" class="primary">Place on cells</button>
+            <button id="multiMoveBtn" type="button" class="primary">Move…</button>
+            <button id="multiEraseBtn" type="button">Erase</button>
+            <button id="multiClear" type="button">Clear selection</button>
+          </div>
+          <div id="moveBanner" class="row" hidden>
+            <span id="moveText"></span>
+            <button id="moveCancel" type="button">Cancel move</button>
+          </div>
+        </section>
 
-        <div class="export-dock">
-          <div class="export-actions row">
+        <section>
+          <h2>Pieces</h2>
+          <div class="row">
+            <label>Layer for a new piece <select id="layerSel" aria-label="Layer for a new piece"></select></label>
+            <label>Facing <select id="facingSel"></select></label>
+            <button id="placeBtn" class="primary" type="button">Place at selected cell</button>
+          </div>
+          <p class="legend">The stack on one cell is Floor, Rugs, Objects, then On top. Floor is in this list: tap it, then tap a cell, to paint a missing floor tile. Erase of the floor stays locked. Walls stay locked beside Objects. The bar is an Object and keeps its own picture. On top is where a glass on the bar will sit: it paints after that bar, and a closer chair still paints in front. Rugs paint under the bar, chairs, and tables. A bar on the floor slot still stands on the rug.</p>
+          <p id="pieceNote" class="legend"></p>
+          <div id="palette"></div>
+          <div id="lockRow" class="row"></div>
+        </section>
+
+        <section>
+          <h2>Your edits</h2>
+          <ol id="ops"></ol>
+          <div class="row">
             <button id="undoBtn" type="button">Undo</button>
             <button id="clearBtn" type="button">Clear all</button>
             <button id="keepSceneBtn" type="button">Keep this scene</button>
             <button id="resetCatalogBtn" type="button">Reset to catalog</button>
+          </div>
+          <textarea id="script" readonly aria-label="Edit script"></textarea>
+          <div class="row">
             <button id="copyBtn" class="primary" type="button">Copy edits</button>
             <button id="copyLevelBtn" type="button">Copy level JSON</button>
             <button id="shareBtn" type="button" hidden>Share</button>
           </div>
-          <details class="script-fold">
-            <summary>Script / import</summary>
-            <ol id="ops"></ol>
-            <textarea id="script" readonly aria-label="Edit script"></textarea>
-            <textarea id="importBox" aria-label="Script to apply" placeholder="# level: tavern&#10;put chair 0 0"></textarea>
-            <div class="row" style="margin-top:8px">
-              <button id="applyBtn" class="primary" type="button">Apply script</button>
-            </div>
-            <p class="legend help-copy">
-              Edits stick on this phone. The first change also pins a private base so a later catalog publish (after a PR merge) does not wipe your layout. <strong>Keep this scene</strong> folds the picture into that base; <strong>Reset to catalog</strong> drops the pin and reloads the published level. The script is the placement message for chat: put, erase, lock, unlock. Copy level JSON when you want the agent to land the scene in git.
-            </p>
-          </details>
-        </div>
+          <p class="legend">
+            Edits stick on this phone. The first change also pins a private base so a later catalog publish (after a PR merge) does not wipe your layout. <strong>Keep this scene</strong> folds the picture into that base; <strong>Reset to catalog</strong> drops the pin and reloads the published level. The script is the placement message for chat: put, erase, lock, unlock. Copy level JSON when you want the agent to land the scene in git.
+          </p>
+        </section>
+
+        <section>
+          <h2>Apply a script</h2>
+          <textarea id="importBox" aria-label="Script to apply" placeholder="# level: tavern&#10;put chair 0 0"></textarea>
+          <div class="row">
+            <button id="applyBtn" class="primary" type="button">Apply script</button>
+          </div>
+        </section>
       </div>
     </main>
-    <script>
-      (function () {
-        const helpBtn = document.getElementById("helpBtn");
-        const helpPanel = document.getElementById("helpPanel");
-        if (!helpBtn || !helpPanel) return;
-        helpBtn.addEventListener("click", () => {
-          const open = helpPanel.classList.toggle("open");
-          helpPanel.hidden = !open;
-          helpBtn.setAttribute("aria-expanded", open ? "true" : "false");
-        });
-      })();
-    </script>
   </body>
 </html>
