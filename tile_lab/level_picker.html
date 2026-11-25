@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -288,10 +288,10 @@
       }
       .script-fold > summary::-webkit-details-marker { display: none; }
       .script-fold > summary::before {
-        content: "▸ ";
+        content: "â–¸ ";
         color: var(--accent, #e8a64c);
       }
-      .script-fold[open] > summary::before { content: "▾ "; }
+      .script-fold[open] > summary::before { content: "â–¾ "; }
       .script-fold textarea { margin-top: 8px; }
       .script-fold ol#ops { margin: 0 0 8px; }
 
@@ -348,7 +348,7 @@
           <button id="gridBtn" class="on" type="button">Grid</button>
         </div>
         <div class="toolbar-group cam" role="group" aria-label="Camera">
-          <button id="zoomOutBtn" type="button" title="Zoom out">−</button>
+          <button id="zoomOutBtn" type="button" title="Zoom out">âˆ’</button>
           <button id="zoomFitBtn" type="button" title="Fit level in view">Fit</button>
           <span id="zoomLabel" aria-live="polite"></span>
           <button id="zoomInBtn" type="button" title="Zoom in">+</button>
@@ -367,7 +367,7 @@
       <h2>Axes</h2>
       <p class="legend">Back corner is the top. +x runs toward the front-right, +y toward the front-left.</p>
       <h2>Layers</h2>
-      <p class="legend">The picture stays the whole room. The grid and the selected cell show the Show-layer filter. On Rugs, a tap on the rug picture selects that rug. The bar is an Object — removing it leaves the floor. On top is for a glass on the bar. Stack order: Floor, Rugs, Objects, On top.</p>
+      <p class="legend">The picture stays the whole room. The grid and the selected cell show the Show-layer filter. On Rugs, a tap on the rug picture selects that rug. The bar is an Object â€” removing it leaves the floor. On top is for a glass on the bar. Stack order: Floor, Rugs, Objects, On top.</p>
       <h2>Pieces</h2>
       <p class="legend">Folders follow stack layers. Wood / Stone / Proposal A keep matching floor and wall tiles together. Objects split into Bar, Counter, and Furniture.</p>
       <h2>Edits</h2>
@@ -379,10 +379,10 @@
     <main>
       <section class="preview">
         <div id="viewport">
-          <p id="loading" class="overlay">Loading atlases…</p>
+          <p id="loading" class="overlay">Loading atlasesâ€¦</p>
           <canvas id="iso" hidden></canvas>
         </div>
-        <p id="viewLegend" class="legend">+x front-right · +y front-left · wheel zoom · drag pan</p>
+        <p id="viewLegend" class="legend">+x front-right Â· +y front-left Â· wheel zoom Â· drag pan</p>
       </section>
 
       <div class="tools">
@@ -415,7 +415,7 @@
             <div id="multiBanner" class="row" hidden>
               <span id="multiText"></span>
               <button id="multiPlaceBtn" type="button" class="primary">Place on cells</button>
-              <button id="multiMoveBtn" type="button" class="primary">Move…</button>
+              <button id="multiMoveBtn" type="button" class="primary">Moveâ€¦</button>
               <button id="multiEraseBtn" type="button">Erase</button>
               <button id="multiClear" type="button">Clear selection</button>
             </div>
@@ -492,6 +492,7 @@
         });
       })();
     </script>
-    <script src="./assets/cast_play.js?v=play1"></script>
+    <script src="./assets/cast_play.js?v=play2"></script>
   </body>
 </html>
+
