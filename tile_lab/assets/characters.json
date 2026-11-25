@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "characters": [
+    {
+      "id": "marker",
+      "label": "Marker",
+      "default_cell": [0, 2],
+      "color": "#e8a64c",
+      "art": null
+    },
+    {
+      "id": "keeper",
+      "label": "Keeper",
+      "default_cell": [0, 2],
+      "color": "#c4a574",
+      "art": "res://tiles/tavern/actor/player_front-right.png",
+      "walk": true,
+      "walk_fps": 10.0,
+      "notes": "Locked FR walk v13bc. FL/BL/BR reuse FR frames until other facings ship."
+    }
+  ]
+}
