@@ -21,114 +21,107 @@
     a { color: inherit; text-decoration: none; }
 
     .demo-bar {
-          position: fixed; top: 0; left: 0; right: 0; z-index: 40;
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          gap: 0.45rem;
-          padding: 0.55rem 0.85rem calc(0.55rem + env(safe-area-inset-top, 0px));
-          padding-top: calc(0.55rem + env(safe-area-inset-top, 0px));
-          background: rgba(12, 12, 14, 0.94);
-          border-bottom: 1px solid color-mix(in srgb, var(--demo-accent) 45%, transparent);
-          backdrop-filter: blur(10px);
-          font-size: 0.75rem;
-          font-family: system-ui, sans-serif;
-        }
-        .demo-bar-label { line-height: 1.3; color: rgba(242,239,232,0.85); }
-        .demo-bar-label strong { color: var(--demo-accent, #c9a14a); font-weight: 600; }
-        .demo-bar-links {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.4rem;
-          align-items: center;
-        }
-        .demo-bar-links a {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          min-width: 2rem;
-          min-height: 2rem;
-          padding: 0.3rem 0.65rem;
-          border: 1px solid rgba(244, 240, 230, 0.28);
-          border-radius: 999px;
-          line-height: 1;
-          white-space: nowrap;
-          -webkit-tap-highlight-color: transparent;
-        }
-        .demo-bar-links a:hover,
-        .demo-bar-links a[aria-current="page"] {
-          border-color: var(--demo-accent, #c9a14a);
-          color: var(--demo-accent, #c9a14a);
-        }
-        @media (min-width: 720px) {
-          .demo-bar {
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
-            padding: 0.55rem 1rem;
-          }
-        }
-
-    .hero, .frame, .stack { scroll-margin-top: 5.5rem; }
+      position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.45rem;
+      padding: 0.55rem 0.85rem;
+      padding-top: calc(0.55rem + env(safe-area-inset-top, 0px));
+      background: rgba(7, 9, 14, 0.94);
+      border-bottom: 1px solid color-mix(in srgb, var(--demo-accent) 45%, transparent);
+      backdrop-filter: blur(10px);
+      font-size: 0.75rem;
+      font-family: system-ui, sans-serif;
+    }
+    .demo-bar-label { line-height: 1.3; color: rgba(242,239,232,0.85); }
+    .demo-bar-label strong { color: var(--demo-accent); font-weight: 600; }
+    .demo-bar-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+    }
+    .demo-bar-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2rem;
+      min-height: 2rem;
+      padding: 0.3rem 0.65rem;
+      border: 1px solid rgba(238,243,247,0.28);
+      border-radius: 999px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .demo-bar-links a:hover,
+    .demo-bar-links a[aria-current="page"] {
+      border-color: var(--demo-accent);
+      color: var(--demo-accent);
+    }
+    @media (min-width: 720px) {
+      .demo-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.55rem 1rem;
+      }
+    }
     @media (max-width: 719px) {
       .hero { padding-top: 6.25rem !important; }
-      .hero-media, .bg, .media { top: 5.75rem !important; }
+      .media { top: 5.75rem !important; }
     }
 
     .hero {
       position: relative;
       min-height: 100svh;
-      padding-top: 2.6rem;
+      padding-top: 3.2rem;
       overflow: hidden;
       display: grid;
       align-content: end;
     }
     .hero::before, .hero::after {
       content: "";
-      position: absolute; left: 0; right: 0; height: 10vh;
+      position: absolute; left: 0; right: 0; height: 8vh;
       background: var(--bg); z-index: 3;
-      animation: letterbox 1.2s ease both;
     }
-    .hero::before { top: 2.4rem; }
+    .hero::before { top: 0; }
     .hero::after { bottom: 0; }
-    @keyframes letterbox {
-      from { transform: scaleY(1.8); }
-      to { transform: none; }
-    }
 
     .media {
       position: absolute; inset: 0;
-      background: center/cover no-repeat url("../assets/hero-ring.jpg");
-      filter: contrast(1.1) saturate(0.7) brightness(0.68);
+      background: center/cover no-repeat;
+      background-image: url("../assets/hero-ring.jpg");
+      filter: contrast(1.05) saturate(0.85) brightness(0.78);
+      transition: background-image 0.35s ease, filter 0.35s ease;
+    }
+    .media[data-shot="kick"] {
+      background-image: url("../assets/hero-kick.png");
+      background-position: 70% 20%;
+      filter: contrast(1.08) saturate(0.55) brightness(0.72);
+    }
+    .media[data-shot="team"] {
+      background-image: url("../assets/hero-team.jpg");
+      background-position: center 30%;
+      filter: contrast(1.05) saturate(0.8) brightness(0.7);
     }
     .wash {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 70% 60% at 70% 40%, rgba(232, 180, 138, 0.28), transparent 55%),
-        radial-gradient(ellipse 50% 70% at 15% 70%, rgba(70, 110, 150, 0.35), transparent 60%),
-        linear-gradient(180deg, rgba(7,9,14,0.25) 0%, rgba(7,9,14,0.55) 55%, rgba(7,9,14,0.96) 100%);
-      animation: flicker 7s ease-in-out infinite;
-    }
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.92; }
+        radial-gradient(ellipse 65% 55% at 75% 35%, rgba(232, 180, 138, 0.18), transparent 55%),
+        linear-gradient(180deg, rgba(7,9,14,0.35) 0%, rgba(7,9,14,0.55) 50%, rgba(7,9,14,0.96) 100%);
     }
 
     .frame {
       position: relative; z-index: 4;
       width: min(1100px, calc(100% - 2rem));
-      margin: 0 auto 12vh;
-      animation: rise 1s ease 0.2s both;
-    }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: none; }
+      margin: 0 auto 10vh;
     }
     .topnav {
       display: flex; justify-content: space-between; align-items: baseline;
-      margin-bottom: 18vh;
-      font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 14vh;
+      font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--mute);
     }
     .topnav b { color: var(--paper); font-weight: 700; }
@@ -139,29 +132,28 @@
       font-family: "Cormorant Garamond", Georgia, serif;
       font-style: italic;
       font-weight: 600;
-      font-size: clamp(3.4rem, 11vw, 6.8rem);
+      font-size: clamp(3.2rem, 10vw, 6.2rem);
       line-height: 0.95;
       color: var(--paper);
-      text-shadow: 0 0 40px rgba(232, 180, 138, 0.25);
     }
     .tag {
-      margin: 1rem 0 1.5rem;
-      font-size: clamp(1rem, 2.4vw, 1.25rem);
+      margin: 0.85rem 0 1.1rem;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
       font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--steel);
     }
     .lede {
-      margin: 0 0 1.5rem;
+      margin: 0 0 1.4rem;
       max-width: 28rem;
       color: var(--mute);
-      line-height: 1.5;
+      line-height: 1.55;
+      font-weight: 500;
     }
     .ctas { display: flex; flex-wrap: wrap; gap: 0.7rem; }
     .btn {
       padding: 0.85rem 1.25rem; border-radius: 2px;
-      font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em;
+      font-weight: 700; font-size: 0.9rem;
       transition: transform 0.2s ease, background 0.2s ease;
     }
     .btn:hover { transform: translateY(-2px); }
@@ -169,42 +161,69 @@
     .btn-ghost { border: 1px solid rgba(238,243,247,0.4); }
 
     .city {
-      margin-top: 2rem;
+      margin-top: 1.75rem;
       font-size: 0.75rem;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: rgba(238,243,247,0.45);
+    }
+
+    .photo-pick {
+      position: relative; z-index: 5;
+      width: min(1100px, calc(100% - 2rem));
+      margin: 0 auto 1.25rem;
+      display: flex; flex-wrap: wrap; gap: 0.45rem; align-items: center;
+      font-family: system-ui, sans-serif;
+      font-size: 0.72rem;
+      color: var(--mute);
+    }
+    .photo-pick span { margin-right: 0.25rem; }
+    .photo-pick button {
+      appearance: none;
+      border: 1px solid rgba(238,243,247,0.28);
+      background: rgba(7,9,14,0.55);
+      color: var(--paper);
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font: inherit;
+      cursor: pointer;
+    }
+    .photo-pick button[aria-pressed="true"] {
+      border-color: var(--steel);
+      color: var(--steel);
     }
 
     @media (max-width: 640px) {
       .frame { margin-bottom: 8vh; }
       .topnav { margin-bottom: 8vh; }
-      .hero::before, .hero::after { height: 6vh; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero::before, .hero::after, .wash, .frame { animation: none; }
+      .hero::before, .hero::after { height: 5vh; }
     }
   </style>
 </head>
 <body>
-    <div class="demo-bar">
+  <div class="demo-bar">
     <div class="demo-bar-label"><strong>Demo B · Ringlicht Wien</strong> — Konzept-Homepage</div>
     <nav class="demo-bar-links" aria-label="Demo wechseln">
       <a href="../">Alle</a>
       <a href="../a/">A</a>
       <a href="./" aria-current="page">B</a>
       <a href="../c/">C</a>
-      <a href="../d/">D</a>
       <a href="../e/">E</a>
     </nav>
   </div>
 
   <header class="hero">
-    <div class="media" aria-hidden="true"></div>
+    <div class="media" id="hero-media" data-shot="ring" aria-hidden="true"></div>
     <div class="wash" aria-hidden="true"></div>
+    <div class="photo-pick" aria-label="Foto wählen">
+      <span>Foto:</span>
+      <button type="button" data-shot="ring" aria-pressed="true">Interview</button>
+      <button type="button" data-shot="kick" aria-pressed="false">Kick</button>
+      <button type="button" data-shot="team" aria-pressed="false">Team</button>
+    </div>
     <div class="frame">
       <nav class="topnav" aria-label="Hauptnavigation">
-        <b>B · Levente</b>
+        <b>Levente B.</b>
         <div>
           <a href="#bio">Bio</a>
           <a href="../news/?demo=b">News</a>
@@ -212,14 +231,26 @@
         </div>
       </nav>
       <h1>Levente Bertalan</h1>
-      <p class="tag">Champion. Coach. Wien.</p>
-      <p class="lede">Vienna Nights, Fight Night — die Personal Brand eines Weltmeisters, der in der Stadt trainiert und unterrichtet.</p>
+      <p class="tag">Kickbox-Champion &amp; Trainer in Wien</p>
+      <p class="lede">Personal Training mit jemandem, der den Sport von der Wettkampfseite kennt. Klar, direkt — ohne großen Auftritt.</p>
       <div class="ctas">
-        <a class="btn btn-main" href="#bio">Bio</a>
-        <a class="btn btn-ghost" href="mailto:trainwith@b-levente.at">Trainieren</a>
+        <a class="btn btn-main" href="mailto:trainwith@b-levente.at">Training anfragen</a>
+        <a class="btn btn-ghost" href="#bio">Mehr erfahren</a>
       </div>
       <p class="city" id="bio">Münzgasse 3 · 1030 Wien</p>
     </div>
   </header>
+
+  <script>
+    const media = document.getElementById("hero-media");
+    const buttons = [...document.querySelectorAll(".photo-pick button")];
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const shot = btn.dataset.shot;
+        media.dataset.shot = shot;
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+      });
+    });
+  </script>
 </body>
 </html>

@@ -25,7 +25,6 @@
       --font-display: "Syne", "Sora", sans-serif;
     }
     html[data-demo="c"] { --accent: #d4b35a; --bg: #050505; --font-display: "Anton", "Bebas Neue", sans-serif; }
-    html[data-demo="d"] { --accent: #b83a3a; --bg: #121925; --paper: #f3f1ea; }
     html[data-demo="e"] { --accent: #e11d2e; --bg: #101010; --paper: #ece6d8; --accent-text: #fff; }
 
     * { box-sizing: border-box; }
@@ -265,7 +264,6 @@
       <a href="../a/">A</a>
       <a href="../b/">B</a>
       <a href="../c/">C</a>
-      <a href="../d/">D</a>
       <a href="../e/">E</a>
     </nav>
   </div>
@@ -329,13 +327,13 @@
   </main>
 
   <footer class="wrap">
-    Shared News für Demos A–E · Quelle: instagram.com/levente.bertalan
+    Shared News für Demos A, B, C, E · Quelle: instagram.com/levente.bertalan
   </footer>
 
   <script>
     const params = new URLSearchParams(location.search);
     const demo = (params.get("demo") || "a").toLowerCase();
-    const allowed = ["a", "b", "c", "d", "e"];
+    const allowed = ["a", "b", "c", "e"];
     const key = allowed.includes(demo) ? demo : "a";
     document.documentElement.dataset.demo = key;
 
