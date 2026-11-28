@@ -32,6 +32,7 @@
     body {
       margin: 0;
       min-height: 100vh;
+      padding-top: 5.5rem;
       color: var(--paper);
       font-family: var(--font-body);
       background:
@@ -41,25 +42,55 @@
     a { color: inherit; text-decoration: none; }
 
     .demo-bar {
-      position: sticky; top: 0; z-index: 40;
-      display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center; justify-content: space-between;
-      padding: 0.55rem 1rem;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-      backdrop-filter: blur(10px);
-      font-size: 0.78rem;
-    }
-    .demo-bar strong { color: var(--accent); }
-    .demo-bar nav { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .demo-bar a {
-      border: 1px solid var(--line);
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-    }
-    .demo-bar a:hover, .demo-bar a[aria-current="page"] {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
+          position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.45rem;
+          padding: 0.55rem 0.85rem calc(0.55rem + env(safe-area-inset-top, 0px));
+          padding-top: calc(0.55rem + env(safe-area-inset-top, 0px));
+          background: color-mix(in srgb, var(--bg) 92%, transparent);
+          border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+          backdrop-filter: blur(10px);
+          font-size: 0.75rem;
+          font-family: system-ui, sans-serif;
+        }
+        .demo-bar-label { line-height: 1.3; color: rgba(242,239,232,0.85); }
+        .demo-bar-label strong { color: var(--accent); font-weight: 600; }
+        .demo-bar-links {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+          align-items: center;
+        }
+        .demo-bar-links a {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 2rem;
+          min-height: 2rem;
+          padding: 0.3rem 0.65rem;
+          border: 1px solid rgba(244, 240, 230, 0.28);
+          border-radius: 999px;
+          line-height: 1;
+          white-space: nowrap;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .demo-bar-links a:hover,
+        .demo-bar-links a[aria-current="page"] {
+          border-color: var(--accent);
+          color: var(--accent);
+        }
+        @media (min-width: 720px) {
+          .demo-bar {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.55rem 1rem;
+          }
+          body { padding-top: 3.25rem; }
+        }
 
     .wrap { width: min(920px, calc(100% - 2rem)); margin-inline: auto; }
 
@@ -227,9 +258,9 @@
   </style>
 </head>
 <body>
-  <div class="demo-bar">
-    <span><strong>News</strong> · Instagram @levente.bertalan · für alle Demos</span>
-    <nav aria-label="Demo-Navigation">
+    <div class="demo-bar">
+    <div class="demo-bar-label"><strong>News</strong> · Instagram @levente.bertalan · für alle Demos</div>
+    <nav class="demo-bar-links" aria-label="Demo wechseln">
       <a href="../">Alle</a>
       <a href="../a/">A</a>
       <a href="../b/">B</a>
@@ -311,7 +342,7 @@
     const home = document.getElementById("home-link");
     home.href = `../${key}/`;
 
-    document.querySelectorAll(".demo-bar nav a").forEach((a) => {
+    document.querySelectorAll(".demo-bar-links a").forEach((a) => {
       const href = a.getAttribute("href") || "";
       if (href === `../${key}/`) a.setAttribute("aria-current", "page");
     });

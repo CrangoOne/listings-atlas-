@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
+      --demo-accent: #c9a14a;
       --bg: #0c0c0e;
       --paper: #f4f0e6;
       --gold: #c9a14a;
@@ -24,17 +25,60 @@
     a { color: inherit; text-decoration: none; }
 
     .demo-bar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 40;
-      display: flex; gap: 0.75rem; align-items: center; justify-content: space-between;
-      padding: 0.55rem 1rem;
-      background: rgba(12, 12, 14, 0.88);
-      border-bottom: 1px solid rgba(201, 161, 74, 0.35);
-      backdrop-filter: blur(10px);
-      font-size: 0.78rem;
+          position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.45rem;
+          padding: 0.55rem 0.85rem calc(0.55rem + env(safe-area-inset-top, 0px));
+          padding-top: calc(0.55rem + env(safe-area-inset-top, 0px));
+          background: rgba(12, 12, 14, 0.94);
+          border-bottom: 1px solid color-mix(in srgb, var(--demo-accent) 45%, transparent);
+          backdrop-filter: blur(10px);
+          font-size: 0.75rem;
+          font-family: system-ui, sans-serif;
+        }
+        .demo-bar-label { line-height: 1.3; color: rgba(242,239,232,0.85); }
+        .demo-bar-label strong { color: var(--demo-accent, #c9a14a); font-weight: 600; }
+        .demo-bar-links {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.4rem;
+          align-items: center;
+        }
+        .demo-bar-links a {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-width: 2rem;
+          min-height: 2rem;
+          padding: 0.3rem 0.65rem;
+          border: 1px solid rgba(244, 240, 230, 0.28);
+          border-radius: 999px;
+          line-height: 1;
+          white-space: nowrap;
+          -webkit-tap-highlight-color: transparent;
+        }
+        .demo-bar-links a:hover,
+        .demo-bar-links a[aria-current="page"] {
+          border-color: var(--demo-accent, #c9a14a);
+          color: var(--demo-accent, #c9a14a);
+        }
+        @media (min-width: 720px) {
+          .demo-bar {
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.55rem 1rem;
+          }
+        }
+
+    .hero, .frame, .stack { scroll-margin-top: 5.5rem; }
+    @media (max-width: 719px) {
+      .hero { padding-top: 6.25rem !important; }
+      .hero-media, .bg, .media { top: 5.75rem !important; }
     }
-    .demo-bar strong { color: var(--gold); font-weight: 600; }
-    .demo-bar a { border: 1px solid rgba(244, 240, 230, 0.25); padding: 0.35rem 0.7rem; border-radius: 999px; }
-    .demo-bar a:hover { border-color: var(--gold); color: var(--gold); }
 
     .hero {
       position: relative;
@@ -154,15 +198,16 @@
   </style>
 </head>
 <body>
-  <div class="demo-bar">
-    <span><strong>Demo A · Goldene Linie</strong> — Konzept-Homepage</span>
-    <span>
-      <a href="../">Alle Richtungen</a>
+    <div class="demo-bar">
+    <div class="demo-bar-label"><strong>Demo A · Goldene Linie</strong> — Konzept-Homepage</div>
+    <nav class="demo-bar-links" aria-label="Demo wechseln">
+      <a href="../">Alle</a>
+      <a href="./" aria-current="page">A</a>
       <a href="../b/">B</a>
       <a href="../c/">C</a>
       <a href="../d/">D</a>
       <a href="../e/">E</a>
-    </span>
+    </nav>
   </div>
 
   <header class="hero">
