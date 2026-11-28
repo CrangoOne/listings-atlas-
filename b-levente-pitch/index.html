@@ -283,13 +283,22 @@
       color: rgba(242, 239, 232, 0.85);
       line-height: 1.45;
     }
-    .pick {
+    .pick-bar {
+      position: sticky;
+      bottom: 0;
+      z-index: 20;
       margin-top: 1.5rem;
+      padding: 0.85rem 0 calc(0.85rem + env(safe-area-inset-bottom, 0px));
+      background: linear-gradient(180deg, transparent, rgba(10, 11, 16, 0.92) 28%);
+    }
+    .pick {
       padding: 1rem 1.15rem;
       border: 1px dashed rgba(201, 161, 74, 0.45);
       border-radius: 4px;
       min-height: 3.2rem;
       color: rgba(242, 239, 232, 0.9);
+      background: rgba(14, 16, 22, 0.92);
+      backdrop-filter: blur(8px);
     }
     .pick strong { color: var(--gold); }
 
@@ -418,7 +427,9 @@
         <li>Instagram für News: persönlicher Account oder @team_taekibo?</li>
         <li>Sprache: nur Deutsch, oder DE + EN?</li>
       </ol>
-      <div class="pick" id="pick" aria-live="polite">Noch keine Richtung gewählt — tippen Sie A–E oben.</div>
+      <div class="pick-bar">
+        <div class="pick" id="pick" aria-live="polite">Noch keine Richtung gewählt — tippen Sie A–E oben.</div>
+      </div>
     </section>
   </main>
 
