@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Levente Bertalan — Goldene Linie (Demo A)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0c0c0e;
+      --paper: #f4f0e6;
+      --gold: #c9a14a;
+      --mute: rgba(244, 240, 230, 0.62);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Outfit", system-ui, sans-serif;
+      color: var(--paper);
+      background: var(--bg);
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .demo-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+      display: flex; gap: 0.75rem; align-items: center; justify-content: space-between;
+      padding: 0.55rem 1rem;
+      background: rgba(12, 12, 14, 0.88);
+      border-bottom: 1px solid rgba(201, 161, 74, 0.35);
+      backdrop-filter: blur(10px);
+      font-size: 0.78rem;
+    }
+    .demo-bar strong { color: var(--gold); font-weight: 600; }
+    .demo-bar a { border: 1px solid rgba(244, 240, 230, 0.25); padding: 0.35rem 0.7rem; border-radius: 999px; }
+    .demo-bar a:hover { border-color: var(--gold); color: var(--gold); }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      padding-top: 2.6rem;
+      overflow: hidden;
+    }
+    .hero-media {
+      position: absolute; inset: 0;
+      background: #000 center/cover no-repeat;
+      background-image: url("../assets/levente-442.png");
+      filter: grayscale(1) contrast(1.12) brightness(0.78);
+      transform: scale(1.04);
+      animation: ken 22s ease-in-out infinite alternate;
+    }
+    @keyframes ken {
+      from { transform: scale(1.04) translate3d(0, 0, 0); }
+      to { transform: scale(1.1) translate3d(-2%, -1%, 0); }
+    }
+    .hero-shade {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(90deg, rgba(12,12,14,0.92) 0%, rgba(12,12,14,0.55) 42%, rgba(12,12,14,0.15) 70%),
+        linear-gradient(180deg, transparent 40%, rgba(12,12,14,0.95) 100%);
+    }
+    .nav {
+      position: relative; z-index: 2;
+      display: flex; justify-content: space-between; align-items: center;
+      width: min(1120px, calc(100% - 2rem));
+      margin: 1rem auto 0;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .nav-brand { font-family: "Bebas Neue", sans-serif; font-size: 1.35rem; letter-spacing: 0.12em; color: var(--gold); }
+    .nav-links { display: flex; gap: 1.25rem; }
+    .nav-links a { color: var(--mute); }
+    .nav-links a:hover { color: var(--paper); }
+
+    .hero-copy {
+      position: relative; z-index: 2;
+      align-self: end;
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto 3.5rem;
+      max-width: 34rem;
+      animation: rise 0.9s ease both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: none; }
+    }
+    .hero-copy h1 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: clamp(3.8rem, 12vw, 7rem);
+      line-height: 0.9;
+      margin: 0 0 0.85rem;
+      letter-spacing: 0.02em;
+    }
+    .hero-copy h1 span { display: block; color: var(--gold); font-size: 0.38em; letter-spacing: 0.2em; margin-top: 0.45rem; }
+    .hero-copy p {
+      margin: 0 0 1.4rem;
+      color: var(--mute);
+      font-size: 1.05rem;
+      line-height: 1.45;
+      max-width: 26rem;
+    }
+    .cta {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--gold); color: #111; font-weight: 600;
+      padding: 0.9rem 1.35rem; border-radius: 999px;
+      transition: transform 0.2s ease;
+    }
+    .cta:hover { transform: translateY(-2px); }
+
+    .strip {
+      border-top: 1px solid rgba(201, 161, 74, 0.28);
+      padding: 2rem 0 3rem;
+      background: #0a0a0c;
+    }
+    .strip-inner {
+      width: min(1120px, calc(100% - 2rem));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .strip h2 {
+      font-family: "Bebas Neue", sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      margin: 0 0 0.4rem;
+    }
+    .strip p { margin: 0; color: var(--mute); font-size: 0.92rem; line-height: 1.4; }
+    @media (max-width: 720px) {
+      .strip-inner { grid-template-columns: 1fr; }
+      .nav-links { gap: 0.8rem; font-size: 0.75rem; }
+      .hero-shade {
+        background:
+          linear-gradient(180deg, rgba(12,12,14,0.35) 0%, rgba(12,12,14,0.75) 45%, rgba(12,12,14,0.97) 100%);
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero-media { animation: none; }
+      .hero-copy { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">
+    <span><strong>Demo A · Goldene Linie</strong> — Konzept-Homepage</span>
+    <span>
+      <a href="../">Alle Richtungen</a>
+      <a href="../b/">B</a>
+      <a href="../c/">C</a>
+      <a href="../d/">D</a>
+      <a href="../e/">E</a>
+    </span>
+  </div>
+
+  <header class="hero">
+    <div class="hero-media" aria-hidden="true"></div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a class="nav-brand" href="./">Levente B.</a>
+      <div class="nav-links">
+        <a href="#bio">Bio</a>
+        <a href="#news">News</a>
+        <a href="mailto:trainwith@b-levente.at">Kontakt</a>
+      </div>
+    </nav>
+    <div class="hero-copy">
+      <h1>LEVENTE BERTALAN<span>WAKO PRO WELTMESTER · WIEN</span></h1>
+      <p>Titel, die für sich sprechen. Personal Training auf Champion-Niveau — ruhig, präzise, ohne Verkaufsrauschen.</p>
+      <a class="cta" href="mailto:trainwith@b-levente.at">Personal Training anfragen</a>
+    </div>
+  </header>
+
+  <section class="strip" id="bio" aria-label="Kurzprofil">
+    <div class="strip-inner">
+      <div>
+        <h2>Titel</h2>
+        <p>WAKO PRO Weltmeister · Mehrfacher Welt- &amp; Europameister · ~196× Gold</p>
+      </div>
+      <div>
+        <h2>Ehre</h2>
+        <p>Goldenes Ehrenzeichen der Republik Österreich · Sportehrenzeichen der Stadt Wien</p>
+      </div>
+      <div id="news">
+        <h2>Weiter</h2>
+        <p>Bio-Timeline &amp; Instagram-News folgen nach Konzeptwahl. Gym: <a href="https://tae-kibo.at/" style="color:var(--gold)">tae-kibo.at</a></p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

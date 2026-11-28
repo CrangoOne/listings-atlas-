@@ -301,6 +301,22 @@
       backdrop-filter: blur(8px);
     }
     .pick strong { color: var(--gold); }
+    .demo-link {
+      display: inline-flex;
+      margin-top: 1rem;
+      padding: 0.55rem 0.95rem;
+      border: 1px solid var(--accent, var(--gold));
+      border-radius: 999px;
+      color: var(--accent, var(--gold));
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .demo-link:hover {
+      background: var(--accent, var(--gold));
+      color: #0a0b10;
+    }
 
     footer {
       padding: 0 0 2.5rem;
@@ -339,9 +355,9 @@
   <main>
     <section class="scope wrap" aria-labelledby="scope-title">
       <h2 id="scope-title">Gemeinsamer Rahmen</h2>
-      <p>Jede Richtung hat dieselben drei Seiten. Unterschied ist Look, Ton und wie Titel vs. Coaching betont werden. Tippen Sie eine Karte — Ihre Wahl bleibt sichtbar unten.</p>
+      <p>Jede Richtung hat dieselben drei Seiten. Unterschied ist Look, Ton und wie Titel vs. Coaching betont werden. Tippen Sie eine Karte — oder öffnen Sie die Homepage-Demo.</p>
       <div class="chips">
-        <span class="chip">Startseite</span>
+        <span class="chip">Startseite (Demo live)</span>
         <span class="chip">Bio</span>
         <span class="chip">News · Posts + Stories</span>
         <span class="chip">CTA · Personal Training</span>
@@ -360,6 +376,7 @@
             <div class="fact"><dt>Bio</dt><dd>Medaillenwand, Ehrenzeichen, Dan / Uni Wien</dd></div>
             <div class="fact"><dt>News</dt><dd>Live Instagram — Posts &amp; Stories, kein Blog</dd></div>
           </dl>
+          <a class="demo-link" href="a/" data-demo>Homepage-Demo A öffnen</a>
         </div>
       </article>
 
@@ -374,6 +391,7 @@
             <div class="fact"><dt>Bio</dt><dd>Erzählbogen: Kämpfer → Lehrer → Mentor</dd></div>
             <div class="fact"><dt>News</dt><dd>Instagram als Puls · Story-Strip oben</dd></div>
           </dl>
+          <a class="demo-link" href="b/" data-demo>Homepage-Demo B öffnen</a>
         </div>
       </article>
 
@@ -388,6 +406,7 @@
             <div class="fact"><dt>Bio</dt><dd>Titel-Ledger (WAKO PRO, Ehrenzeichen, 4. Dan)</dd></div>
             <div class="fact"><dt>News</dt><dd>IG-Grid statt veralteter Workshop-Liste</dd></div>
           </dl>
+          <a class="demo-link" href="c/" data-demo>Homepage-Demo C öffnen</a>
         </div>
       </article>
 
@@ -402,6 +421,7 @@
             <div class="fact"><dt>Bio</dt><dd>Philosophie + Dan / Uni / Auszeichnungen</dd></div>
             <div class="fact"><dt>News</dt><dd>Instagram als lebender Beweis</dd></div>
           </dl>
+          <a class="demo-link" href="d/" data-demo>Homepage-Demo D öffnen</a>
         </div>
       </article>
 
@@ -416,6 +436,7 @@
             <div class="fact"><dt>Bio</dt><dd>Kurzkapitel: Ring / Titel / Lehre / Training</dd></div>
             <div class="fact"><dt>News</dt><dd>Feed + Stories = einzige „Aktuell“-Fläche</dd></div>
           </dl>
+          <a class="demo-link" href="e/" data-demo>Homepage-Demo E öffnen</a>
         </div>
       </article>
     </section>
@@ -442,13 +463,17 @@
     const cards = [...document.querySelectorAll(".proposal")];
 
     function select(card) {
+      const letter = card.dataset.letter.toLowerCase();
       cards.forEach((c) => c.setAttribute("aria-pressed", String(c === card)));
-      pick.innerHTML = `Gewählt: <strong>${card.dataset.letter} · ${card.dataset.name}</strong> — wir bauen als Nächstes einen Visual-Mock dieser Richtung.`;
+      pick.innerHTML = `Gewählt: <strong>${card.dataset.letter} · ${card.dataset.name}</strong> — <a href="${letter}/" style="color:var(--gold)">Homepage-Demo öffnen</a>`;
     }
 
     cards.forEach((card, i) => {
       card.style.transitionDelay = `${i * 60}ms`;
-      card.addEventListener("click", () => select(card));
+      card.addEventListener("click", (e) => {
+        if (e.target.closest("[data-demo]")) return;
+        select(card);
+      });
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();

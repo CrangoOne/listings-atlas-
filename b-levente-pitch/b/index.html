@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Levente B. — Ringlicht Wien (Demo B)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600&family=Syne:wght@500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07090e;
+      --steel: #8eacc2;
+      --warm: #e8b48a;
+      --paper: #eef3f7;
+      --mute: rgba(238, 243, 247, 0.7);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--paper); font-family: "Syne", system-ui, sans-serif; }
+    a { color: inherit; text-decoration: none; }
+
+    .demo-bar {
+      position: fixed; inset: 0 0 auto; z-index: 40;
+      display: flex; justify-content: space-between; gap: 0.75rem; align-items: center;
+      padding: 0.55rem 1rem; font-size: 0.78rem;
+      background: rgba(7, 9, 14, 0.9); border-bottom: 1px solid rgba(142, 172, 194, 0.35);
+      backdrop-filter: blur(10px);
+    }
+    .demo-bar strong { color: var(--steel); }
+    .demo-bar a { border: 1px solid rgba(238,243,247,0.22); padding: 0.35rem 0.7rem; border-radius: 999px; }
+    .demo-bar a:hover { border-color: var(--steel); color: var(--steel); }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      padding-top: 2.6rem;
+      overflow: hidden;
+      display: grid;
+      align-content: end;
+    }
+    .hero::before, .hero::after {
+      content: "";
+      position: absolute; left: 0; right: 0; height: 10vh;
+      background: var(--bg); z-index: 3;
+      animation: letterbox 1.2s ease both;
+    }
+    .hero::before { top: 2.4rem; }
+    .hero::after { bottom: 0; }
+    @keyframes letterbox {
+      from { transform: scaleY(1.8); }
+      to { transform: none; }
+    }
+
+    .media {
+      position: absolute; inset: 0;
+      background: center/cover no-repeat url("../assets/levente-442.png");
+      filter: contrast(1.08) saturate(0.75) brightness(0.72);
+    }
+    .wash {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 70% 40%, rgba(232, 180, 138, 0.28), transparent 55%),
+        radial-gradient(ellipse 50% 70% at 15% 70%, rgba(70, 110, 150, 0.35), transparent 60%),
+        linear-gradient(180deg, rgba(7,9,14,0.25) 0%, rgba(7,9,14,0.55) 55%, rgba(7,9,14,0.96) 100%);
+      animation: flicker 7s ease-in-out infinite;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.92; }
+    }
+
+    .frame {
+      position: relative; z-index: 4;
+      width: min(1100px, calc(100% - 2rem));
+      margin: 0 auto 12vh;
+      animation: rise 1s ease 0.2s both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: none; }
+    }
+    .topnav {
+      display: flex; justify-content: space-between; align-items: baseline;
+      margin-bottom: 18vh;
+      font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--mute);
+    }
+    .topnav b { color: var(--paper); font-weight: 700; }
+    .topnav div { display: flex; gap: 1.2rem; }
+
+    h1 {
+      margin: 0;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(3.4rem, 11vw, 6.8rem);
+      line-height: 0.95;
+      color: var(--paper);
+      text-shadow: 0 0 40px rgba(232, 180, 138, 0.25);
+    }
+    .tag {
+      margin: 1rem 0 1.5rem;
+      font-size: clamp(1rem, 2.4vw, 1.25rem);
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+    .lede {
+      margin: 0 0 1.5rem;
+      max-width: 28rem;
+      color: var(--mute);
+      line-height: 1.5;
+    }
+    .ctas { display: flex; flex-wrap: wrap; gap: 0.7rem; }
+    .btn {
+      padding: 0.85rem 1.25rem; border-radius: 2px;
+      font-weight: 700; font-size: 0.9rem; letter-spacing: 0.04em;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-main { background: var(--warm); color: #1a120e; }
+    .btn-ghost { border: 1px solid rgba(238,243,247,0.4); }
+
+    .city {
+      margin-top: 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(238,243,247,0.45);
+    }
+
+    @media (max-width: 640px) {
+      .frame { margin-bottom: 8vh; }
+      .topnav { margin-bottom: 8vh; }
+      .hero::before, .hero::after { height: 6vh; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hero::before, .hero::after, .wash, .frame { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">
+    <span><strong>Demo B · Ringlicht Wien</strong> — Konzept-Homepage</span>
+    <span>
+      <a href="../">Alle</a>
+      <a href="../a/">A</a>
+      <a href="../c/">C</a>
+      <a href="../d/">D</a>
+      <a href="../e/">E</a>
+    </span>
+  </div>
+
+  <header class="hero">
+    <div class="media" aria-hidden="true"></div>
+    <div class="wash" aria-hidden="true"></div>
+    <div class="frame">
+      <nav class="topnav" aria-label="Hauptnavigation">
+        <b>B · Levente</b>
+        <div>
+          <a href="#bio">Bio</a>
+          <a href="#news">News</a>
+          <a href="mailto:trainwith@b-levente.at">Kontakt</a>
+        </div>
+      </nav>
+      <h1>Levente Bertalan</h1>
+      <p class="tag">Champion. Coach. Wien.</p>
+      <p class="lede">Vienna Nights, Fight Night — die Personal Brand eines Weltmeisters, der in der Stadt trainiert und unterrichtet.</p>
+      <div class="ctas">
+        <a class="btn btn-main" href="#bio">Bio</a>
+        <a class="btn btn-ghost" href="mailto:trainwith@b-levente.at">Trainieren</a>
+      </div>
+      <p class="city" id="bio">Münzgasse 3 · 1030 Wien</p>
+    </div>
+  </header>
+  <p id="news" hidden>News: Instagram follows concept pick.</p>
+</body>
+</html>

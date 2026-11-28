@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Levente B. — Faustschrift (Demo E)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #101010;
+      --bone: #ece6d8;
+      --red: #e11d2e;
+      --mute: rgba(236, 230, 216, 0.62);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--bone);
+      font-family: "Schibsted Grotesk", "Arial Narrow", Impact, sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .demo-bar {
+      position: fixed; inset: 0 0 auto; z-index: 40;
+      display: flex; justify-content: space-between; gap: 0.75rem; align-items: center;
+      padding: 0.55rem 1rem; font-size: 0.78rem;
+      font-family: system-ui, sans-serif;
+      background: rgba(16,16,16,0.92); border-bottom: 1px solid rgba(225, 29, 46, 0.45);
+      backdrop-filter: blur(10px);
+    }
+    .demo-bar strong { color: var(--red); }
+    .demo-bar a { border: 1px solid rgba(236,230,216,0.25); padding: 0.35rem 0.7rem; border-radius: 999px; }
+    .demo-bar a:hover { border-color: var(--red); color: var(--red); }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      padding: 4rem 1rem 2rem;
+      overflow: hidden;
+      display: grid;
+      align-content: center;
+    }
+    .bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(105deg, rgba(16,16,16,0.92) 0%, rgba(16,16,16,0.55) 45%, rgba(16,16,16,0.2) 100%),
+        url("../assets/levente-442.png") right center / cover no-repeat;
+      filter: contrast(1.2) grayscale(0.35);
+      transform-origin: 70% 40%;
+      animation: punch-zoom 14s ease-in-out infinite alternate;
+    }
+    @keyframes punch-zoom {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.12); }
+    }
+    .slash {
+      position: absolute;
+      inset: 18% -10% auto;
+      height: 2px;
+      background: var(--red);
+      transform: rotate(-8deg);
+      animation: slash-in 0.7s ease both;
+    }
+    @keyframes slash-in {
+      from { transform: rotate(-8deg) scaleX(0); }
+      to { transform: rotate(-8deg) scaleX(1); }
+    }
+
+    .stack {
+      position: relative; z-index: 2;
+      width: min(1100px, 100%);
+      margin: 0 auto;
+      animation: rise 0.75s ease 0.1s both;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: none; }
+    }
+    .nav {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 8vh;
+      font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      font-family: system-ui, sans-serif;
+      color: var(--mute);
+    }
+    .nav div { display: flex; gap: 1rem; }
+    .nav a:hover { color: var(--bone); }
+
+    .display {
+      margin: 0;
+      font-weight: 900;
+      font-size: clamp(4rem, 16vw, 9.5rem);
+      line-height: 0.82;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+    }
+    .display .thin {
+      display: block;
+      font-weight: 500;
+      font-size: 0.42em;
+      letter-spacing: 0.02em;
+      color: var(--mute);
+      margin-bottom: 0.15em;
+    }
+    .display .mark { color: var(--red); }
+
+    .line {
+      margin: 1.4rem 0 1.6rem;
+      max-width: 22rem;
+      font-family: system-ui, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--mute);
+    }
+    .cta {
+      display: inline-block;
+      background: var(--red);
+      color: #fff;
+      font-family: system-ui, sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 1rem 1.4rem;
+      transition: transform 0.2s ease;
+    }
+    .cta:hover { transform: translateX(4px); }
+
+    @media (max-width: 700px) {
+      .bg {
+        background:
+          linear-gradient(180deg, rgba(16,16,16,0.55) 0%, rgba(16,16,16,0.92) 70%),
+          url("../assets/levente-442.png") center top / cover no-repeat;
+      }
+      .nav { margin-bottom: 4vh; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bg, .slash, .stack { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-bar">
+    <span><strong>Demo E · Faustschrift</strong> — Konzept-Homepage</span>
+    <span>
+      <a href="../">Alle</a>
+      <a href="../a/">A</a>
+      <a href="../b/">B</a>
+      <a href="../c/">C</a>
+      <a href="../d/">D</a>
+    </span>
+  </div>
+
+  <header class="hero">
+    <div class="bg" aria-hidden="true"></div>
+    <div class="slash" aria-hidden="true"></div>
+    <div class="stack">
+      <nav class="nav" aria-label="Hauptnavigation">
+        <a href="./">B · Levente</a>
+        <div>
+          <a href="#bio">Bio</a>
+          <a href="#news">News</a>
+          <a href="mailto:trainwith@b-levente.at">Kontakt</a>
+        </div>
+      </nav>
+      <h1 class="display">
+        <span class="thin">B ·</span>
+        LEVENTE<span class="mark">.</span>
+      </h1>
+      <p class="line" id="bio">Kickbox-Champion. Personal Brand. Kein WordPress-Template — Typografie mit Schlag.</p>
+      <a class="cta" id="news" href="mailto:trainwith@b-levente.at">Kontakt</a>
+    </div>
+  </header>
+</body>
+</html>
