@@ -44,17 +44,23 @@
       align-content: center;
     }
     .bg {
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(105deg, rgba(16,16,16,0.92) 0%, rgba(16,16,16,0.55) 45%, rgba(16,16,16,0.2) 100%),
-        url("../assets/hero-kick.png") 65% 15% / cover no-repeat;
-      filter: contrast(1.12) grayscale(0.2) brightness(0.95);
-      transform-origin: 70% 40%;
+      position: absolute;
+      top: 2.6rem; right: 0; bottom: 0;
+      width: min(56vw, 680px);
+      background: transparent right bottom / contain no-repeat;
+      background-image: url("../assets/hero-kick.png");
+      filter: contrast(1.08) grayscale(0.15) brightness(1.02);
       animation: punch-zoom 14s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    .bg::after {
+      content: "";
+      position: absolute; inset: 0 40% 0 -60vw;
+      background: linear-gradient(90deg, #101010 55%, rgba(16,16,16,0.2) 100%);
     }
     @keyframes punch-zoom {
-      from { transform: scale(1.05); }
-      to { transform: scale(1.12); }
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-1%, 0, 0); }
     }
     .slash {
       position: absolute;
@@ -131,9 +137,13 @@
 
     @media (max-width: 700px) {
       .bg {
-        background:
-          linear-gradient(180deg, rgba(16,16,16,0.55) 0%, rgba(16,16,16,0.92) 70%),
-          url("../assets/hero-kick.png") center top / cover no-repeat;
+        width: 100%;
+        opacity: 0.5;
+        background-position: 75% bottom;
+      }
+      .bg::after {
+        inset: 0;
+        background: linear-gradient(180deg, rgba(16,16,16,0.25) 0%, rgba(16,16,16,0.92) 78%);
       }
       .nav { margin-bottom: 4vh; }
     }
