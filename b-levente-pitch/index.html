@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>b-levente.at — 5 Richtungen · Client Pitch</title>
+    <meta
+      name="description"
+      content="Fünf Konzept-Richtungen für die Personal Brand Site von Levente Bertalan. Eine Stunde Review — A bis E wählen."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0c0c0c;
+        --paper: #f2efe8;
+        --mute: #8a857c;
+        --line: rgba(255, 255, 255, 0.12);
+        --gold: #c9a45c;
+        --steel: #6a8cae;
+        --crimson: #b91c1c;
+        --signal: #e11d2e;
+        --pad: clamp(1.25rem, 4vw, 3rem);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Manrope, sans-serif;
+        color: var(--paper);
+        background:
+          radial-gradient(ellipse 80% 50% at 10% -10%, rgba(201, 164, 92, 0.18), transparent 55%),
+          radial-gradient(ellipse 60% 40% at 100% 20%, rgba(106, 140, 174, 0.12), transparent 50%),
+          linear-gradient(180deg, #121212 0%, #0a0a0a 40%, #101010 100%);
+        min-height: 100vh;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .wrap {
+        width: min(1120px, 100% - 2 * var(--pad));
+        margin-inline: auto;
+      }
+
+      /* —— Hero —— */
+      .hero {
+        padding: clamp(3rem, 10vh, 6rem) 0 clamp(2.5rem, 6vh, 4rem);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .hero-kicker {
+        font-size: 0.75rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin: 0 0 1.25rem;
+        font-weight: 600;
+      }
+
+      .hero-brand {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(3.5rem, 12vw, 7.5rem);
+        line-height: 0.9;
+        letter-spacing: 0.02em;
+        margin: 0;
+        animation: rise 0.8s ease-out both;
+      }
+
+      .hero-brand span {
+        display: block;
+        color: var(--mute);
+        font-size: 0.42em;
+        letter-spacing: 0.18em;
+        margin-top: 0.35rem;
+      }
+
+      .hero-line {
+        max-width: 36rem;
+        margin: 1.5rem 0 0;
+        font-size: 1.05rem;
+        line-height: 1.55;
+        color: rgba(242, 239, 232, 0.78);
+        animation: rise 0.8s ease-out 0.12s both;
+      }
+
+      .ask {
+        margin-top: 2rem;
+        padding: 1.1rem 1.25rem;
+        border-left: 3px solid var(--gold);
+        background: rgba(255, 255, 255, 0.03);
+        animation: rise 0.8s ease-out 0.22s both;
+      }
+
+      .ask strong {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--gold);
+        margin-bottom: 0.45rem;
+      }
+
+      .ask p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: rgba(242, 239, 232, 0.85);
+      }
+
+      .shared {
+        margin-top: 1.25rem;
+        font-size: 0.85rem;
+        color: var(--mute);
+        animation: rise 0.8s ease-out 0.28s both;
+      }
+
+      /* —— Proposals —— */
+      .proposals {
+        padding: clamp(2.5rem, 7vh, 4.5rem) 0 5rem;
+      }
+
+      .proposals-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 1.75rem;
+        flex-wrap: wrap;
+      }
+
+      .proposals-head h2 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        letter-spacing: 0.04em;
+        margin: 0;
+      }
+
+      .proposals-head p {
+        margin: 0;
+        color: var(--mute);
+        font-size: 0.9rem;
+      }
+
+      .grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      @media (min-width: 720px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (min-width: 1020px) {
+        .grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .card[data-letter="E"] {
+          grid-column: 1 / -1;
+        }
+      }
+
+      .card {
+        position: relative;
+        padding: 1.5rem 1.4rem 1.35rem;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.025);
+        overflow: hidden;
+        transition: border-color 0.25s ease, transform 0.25s ease, background 0.25s ease;
+        animation: rise 0.7s ease-out both;
+      }
+
+      .card:nth-child(1) { animation-delay: 0.05s; }
+      .card:nth-child(2) { animation-delay: 0.12s; }
+      .card:nth-child(3) { animation-delay: 0.19s; }
+      .card:nth-child(4) { animation-delay: 0.26s; }
+      .card:nth-child(5) { animation-delay: 0.33s; }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 3px;
+        background: var(--accent, var(--gold));
+      }
+
+      .card:hover {
+        border-color: rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.045);
+        transform: translateY(-2px);
+      }
+
+      .card[data-letter="A"] { --accent: #c9a45c; }
+      .card[data-letter="B"] { --accent: #6a8cae; }
+      .card[data-letter="C"] { --accent: #d4af37; }
+      .card[data-letter="D"] { --accent: #b91c1c; }
+      .card[data-letter="E"] { --accent: #e11d2e; }
+
+      .card-top {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin-bottom: 0.85rem;
+      }
+
+      .letter {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 2.4rem;
+        line-height: 1;
+        color: var(--accent, var(--gold));
+        letter-spacing: 0.04em;
+      }
+
+      .card h3 {
+        font-family: "Bebas Neue", sans-serif;
+        font-size: 1.65rem;
+        letter-spacing: 0.04em;
+        margin: 0;
+      }
+
+      .tagline {
+        margin: 0 0 1rem;
+        color: rgba(242, 239, 232, 0.72);
+        font-size: 0.95rem;
+        line-height: 1.45;
+      }
+
+      .meta {
+        display: grid;
+        gap: 0.65rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .meta li {
+        display: grid;
+        grid-template-columns: 4.5rem 1fr;
+        gap: 0.6rem;
+        font-size: 0.86rem;
+        line-height: 1.45;
+      }
+
+      .meta dt,
+      .meta .k {
+        color: var(--mute);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        padding-top: 0.15rem;
+        font-weight: 600;
+      }
+
+      .meta .v {
+        color: rgba(242, 239, 232, 0.88);
+      }
+
+      /* —— Footer —— */
+      .site-foot {
+        border-top: 1px solid var(--line);
+        padding: 1.5rem 0 2.5rem;
+        color: var(--mute);
+        font-size: 0.8rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.5rem;
+        justify-content: space-between;
+      }
+
+      .site-foot a {
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+      }
+
+      .site-foot a:hover {
+        border-bottom-color: currentColor;
+        color: var(--paper);
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <p class="hero-kicker">Client pitch · ≈1 Stunde</p>
+        <h1 class="hero-brand">
+          LEVENTE BERTALAN
+          <span>b-levente.at · 5 Richtungen</span>
+        </h1>
+        <p class="hero-line">
+          Personal Brand Site — nicht Team TAE-KIBO. Fünf visuelle Konzepte.
+          Eine Richtung wählen, dann Mock &amp; Build.
+        </p>
+        <div class="ask">
+          <strong>Bitte entscheiden</strong>
+          <p>
+            Welcher Buchstabe (A–E)? Persönliche Instagram oder
+            <code>@team_taekibo</code>? Nur DE oder DE+EN?
+          </p>
+        </div>
+        <p class="shared">
+          Shared auf allen Konzepten: Home · Bio · News (Instagram). TAE-KIBO nur als Footer-Link.
+        </p>
+      </div>
+    </header>
+
+    <main class="proposals">
+      <div class="wrap">
+        <div class="proposals-head">
+          <h2>Proposals A–E</h2>
+          <p>Look · Home · Bio / News</p>
+        </div>
+
+        <div class="grid">
+          <article class="card" data-letter="A">
+            <div class="card-top">
+              <span class="letter" aria-hidden="true">A</span>
+              <h3>Goldene Linie</h3>
+            </div>
+            <p class="tagline">Quiet authority — titles over sales copy.</p>
+            <ul class="meta">
+              <li>
+                <span class="k">Look</span>
+                <span class="v">Charcoal + brushed gold · condensed type · B&amp;W ringside</span>
+              </li>
+              <li>
+                <span class="k">Home</span>
+                <span class="v"><em>LEVENTE BERTALAN</em> · WAKO PRO · Wien · CTA Personal Training</span>
+              </li>
+              <li>
+                <span class="k">Bio/News</span>
+                <span class="v">Medal wall + honors timeline · live IG posts/stories</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="card" data-letter="B">
+            <div class="card-top">
+              <span class="letter" aria-hidden="true">B</span>
+              <h3>Ringlicht Wien</h3>
+            </div>
+            <p class="tagline">Vienna nights × fight night — cinematic, local.</p>
+            <ul class="meta">
+              <li>
+                <span class="k">Look</span>
+                <span class="v">Near-black + steel blue + tungsten · film stills</span>
+              </li>
+              <li>
+                <span class="k">Home</span>
+                <span class="v">Light-cut name · “Champion. Coach. Wien.” · Bio / Trainieren</span>
+              </li>
+              <li>
+                <span class="k">Bio/News</span>
+                <span class="v">Fighter→teacher→mentor arc · IG as brand pulse (+ story strip)</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="card" data-letter="C">
+            <div class="card-top">
+              <span class="letter" aria-hidden="true">C</span>
+              <h3>196 Gold</h3>
+            </div>
+            <p class="tagline">Record-holder energy — the number <em>is</em> the brand.</p>
+            <ul class="meta">
+              <li>
+                <span class="k">Look</span>
+                <span class="v">Black / white / gold · huge numerals · action crops</span>
+              </li>
+              <li>
+                <span class="k">Home</span>
+                <span class="v"><em>LEVENTE</em> + <strong>196</strong> · “Gold. Europa. Welt.” · Mit dem Champion trainieren</span>
+              </li>
+              <li>
+                <span class="k">Bio/News</span>
+                <span class="v">Title ledger · IG grid (kills dead 2020 workshops)</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="card" data-letter="D">
+            <div class="card-top">
+              <span class="letter" aria-hidden="true">D</span>
+              <h3>Meister &amp; Mentor</h3>
+            </div>
+            <p class="tagline">Calm power — still trains hard.</p>
+            <ul class="meta">
+              <li>
+                <span class="k">Look</span>
+                <span class="v">Slate navy + chalk + crimson · documentary portraits</span>
+              </li>
+              <li>
+                <span class="k">Home</span>
+                <span class="v">Wordmark + pads hero · “Persönlich. Auf Weltniveau.” · Erste Einheit</span>
+              </li>
+              <li>
+                <span class="k">Bio/News</span>
+                <span class="v">Philosophy + Dan/Uni/honors · IG as living proof</span>
+              </li>
+            </ul>
+          </article>
+
+          <article class="card" data-letter="E">
+            <div class="card-top">
+              <span class="letter" aria-hidden="true">E</span>
+              <h3>Faustschrift</h3>
+            </div>
+            <p class="tagline">Typographic punch — editorial sport, not WP.</p>
+            <ul class="meta">
+              <li>
+                <span class="k">Look</span>
+                <span class="v">Off-black + bone type + signal red · extreme weight contrast</span>
+              </li>
+              <li>
+                <span class="k">Home</span>
+                <span class="v"><em>B · LEVENTE</em> · “Kickbox-Champion. Personal Brand.” · Kontakt</span>
+              </li>
+              <li>
+                <span class="k">Bio/News</span>
+                <span class="v">Short chapters (Ring/Titel/Lehre/Training) · IG = only “aktuell”</span>
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-foot wrap">
+      <span>Source concepts from <code>apps/b-levente/PROPOSALS.md</code></span>
+      <span>
+        <a href="https://b-levente.at/" rel="noopener">b-levente.at</a>
+        ·
+        <a href="https://tae-kibo.at/" rel="noopener">tae-kibo.at</a>
+      </span>
+    </footer>
+  </body>
+</html>
